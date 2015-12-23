@@ -1,0 +1,16 @@
+{
+      "theme": "your-theme-folder-name",
+
+      "base-url": "http://localhost/my-website",
+
+      "client": {
+            "name": "Client's name",
+            "organisation": "Client's business name",
+            "email": "Client's e-mail address"
+      },
+
+      "title": {
+            "prefix": "Begin all titles with this string",
+            "suffix": "End all titles with this string"
+      }
+}

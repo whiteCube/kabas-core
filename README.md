@@ -1,4 +1,5 @@
-Project started 23/12/2015
+Project started 23/12/2015 - *Toon Van den Bos*
+
 ------------------
 
 # Kabas 0.0.1

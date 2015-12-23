@@ -1,0 +1,20 @@
+{
+      "type": "head",
+
+      "tags": [
+            {
+                  "tag": "title",
+                  "contains": "Set your base website title"
+            },
+            {
+                  "tag": "meta",
+                  "name": "description",
+                  "content": "Set your base website's description."
+            },
+            {
+                  "tag": "meta",
+                  "name": "keywords",
+                  "content": "Set your base website's keywords list."
+            }
+      ]
+}
