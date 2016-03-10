@@ -18,8 +18,14 @@ class Kabas
      */
     public function __construct()
     {
-          $this->ConfigContainer = new \Kabas\Config\Container();
+          $this->Config = new Config\Container();
     }
+
+    public function boot()
+    {
+    $this->Request = new Http\Request();
+    $this->Router = new Http\Router();
+   }
 
 
     /**
