@@ -11,6 +11,10 @@ class Router
             $this->handle();
       }
 
+      /**
+       * Iterate through pages from config to create routes
+       * @return void
+       */
       private function loadRoutes()
       {
             global $app;
@@ -22,6 +26,10 @@ class Router
 
       }
 
+      /**
+       * Check if current route exists and react
+       * @return void
+       */
       private function handle()
       {
             if(array_key_exists($this->route, $this->routes)) {
