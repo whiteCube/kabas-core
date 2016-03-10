@@ -6,8 +6,29 @@ class Router
 {
       public function __construct()
       {
+            $this->route = $_SERVER['REQUEST_URI'];
+            $this->loadRoutes();
+            $this->handle();
+      }
+
+      private function loadRoutes()
+      {
             global $app;
-            $this->route = $_SERVER['REDIRECT_URL'];
+            $this->routes = [];
+
+            foreach ($app->config->pages->items as $page) {
+                  $this->routes[$page->route] = $page->id;
+            }
+
+      }
+
+      private function handle()
+      {
+            if(array_key_exists($this->route, $this->routes)) {
+                  // We have a hit! the page id is located in $this->routes[$this->route]
+            } else {
+                  // 404
+            }
       }
 
 }
