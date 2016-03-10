@@ -1,0 +1,13 @@
+{
+    "name": "root/kabas",
+    "authors": [
+        {
+            "name": "WhiteCube",
+            "email": "hello@whitecube.be"
+        }
+    ],
+    "require": {},
+    "autoload": {
+          "psr-4": { "Kabas\\": "core/" }
+   }
+}
