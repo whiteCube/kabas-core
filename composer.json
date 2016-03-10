@@ -8,6 +8,10 @@
     ],
     "require": {},
     "autoload": {
-          "psr-4": { "Kabas\\": "core/" }
+          "psr-4": {
+                "Kabas\\": "core/",
+                "Kabas\\Config\\": "core/Config/",
+                "Kabas\\Utils\\": "core/Utils/"
+          }
    }
 }
