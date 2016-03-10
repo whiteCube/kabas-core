@@ -2,7 +2,7 @@
 
 namespace Kabas;
 
-class Kabas 
+class Kabas
 {
     /**
      * The current Kabas version
@@ -10,6 +10,16 @@ class Kabas
      * @var string
      */
     const VERSION = '0.0.1';
+
+    /**
+     * Instanciate the application
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+          $this->ConfigContainer = new \Kabas\Config\Container();
+    }
 
 
     /**
@@ -21,5 +31,5 @@ class Kabas
     {
         return static::VERSION;
     }
-    
+
 }
