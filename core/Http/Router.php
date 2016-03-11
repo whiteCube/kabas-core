@@ -4,6 +4,12 @@ namespace Kabas\Http;
 
 class Router
 {
+      /**
+       * Routes for the current application
+       * @var array
+       */
+      public $routes = [];
+
       public function __construct()
       {
             $this->route = $_SERVER['REQUEST_URI'];
@@ -17,7 +23,6 @@ class Router
       private function loadRoutes()
       {
             global $app;
-            $this->routes = [];
 
             foreach ($app->config->pages->items as $page) {
                   $this->routes[$page->route] = $page->id;
