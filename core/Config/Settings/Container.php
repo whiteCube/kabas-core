@@ -7,7 +7,6 @@ class Container extends \Kabas\Config\Container
       public function __construct()
       {
             $this->loadConfigs();
-            var_dump($this);
       }
 
       private function loadConfigs()
