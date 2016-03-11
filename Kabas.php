@@ -2,6 +2,9 @@
 
 namespace Kabas;
 
+use WhiteCube\Bootstrap\Builder;
+use WhiteCube\Bootstrap\FileLoader;
+
 class Kabas
 {
       /**
@@ -10,6 +13,13 @@ class Kabas
       * @var string
       */
       const VERSION = '0.0.1';
+
+      /**
+       * Activate debug mode
+       *
+       * @var boolean
+       */
+      const DEBUG = true;
 
       /**
        * The driver used to read data
@@ -29,6 +39,12 @@ class Kabas
             $this->request = new Http\Request();
             $this->router = new Http\Router();
             $this->response = new Http\Response();
+      }
+
+      public function loadTheme()
+      {
+            $loader = new FileLoader(__DIR__ . '/../themes/'. $this->config->settings->site->theme);
+            $loader->autoload();
       }
 
       /**
@@ -51,6 +67,10 @@ class Kabas
       public function version()
       {
             return static::VERSION;
+      }
+
+      public function isDebug() {
+            return static::DEBUG;
       }
 
 }
