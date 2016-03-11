@@ -4,9 +4,16 @@ namespace Kabas\View;
 
 use \RecursiveDirectoryIterator;
 use \RecursiveIteratorIterator;
+use Kabas\Utils\Url;
 
 class View
 {
+
+      public function __construct($view, $data)
+      {
+            include $this->getTemplateFile($view);
+      }
+
       /**
        * Includes the template
        *
@@ -16,7 +23,7 @@ class View
        */
       static function make($view, $data)
       {
-            include self::getTemplateFile($view);
+            new self($view, $data);
       }
 
       /**
@@ -26,25 +33,25 @@ class View
        * @param  string $view
        * @return string
        */
-      static function getTemplateFile($view)
+      protected function getTemplateFile($view)
       {
             global $app;
 
             $themeName = $app->config->settings->site->theme;
             $baseDir = __DIR__ . '/../../themes/' . $themeName;
-            $view = self::checkViewExtension($view);
+            $view = $this->checkViewExtension($view);
 
-            return self::getTemplatePath($view, $baseDir);
+            return $this->getTemplatePath($view, $baseDir);
       }
 
       /**
-       * Finds the template file in it's directory
+       * Finds the template file in its directory
        *
        * @param  string $view       the name of the view file
        * @param  string $baseDir    the directory we want to search into
        * @return string
        */
-      static function getTemplatePath($view, $baseDir) {
+      protected function getTemplatePath($view, $baseDir) {
             $oDirectory = new RecursiveDirectoryIterator($baseDir);
             $oIterator = new RecursiveIteratorIterator($oDirectory);
             foreach($oIterator as $oFile) {
@@ -61,7 +68,7 @@ class View
        * @param  string $view
        * @return string
        */
-      static function checkViewExtension($view)
+      protected function checkViewExtension($view)
       {
             if(strpos($view, '.php') !== false) {
                   return $view;

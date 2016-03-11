@@ -2,6 +2,8 @@
 
 namespace Kabas\Http;
 
+use Kabas\Utils\Text;
+
 class Response
 {
 
@@ -24,8 +26,11 @@ class Response
                         return;
                   }
             } else {
-                  echo $app->config->pages->items[$pageID]->data->content;
+                  $pageTemplate = Text::toNamespace($app->config->pages->items[$pageID]->template);
+                  $themeTemplate = '\Theme\\' . $app->config->settings->site->theme .'\Pages\\' . $pageTemplate;
+                  new $themeTemplate($app->config->pages->items[$pageID]->template, $app->config->pages->items[$pageID]->data);
                   return;
             }
       }
+
 }
