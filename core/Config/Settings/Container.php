@@ -2,15 +2,20 @@
 
 namespace Kabas\Config\Settings;
 
-use \Kabas\Utils\File;
-
-class Container
+class Container extends \Kabas\Config\Container
 {
       public function __construct()
       {
-            $this->database = File::loadJson('config/database.json');
-            $this->site = File::loadJson('config/site.json');
-            $this->social = File::loadJson('config/social.json');
+            $this->loadConfigs();
+            var_dump($this);
+      }
+
+      private function loadConfigs()
+      {
+            global $app;
+            $this->database = $app->driver->loadDBConfig();
+            $this->site = $app->driver->loadSiteConfig();
+            $this->social = $app->driver->loadSocialConfig();
       }
 
 }
