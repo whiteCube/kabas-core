@@ -4,10 +4,11 @@ namespace Kabas\Config\Pages;
 
 class Item
 {
-      public function __construct($jsonData)
+      public function __construct($data)
       {
-            $this->route = $jsonData->route;
-            $this->id = $jsonData->id;
-            $this->template = $jsonData->template;
+            $this->route = $data->route;
+            $this->id = $data->id;
+            $this->template = $data->template;
+            $this->data = $data->data;
       }
 }
