@@ -12,7 +12,6 @@ class Router
 
       public function __construct()
       {
-            $this->route = $_SERVER['REQUEST_URI'];
             $this->loadRoutes();
       }
 
@@ -31,14 +30,39 @@ class Router
       }
 
       /**
-       * Check if current route exists and return it
+       * Get the current route
+       * @return string
+       */
+      public function getRoute()
+      {
+            $pathToIgnore = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
+            if($pathToIgnore !== '') {
+                  return explode($pathToIgnore, $_SERVER['REQUEST_URI'])[1];
+            } else {
+                  return $_SERVER['REQUEST_URI'];
+            }
+      }
+
+      /**
+       * Check if current route exists and return the corresponding page ID
        * @return string
        */
       public function handle()
       {
-            if(array_key_exists($this->route, $this->routes)) {
+            $this->route = $this->getRoute();
+            if($this->routeExists($this->route)) {
                   return $this->routes[$this->route];
             }
+      }
+
+      /**
+       * Check if specified route exists in the application
+       * @param  string $route
+       * @return boolean
+       */
+      public function routeExists($route)
+      {
+            return array_key_exists($route, $this->routes);
       }
 
 }
