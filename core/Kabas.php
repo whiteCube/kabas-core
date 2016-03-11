@@ -28,6 +28,19 @@ class Kabas
             $this->config = new Config\Container();
             $this->request = new Http\Request();
             $this->router = new Http\Router();
+            $this->response = new Http\Response();
+      }
+
+      /**
+       * Once we're all set, take care of the request
+       * and send something back!
+       *
+       * @return void
+       */
+      public function react()
+      {
+            $this->page = $this->router->handle();
+            $this->response->send($this->page);
       }
 
       /**

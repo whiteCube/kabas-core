@@ -8,7 +8,6 @@ class Router
       {
             $this->route = $_SERVER['REQUEST_URI'];
             $this->loadRoutes();
-            $this->handle();
       }
 
       /**
@@ -27,15 +26,13 @@ class Router
       }
 
       /**
-       * Check if current route exists and react
-       * @return void
+       * Check if current route exists and return it
+       * @return string
        */
-      private function handle()
+      public function handle()
       {
             if(array_key_exists($this->route, $this->routes)) {
-                  // We have a hit! the page id is located in $this->routes[$this->route]
-            } else {
-                  // 404
+                  return $this->routes[$this->route];
             }
       }
 
