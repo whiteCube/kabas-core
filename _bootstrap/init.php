@@ -12,5 +12,6 @@
 $app = new Kabas\Kabas();
 
 $app->boot();
+$app->react();
 
 return $app;
