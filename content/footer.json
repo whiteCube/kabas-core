@@ -1,5 +1,7 @@
 {
-      "type": "footer",
+      "id": "footer",
 
-      "copyright": "Website's copyright - 2015"
+      "data": {
+            "copyright": "Website's copyright - 2015"
+      }
 }

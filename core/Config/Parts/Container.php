@@ -9,6 +9,8 @@ class Container
       public function __construct()
       {
             $this->instanciateParts();
+            $this->instanciateHeader();
+            $this->instanciateFooter();
       }
 
       /**
@@ -20,6 +22,28 @@ class Container
             $this->items = [];
             $files = File::loadJsonFromDir('content/parts');
             $this->loop($files);
+      }
+
+      /**
+       * [instanciateHeader description]
+       * @return void
+       */
+      public function instanciateHeader()
+      {
+            $file = File::loadJson('content/header.json');
+            if(isset($file)){
+                  $file->template = "header";
+                  $this->items['header'] = new Item($file);
+            }
+      }
+
+      public function instanciateFooter()
+      {
+            $file = File::loadJson('content/footer.json');
+            if(isset($file)) {
+                  $file->template = "footer";
+                  $this->items['footer'] = new Item($file);
+            }
       }
 
       /**
