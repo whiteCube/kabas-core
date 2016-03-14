@@ -2,14 +2,14 @@
 
 namespace Kabas\Utils;
 
-use \Kabas\Kabas;
+use \Kabas\App;
 use \Kabas\View\View;
 
 class Part
 {
       static function get($partID)
       {
-            $app = Kabas::getInstance();
+            $app = App::getInstance();
 
             $part = $app->config->parts->getPart($partID);
 

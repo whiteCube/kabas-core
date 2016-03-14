@@ -4,7 +4,7 @@ namespace Kabas\Http;
 
 use Kabas\Utils\Text;
 
-use \Kabas\Kabas;
+use \Kabas\App;
 
 class Response
 {
@@ -16,7 +16,7 @@ class Response
        */
       public function send($pageID)
       {
-            $app = Kabas::getInstance();
+            $app = App::getInstance();
             if($pageID === null){
                   if(array_key_exists('404', $app->config->pages->items)) {
                         http_response_code(404);
