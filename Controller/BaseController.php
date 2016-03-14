@@ -9,11 +9,18 @@ class BaseController
       protected $view;
       protected $config;
 
-      public function __construct($template, $data)
+      public function __construct($template, $data, $options = null)
       {
             $this->defaultTemplateName = $template;
             $this->checkLinkedFiles();
+            $this->data = $data;
+            $this->setup($options);
             $this->render($data);
+      }
+
+      public function setup($options)
+      {
+
       }
 
       protected function render($data)
