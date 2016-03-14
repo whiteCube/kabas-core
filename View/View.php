@@ -12,6 +12,7 @@ class View
 
       public function __construct($view, $data)
       {
+            extract((array) $data);
             include $this->getTemplateFile($view);
       }
 
