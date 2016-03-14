@@ -13,10 +13,19 @@
 return [
 
       /**
-       * The driver used to get your site's data in the config and curl_multi_getcontent
+       * The driver used to get your site's data in the config and content
        * folders. Only JSON is supported at the moment.
        *
        * @var string
        */
-      'driver' => 'JSON'
+      'driver' => 'JSON',
+
+      /**
+       * Aliases for classes
+       *
+       * @var array
+       */
+      'aliases' => [
+            'Url' => Kabas\Utils\Url::class,
+      ],
 ];
