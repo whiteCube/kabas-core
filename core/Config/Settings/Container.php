@@ -2,6 +2,8 @@
 
 namespace Kabas\Config\Settings;
 
+use \Kabas\Kabas;
+
 class Container extends \Kabas\Config\Container
 {
       public function __construct()
@@ -11,7 +13,7 @@ class Container extends \Kabas\Config\Container
 
       private function loadConfigs()
       {
-            global $app;
+            $app = Kabas::getInstance();
             $this->database = $app->driver->loadDBConfig();
             $this->site = $app->driver->loadSiteConfig();
             $this->social = $app->driver->loadSocialConfig();

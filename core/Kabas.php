@@ -29,6 +29,18 @@ class Kabas
       public $driver;
 
       /**
+       * The instance of the app
+       *
+       * @var Kabas
+       */
+      public static $instance;
+
+      public function __construct()
+      {
+            self::$instance = $this;
+      }
+
+      /**
        * Start up the application
        *
        * @return void
@@ -41,10 +53,48 @@ class Kabas
             $this->response = new Http\Response();
       }
 
+      /**
+       * Check appConfig and load the specified aliases
+       *
+       * @return void
+       */
+      public function loadAliases()
+      {
+            foreach($this->config->appConfig['aliases'] as $alias => $class) {
+                  class_alias($class, $alias);
+            }
+      }
+
+      /**
+       * Autoload the theme files
+       *
+       * @return void
+       */
       public function loadTheme()
       {
             $loader = new FileLoader(__DIR__ . '/../themes/'. $this->config->settings->site->theme);
             $loader->autoload();
+      }
+
+      /**
+       * Returns app instance
+       *
+       * @return Kabas
+       */
+      static function getInstance()
+      {
+            return self::$instance;
+      }
+
+      /**
+       * Sets the driver for the app;
+       *
+       * @param Driver $driver
+       */
+      static function setDriver($driver)
+      {
+            $app = self::getInstance();
+            $app->driver = $driver;
       }
 
       /**
@@ -69,7 +119,12 @@ class Kabas
             return static::VERSION;
       }
 
-      public function isDebug() {
+      /**
+       * Checks if app is in debug mode
+       *
+       * @return boolean
+       */
+      static function isDebug() {
             return static::DEBUG;
       }
 

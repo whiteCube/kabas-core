@@ -2,6 +2,8 @@
 
 namespace Kabas\Http;
 
+use \Kabas\Kabas;
+
 class Router
 {
       /**
@@ -21,7 +23,7 @@ class Router
        */
       private function loadRoutes()
       {
-            global $app;
+            $app = Kabas::getInstance();
 
             foreach ($app->config->pages->items as $page) {
                   $this->routes[$page->route] = $page->id;

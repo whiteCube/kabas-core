@@ -2,6 +2,8 @@
 
 namespace Kabas\Config;
 
+use \Kabas\Kabas;
+
 class Container
 {
       public function __construct()
@@ -30,8 +32,7 @@ class Container
        */
       protected function initDriver()
       {
-            global $app;
             $driverName = '\Kabas\Drivers\\' . $this->appConfig['driver'];
-            $app->driver = new $driverName;
+            Kabas::setDriver(new $driverName);
       }
 }
