@@ -27,5 +27,6 @@ return [
        */
       'aliases' => [
             'Url' => Kabas\Utils\Url::class,
+            'Part' => Kabas\Utils\Part::class,
       ],
 ];

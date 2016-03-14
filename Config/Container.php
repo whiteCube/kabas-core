@@ -12,6 +12,7 @@ class Container
             $this->initDriver();
             $this->settings = new Settings\Container();
             $this->pages = new Pages\Container();
+            $this->parts = new Parts\Container();
       }
 
       /**
