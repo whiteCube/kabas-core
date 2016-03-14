@@ -1,7 +1,11 @@
 {
       "id": "section1",
       "template": "section1",
-      "options": {},
+      "options": {
+            "title": {
+                  "color": "#FF0000"
+            }
+      },
       "data": {
             "title": "Section 1",
             "text": "Texte de la section 1"
