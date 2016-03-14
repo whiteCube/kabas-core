@@ -1,0 +1,9 @@
+{
+      "id": "section1",
+      "template": "section1",
+      "options": {},
+      "data": {
+            "title": "Section 1",
+            "text": "Texte de la section 1"
+      }
+}
