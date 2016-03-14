@@ -2,6 +2,8 @@
 
 namespace Kabas\Utils;
 
+use Kabas\App;
+
 class File
 {
       /**
@@ -11,9 +13,11 @@ class File
        */
       static function loadJson($filePath)
       {
-            $string = file_get_contents($filePath);
-            $json = json_decode($string);
-            return $json;
+            if(file_exists($filePath)){
+                  $string = file_get_contents($filePath);
+                  $json = json_decode($string);
+                  return $json;
+            }
       }
 
       /**
