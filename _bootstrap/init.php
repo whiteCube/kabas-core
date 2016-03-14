@@ -12,6 +12,7 @@
 $app = new Kabas\Kabas();
 
 $app->boot();
+$app->loadAliases();
 $app->loadTheme();
 $app->react();
 

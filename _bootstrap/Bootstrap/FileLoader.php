@@ -2,6 +2,8 @@
 
 namespace Whitecube\Bootstrap;
 
+use \Kabas\Kabas;
+
 class FileLoader
 {
       // Base directory path
@@ -38,8 +40,7 @@ class FileLoader
 
       protected function loadBuild()
       {
-            global $app;
-            if( $app->isDebug() || !file_exists( __DIR__ . DIRECTORY_SEPARATOR . self::$fileLoad ) ){
+            if( Kabas::isDebug() || !file_exists( __DIR__ . DIRECTORY_SEPARATOR . self::$fileLoad ) ){
                   $this->build();
             } else {
                   $this->loadFiles();

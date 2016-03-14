@@ -2,6 +2,8 @@
 
 namespace Kabas\Utils;
 
+use \Kabas\Kabas;
+
 class Url
 {
       /**
@@ -11,7 +13,7 @@ class Url
        */
       static function to($pageID)
       {
-            global $app;
+            $app = Kabas::getInstance();
 
             $baseUrl = $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
 
