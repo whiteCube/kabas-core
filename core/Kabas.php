@@ -33,7 +33,7 @@ class Kabas
        *
        * @var Kabas
        */
-      public static $instance;
+      private static $instance;
 
       public function __construct()
       {
