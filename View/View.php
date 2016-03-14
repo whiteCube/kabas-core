@@ -5,7 +5,7 @@ namespace Kabas\View;
 use \RecursiveDirectoryIterator;
 use \RecursiveIteratorIterator;
 use Kabas\Utils\Url;
-use \Kabas\Kabas;
+use \Kabas\App;
 
 class View
 {
@@ -37,7 +37,7 @@ class View
        */
       protected function getTemplateFile($view)
       {
-            $app = Kabas::getInstance();
+            $app = App::getInstance();
 
             $themeName = $app->config->settings->site->theme;
             $baseDir = __DIR__ . '/../../themes/' . $themeName;

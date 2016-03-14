@@ -2,10 +2,9 @@
 
 namespace Kabas;
 
-use WhiteCube\Bootstrap\Builder;
 use WhiteCube\Bootstrap\FileLoader;
 
-class Kabas
+class App
 {
       /**
       * The current Kabas version

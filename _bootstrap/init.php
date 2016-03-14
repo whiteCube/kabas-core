@@ -9,7 +9,7 @@
 |
 */
 
-$app = new Kabas\Kabas();
+$app = new Kabas\App();
 
 $app->boot();
 $app->loadAliases();
