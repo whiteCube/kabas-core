@@ -1,0 +1,14 @@
+{
+      "id": "main",
+      "links": {
+            "home": {
+                  "label": "Accueil"
+            },
+            "about": {
+                  "label": "À propos"
+            },
+            "nos-services": {
+                  "label": "Nos services"
+            }
+      }
+}
