@@ -11,7 +11,7 @@ class App
       *
       * @var string
       */
-      const VERSION = '0.0.1';
+      const VERSION = '0.0.2';
 
       /**
        * Activate debug mode
