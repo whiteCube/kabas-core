@@ -75,6 +75,11 @@ class App
             $loader->autoload();
       }
 
+      public function loadFields()
+      {
+            $this->config->pages->loadFields();
+      }
+
       /**
        * Returns app instance
        *
