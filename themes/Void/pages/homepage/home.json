@@ -1,0 +1,17 @@
+{
+      "id": "home",
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "Your homepage's title",
+                  "defaultValue": ""
+            },
+            "intro": {
+                  "type": "text",
+                  "label": "Introduction",
+                  "description": "Your homepage's introduction text",
+                  "defaultValue": ""
+            }
+      }
+}
