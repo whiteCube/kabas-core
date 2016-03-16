@@ -14,7 +14,7 @@ class MenuController
             $this->defaultTemplateName = $template;
             $this->checkLinkedFiles();
 
-            $this->instanciateMenuItems($menuItems);
+            $this->items = $this->instanciateMenuItems($menuItems);
             $this->options = $options;
             $this->setup();
 
@@ -39,9 +39,15 @@ class MenuController
        */
       protected function instanciateMenuItems($menuItems)
       {
+            $items = [];
             foreach($menuItems as $itemID => $itemData) {
-                  $this->items[$itemID] = new MenuItem($itemID, $itemData);
+                  $items[$itemID] = new MenuItem($itemID, $itemData);
+                  if(isset($items[$itemID]->subitems)) {
+                        $items[$itemID]->subitems = $this->instanciateMenuItems($items[$itemID]->subitems);
+                  }
             }
+
+            return $items;
       }
 
       /**

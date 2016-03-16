@@ -13,4 +13,10 @@ class MenuItem
                   $this->$key = $value;
             }
       }
+
+      public function hasSubmenu()
+      {
+            if(isset($this->subitems)) return true;
+            return false;
+      }
 }
