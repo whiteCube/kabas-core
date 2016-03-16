@@ -6,8 +6,8 @@ use \Kabas\Controller\BaseController;
 
 class Section1 extends BaseController
 {
-      public function setup($options)
+      public function setup()
       {
-            $this->data->options = $options;
+            $this->data->options = $this->options;
       }
 }
