@@ -1,5 +1,6 @@
 {
       "id": "main",
+      "template": "main",
       "links": {
             "home": {
                   "label": "Accueil"
@@ -10,5 +11,8 @@
             "nos-services": {
                   "label": "Nos services"
             }
+      },
+      "options": {
+            "color": "#ff0000"
       }
 }

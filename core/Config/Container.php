@@ -13,6 +13,7 @@ class Container
             $this->settings = new Settings\Container();
             $this->pages = new Pages\Container();
             $this->parts = new Parts\Container();
+            $this->menus = new Menus\Container();
       }
 
       /**

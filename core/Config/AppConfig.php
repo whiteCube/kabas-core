@@ -27,6 +27,7 @@ return [
        */
       'aliases' => [
             'Url' => Kabas\Utils\Url::class,
+            'Menu' => Kabas\Utils\Menu::class,
             'Part' => Kabas\Utils\Part::class,
       ],
 ];
