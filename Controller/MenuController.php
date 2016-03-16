@@ -13,9 +13,11 @@ class MenuController
       {
             $this->defaultTemplateName = $template;
             $this->checkLinkedFiles();
+
             $this->instanciateMenuItems($menuItems);
             $this->options = $options;
             $this->setup();
+
             $this->render($this->constructViewData());
       }
 
