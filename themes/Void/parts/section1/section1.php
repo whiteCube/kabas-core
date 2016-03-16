@@ -3,5 +3,4 @@
       <p>
             <?= $text; ?>
       </p>
-      <span><?= $caca ?></span>
 </div>
