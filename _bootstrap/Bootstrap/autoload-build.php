@@ -3,7 +3,7 @@
 /* **************************************
  * AUTOLOAD BUILD
  * --------------
- * generated 15/03/2016 @ 11:30:03:07
+ * generated 16/03/2016 @ 13:28:03:10
  * In order to regenerate this file, just
  * delete it, the autoloader will
  * automatically re-build it.
@@ -11,6 +11,8 @@
  * ************************************** */
 
 return [
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/menus/main.class.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/menus/main.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/about/about.class.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/about/about.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/homepage/home.class.php',
