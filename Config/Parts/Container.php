@@ -25,7 +25,7 @@ class Container
       }
 
       /**
-       * [instanciateHeader description]
+       * Instanciate the header part
        * @return void
        */
       public function instanciateHeader()
@@ -37,6 +37,10 @@ class Container
             }
       }
 
+      /**
+       * Instanciate the footer part
+       * @return void
+       */
       public function instanciateFooter()
       {
             $file = File::loadJson('content/footer.json');

@@ -75,6 +75,10 @@ class App
             $loader->autoload();
       }
 
+      /**
+       * Load the fields for each page
+       * @return void
+       */
       public function loadFields()
       {
             $this->config->pages->loadFields();

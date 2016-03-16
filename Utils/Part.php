@@ -7,6 +7,11 @@ use \Kabas\View\View;
 
 class Part
 {
+      /**
+       * Get and display the menu with the corresponding ID onto the page.
+       * @param  string $partID
+       * @return void
+       */
       static function get($partID)
       {
             $app = App::getInstance();
@@ -18,11 +23,19 @@ class Part
             new $themeTemplate($part->template, $part->data, $part->options);
       }
 
+      /**
+       * Get and display the site's header
+       * @return void
+       */
       static function header()
       {
             self::get('header');
       }
 
+      /**
+       * Get and display the site's footer
+       * @return void
+       */
       static function footer()
       {
             self::get('footer');

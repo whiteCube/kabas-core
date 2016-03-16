@@ -4,13 +4,17 @@ namespace Kabas\Config\Settings;
 
 use \Kabas\App;
 
-class Container extends \Kabas\Config\Container
+class Container
 {
       public function __construct()
       {
             $this->loadConfigs();
       }
 
+      /**
+       * Load all configs
+       * @return void
+       */
       private function loadConfigs()
       {
             $app = App::getInstance();

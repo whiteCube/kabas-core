@@ -11,6 +11,15 @@
 
 $app = new Kabas\App();
 
+
+/*
+|--------------------------------------------------------------------------
+| Loading everything we need
+|--------------------------------------------------------------------------
+|
+| Once everything's loaded, react to the request.
+|
+*/
 $app->boot();
 $app->loadFields();
 $app->loadAliases();

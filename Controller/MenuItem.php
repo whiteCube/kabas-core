@@ -14,6 +14,10 @@ class MenuItem
             }
       }
 
+      /**
+       * Check if menu item has a submenu
+       * @return boolean
+       */
       public function hasSubmenu()
       {
             if(isset($this->subitems)) return true;
