@@ -1,6 +1,7 @@
 <style>
       body {
             font-family: 'Avenir Next', sans-serif;
+            color: rgb(44, 45, 54);
             padding: 3em;
       }
 </style>

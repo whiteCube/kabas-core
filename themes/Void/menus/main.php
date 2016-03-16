@@ -2,6 +2,29 @@
       <?php foreach($menu as $menuItem): ?>
             <li>
                   <a href="<?= $menuItem->url ?>" style="color: <?= $options->color; ?>"><?= $menuItem->label ?></a>
+                  <?php if($menuItem->hasSubmenu()): ?>
+                        <ul>
+                              <?php foreach($menuItem->subitems as $subItem): ?>
+                              <li>
+                                    <a href="<?= $subItem->url ?>"  style="color: <?= $options->color; ?>">
+                                          <?= $subItem->label ?>
+                                    </a>
+                                    <?php if($subItem->hasSubmenu()): ?>
+                                          <ul>
+                                                <?php foreach($subItem->subitems as $subItem): ?>
+                                                <li>
+                                                      <a href="<?= $subItem->url ?>"  style="color: <?= $options->color; ?>">
+                                                            <?= $subItem->label ?>
+                                                      </a>
+
+                                                </li>
+                                                <?php endforeach; ?>
+                                          </ul>
+                                    <?php endif; ?>
+                              </li>
+                              <?php endforeach; ?>
+                        </ul>
+                  <?php endif; ?>
             </li>
       <?php endforeach; ?>
 </ul>

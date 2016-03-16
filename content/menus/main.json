@@ -5,14 +5,24 @@
             "home": {
                   "label": "Accueil"
             },
-            "about": {
-                  "label": "À propos"
+            "contact": {
+                  "label": "Contact",
+                  "subitems": {
+                        "about": {
+                              "label": "À propos",
+                              "subitems": {
+                                    "home": {
+                                          "label": "Accueil"
+                                    }
+                              }
+                        }
+                  }
             },
             "nos-services": {
                   "label": "Nos services"
             }
       },
       "options": {
-            "color": "#ff0000"
+            "color": "rgb(226, 69, 69)"
       }
 }

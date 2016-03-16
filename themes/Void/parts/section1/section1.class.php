@@ -8,6 +8,6 @@ class Section1 extends BaseController
 {
       public function setup()
       {
-            $this->data->options = $this->options;
+            $this->options->title->color = "rgb(41, 122, 140)";
       }
 }
