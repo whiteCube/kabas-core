@@ -16,19 +16,24 @@ class View
       {
             if(self::isFirstView($view)){
                   ob_start();
-                  extract((array) $data);
-                  include $this->getTemplateFile($view);
+            }
+
+            extract((array) $data);
+            include $this->getTemplateFile($view);
+
+            if(self::isFirstView($view)){
                   $page = ob_get_contents();
                   ob_end_clean();
                   $page = Assets::load($page);
                   echo $page;
-            } else {
-                  extract((array) $data);
-                  include $this->getTemplateFile($view);
             }
-
       }
 
+      /**
+       * Check if view is the root one or not.
+       * @param  string  $view
+       * @return boolean
+       */
       static function isFirstView($view)
       {
             if(!isset(self::$isFirst)) {
@@ -37,7 +42,8 @@ class View
             }
             else if(self::$isFirst === $view) {
                   return true;
-            } else {
+            }
+            else {
                   return false;
             }
       }
