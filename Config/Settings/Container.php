@@ -25,6 +25,11 @@ class Container
             $this->detectLang();
       }
 
+      /**
+       * Detect browser language and set it as site lang.
+       * If site doesn't support said lang, set it to the default one.
+       * @return void
+       */
       protected function detectLang()
       {
             $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
