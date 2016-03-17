@@ -30,8 +30,8 @@ class Assets
       }
 
       /**
-       * Adds a marker to pinpoint the location of where
-       * the assets will be loaded
+       * Add a marker to pinpoint the location where
+       * the assets will be loaded.
        * @param  string $location
        * @return void
        */
@@ -72,7 +72,7 @@ class Assets
                   $name = $matches[1][$i];
                   $page = preg_replace($pattern, $assets[$name], $page);
             }
-            
+
             return $page;
       }
 
@@ -101,6 +101,11 @@ class Assets
             return $tag;
       }
 
+      /**
+       * Get the type of the asset from its extension.
+       * @param  string $asset
+       * @return string
+       */
       static function getType($asset)
       {
             $exploded = explode('.', $asset);
