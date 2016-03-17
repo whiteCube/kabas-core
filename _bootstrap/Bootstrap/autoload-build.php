@@ -3,7 +3,7 @@
 /* **************************************
  * AUTOLOAD BUILD
  * --------------
- * generated 16/03/2016 @ 16:44:03:47
+ * generated 17/03/2016 @ 09:29:03:28
  * In order to regenerate this file, just
  * delete it, the autoloader will
  * automatically re-build it.
@@ -21,9 +21,12 @@ return [
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/nos-services/services.class.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/nos-services/services.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/footer/footer.class.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/footer/footer.json',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/footer/footer.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/header/header.class.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/header/header.json',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/header/header.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/section1/section1.class.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/section1/section1.json',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/parts/section1/section1.php',
 ];

@@ -82,6 +82,7 @@ class App
       public function loadFields()
       {
             $this->config->pages->loadFields();
+            $this->config->parts->loadFields();
       }
 
       /**

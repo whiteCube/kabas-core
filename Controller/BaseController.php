@@ -3,16 +3,18 @@
 namespace Kabas\Controller;
 
 use Kabas\View\View;
+use Kabas\App;
 
 class BaseController
 {
       protected $view;
       protected $config;
 
-      public function __construct($template, $data, $options = null)
+      public function __construct($pageID, $template, $data, $options = null)
       {
             $this->defaultTemplateName = $template;
             $this->checkLinkedFiles();
+            $this->pageID = $pageID;
 
             $this->data = $data;
             $this->options = $options;
@@ -38,6 +40,9 @@ class BaseController
        */
       protected function constructViewData()
       {
+            $this->checkValues('pages');
+            $this->checkValues('parts');
+
             $data = $this->data;
             $data->options = $this->options;
 
@@ -62,6 +67,19 @@ class BaseController
       {
             if(!$this->view) $this->view = $this->guessViewFile();
             if(!$this->config) $this->config = $this->guessConfigFile();
+      }
+
+      protected function checkValues($type)
+      {
+            $app = App::getInstance();
+
+            if(isset($app->config->$type->items[$this->pageID])){
+                  foreach($app->config->$type->items[$this->pageID]->fields as $field => $data) {
+                        if(!isset($this->data->$field)) {
+                              $this->data->$field = $data->defaultValue;
+                        }
+                  }
+            }
       }
 
       /**

@@ -3,6 +3,7 @@
 namespace Kabas\Config\Parts;
 
 use \Kabas\Utils\File;
+use Kabas\App;
 
 class Container
 {
@@ -86,6 +87,34 @@ class Container
       {
             if($this->hasPart($partID)) return $this->items[$partID];
             else return 'error, part does not exist';
+      }
+
+      /**
+       * Recursively go through the files array to add
+       * fields to the corresponding item
+       * @return void
+       */
+      public function loopAndAddFields($files)
+      {
+            foreach($files as $file) {
+                  if(is_array($file)) {
+                        $this->loopAndAddFields($file);
+                  } else {
+                        $this->items[$file->id]->fields = $file->fields;
+                  }
+            }
+      }
+
+      /**
+       * Loads the fields object for each part from the theme
+       * @return void
+       */
+      public function loadFields()
+      {
+            $app = App::getInstance();
+            $path = 'themes' . DIRECTORY_SEPARATOR . $app->config->settings->site->theme . DIRECTORY_SEPARATOR . 'parts';
+            $files = File::loadJsonFromDir($path);
+            $this->loopAndAddFields($files);
       }
 
 }
