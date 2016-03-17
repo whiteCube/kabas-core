@@ -28,7 +28,6 @@ class Router
             foreach ($app->config->pages->items as $page) {
                   $this->routes[$page->route] = $page->id;
             }
-
       }
 
       /**
@@ -38,6 +37,7 @@ class Router
       public function getRoute()
       {
             $pathToIgnore = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
+            $this->baseUrl = 'http://' . $_SERVER['SERVER_NAME'] . $pathToIgnore;
             if($pathToIgnore !== '') {
                   return explode($pathToIgnore, $_SERVER['REQUEST_URI'])[1];
             } else {

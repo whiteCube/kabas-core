@@ -6,13 +6,6 @@ use \Kabas\App;
 
 class Container
 {
-      public function __construct()
-      {
-
-
-
-      }
-
       /**
        * Load the app config
        *
