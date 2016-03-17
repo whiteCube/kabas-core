@@ -1,0 +1,17 @@
+{
+      "id": "nos-services",
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "Our service's title",
+                  "defaultValue": "Default title value"
+            },
+            "content": {
+                  "type": "text",
+                  "label": "Content",
+                  "description": "Our service's content",
+                  "defaultValue": "Default intro value"
+            }
+      }
+}

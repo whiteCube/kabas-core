@@ -4,3 +4,5 @@
             <?= $copyright ?>
       </p>
 </div>
+
+<?php Assets::here('footer'); ?>

@@ -5,6 +5,7 @@
             padding: 3em;
       }
 </style>
+<?php Assets::here('header'); ?>
 <div class="header">
       <h1><?= $title ?></h1>
       <h2><?= $baseline ?></h2>

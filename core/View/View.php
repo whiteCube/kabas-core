@@ -4,16 +4,42 @@ namespace Kabas\View;
 
 use \RecursiveDirectoryIterator;
 use \RecursiveIteratorIterator;
+use \Kabas\Utils\Assets;
 use Kabas\Utils\Url;
 use \Kabas\App;
 
 class View
 {
+      private static $isFirst;
 
       public function __construct($view, $data)
       {
-            extract((array) $data);
-            include $this->getTemplateFile($view);
+            if(self::isFirstView($view)){
+                  ob_start();
+                  extract((array) $data);
+                  include $this->getTemplateFile($view);
+                  $page = ob_get_contents();
+                  ob_end_clean();
+                  $page = Assets::load($page);
+                  echo $page;
+            } else {
+                  extract((array) $data);
+                  include $this->getTemplateFile($view);
+            }
+
+      }
+
+      static function isFirstView($view)
+      {
+            if(!isset(self::$isFirst)) {
+                  self::$isFirst = $view;
+                  return true;
+            }
+            else if(self::$isFirst === $view) {
+                  return true;
+            } else {
+                  return false;
+            }
       }
 
       /**
