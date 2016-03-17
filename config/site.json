@@ -3,6 +3,8 @@
 
       "base-url": "http://localhost/my-website",
 
+      "lang": "fr-be",
+
       "client": {
             "name": "Client's name",
             "organisation": "Client's business name",

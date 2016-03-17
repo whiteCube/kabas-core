@@ -1,0 +1,23 @@
+{
+      "id": "main",
+      "template": "main",
+      "links": {
+            "home": {
+                  "label": "Accueil"
+            },
+            "contact": {
+                  "label": "Contact",
+                  "subitems": {
+                        "about": {
+                              "label": "À propos"
+                        }
+                  }
+            },
+            "nos-services": {
+                  "label": "Nos services"
+            }
+      },
+      "options": {
+            "color": "rgb(226, 69, 69)"
+      }
+}

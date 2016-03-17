@@ -3,23 +3,18 @@
       "template": "main",
       "links": {
             "home": {
-                  "label": "Accueil"
+                  "label": "Home"
             },
             "contact": {
                   "label": "Contact",
                   "subitems": {
                         "about": {
-                              "label": "À propos",
-                              "subitems": {
-                                    "home": {
-                                          "label": "Accueil"
-                                    }
-                              }
+                              "label": "About"
                         }
                   }
             },
             "nos-services": {
-                  "label": "Nos services"
+                  "label": "Our services"
             }
       },
       "options": {

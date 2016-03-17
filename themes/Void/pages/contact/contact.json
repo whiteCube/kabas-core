@@ -1,0 +1,17 @@
+{
+      "id": "contact",
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "About page's title",
+                  "defaultValue": "Default title value"
+            },
+            "content": {
+                  "type": "text",
+                  "label": "Introduction",
+                  "description": "About page's main text",
+                  "defaultValue": "Default content value"
+            }
+      }
+}

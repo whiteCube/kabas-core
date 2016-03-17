@@ -1,0 +1,8 @@
+{
+      "route": "",
+      "id": "404",
+      "template": "404",
+      "data": {
+            "content": "Whoops! This is a (custom) 404."
+      }
+}

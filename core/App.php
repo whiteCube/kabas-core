@@ -47,6 +47,7 @@ class App
       public function boot()
       {
             $this->config = new Config\Container();
+            $this->config->init();
             $this->request = new Http\Request();
             $this->router = new Http\Router();
             $this->response = new Http\Response();
