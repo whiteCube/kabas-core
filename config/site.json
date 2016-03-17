@@ -3,7 +3,10 @@
 
       "base-url": "http://localhost/my-website",
 
-      "lang": "en-us",
+      "lang": {
+            "default": "en-US",
+            "available": [ "en-US", "fr-FR" ]
+      },
 
       "client": {
             "name": "Client's name",
