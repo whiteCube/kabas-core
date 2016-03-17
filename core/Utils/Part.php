@@ -20,7 +20,7 @@ class Part
             $partTemplate = Text::toNamespace($part->template);
 
             $themeTemplate = '\Theme\\' . $app->config->settings->site->theme .'\Parts\\' . $partTemplate;
-            new $themeTemplate($part->template, $part->data, $part->options);
+            new $themeTemplate($partID, $part->template, $part->data, $part->options);
       }
 
       /**

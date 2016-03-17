@@ -1,0 +1,11 @@
+{
+      "id": "footer",
+      "fields": {
+            "copyright": {
+                  "type": "text",
+                  "label": "Copyright",
+                  "description": "Footer's copyright",
+                  "defaultValue": "Copyright Kabas, 2016."
+            }
+      }
+}

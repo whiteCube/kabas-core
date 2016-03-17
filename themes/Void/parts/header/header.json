@@ -1,0 +1,17 @@
+{
+      "id": "header",
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "Your header's title",
+                  "defaultValue": "Default header title"
+            },
+            "baseline": {
+                  "type": "text",
+                  "label": "Baseline",
+                  "description": "Your header's baseline",
+                  "defaultValue": "Default header baseline"
+            }
+      }
+}

@@ -14,6 +14,5 @@ class Main extends MenuController
        */
       public function setup()
       {
-            $this->items['home']->label = "Test";
       }
 }
