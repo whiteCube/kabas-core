@@ -29,5 +29,6 @@ return [
             'Url' => Kabas\Utils\Url::class,
             'Menu' => Kabas\Utils\Menu::class,
             'Part' => Kabas\Utils\Part::class,
+            'Assets' => Kabas\Utils\Assets::class,
       ],
 ];
