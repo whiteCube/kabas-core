@@ -5,6 +5,5 @@
 </p>
 
 <?php Part::get('section1'); ?>
-<?php Part::get('section1'); ?>
 
 <?php Part::footer(); ?>

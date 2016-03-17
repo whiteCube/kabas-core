@@ -1,6 +1,6 @@
 <head>
       <?php Assets::here('header'); ?>
-      <?php Assets::required('header', 'main.css'); ?>
+      <?php Assets::add('header', 'main.css'); ?>
 </head>
 <div class="header">
       <h1><?= $title ?></h1>

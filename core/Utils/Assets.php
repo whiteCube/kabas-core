@@ -19,7 +19,7 @@ class Assets
        * @param  string $path     Path of the asset
        * @return void
        */
-      static function required($location, $path)
+      static function add($location, $path)
       {
             if(!isset(self::$required[$location])) {
                   self::$required[$location] = [];
@@ -41,8 +41,7 @@ class Assets
       }
 
       /**
-       * Takes the page buffer and loads the assets at the marked
-       * positions.
+       * Takes the page buffer and loads the assets at the marked positions.
        * @param  string $page The buffered page
        * @return string       The buffered page with the assets loaded
        */
@@ -50,29 +49,15 @@ class Assets
       {
             $pattern = '/@@@ASSETS-(.+?)@@@/';
             preg_match_all($pattern, $page, $matches);
-
-            $assets = [];
             foreach($matches[1] as $location) {
-                  if(isset(self::$required[$location])) {
-                        foreach(self::$required[$location] as $asset) {
-                              if(isset($assets[$location])) {
-                                    $asset = self::generateTag($asset);
-                                    $assets[$location] = $assets[$location] . $asset;
-                              } else {
-                                    $asset = self::generateTag($asset);
-                                    $assets[$location] = $asset;
-                              }
-                        }
-                  } else {
-                        $assets[$location] = '';
+                  if(!isset(self::$required[$location])) { $assets[$location] = ''; break; }
+                  foreach(self::$required[$location] as $asset) {
+                        if(!isset($assets[$location])) { $assets[$location] = ''; }
+                        $asset = self::generateTag($asset);
+                        $assets[$location] = $assets[$location] . $asset;
                   }
             }
-            for($i = 0; $i < count($matches[0]); $i++) {
-                  $pattern = '/' . $matches[0][$i] . '/';
-                  $name = $matches[1][$i];
-                  $page = preg_replace($pattern, $assets[$name], $page);
-            }
-
+            $page = str_replace($matches[0], $assets, $page);
             return $page;
       }
 
@@ -83,21 +68,21 @@ class Assets
        */
       static function generateTag($asset)
       {
-            $app = App::getInstance();
-            $themeDir = $app->router->baseUrl . DIRECTORY_SEPARATOR .'themes' . DIRECTORY_SEPARATOR . $app->config->settings->site->theme;
             $type = self::getType($asset);
-            if($type === 'css') {
-                  $cssDir = $themeDir . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR;
-                  $assetPath = $cssDir . $asset;
-                  $tag = '<link rel="stylesheet" type="text/css" href="' . $assetPath . '" />';
+            
+            switch($type) {
+                  case 'css':
+                        $assetPath = self::getDir('css') . $asset;
+                        $tag = '<link rel="stylesheet" type="text/css" href="' . $assetPath . '" />';
+                        break;
+                  case 'js':
+                        $assetPath = self::getDir('js') . $asset;
+                        $tag = '<script src="' . $assetPath . '"></script>';
+                        break;
+                  default:
+                        return;
             }
-            else if($type === 'js') {
-                  $jsDir = $themeDir . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR;
-                  $assetPath = $jsDir . $asset;
-                  $tag = '<script src="' . $assetPath . '"></script>';
-            } else {
-                  return;
-            }
+
             return $tag;
       }
 
@@ -111,5 +96,26 @@ class Assets
             $exploded = explode('.', $asset);
             $index = count($exploded) - 1;
             return $exploded[$index];
+      }
+
+      /**
+       * Get the full path for an asset directory
+       * @param  string $dir
+       * @return string
+       */
+      static function getDir($dir)
+      {
+            $app = App::getInstance();
+            $dir =
+                  $app->router->baseUrl
+                  . DIRECTORY_SEPARATOR
+                  . 'themes'
+                  . DIRECTORY_SEPARATOR
+                  . $app->config->settings->site->theme
+                  . DIRECTORY_SEPARATOR
+                  . $dir
+                  . DIRECTORY_SEPARATOR;
+
+            return $dir;
       }
 }

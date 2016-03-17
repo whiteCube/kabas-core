@@ -4,4 +4,3 @@
             <?= $text; ?>
       </p>
 </div>
-<?php Assets::required('footer', 'section1.js'); ?>
