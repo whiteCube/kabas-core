@@ -21,7 +21,10 @@ class Container
       public function instanciateParts()
       {
             $this->items = [];
-            $files = File::loadJsonFromDir('content/parts');
+            $app = App::getInstance();
+            $lang = $app->config->settings->site->lang;
+            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'parts';
+            $files = File::loadJsonFromDir($path);
             $this->loop($files);
       }
 
@@ -31,7 +34,10 @@ class Container
        */
       public function instanciateHeader()
       {
-            $file = File::loadJson('content/header.json');
+            $app = App::getInstance();
+            $lang = $app->config->settings->site->lang;
+            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'header.json';
+            $file = File::loadJson($path);
             if(isset($file)){
                   $file->template = "header";
                   $this->items['header'] = new Item($file);
@@ -44,7 +50,10 @@ class Container
        */
       public function instanciateFooter()
       {
-            $file = File::loadJson('content/footer.json');
+            $app = App::getInstance();
+            $lang = $app->config->settings->site->lang;
+            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'footer.json';
+            $file = File::loadJson($path);
             if(isset($file)) {
                   $file->template = "footer";
                   $this->items['footer'] = new Item($file);

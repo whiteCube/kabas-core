@@ -3,6 +3,7 @@
 namespace Kabas\Config\Menus;
 
 use \Kabas\Utils\File;
+use \Kabas\App;
 
 class Container
 {
@@ -18,7 +19,10 @@ class Container
       public function instanciateMenus()
       {
             $this->items = [];
-            $files = File::loadJsonFromDir('content/menus');
+            $app = App::getInstance();
+            $lang = $app->config->settings->site->lang;
+            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'menus';
+            $files = File::loadJsonFromDir($path);
             $this->loop($files);
       }
 

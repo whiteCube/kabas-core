@@ -8,12 +8,9 @@ class Container
 {
       public function __construct()
       {
-            $this->loadAppConfig();
-            $this->initDriver();
-            $this->settings = new Settings\Container();
-            $this->pages = new Pages\Container();
-            $this->parts = new Parts\Container();
-            $this->menus = new Menus\Container();
+
+
+
       }
 
       /**
@@ -36,5 +33,15 @@ class Container
       {
             $driverName = '\Kabas\Drivers\\' . $this->appConfig['driver'];
             App::setDriver(new $driverName);
+      }
+
+      public function init()
+      {
+            $this->loadAppConfig();
+            $this->initDriver();
+            $this->settings = new Settings\Container();
+            $this->pages = new Pages\Container();
+            $this->parts = new Parts\Container();
+            $this->menus = new Menus\Container();
       }
 }
