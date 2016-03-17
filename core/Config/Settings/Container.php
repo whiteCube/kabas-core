@@ -27,7 +27,7 @@ class Container
 
       protected function detectLang()
       {
-            $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
+            $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
             if(in_array($lang, $this->site->lang->available)){
                   $this->site->lang = $lang;
             } else {
