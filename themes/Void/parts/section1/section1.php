@@ -4,5 +4,4 @@
             <?= $text; ?>
       </p>
 </div>
-<?php Assets::required('header', 'section1.css'); ?>
 <?php Assets::required('footer', 'section1.js'); ?>

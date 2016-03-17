@@ -3,6 +3,7 @@
 namespace Kabas\Utils;
 
 use Kabas\View\View;
+use Kabas\App;
 
 class Assets
 {
@@ -20,7 +21,12 @@ class Assets
        */
       static function required($location, $path)
       {
-            self::$required[$location][] = $path;
+            if(!isset(self::$required[$location])) {
+                  self::$required[$location] = [];
+            }
+            if(!in_array($path, self::$required[$location])){
+                  self::$required[$location][] = $path;
+            }
       }
 
       /**
@@ -66,9 +72,8 @@ class Assets
                   $name = $matches[1][$i];
                   $page = preg_replace($pattern, $assets[$name], $page);
             }
-
+            
             return $page;
-
       }
 
       /**
@@ -78,7 +83,28 @@ class Assets
        */
       static function generateTag($asset)
       {
-            $tag = $asset;
+            $app = App::getInstance();
+            $themeDir = $app->router->baseUrl . DIRECTORY_SEPARATOR .'themes' . DIRECTORY_SEPARATOR . $app->config->settings->site->theme;
+            $type = self::getType($asset);
+            if($type === 'css') {
+                  $cssDir = $themeDir . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR;
+                  $assetPath = $cssDir . $asset;
+                  $tag = '<link rel="stylesheet" type="text/css" href="' . $assetPath . '" />';
+            }
+            else if($type === 'js') {
+                  $jsDir = $themeDir . DIRECTORY_SEPARATOR . 'js' . DIRECTORY_SEPARATOR;
+                  $assetPath = $jsDir . $asset;
+                  $tag = '<script src="' . $assetPath . '"></script>';
+            } else {
+                  return;
+            }
             return $tag;
+      }
+
+      static function getType($asset)
+      {
+            $exploded = explode('.', $asset);
+            $index = count($exploded) - 1;
+            return $exploded[$index];
       }
 }
