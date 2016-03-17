@@ -6,19 +6,40 @@ use Kabas\View\View;
 
 class Assets
 {
-
+      /**
+       * Keeps track of all required assets
+       * @var array
+       */
       private static $required = [];
 
+      /**
+       * Adds an asset dependency.
+       * @param  string $location Where the asset will be loaded
+       * @param  string $path     Path of the asset
+       * @return void
+       */
       static function required($location, $path)
       {
             self::$required[$location][] = $path;
       }
 
+      /**
+       * Adds a marker to pinpoint the location of where
+       * the assets will be loaded
+       * @param  string $location
+       * @return void
+       */
       static function here($location)
       {
             echo "@@@ASSETS-" . $location . '@@@';
       }
 
+      /**
+       * Takes the page buffer and loads the assets at the marked
+       * positions.
+       * @param  string $page The buffered page
+       * @return string       The buffered page with the assets loaded
+       */
       static function load($page)
       {
             $pattern = '/@@@ASSETS-(.+?)@@@/';
@@ -50,6 +71,11 @@ class Assets
 
       }
 
+      /**
+       * Generate the proper tag for an asset.
+       * @param  string $asset
+       * @return string
+       */
       static function generateTag($asset)
       {
             $tag = $asset;
