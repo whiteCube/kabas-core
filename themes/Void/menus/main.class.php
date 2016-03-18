@@ -12,7 +12,7 @@ class Main extends MenuController
        * passed on to the view.
        * @return void
        */
-      public function setup()
+      protected function setup()
       {
       }
 }
