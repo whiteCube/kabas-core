@@ -14,14 +14,14 @@ class Router
 
       public function __construct()
       {
-            $this->loadRoutes();
+            $this->route = $this->getRoute();
       }
 
       /**
        * Iterate through pages from config to create routes
        * @return void
        */
-      private function loadRoutes()
+      public function loadRoutes()
       {
             $app = App::getInstance();
 
@@ -36,13 +36,27 @@ class Router
        */
       public function getRoute()
       {
+            $app = App::getInstance();
             $pathToIgnore = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
             $this->baseUrl = 'http://' . $_SERVER['SERVER_NAME'] . $pathToIgnore;
             if($pathToIgnore !== '') {
-                  return explode($pathToIgnore, $_SERVER['REQUEST_URI'])[1];
+                  $route = explode($pathToIgnore, $_SERVER['REQUEST_URI'])[1];
             } else {
-                  return $_SERVER['REQUEST_URI'];
+                  $route = $_SERVER['REQUEST_URI'];
             }
+            $routeParts = explode('/', $route);
+            $this->hasLangInUrl = false;
+            foreach($app->config->settings->site->lang->available as $lang) {
+                  foreach($routeParts as $routePart) {
+                        if($routePart === $lang) {
+                              $this->hasLangInUrl = true;
+                              $app->config->settings->site->lang->active = $lang;
+                              $route = str_ireplace('/'.$lang, '', $route);
+                              if($route === '') $route = '/';
+                        }
+                  }
+            }
+            return $route;
       }
 
       /**
@@ -51,7 +65,6 @@ class Router
        */
       public function handle()
       {
-            $this->route = $this->getRoute();
             if($this->routeExists($this->route)) {
                   return $this->routes[$this->route];
             }

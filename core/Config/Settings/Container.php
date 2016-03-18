@@ -34,9 +34,9 @@ class Container
       {
             $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
             if(in_array($lang, $this->site->lang->available)){
-                  $this->site->lang = $lang;
+                  $this->site->lang->active = $lang;
             } else {
-                  $this->site->lang = $this->site->lang->default;
+                  $this->site->lang->active = $this->site->lang->default;
             }
       }
 

@@ -22,7 +22,7 @@ class Container
       {
             $this->items = [];
             $app = App::getInstance();
-            $lang = $app->config->settings->site->lang;
+            $lang = $app->config->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'parts';
             $files = File::loadJsonFromDir($path);
             $this->loop($files);
@@ -35,7 +35,7 @@ class Container
       public function instanciateHeader()
       {
             $app = App::getInstance();
-            $lang = $app->config->settings->site->lang;
+            $lang = $app->config->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'header.json';
             $file = File::loadJson($path);
             if(isset($file)){
@@ -51,7 +51,7 @@ class Container
       public function instanciateFooter()
       {
             $app = App::getInstance();
-            $lang = $app->config->settings->site->lang;
+            $lang = $app->config->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'footer.json';
             $file = File::loadJson($path);
             if(isset($file)) {
