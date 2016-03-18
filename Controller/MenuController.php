@@ -27,7 +27,7 @@ class MenuController
        * view. Please re-declare it in your menu's controller.
        * @return void
        */
-      public function setup()
+      protected function setup()
       {
       }
 
