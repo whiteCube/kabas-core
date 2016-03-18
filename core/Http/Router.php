@@ -66,7 +66,7 @@ class Router
       public function handle()
       {
             if($this->routeExists($this->route)) {
-                  return $this->routes[$this->route];
+                  return $this->getCurrentPageID();
             }
       }
 
@@ -78,6 +78,11 @@ class Router
       public function routeExists($route)
       {
             return array_key_exists($route, $this->routes);
+      }
+
+      public function getCurrentPageID()
+      {
+            return $this->routes[$this->route];
       }
 
 }

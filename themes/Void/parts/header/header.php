@@ -1,4 +1,5 @@
 <head>
+      <title><?= Page::title() ?></title>
       <?php Assets::here('header'); ?>
       <?php Assets::add('header', 'main.css'); ?>
 </head>

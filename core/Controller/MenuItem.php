@@ -3,14 +3,19 @@
 namespace Kabas\Controller;
 
 use Kabas\Utils\Url;
+use Kabas\App;
 
 class MenuItem
 {
       public function __construct($id, $data)
       {
+            $app = App::getInstance();
             $this->url = Url::to($id);
             foreach($data as $key => $value) {
                   $this->$key = $value;
+            }
+            if(!isset($this->label)) {
+                  $this->label = $app->config->pages->items[$id]->title;
             }
       }
 

@@ -2,19 +2,14 @@
       "id": "main",
       "template": "main",
       "links": {
-            "home": {
-                  "label": "Home"
-            },
+            "home": {},
             "contact": {
-                  "label": "Contact",
                   "subitems": {
                         "about": {
-                              "label": "About"
                         }
                   }
             },
             "nos-services": {
-                  "label": "Our services"
             }
       },
       "options": {
