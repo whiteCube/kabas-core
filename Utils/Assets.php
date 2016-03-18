@@ -69,7 +69,7 @@ class Assets
       static function generateTag($asset)
       {
             $type = self::getType($asset);
-            
+
             switch($type) {
                   case 'css':
                         $assetPath = self::getDir('css') . $asset;
@@ -112,6 +112,8 @@ class Assets
                   . 'themes'
                   . DIRECTORY_SEPARATOR
                   . $app->config->settings->site->theme
+                  . DIRECTORY_SEPARATOR
+                  . 'assets'
                   . DIRECTORY_SEPARATOR
                   . $dir
                   . DIRECTORY_SEPARATOR;
