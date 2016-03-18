@@ -1,22 +1,18 @@
 <?php
 return [
+
+      /**
+       * The name of the theme you want to use on your site.
+       */
       "theme" => "Void",
 
-      "base-url" => "http =>//localhost/my-website",
-
+      /**
+       * The languages available on your site. Each available language
+       * must have its own folder inside the content folder.
+       */
       "lang" => [
             "default" => "en-US",
             "available" => [ "en-US", "fr-FR" ]
       ],
 
-      "client" => [
-            "name" => "Client's name",
-            "organisation" => "Client's business name",
-            "email" => "Client's e-mail address"
-      ],
-
-      "title" => [
-            "prefix" => "Begin all titles with this string",
-            "suffix" => "End all titles with this string"
-      ]
 ];
