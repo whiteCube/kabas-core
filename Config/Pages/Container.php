@@ -20,7 +20,7 @@ class Container
       {
             $this->items = [];
             $app = App::getInstance();
-            $lang = $app->config->settings->site->lang;
+            $lang = $app->config->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'pages';
             $files = File::loadJsonFromDir($path);
             $this->loop($files);

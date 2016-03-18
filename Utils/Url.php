@@ -19,8 +19,18 @@ class Url
 
             foreach($app->router->routes as $route => $id) {
                   if($pageID === $id) {
-                        return 'http://'. $baseUrl . $route;
+                        if($app->router->hasLangInUrl) $lang = '/' . $app->config->settings->site->lang->active;
+                        else $lang = '';
+                        return 'http://'. $baseUrl . $lang . $route;
                   }
             }
+      }
+
+      static function lang($lang)
+      {
+            $app = App::getInstance();
+
+            $baseUrl = $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
+            return 'http://' . $baseUrl . '/' . $lang . $app->router->route;
       }
 }
