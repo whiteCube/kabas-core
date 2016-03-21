@@ -1,3 +1,4 @@
 
 !/themes/README.md
 /vendor/
+/core/_bootstrap/Bootstrap/autoload-build.php
