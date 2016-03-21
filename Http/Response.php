@@ -30,7 +30,8 @@ class Response
             } else {
                   $pageTemplate = Text::toNamespace($app->config->pages->items[$pageID]->template);
                   $themeTemplate = '\Theme\\' . $app->config->settings->site->theme .'\Pages\\' . $pageTemplate;
-                  new $themeTemplate($pageID, $app->config->pages->items[$pageID]->template, $app->config->pages->items[$pageID]->data);
+                  $page = $app->config->pages->items[$pageID];
+                  new $themeTemplate($page);
                   return;
             }
       }
