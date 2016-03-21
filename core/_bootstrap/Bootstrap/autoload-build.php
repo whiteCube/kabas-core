@@ -3,7 +3,7 @@
 /* **************************************
  * AUTOLOAD BUILD
  * --------------
- * generated 18/03/2016 @ 16:43:03:36
+ * generated 21/03/2016 @ 14:22:03:48
  * In order to regenerate this file, just
  * delete it, the autoloader will
  * automatically re-build it.
@@ -16,15 +16,15 @@ return [
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/assets/js/section1.js',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/menus/main.class.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/menus/main.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/about/about.class.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/about/about.json',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/about/about.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/contact.class.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/contact.json',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/contact.php',
-      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/about/about.class.php',
-      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/about/about.json',
-      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/contact/about/about.php',
-      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/lol/home.class.php',
-      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/lol/home.json',
-      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/lol/homepage.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/homepage/home.class.php',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/homepage/home.json',
+      '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/homepage/homepage.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/nos-services/services.class.php',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/nos-services/services.json',
       '/Users/adrienleloup/Dev/WhiteCube/Kabas/kabas/core/../themes/Void/pages/nos-services/services.php',

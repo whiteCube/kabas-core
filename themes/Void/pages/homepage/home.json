@@ -1,5 +1,4 @@
 {
-      "id": "home",
       "fields": {
             "title": {
                   "type": "text",
