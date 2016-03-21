@@ -10,14 +10,15 @@ class BaseController
       protected $view;
       protected $config;
 
-      public function __construct($pageID, $template, $data, $options = null)
+      public function __construct($view)
       {
-            $this->defaultTemplateName = $template;
+            $this->defaultTemplateName = $view->template;
             $this->checkLinkedFiles();
-            $this->pageID = $pageID;
+            $this->viewID = $view->id;
 
-            $this->data = $data;
-            $this->options = $options;
+            $this->data = $view->data;
+            $this->options = isset($view->options) ? $view->options : null;
+            $this->meta = isset($view->meta) ? $view->meta : null;
             $this->setup();
 
             $this->render($this->constructViewData());
@@ -45,6 +46,7 @@ class BaseController
 
             $data = $this->data;
             $data->options = $this->options;
+            $data->meta = $this->meta;
 
             return $data;
       }
@@ -73,8 +75,8 @@ class BaseController
       {
             $app = App::getInstance();
 
-            if(isset($app->config->$type->items[$this->pageID])){
-                  foreach($app->config->$type->items[$this->pageID]->fields as $field => $data) {
+            if(isset($app->config->$type->items[$this->viewID])){
+                  foreach($app->config->$type->items[$this->viewID]->fields as $field => $data) {
                         if(!isset($this->data->$field)) {
                               $this->data->$field = $data->defaultValue;
                         }
