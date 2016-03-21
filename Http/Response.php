@@ -16,11 +16,10 @@ class Response
        */
       public function send($pageID)
       {
-            $app = App::getInstance();
             if($pageID === null){
-                  if(array_key_exists('404', $app->config->pages->items)) {
+                  if(array_key_exists('404', App::config()->pages->items)) {
                         http_response_code(404);
-                        echo $app->config->pages->items['404']->data->content;
+                        echo App::config()->pages->items['404']->data->content;
                         return;
                   } else {
                         http_response_code(404);
@@ -28,9 +27,9 @@ class Response
                         return;
                   }
             } else {
-                  $pageTemplate = Text::toNamespace($app->config->pages->items[$pageID]->template);
-                  $themeTemplate = '\Theme\\' . $app->config->settings->site->theme .'\Pages\\' . $pageTemplate;
-                  $page = $app->config->pages->items[$pageID];
+                  $pageTemplate = Text::toNamespace(App::config()->pages->items[$pageID]->template);
+                  $themeTemplate = '\Theme\\' . App::config()->settings->site->theme .'\Pages\\' . $pageTemplate;
+                  $page = App::config()->pages->items[$pageID];
                   new $themeTemplate($page);
                   return;
             }

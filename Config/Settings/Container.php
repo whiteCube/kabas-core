@@ -17,7 +17,6 @@ class Container
        */
       private function loadConfigs()
       {
-            $app = App::getInstance();
             $this->database = json_decode(json_encode(include __DIR__ . '/../../../config/database.php'));
             $this->site = json_decode(json_encode(include __DIR__ . '/../../../config/site.php'));
             $this->social = json_decode(json_encode(include __DIR__ . '/../../../config/social.php'));

@@ -19,8 +19,7 @@ class Container
       public function instanciatePages()
       {
             $this->items = [];
-            $app = App::getInstance();
-            $lang = $app->config->settings->site->lang->active;
+            $lang = App::config()->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'pages';
             $files = File::loadJsonFromDir($path);
             $this->loop($files);
@@ -64,19 +63,18 @@ class Container
        */
       public function loadFields()
       {
-            $app = App::getInstance();
-            $template = $app->router->getCurrentPageTemplate();
+            $template = App::router()->getCurrentPageTemplate();
             $path =
                   'themes'
                   . DIRECTORY_SEPARATOR
-                  . $app->config->settings->site->theme
+                  . App::config()->settings->site->theme
                   . DIRECTORY_SEPARATOR
                   . 'pages'
                   . DIRECTORY_SEPARATOR
                   . $template;
-                  
+
             $file = File::loadJsonFromDir($path);
-            $this->items[$app->router->getCurrentPageID()]->fields = $file[0]->fields;
+            $this->items[App::router()->getCurrentPageID()]->fields = $file[0]->fields;
 
       }
 

@@ -8,9 +8,8 @@ class Page
 {
       static function title()
       {
-            $app = App::getInstance();
-            $pageID = $app->router->getCurrentPageID();
-            $pageTitle = $app->config->pages->items[$pageID]->title;
+            $pageID = App::router()->getCurrentPageID();
+            $pageTitle = App::config()->pages->items[$pageID]->title;
             return $pageTitle;
       }
 }

@@ -39,6 +39,13 @@ class App
             self::$instance = $this;
       }
 
+      public static function __callStatic($name, $arguments)
+      {
+            if(!method_exists(self::$instance, $name)) {
+                  return self::$instance->$name;
+            }
+      }
+
       /**
        * Start up the application
        *
@@ -105,8 +112,8 @@ class App
        */
       static function setDriver($driver)
       {
-            $app = self::getInstance();
-            $app->driver = $driver;
+            // $app = self::getInstance();
+            self::$instance->driver = $driver;
       }
 
       /**
