@@ -29,6 +29,7 @@ return [
             'Url' => Kabas\Utils\Url::class,
             'Page' => Kabas\Utils\Page::class,
             'Menu' => Kabas\Utils\Menu::class,
+            'Meta' => Kabas\Utils\Meta::class,
             'Part' => Kabas\Utils\Part::class,
             'Assets' => Kabas\Utils\Assets::class,
       ],
