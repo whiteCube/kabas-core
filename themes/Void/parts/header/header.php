@@ -1,5 +1,8 @@
 <head>
       <title><?= Page::title() ?></title>
+      <meta name="description" content="<?= Meta::get('description') ?>">
+      <meta name="keywords" content="<?= Meta::get('keywords') ?>">
+      <meta name="og:image" content="<?= Meta::get('og:image') ?>">
       <?php Assets::here('header'); ?>
       <?php Assets::add('header', 'main.css'); ?>
 </head>
