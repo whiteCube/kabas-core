@@ -65,9 +65,19 @@ class Container
       public function loadFields()
       {
             $app = App::getInstance();
-            $path = 'themes' . DIRECTORY_SEPARATOR . $app->config->settings->site->theme . DIRECTORY_SEPARATOR . 'pages';
-            $files = File::loadJsonFromDir($path);
-            $this->loopAndAddFields($files);
+            $template = $app->router->getCurrentPageTemplate();
+            $path =
+                  'themes'
+                  . DIRECTORY_SEPARATOR
+                  . $app->config->settings->site->theme
+                  . DIRECTORY_SEPARATOR
+                  . 'pages'
+                  . DIRECTORY_SEPARATOR
+                  . $template;
+                  
+            $file = File::loadJsonFromDir($path);
+            $this->items[$app->router->getCurrentPageID()]->fields = $file[0]->fields;
+
       }
 
 }

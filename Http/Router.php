@@ -85,4 +85,10 @@ class Router
             return $this->routes[$this->route];
       }
 
+      public function getCurrentPageTemplate()
+      {
+            $app = App::getInstance();
+            return $app->config->pages->items[$this->getCurrentPageID()]->template;
+      }
+
 }
