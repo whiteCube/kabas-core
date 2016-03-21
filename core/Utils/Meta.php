@@ -13,8 +13,7 @@ class Meta
        */
       static function set($key, $value)
       {
-            $app = App::getInstance();
-            $page = $app->config->pages->items[$app->router->getCurrentPageID()];
+            $page = App::config()->pages->items[App::router()->getCurrentPageID()];
             $page->meta->$key = $value;
       }
 
@@ -25,8 +24,7 @@ class Meta
        */
       static function get($key)
       {
-            $app = App::getInstance();
-            $page = $app->config->pages->items[$app->router->getCurrentPageID()];
+            $page = App::config()->pages->items[App::router()->getCurrentPageID()];
             if(isset($page->meta->$key)) return $page->meta->$key;
             return null;
       }

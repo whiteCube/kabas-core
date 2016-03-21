@@ -13,11 +13,9 @@ class Menu
        */
       static function get($menuID)
       {
-            $app = App::getInstance();
-
-            $menu = $app->config->menus->getMenu($menuID);
+            $menu = App::config()->menus->getMenu($menuID);
             $menuTemplate = Text::toNamespace($menu->template);
-            $themeTemplate = '\Theme\\' . $app->config->settings->site->theme .'\Menus\\' . $menuTemplate;
+            $themeTemplate = '\Theme\\' . App::config()->settings->site->theme .'\Menus\\' . $menuTemplate;
             new $themeTemplate($menu->template, $menu->links, $menu->options);
       }
 }

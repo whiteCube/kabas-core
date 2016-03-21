@@ -105,13 +105,12 @@ class Assets
        */
       static function getDir($dir)
       {
-            $app = App::getInstance();
             $dir =
-                  $app->router->baseUrl
+                  App::router()->baseUrl
                   . DIRECTORY_SEPARATOR
                   . 'themes'
                   . DIRECTORY_SEPARATOR
-                  . $app->config->settings->site->theme
+                  . App::config()->settings->site->theme
                   . DIRECTORY_SEPARATOR
                   . 'assets'
                   . DIRECTORY_SEPARATOR

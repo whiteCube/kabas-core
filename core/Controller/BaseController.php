@@ -73,10 +73,8 @@ class BaseController
 
       protected function checkValues($type)
       {
-            $app = App::getInstance();
-
-            if(isset($app->config->$type->items[$this->viewID])){
-                  foreach($app->config->$type->items[$this->viewID]->fields as $field => $data) {
+            if(isset(App::config()->$type->items[$this->viewID])){
+                  foreach(App::config()->$type->items[$this->viewID]->fields as $field => $data) {
                         if(!isset($this->data->$field)) {
                               $this->data->$field = $data->defaultValue;
                         }

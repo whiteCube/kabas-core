@@ -21,8 +21,7 @@ class Container
       public function instanciateParts()
       {
             $this->items = [];
-            $app = App::getInstance();
-            $lang = $app->config->settings->site->lang->active;
+            $lang = App::config()->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'parts';
             $files = File::loadJsonFromDir($path);
             $this->loop($files);
@@ -34,8 +33,7 @@ class Container
        */
       public function instanciateHeader()
       {
-            $app = App::getInstance();
-            $lang = $app->config->settings->site->lang->active;
+            $lang = App::config()->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'header.json';
             $file = File::loadJson($path);
             if(isset($file)){
@@ -50,8 +48,7 @@ class Container
        */
       public function instanciateFooter()
       {
-            $app = App::getInstance();
-            $lang = $app->config->settings->site->lang->active;
+            $lang = App::config()->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'footer.json';
             $file = File::loadJson($path);
             if(isset($file)) {
@@ -120,8 +117,7 @@ class Container
        */
       public function loadFields()
       {
-            $app = App::getInstance();
-            $path = 'themes' . DIRECTORY_SEPARATOR . $app->config->settings->site->theme . DIRECTORY_SEPARATOR . 'parts';
+            $path = 'themes' . DIRECTORY_SEPARATOR . App::config()->settings->site->theme . DIRECTORY_SEPARATOR . 'parts';
             $files = File::loadJsonFromDir($path);
             $this->loopAndAddFields($files);
       }

@@ -23,9 +23,7 @@ class Router
        */
       public function loadRoutes()
       {
-            $app = App::getInstance();
-
-            foreach ($app->config->pages->items as $page) {
+            foreach (App::config()->pages->items as $page) {
                   $this->routes[$page->route] = $page->id;
             }
       }
@@ -36,7 +34,6 @@ class Router
        */
       public function getRoute()
       {
-            $app = App::getInstance();
             $pathToIgnore = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
             $this->baseUrl = 'http://' . $_SERVER['SERVER_NAME'] . $pathToIgnore;
             if($pathToIgnore !== '') {
@@ -46,11 +43,11 @@ class Router
             }
             $routeParts = explode('/', $route);
             $this->hasLangInUrl = false;
-            foreach($app->config->settings->site->lang->available as $lang) {
+            foreach(App::config()->settings->site->lang->available as $lang) {
                   foreach($routeParts as $routePart) {
                         if($routePart === $lang) {
                               $this->hasLangInUrl = true;
-                              $app->config->settings->site->lang->active = $lang;
+                              App::config()->settings->site->lang->active = $lang;
                               $route = str_ireplace('/'.$lang, '', $route);
                               if($route === '') $route = '/';
                         }
@@ -87,8 +84,7 @@ class Router
 
       public function getCurrentPageTemplate()
       {
-            $app = App::getInstance();
-            return $app->config->pages->items[$this->getCurrentPageID()]->template;
+            return App::config()->pages->items[$this->getCurrentPageID()]->template;
       }
 
 }

@@ -19,8 +19,7 @@ class Container
       public function instanciateMenus()
       {
             $this->items = [];
-            $app = App::getInstance();
-            $lang = $app->config->settings->site->lang->active;
+            $lang = App::config()->settings->site->lang->active;
             $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'menus';
             $files = File::loadJsonFromDir($path);
             $this->loop($files);
