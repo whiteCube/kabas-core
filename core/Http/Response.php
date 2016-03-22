@@ -10,7 +10,6 @@ class Response
 
       /**
        * Send a response to the browser
-       *
        * @return void
        */
       public function send($pageID)

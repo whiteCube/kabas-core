@@ -50,7 +50,6 @@ class View
 
       /**
        * Includes the template
-       *
        * @param  string $view
        * @param  object $data
        * @return void
@@ -63,7 +62,6 @@ class View
       /**
        * Find the base directory of the theme
        * and look for the template file within.
-       *
        * @param  string $view
        * @return string
        */
@@ -80,7 +78,6 @@ class View
 
       /**
        * Finds the template file in its directory
-       *
        * @param  string $view       the name of the view file
        * @param  string $baseDir    the directory we want to search into
        * @return string
@@ -98,7 +95,6 @@ class View
       /**
        * Checks if view string contains .php extension
        * and adds it if needed.
-       *
        * @param  string $view
        * @return string
        */

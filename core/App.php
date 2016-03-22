@@ -8,28 +8,24 @@ class App
 {
       /**
       * The current Kabas version
-      *
       * @var string
       */
       const VERSION = '0.0.3';
 
       /**
        * Activate debug mode
-       *
        * @var boolean
        */
       const DEBUG = true;
 
       /**
        * The driver used to read data
-       *
        * @var \Kabas\Drivers
        */
       public $driver;
 
       /**
        * The instance of the app
-       *
        * @var Kabas
        */
       private static $instance;
@@ -48,7 +44,6 @@ class App
 
       /**
        * Start up the application
-       *
        * @return void
        */
       public function boot()
@@ -64,7 +59,6 @@ class App
 
       /**
        * Check appConfig and load the specified aliases
-       *
        * @return void
        */
       public function loadAliases()
@@ -76,7 +70,6 @@ class App
 
       /**
        * Autoload the theme files
-       *
        * @return void
        */
       public function loadTheme()
@@ -97,7 +90,6 @@ class App
 
       /**
        * Returns app instance
-       *
        * @return Kabas
        */
       static function getInstance()
@@ -107,7 +99,6 @@ class App
 
       /**
        * Sets the driver for the app;
-       *
        * @param Driver $driver
        */
       static function setDriver($driver)
@@ -118,7 +109,6 @@ class App
       /**
        * Once we're all set, take care of the request
        * and send something back!
-       *
        * @return void
        */
       public function react()
@@ -129,7 +119,6 @@ class App
 
       /**
       * Get the version number of this Kabas website.
-      *
       * @return string
       */
       public function version()
@@ -139,7 +128,6 @@ class App
 
       /**
        * Checks if app is in debug mode
-       *
        * @return boolean
        */
       static function isDebug() {

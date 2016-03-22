@@ -8,7 +8,6 @@ class Container
 {
       /**
        * Load the app config
-       *
        * @return void
        */
       protected function loadAppConfig()
@@ -19,7 +18,6 @@ class Container
       /**
        * Initialise the data driver based on
        * what's specified in the app config
-       *
        * @return void
        */
       protected function initDriver()
