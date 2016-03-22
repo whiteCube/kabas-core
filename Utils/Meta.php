@@ -28,4 +28,26 @@ class Meta
             if(isset($page->meta->$key)) return $page->meta->$key;
             return null;
       }
+
+      /**
+       * Get an array containing all metadata
+       * @return array | null
+       */
+      static function all()
+      {
+            $page = App::config()->pages->items[App::router()->getCurrentPageID()];
+            if(isset($page->meta)) return (array) $page->meta;
+            return null;
+      }
+
+      /**
+       * Output all the meta information in html tags
+       * @return void
+       */
+      static function output()
+      {
+            foreach(self::all() as $name => $content) {
+                  echo '<meta name="' . $name . '" content="' . $content . '">';
+            }
+      }
 }
