@@ -13,14 +13,13 @@ class BaseController
       public function __construct($view)
       {
             $this->defaultTemplateName = $view->template;
-            $this->checkLinkedFiles();
             $this->viewID = $view->id;
-
             $this->data = $view->data;
             $this->options = isset($view->options) ? $view->options : null;
             $this->meta = isset($view->meta) ? $view->meta : null;
-            $this->setup();
 
+            $this->setup();
+            $this->checkLinkedFiles();
             $this->render($this->constructViewData());
       }
 
@@ -62,30 +61,37 @@ class BaseController
       }
 
       /**
-       * Check if the theme provided a custom template or config filename
+       * Check if the theme provided a custom template filename
        * @return void
        */
       protected function checkLinkedFiles()
       {
             if(!$this->view) $this->view = $this->guessViewFile();
-            if(!$this->config) $this->config = $this->guessConfigFile();
       }
 
+      /**
+       * Complete data with default values and then check
+       * if values correspond to types.
+       * @param  string $type
+       * @return void
+       */
       protected function checkValues($type)
       {
             if(isset(App::config()->$type->items[$this->viewID])){
-                  foreach(App::config()->$type->items[$this->viewID]->fields as $field => $data) {
-                        if(!isset($this->data->$field)) {
-                              $this->data->$field = $data->defaultValue;
+                  foreach(App::config()->$type->items[$this->viewID]->fields as $fieldName => $fieldDetails) {
+                        $type = $fieldDetails->type;
+
+                        if(!isset($this->data->$fieldName)) {
+                              $this->data->$fieldName = $fieldDetails->defaultValue;
                         }
-                        try {
-                              App::config()->fieldTypes->exists($data->type);
-                              try {
-                                    App::config()->fieldTypes->types[$data->type]->check($field, $this->data->$field);
-                              } catch (\Kabas\Exceptions\TypeException $e) {
-                                    echo $e->getMessage();
-                              }
-                        } catch (\Kabas\Exceptions\TypeException $e) {
+
+                        try { App::config()->fieldTypes->exists($type); }
+                        catch (\Kabas\Exceptions\TypeException $e) {
+                              echo $e->getMessage();
+                        }
+
+                        try { App::config()->fieldTypes->types[$type]->check($fieldName, $this->data->$fieldName); }
+                        catch (\Kabas\Exceptions\TypeException $e) {
                               echo $e->getMessage();
                         }
 
@@ -100,15 +106,6 @@ class BaseController
       protected function guessViewFile()
       {
             return $this->defaultTemplateName;
-      }
-
-      /**
-       * Get the default config filename
-       * @return string
-       */
-      protected function guessConfigFile()
-      {
-
       }
 
 }
