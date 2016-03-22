@@ -6,7 +6,6 @@ class Text
 {
       /**
        * Formats a string to namespace conventional format
-       *
        * @param  string $text
        * @return string
        */

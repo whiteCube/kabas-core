@@ -24,6 +24,11 @@ class Url
             }
       }
 
+      /**
+       * Generate an URL to the current page in another language.
+       * @param  string $lang
+       * @return string
+       */
       static function lang($lang)
       {
             $baseUrl = $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];

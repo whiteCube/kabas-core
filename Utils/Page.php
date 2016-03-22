@@ -6,6 +6,10 @@ use Kabas\App;
 
 class Page
 {
+      /**
+       * Get the title of the page
+       * @return string
+       */
       static function title()
       {
             $pageID = App::router()->getCurrentPageID();
