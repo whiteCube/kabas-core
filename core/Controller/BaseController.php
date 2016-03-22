@@ -27,7 +27,7 @@ class BaseController
       /**
        * In this function you get the chance to process the data inside
        * $this->data and $this->options before it is passed on to the
-       * view. Please re-declare it in your menu's controller.
+       * view. Please re-declare it in your template's controller.
        * @return void
        */
       protected function setup()
@@ -78,6 +78,17 @@ class BaseController
                         if(!isset($this->data->$field)) {
                               $this->data->$field = $data->defaultValue;
                         }
+                        try {
+                              App::config()->fieldTypes->exists($data->type);
+                              try {
+                                    App::config()->fieldTypes->types[$data->type]->check($field, $this->data->$field);
+                              } catch (\Kabas\Exceptions\TypeException $e) {
+                                    echo $e->getMessage();
+                              }
+                        } catch (\Kabas\Exceptions\TypeException $e) {
+                              echo $e->getMessage();
+                        }
+
                   }
             }
       }
