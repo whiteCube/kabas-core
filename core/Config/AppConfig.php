@@ -26,11 +26,11 @@ return [
        * @var array
        */
       'aliases' => [
-            'Url' => Kabas\Utils\Url::class,
-            'Page' => Kabas\Utils\Page::class,
+            'Assets' => Kabas\Utils\Assets::class,
             'Menu' => Kabas\Utils\Menu::class,
             'Meta' => Kabas\Utils\Meta::class,
+            'Page' => Kabas\Utils\Page::class,
             'Part' => Kabas\Utils\Part::class,
-            'Assets' => Kabas\Utils\Assets::class,
+            'Url' => Kabas\Utils\Url::class,
       ],
 ];
