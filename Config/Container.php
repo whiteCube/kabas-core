@@ -33,6 +33,7 @@ class Container
             $this->loadAppConfig();
             $this->initDriver();
             $this->settings = new Settings\Container();
+            $this->fieldTypes = new FieldTypes\Container();
       }
 
       public function initParts()
