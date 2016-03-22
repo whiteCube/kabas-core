@@ -1,9 +1,10 @@
 {
       "route": "",
       "id": "404",
-      "template": "404",
+      "template": "E404",
       "title": "404",
       "data": {
-            "content": "Whoops! This is a (custom) 404."
+            "title": "Whoops!",
+            "errorMessage": "This is a (custom) 404."
       }
 }

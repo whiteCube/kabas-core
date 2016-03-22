@@ -1,0 +1,16 @@
+{
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "The title of your 404 page",
+                  "defaultValue": "404!"
+            },
+            "errorMessage": {
+                  "type": "textarea",
+                  "label": "Error message",
+                  "description": "The error message to display on the 404 page",
+                  "defaultValue": "You've found a page that leads nowhere."
+            }
+      }
+}

@@ -57,34 +57,33 @@ class Router
       }
 
       /**
-       * Check if current route exists and return the corresponding page ID
-       * @return string
-       */
-      public function handle()
-      {
-            if($this->routeExists($this->route)) {
-                  return $this->getCurrentPageID();
-            }
-      }
-
-      /**
-       * Check if specified route exists in the application
-       * @param  string $route
+       * Check if specified route exists in the application.
+       * If no route is specified, checks the current one.
+       * @param  string $route (optional)
        * @return boolean
        */
-      public function routeExists($route)
+      public function routeExists($route = null)
       {
+            if($route === null) $route = $this->route;
             return array_key_exists($route, $this->routes);
       }
 
+      /**
+       * Check if current route exists and return the corresponding page ID
+       * @return string
+       */
       public function getCurrentPageID()
       {
-            return $this->routes[$this->route];
+            if($this->routeExists()) {
+                  return $this->routes[$this->route];
+            } else return '404';
       }
 
       public function getCurrentPageTemplate()
       {
-            return App::config()->pages->items[$this->getCurrentPageID()]->template;
+            if(isset(App::config()->pages->items[$this->getCurrentPageID()])) {
+                  return App::config()->pages->items[$this->getCurrentPageID()]->template;
+            }
       }
 
 }

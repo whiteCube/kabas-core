@@ -112,7 +112,6 @@ class App
        */
       static function setDriver($driver)
       {
-            // $app = self::getInstance();
             self::$instance->driver = $driver;
       }
 
@@ -124,7 +123,7 @@ class App
        */
       public function react()
       {
-            $this->page = $this->router->handle();
+            $this->page = $this->router->getCurrentPageID();
             $this->response->send($this->page);
       }
 
