@@ -4,6 +4,12 @@ namespace Kabas\Http;
 
 class Request
 {
+      /**
+       * The request method.
+       * @var string
+       */
+      public $method;
+
       public function __construct()
       {
             $this->method = $_SERVER['REQUEST_METHOD'];
