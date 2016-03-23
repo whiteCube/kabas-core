@@ -6,6 +6,31 @@ class Item
 {
       public $type;
 
+      public function __construct($fieldName = null, $data = null)
+      {
+            $this->fieldName = $fieldName;
+            $this->data = $data;
+
+            if(isset($this->fieldName) && isset($this->data)) {
+                  try { $this->check($fieldName, $this->data); }
+                  catch (\Kabas\Exceptions\TypeException $e) {
+                        echo $e->getMessage();
+                  }
+            }
+      }
+
+      public function __toString()
+      {
+            return $this->data;
+      }
+
+      public function __call($name, $arguments)
+      {
+            if(!method_exists($this, $name)) {
+                  echo '<pre>Error: Method "' . $name . '" does not exist for field type → "' . $this->type .'"</pre>';
+            }
+      }
+
       /**
        * Runs the condition and throw an error if it returns false.
        * @param  string $field

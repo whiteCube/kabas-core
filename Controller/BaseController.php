@@ -88,12 +88,11 @@ class BaseController
                         try { App::config()->fieldTypes->exists($type); }
                         catch (\Kabas\Exceptions\TypeException $e) {
                               echo $e->getMessage();
+                              die();
                         }
 
-                        try { App::config()->fieldTypes->types[$type]->check($fieldName, $this->data->$fieldName); }
-                        catch (\Kabas\Exceptions\TypeException $e) {
-                              echo $e->getMessage();
-                        }
+                        $class = get_class(App::config()->fieldTypes->types[$type]);
+                        $this->data->$fieldName = new $class($fieldName, $this->data->$fieldName);
 
                   }
             }
