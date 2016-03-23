@@ -58,7 +58,7 @@ class Container
       }
 
       /**
-       * Loads the fields object for each page from the theme
+       * Loads the fields object from the theme.
        * @return void
        */
       public function loadFields()
