@@ -7,7 +7,7 @@
 <?php foreach($faveFoods->all() as $checkbox): ?>
       <p>
             <strong><?= $checkbox->label() ?>:</strong>
-            <?= $checkbox ?>
+            <?= $checkbox->isSelected() ?>
       </p>
 <?php endforeach; ?>
 
