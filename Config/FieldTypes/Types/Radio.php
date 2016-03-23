@@ -2,13 +2,9 @@
 
 namespace Kabas\Config\FieldTypes;
 
-class Radio extends Item
+class Radio extends Selectable
 {
       public $type = "radio";
-
-      public function condition($value)
-      {
-            return true;
-      }
+      protected $allowsMultipleValues = false;
 
 }
