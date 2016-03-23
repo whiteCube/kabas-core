@@ -2,7 +2,7 @@
       "id": "section1",
       "fields": {
             "title": {
-                  "type": "lol",
+                  "type": "text",
                   "label": "Title",
                   "description": "Section 1's title",
                   "defaultValue": "Default section 1 title"
