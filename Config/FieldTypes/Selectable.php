@@ -2,6 +2,8 @@
 
 namespace Kabas\Config\FieldTypes;
 
+use Kabas\Exceptions\TypeException;
+
 class Selectable
 {
       public function __construct($fieldName = null, $data = null)
@@ -10,6 +12,12 @@ class Selectable
             $data = (array) $data;
             foreach($data as $option) {
                   $this->data[$option->id] = new Option($option);
+            }
+            if(!$this->allowsMultipleValues && isset($fieldName)) {
+                  try { $this->checkValues(); }
+                  catch (TypeException $e) {
+                        echo $e->getMessage();
+                  }
             }
       }
 
@@ -54,5 +62,17 @@ class Selectable
             }
 
             return $array;
+      }
+
+      private function checkValues()
+      {
+            $selectedCount = 0;
+            foreach($this->data as $option) {
+                  if($option->isSelected()) $selectedCount++;
+            }
+            if($selectedCount > 1) {
+                  throw new TypeException('Field "' . $this->fieldName . '" only allows one selected value');
+            }
+            // var_dump($selectedCount);
       }
 }
