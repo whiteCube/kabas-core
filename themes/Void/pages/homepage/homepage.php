@@ -1,7 +1,7 @@
 <?php Part::header(); ?>
-<h2><?= $title; ?></h2>
+<h2><?= $title ?></h2>
 <p>
-      <?= $intro; ?>
+      <?= $intro ?>
 </p>
 
 <?php Part::get('section1'); ?>
