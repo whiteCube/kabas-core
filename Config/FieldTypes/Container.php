@@ -44,13 +44,7 @@ class Container
             if(array_key_exists($type, $this->types)) {
                   return true;
             } else {
-                  $line1 = 'Type "' . $type . '" is not a supported field type.';
-                  $line2 = 'Available field types: ';
-                  $error = $line1 . '<br>' . $line2;
-
-                  foreach($this->types as $typeName => $type) {
-                        $error = $error . '<br>' . $typeName;
-                  }
+                  $error = 'Type "' . $type . '" is not a supported field type.';
                   throw new \Kabas\Exceptions\TypeException($error);
             }
       }

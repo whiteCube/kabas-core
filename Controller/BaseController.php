@@ -87,6 +87,8 @@ class BaseController
 
                         try { App::config()->fieldTypes->exists($type); }
                         catch (\Kabas\Exceptions\TypeException $e) {
+                              $e->setFieldName($fieldName, $this->viewID);
+                              $e->showAvailableTypes();
                               echo $e->getMessage();
                               die();
                         }
