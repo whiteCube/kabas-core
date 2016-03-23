@@ -2,13 +2,8 @@
 
 namespace Kabas\Config\FieldTypes;
 
-class Textarea extends Item
+class Textarea extends Textual
 {
       public $type = "textarea";
-
-      public function condition($value)
-      {
-            return gettype($value) === 'string';
-      }
 
 }

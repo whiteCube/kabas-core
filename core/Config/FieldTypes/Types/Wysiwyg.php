@@ -2,13 +2,8 @@
 
 namespace Kabas\Config\FieldTypes;
 
-class Wysiwyg extends Item
+class Wysiwyg extends Textual
 {
       public $type = "wysiwyg";
-
-      public function condition($value)
-      {
-            return gettype($value) === 'string';
-      }
 
 }
