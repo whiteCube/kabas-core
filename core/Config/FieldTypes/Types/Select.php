@@ -2,13 +2,7 @@
 
 namespace Kabas\Config\FieldTypes;
 
-class Select extends Item
+class Select extends Selectable
 {
       public $type = "select";
-
-      public function condition($value)
-      {
-            return true;
-      }
-
 }

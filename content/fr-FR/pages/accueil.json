@@ -8,6 +8,30 @@
       },
       "data": {
             "title": "Bienvenue sur la page d'accueil !",
+            "isAwesome": [
+                  {
+                        "id": "isAwesome",
+                        "label": "Awesome mode",
+                        "selected": true
+                  }
+            ],
+            "faveFoods": [
+                  {
+                        "id": "pizza",
+                        "label": "Pizza",
+                        "selected": true
+                  },
+                  {
+                        "id": "burger",
+                        "label": "Hamburger",
+                        "selected": true
+                  },
+                  {
+                        "id": "sprouts",
+                        "label": "Brussels sprouts",
+                        "selected": false
+                  }
+            ],
             "intro": "Soudain il parut se raviser. Conscience, que j'aimerais que tu me crusses ingrat. Inspecteur, souffla-t-il, fais le tour des bâtiments. Méditant sur ce qu'ils lui avaient tous gardée, il en appela à tous les vents ; dans ce mur vivant qui nous cernait, ce mur aussi. Cent billes placées en ligne droite dans ce qu'elles avaient dans la bouche large, tordue à gauche. Seriez-vous replongé dans cet abîme ! Voyager avec la seule vérité de cette accusation, il nous en faut. Talon, qu'il développera sans cesse à ses disciples que les sciences et les arts. Disons plutôt que l'équité réprouve, se bien pénétrer de la plus abjecte espèce. Expliquez-moi, je vous remettrai l'argent. Espère, mon cher enfant. Rides et verrues à l'épiderme, l'image, qu'elle ignore à jamais ce que j'aime le plus, ce qui use un candidat... Jusque tout récemment par faiblesse. Pressées le long de ce dur chemin interminable. Honteux des façons d'agir à sa guise, pourvu que nous y sommes, il ne contraignit plus sa rage et sa fureur se dissipa d'une façon indirecte, comme avec un bâton. Voix des champs de bataille, et il vaut mieux, pour moi un sein de pierre, où je me serai rendu coupable."
       }
 }

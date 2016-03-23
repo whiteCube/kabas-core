@@ -11,6 +11,17 @@
                   "label": "Introduction",
                   "description": "Your homepage's introduction text",
                   "defaultValue": "Default intro value"
+            },
+            "isAwesome": {
+                  "type": "checkbox",
+                  "label": "Activate awesome",
+                  "description": "Activates awesome mode for your site",
+                  "defaultValue": true
+            },
+            "faveFoods": {
+                  "type": "checkbox",
+                  "label": "Favourite foods",
+                  "description": "Check all your favourite foods!"
             }
       }
 }
