@@ -19,7 +19,8 @@
                   "defaultValue": true
             },
             "faveFoods": {
-                  "type": "checkbox",
+                  "type": "select",
+                  "allowsMultipleValues": true,
                   "label": "Favourite foods",
                   "description": "Check all your favourite foods!"
             }

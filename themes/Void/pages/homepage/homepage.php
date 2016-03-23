@@ -3,16 +3,14 @@
 <p>
       <?= $intro ?>
 </p>
-
 <?php foreach($faveFoods->all() as $checkbox): ?>
       <p>
-            <strong><?= $checkbox->label() ?>:</strong>
-            <?= $checkbox->isSelected() ?>
+            <strong><?= $checkbox->isSelected() ? '●' : '○' ?> <?= $checkbox->label() ?></strong>
       </p>
 <?php endforeach; ?>
 
 <?php if($isAwesome->isSelected()): ?>
-      <p>Awesome mode activated!</p>
+      <h2>Awesome mode activated!</h2>
       <img src="https://media.giphy.com/media/DpB9NBjny7jF1pd0yt2/giphy.gif" alt="Awesome mode" />
 <?php endif; ?>
 
