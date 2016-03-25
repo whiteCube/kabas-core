@@ -73,6 +73,5 @@ class Selectable
             if($selectedCount > 1) {
                   throw new TypeException('Field "' . $this->fieldName . '" only allows one selected value');
             }
-            // var_dump($selectedCount);
       }
 }

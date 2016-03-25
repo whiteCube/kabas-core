@@ -8,6 +8,7 @@
       },
       "data": {
             "title": "Bienvenue sur la page d'accueil !",
+            "banner": "banner.jpg",
             "isAwesome": [
                   {
                         "id": "isAwesome",

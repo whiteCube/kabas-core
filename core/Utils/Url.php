@@ -13,13 +13,11 @@ class Url
        */
       static function to($pageID)
       {
-            $baseUrl = $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
-
             foreach(App::router()->routes as $route => $id) {
                   if($pageID === $id) {
                         if(App::router()->hasLangInUrl) $lang = '/' . App::config()->settings->site->lang->active;
                         else $lang = '';
-                        return 'http://'. $baseUrl . $lang . $route;
+                        return self::base() . $lang . $route;
                   }
             }
       }
@@ -31,7 +29,15 @@ class Url
        */
       static function lang($lang)
       {
-            $baseUrl = $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
-            return 'http://' . $baseUrl . '/' . $lang . App::router()->route;
+            return self::base() . '/' . $lang . App::router()->route;
+      }
+
+      /**
+       * Get the base url of the site
+       * @return string
+       */
+      static function base()
+      {
+            return $baseUrl = 'http://' . $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
       }
 }
