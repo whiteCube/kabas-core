@@ -55,6 +55,7 @@ class App
             $this->response = new Http\Response();
             $this->config->initParts();
             $this->router->loadRoutes();
+            $this->setConstant();
       }
 
       /**
@@ -132,6 +133,13 @@ class App
        */
       static function isDebug() {
             return static::DEBUG;
+      }
+
+      protected function setConstant(){
+            define('DS', DIRECTORY_SEPARATOR);
+            define('CORE_PATH', __dir__);
+            define('BASE_PATH', preg_replace('/(\\' . DIRECTORY_SEPARATOR . 'core)?/', '', CORE_PATH));
+            define('THEME_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->settings->site->theme);
       }
 
 }
