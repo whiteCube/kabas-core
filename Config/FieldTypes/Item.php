@@ -5,6 +5,8 @@ namespace Kabas\Config\FieldTypes;
 class Item
 {
       public $type;
+      public $fieldName;
+      public $data;
 
       public function __construct($fieldName = null, $data = null)
       {
