@@ -3,6 +3,7 @@
 namespace Kabas\Objects\Image;
 
 use Intervention\Image\ImageManager as Intervention;
+use Kabas\App;
 
 class Editor
 {
@@ -12,7 +13,7 @@ class Editor
 
       function __construct($path)
       {
-            $this->intervention = new Intervention(['driver' => 'imagick']);
+            $this->intervention = new Intervention(['driver' => App::config()->appConfig['imageDriver']]);
             $this->intervention = $this->intervention->make($path);
             if(!isset($this->intervention->filename)) {
                   $file = explode('/', $path);
