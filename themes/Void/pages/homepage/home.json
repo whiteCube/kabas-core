@@ -16,7 +16,13 @@
                   "type": "image",
                   "label": "Banner image",
                   "description": "Your homepage's banner image",
-                  "defaultValue": "lol.jpg"
+                  "defaultValue": "banner.jpg"
+            },
+            "randomImage": {
+                  "type": "image",
+                  "label": "Banner image",
+                  "description": "A random image for the homepage",
+                  "defaultValue": "banner.jpg"
             },
             "isAwesome": {
                   "type": "checkbox",

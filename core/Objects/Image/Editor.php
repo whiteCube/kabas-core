@@ -14,6 +14,13 @@ class Editor
       {
             $this->intervention = new Intervention(['driver' => 'imagick']);
             $this->intervention = $this->intervention->make($path);
+            if(!isset($this->intervention->filename)) {
+                  $file = explode('/', $path);
+                  $exploded = explode('.', $file[count($file) - 1]);
+                  $this->intervention->filename = $exploded[0];
+                  $this->intervention->extension = $exploded[1];
+                  $this->intervention->dirname = THEME_PATH . DS . 'assets' . DS . 'img' . DS;
+            }
       }
 
       public function fit($width, $height)
@@ -28,6 +35,7 @@ class Editor
 
       public function save()
       {
+
             if(!$this->fileExists()) $this->executeActions()->save($this->intervention->dirname . DS . $this->lastFileName);
             $this->history = [];
             return $this->lastFileName;

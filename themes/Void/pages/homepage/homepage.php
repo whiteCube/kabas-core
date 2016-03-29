@@ -6,9 +6,8 @@
 
 <div>
       <h2>Images</h2>
-      <a href="<?= $banner->src() ?>">
-      <img src="<?= $banner->fit(450, 300)->apply()->src() ?>" alt="" />
-      </a>
+      <img src="<?= $banner->fit(450, 300)->apply()->src() ?>" alt="<?= $banner->alt() ?>" />
+      <img src="<?= $randomImage->fit(450, 300)->apply()->src() ?>" alt="<?= $randomImage->alt() ?>" />
 </div>
 
 <div>
