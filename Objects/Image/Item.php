@@ -29,19 +29,53 @@ class Item
             $this->alt = $file->alt;
       }
 
-      public function fit($width, $height)
+      public function __call($name, $args)
       {
             $this->makeEditor();
-            $this->editor->fit(intval($width), intval($height));
+            call_user_func_array([$this->editor, $name], $args);
             return $this;
       }
 
-
-      public function greyscale()
+      public function filesize()
       {
             $this->makeEditor();
-            $this->editor->greyscale();
-            return $this;
+            return $this->editor->intervention->filesize();
+      }
+
+      public function getCore()
+      {
+            $this->makeEditor();
+            return $this->editor->intervention->getCore();
+      }
+
+      public function height()
+      {
+            $this->makeEditor();
+            return $this->editor->intervention->height();
+      }
+
+      public function iptc($key = null)
+      {
+            $this->makeEditor();
+            return $this->editor->intervention->iptc($key);
+      }
+
+      public function mime()
+      {
+            $this->makeEditor();
+            return $this->editor->intervention->mime();
+      }
+
+      public function pickColor($x, $y, $format = null)
+      {
+            $this->makeEditor();
+            return $this->editor->intervention->pickColor($x, $y, $format);
+      }
+
+      public function width()
+      {
+            $this->makeEditor();
+            return $this->editor->intervention->width();
       }
 
       public function apply()
