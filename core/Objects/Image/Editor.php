@@ -13,15 +13,7 @@ class Editor
 
       function __construct($path)
       {
-            $this->intervention = new Intervention(['driver' => App::config()->appConfig['imageDriver']]);
-            $this->intervention = $this->intervention->make($path);
-            if(!isset($this->intervention->filename)) {
-                  $file = explode('/', $path);
-                  $exploded = explode('.', $file[count($file) - 1]);
-                  $this->intervention->filename = $exploded[0];
-                  $this->intervention->extension = $exploded[1];
-                  $this->intervention->dirname = THEME_PATH . DS . 'assets' . DS . 'img' . DS;
-            }
+            $this->path = $path;
       }
 
       public function backup($name = null)
@@ -196,6 +188,7 @@ class Editor
 
       public function save()
       {
+
             if(!$this->fileExists()) $this->executeActions()->save($this->intervention->dirname . DS . $this->lastFileName);
             $this->history = [];
             return $this->lastFileName;
@@ -223,8 +216,9 @@ class Editor
 
       protected function fileExists()
       {
-            $this->lastFileName = $this->intervention->filename . $this->getHistoryString() . '.' . $this->intervention->extension;
-            if(file_exists($this->intervention->dirname . DS . $this->lastFileName)) return true;
+            $pathParts = pathinfo($this->path);
+            $this->lastFileName = $pathParts['filename'] . $this->getHistoryString() . '.' . $pathParts['extension'];
+            if(file_exists($pathParts['dirname'] . DS . $this->lastFileName)) return true;
             return false;
       }
 
@@ -248,9 +242,24 @@ class Editor
 
       protected function executeActions()
       {
+            $start = microtime(TRUE);
+            $this->intervention = new Intervention(['driver' => App::config()->appConfig['imageDriver']]);
+            $this->intervention = $this->intervention->make($this->path);
+            $end = microtime(TRUE);
+            var_dump('benchmark', $end - $start);
+
+            if(!isset($this->intervention->filename)) {
+                  $file = explode('/', $this->path);
+                  $exploded = explode('.', $file[count($file) - 1]);
+                  $this->intervention->filename = $exploded[0];
+                  $this->intervention->extension = $exploded[1];
+                  $this->intervention->dirname = THEME_PATH . DS . 'assets' . DS . 'img' . DS;
+            }
+
             foreach ($this->history as $o) {
                   $this->intervention = call_user_func_array([$this->intervention, $o->action], $o->args);
             }
+
             return $this->intervention;
       }
 }

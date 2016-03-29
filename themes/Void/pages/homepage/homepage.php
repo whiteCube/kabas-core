@@ -1,4 +1,6 @@
+
 <?php Part::header(); ?>
+
 <h2><?= $title ?></h2>
 <p>
       <?= $intro ?>
@@ -12,7 +14,6 @@
 <div>
       <h2>Images</h2>
       <img src="<?= $banner->fit(450, 300)->apply()->src() ?>" alt="<?= $banner->alt() ?>" />
-      <img src="<?= $randomImage->fit(450, 300)->apply()->src() ?>" alt="<?= $randomImage->alt() ?>" />
 </div>
 
 <div>
@@ -28,7 +29,6 @@
             <img src="https://media.giphy.com/media/DpB9NBjny7jF1pd0yt2/giphy.gif" alt="Awesome mode" />
       <?php endif; ?>
 </div>
-
 
 
 <?php Part::get('section1'); ?>
