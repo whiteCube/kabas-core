@@ -23,13 +23,16 @@ class Container
        */
       public function loadFieldTypes()
       {
-            $path = __DIR__ . DIRECTORY_SEPARATOR . 'types' . DIRECTORY_SEPARATOR . '*.php';
-            foreach(glob($path) as $file) {
-                  require_once($file);
-                  $class = '\Kabas\Config\FieldTypes\\' . basename($file, '.php');
-                  if(class_exists($class)) {
-                        $instance = new $class;
-                        $this->types[$instance->type] = $instance;
+            $path = __DIR__ . DIRECTORY_SEPARATOR . 'Types' . DIRECTORY_SEPARATOR;
+            $data = scandir($path);
+            foreach($data as $file) {
+                  if($file !== '.' && $file !== '..') {
+                        require_once($path . $file);
+                        $class = '\Kabas\Config\FieldTypes\\' . basename($file, '.php');
+                        if(class_exists($class)) {
+                              $instance = new $class;
+                              $this->types[$instance->type] = $instance;
+                        }
                   }
             }
       }
