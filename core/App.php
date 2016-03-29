@@ -3,6 +3,7 @@
 namespace Kabas;
 
 use WhiteCube\Bootstrap\FileLoader;
+use \Kabas\Utils\Benchmark;
 
 class App
 {
@@ -32,6 +33,7 @@ class App
 
       public function __construct()
       {
+            Benchmark::start('start to finish');
             self::$instance = $this;
       }
 

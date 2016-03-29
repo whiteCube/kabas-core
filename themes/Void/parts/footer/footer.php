@@ -6,3 +6,4 @@
 </div>
 
 <?php Assets::here('footer'); ?>
+<?php Benchmark::stop('start to finish'); ?>
