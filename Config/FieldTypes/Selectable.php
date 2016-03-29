@@ -57,8 +57,8 @@ class Selectable
       {
             $array = [];
 
-            foreach($this->data as $checkbox) {
-                  if($checkbox->isSelected()) $array[] = $checkbox;
+            foreach($this->data as $option) {
+                  if($option->isSelected()) $array[] = $option;
             }
 
             return $array;
