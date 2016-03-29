@@ -27,6 +27,7 @@ return [
        */
       'aliases' => [
             'Assets' => Kabas\Utils\Assets::class,
+            'Benchmark' => Kabas\Utils\Benchmark::class,
             'Menu' => Kabas\Utils\Menu::class,
             'Meta' => Kabas\Utils\Meta::class,
             'Page' => Kabas\Utils\Page::class,
