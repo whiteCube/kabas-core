@@ -17,7 +17,9 @@ return [
        * folders. Only JSON is supported at the moment.
        * @var string
        */
-      'driver' => 'JSON',
+      'driver' => 'Json',
+
+      'imageDriver' => 'GD',
 
       /**
        * Aliases for classes
