@@ -6,8 +6,8 @@
 
 <div>
       <h2>Images</h2>
-      <a href="<?= Image::src($banner) ?>">
-      <img src="<?= Image::src($banner->fit(50, 100)->apply()) ?>" alt="" />
+      <a href="<?= $banner->src() ?>">
+      <img src="<?= $banner->fit(450, 300)->apply()->src() ?>" alt="" />
       </a>
 </div>
 

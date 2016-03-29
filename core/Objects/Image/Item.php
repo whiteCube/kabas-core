@@ -2,6 +2,10 @@
 
 namespace Kabas\Objects\Image;
 
+use Kabas\Utils\Image;
+use Kabas\Utils\Url;
+use Kabas\App;
+
 class Item
 {
       public $filename;
@@ -39,6 +43,20 @@ class Item
       {
             if($this->editor) $this->file = $this->editor->save();
             return $this;
+      }
+
+      public function show($echo = true)
+      {
+            $s = '<img src="' . $this->src() . '" />';
+            if($echo) echo($s);
+            return $s;
+      }
+
+      public function src()
+      {
+          if(get_class($this) !== 'Kabas\Objects\Image\Item') $image = $this->file;
+          else $image = $this;
+          return Url::base() . '/themes/' . App::config()->settings->site->theme . '/assets/img/' . $image->file;
       }
 
       protected function makeEditor()
