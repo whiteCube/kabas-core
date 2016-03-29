@@ -5,6 +5,11 @@
 </p>
 
 <div>
+      <h2>Links</h2>
+      <a href="<?= $link1 ?>" title="<?= $link1->title ?>" <?= $link1->isLocal() ? '' : 'target="blank"' ?>><?= $link1->label ?></a>
+</div>
+
+<div>
       <h2>Images</h2>
       <img src="<?= $banner->fit(450, 300)->apply()->src() ?>" alt="<?= $banner->alt() ?>" />
       <img src="<?= $randomImage->fit(450, 300)->apply()->src() ?>" alt="<?= $randomImage->alt() ?>" />

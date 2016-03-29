@@ -12,6 +12,11 @@
                   "src": "banner.jpg",
                   "alt": "Alt of your banner"
             },
+            "link1": {
+                  "href": "http://www.whitecube.be/clients/century21",
+                  "label": "Century 21 - Handcrafted by WhiteCube",
+                  "title": "Visiter le staging de Century 21"
+            },
             "randomImage": {
                   "src": "http://thewebminer.com/blog/wp-content/uploads/2015/08/pizza-1.jpg",
                   "alt": "Random image from Lorem Pixel"

@@ -6,6 +6,12 @@
                   "description": "Your homepage's title",
                   "defaultValue": "Default title value"
             },
+            "link1": {
+                  "type": "url",
+                  "label": "Link 1",
+                  "description": "First link",
+                  "defaultValue": "http://www.whitecube.be/clients/century21"
+            },
             "intro": {
                   "type": "text",
                   "label": "Introduction",
