@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "7b82b53e8a23cd84f55dba1bcd57c315",
-    "content-hash": "7b973b007c183dabdf1000e56fa3fc35",
+    "hash": "e778d8018c45117ebb4a0469df77a9c0",
+    "content-hash": "77707c98b38c2c36fda4c0609a1bb366",
     "packages": [
         {
             "name": "cilex/cilex",
@@ -487,6 +487,91 @@
                 "update"
             ],
             "time": "2013-10-30 17:23:01"
+        },
+        {
+            "name": "illuminate/container",
+            "version": "v5.2.27",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/container.git",
+                "reference": "1e156f8017490f5583ab161030bf839c77c95e54"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/1e156f8017490f5583ab161030bf839c77c95e54",
+                "reference": "1e156f8017490f5583ab161030bf839c77c95e54",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "5.2.*",
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Container\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "The Illuminate Container package.",
+            "homepage": "http://laravel.com",
+            "time": "2016-03-16 17:19:17"
+        },
+        {
+            "name": "illuminate/contracts",
+            "version": "v5.2.27",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/contracts.git",
+                "reference": "411b851962c211078ade7664a6976e77a78cd2a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/411b851962c211078ade7664a6976e77a78cd2a5",
+                "reference": "411b851962c211078ade7664a6976e77a78cd2a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Contracts\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "The Illuminate Contracts package.",
+            "homepage": "http://laravel.com",
+            "time": "2016-03-07 20:37:17"
         },
         {
             "name": "intervention/image",

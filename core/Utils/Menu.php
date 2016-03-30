@@ -16,6 +16,6 @@ class Menu
             $menu = App::config()->menus->getMenu($menuID);
             $menuTemplate = Text::toNamespace($menu->template);
             $themeTemplate = '\Theme\\' . App::config()->settings->site->theme .'\Menus\\' . $menuTemplate;
-            new $themeTemplate($menu->template, $menu->links, $menu->options);
+            App::getInstance()->make($themeTemplate, [$menu->template, $menu->links, $menu->options]);
       }
 }

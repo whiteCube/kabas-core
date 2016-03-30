@@ -3,6 +3,7 @@
 namespace Kabas\Config\FieldTypes;
 
 use Kabas\Exceptions\TypeException;
+use Kabas\App;
 
 class Selectable
 {
@@ -11,7 +12,7 @@ class Selectable
             $this->fieldName = $fieldName;
             $data = (array) $data;
             foreach($data as $option) {
-                  $this->data[$option->id] = new Option($option);
+                  $this->data[$option->id] = App::getInstance()->make('SelectableOption', [$option]);
             }
             if(!$this->allowsMultipleValues && isset($fieldName)) {
                   try { $this->checkValues(); }

@@ -242,11 +242,8 @@ class Editor
 
       protected function executeActions()
       {
-            $start = microtime(TRUE);
-            $this->intervention = new Intervention(['driver' => App::config()->appConfig['imageDriver']]);
+            $this->intervention = App::getInstance()->make('Intervention\Image\ImageManager', [['driver' => App::config()->appConfig['imageDriver']]]);
             $this->intervention = $this->intervention->make($this->path);
-            $end = microtime(TRUE);
-            var_dump('benchmark', $end - $start);
 
             if(!isset($this->intervention->filename)) {
                   $file = explode('/', $this->path);

@@ -36,7 +36,7 @@ class Container
                   if(is_array($file)) {
                         $this->loop($file);
                   } else {
-                        $this->items[$file->id] = new Item($file);
+                        $this->items[$file->id] = App::getInstance()->make('MenuItem', [$file]);
                   }
             }
       }

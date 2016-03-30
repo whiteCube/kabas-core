@@ -96,9 +96,9 @@ class BaseController
 
                         $class = get_class(App::config()->fieldTypes->types[$type]);
                         if(isset($fieldDetails->allowsMultipleValues) && $type === 'select') {
-                              $this->data->$fieldName = new $class($fieldName, $this->data->$fieldName, $fieldDetails->allowsMultipleValues);
+                              $this->data->$fieldName = App::getInstance()->make($class, [$fieldName, $this->data->$fieldName, $fieldDetails->allowsMultipleValues]);
                         } else {
-                              $this->data->$fieldName = new $class($fieldName, $this->data->$fieldName);
+                              $this->data->$fieldName = App::getInstance()->make($class, [$fieldName, $this->data->$fieldName]);
                         }
 
                   }

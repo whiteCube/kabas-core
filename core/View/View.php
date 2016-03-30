@@ -56,7 +56,7 @@ class View
        */
       static function make($view, $data)
       {
-            new self($view, $data);
+            App::getInstance()->make(self::class, [$view, $data]);
       }
 
       /**
