@@ -1,5 +1,4 @@
 {
-      "id": "header",
       "fields": {
             "title": {
                   "type": "text",

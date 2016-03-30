@@ -1,5 +1,4 @@
 {
-      "id": "footer",
       "fields": {
             "copyright": {
                   "type": "text",

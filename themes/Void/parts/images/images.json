@@ -1,5 +1,4 @@
 {
-      "id": "images",
       "fields": {
             "title": {
                   "type": "text",

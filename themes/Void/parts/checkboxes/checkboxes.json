@@ -1,5 +1,4 @@
 {
-      "id": "checkboxes",
       "fields": {
             "title": {
                   "type": "text",

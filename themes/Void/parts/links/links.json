@@ -1,5 +1,4 @@
 {
-      "id": "links",
       "fields": {
             "title": {
                   "type": "text",

@@ -102,13 +102,10 @@ class Container
        */
       public function loopAndAddFields($files)
       {
-            foreach($files as $file) {
-                  if(is_array($file)) {
-                        $this->loopAndAddFields($file);
-                  } else {
-                        $this->items[$file->id]->fields = $file->fields;
-                  }
+            foreach($files as $id => $file) {
+                  $this->items[$id]->fields = $file[0]->fields;
             }
+
       }
 
       /**

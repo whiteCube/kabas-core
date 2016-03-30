@@ -1,5 +1,4 @@
 {
-      "id": "colors",
       "fields": {
             "title": {
                   "type": "text",
