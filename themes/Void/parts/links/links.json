@@ -1,0 +1,17 @@
+{
+      "id": "links",
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "Links section title",
+                  "defaultValue": "Links"
+            },
+            "link1": {
+                  "type": "url",
+                  "label": "Link 1",
+                  "description": "First link",
+                  "defaultValue": "http://www.whitecube.be/clients/century21"
+            }
+      }
+}

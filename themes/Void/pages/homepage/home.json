@@ -6,41 +6,11 @@
                   "description": "Your homepage's title",
                   "defaultValue": "Default title value"
             },
-            "link1": {
-                  "type": "url",
-                  "label": "Link 1",
-                  "description": "First link",
-                  "defaultValue": "http://www.whitecube.be/clients/century21"
-            },
             "intro": {
                   "type": "text",
                   "label": "Introduction",
                   "description": "Your homepage's introduction text",
                   "defaultValue": "Default intro value"
-            },
-            "banner": {
-                  "type": "image",
-                  "label": "Banner image",
-                  "description": "Your homepage's banner image",
-                  "defaultValue": "banner.jpg"
-            },
-            "randomImage": {
-                  "type": "image",
-                  "label": "Banner image",
-                  "description": "A random image for the homepage",
-                  "defaultValue": "banner.jpg"
-            },
-            "isAwesome": {
-                  "type": "checkbox",
-                  "label": "Activate awesome",
-                  "description": "Activates awesome mode for your site",
-                  "defaultValue": true
-            },
-            "faveFoods": {
-                  "type": "select",
-                  "allowsMultipleValues": true,
-                  "label": "Favourite foods",
-                  "description": "Check all your favourite foods!"
             }
       }
 }

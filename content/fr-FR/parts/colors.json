@@ -1,0 +1,8 @@
+{
+      "id": "colors",
+      "template": "colors",
+      "data": {
+            "title": "Colors",
+            "color1": "#da674d"
+      }
+}
