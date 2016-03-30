@@ -14,6 +14,7 @@ class Part
        */
       static function get($partID)
       {
+            App::config()->parts->loadPart($partID);
             $part = App::config()->parts->getPart($partID);
             $partTemplate = Text::toNamespace($part->template);
 
