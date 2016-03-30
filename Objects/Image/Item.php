@@ -110,6 +110,6 @@ class Item
 
       protected function makeEditor()
       {
-            if(!$this->editor) $this->editor = new Editor($this->path . $this->file);
+            if(!$this->editor) $this->editor = App::getInstance()->make('Kabas\Objects\Image\Editor', [$this->path . $this->file]);
       }
 }

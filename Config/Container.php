@@ -7,12 +7,12 @@ use \Kabas\Utils\Benchmark;
 
 class Container
 {
-      public function __construct()
+      public function __construct(Settings\Container $settings, FieldTypes\Container $fieldTypes)
       {
             $this->loadAppConfig();
             $this->initDriver();
-            $this->settings = new Settings\Container();
-            $this->fieldTypes = new FieldTypes\Container();
+            $this->settings = $settings;
+            $this->fieldTypes = $fieldTypes;
       }
 
       /**
@@ -32,16 +32,15 @@ class Container
       protected function initDriver()
       {
             $driverName = '\Kabas\Drivers\\' . $this->appConfig['driver'];
-            App::setDriver(new $driverName);
+            $driver = App::getInstance()->make($driverName);
+            App::setDriver($driver);
       }
 
-      public function initParts()
+      public function initParts(Pages\Container $pages, Parts\Container $parts, Menus\Container $menus)
       {
-            Benchmark::start('PagesContainer');
-            $this->pages = new Pages\Container();
-            Benchmark::stop('PagesContainer');
-            $this->parts = new Parts\Container();
-            $this->menus = new Menus\Container();
+            $this->pages = $pages;
+            $this->parts = $parts;
+            $this->menus = $menus;
       }
 
 }

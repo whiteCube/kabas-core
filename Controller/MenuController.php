@@ -3,6 +3,7 @@
 namespace Kabas\Controller;
 
 use Kabas\View\View;
+use Kabas\App;
 
 class MenuController
 {
@@ -41,7 +42,7 @@ class MenuController
       {
             $items = [];
             foreach($menuItems as $itemID => $itemData) {
-                  $items[$itemID] = new MenuItem($itemID, $itemData);
+                  $items[$itemID] = App::getInstance()->make('Kabas\Controller\MenuItem', [$itemID, $itemData]);
                   if(isset($items[$itemID]->subitems)) {
                         $items[$itemID]->subitems = $this->instanciateMenuItems($items[$itemID]->subitems);
                   }

@@ -4,8 +4,9 @@ namespace Kabas;
 
 use WhiteCube\Bootstrap\FileLoader;
 use \Kabas\Utils\Benchmark;
+use \Illuminate\Container\Container;
 
-class App
+class App extends Container
 {
       /**
       * The current Kabas version
@@ -29,12 +30,15 @@ class App
        * The instance of the app
        * @var Kabas
        */
-      private static $instance;
+      protected static $instance;
 
       public function __construct()
       {
             Benchmark::start('start to finish');
             self::$instance = $this;
+
+            $this->registerBindings();
+
       }
 
       public static function __callStatic($name, $arguments)
@@ -44,17 +48,49 @@ class App
             }
       }
 
+      public function registerBindings()
+      {
+            $this->singleton('config', function() {
+                  $settings = $this->make('Kabas\Config\Settings\Container');
+                  $fieldTypes = $this->make('Kabas\Config\FieldTypes\Container');
+                  return new \Kabas\Config\Container($settings, $fieldTypes);
+            });
+            $this->singleton('request', function() {
+                  return new \Kabas\Http\Request();
+            });
+            $this->singleton('router', function() {
+                  return new \Kabas\Http\Router();
+            });
+            $this->singleton('response', function() {
+                  return new \Kabas\Http\Response();
+            });
+            $this->bind('PageItem', function($app, $args) {
+                  return new \Kabas\Config\Pages\Item($args[0]);
+            });
+            $this->bind('PartItem', function($app, $args) {
+                  return new \Kabas\Config\Parts\Item($args[0]);
+            });
+            $this->bind('MenuItem', function($app, $args) {
+                  return new \Kabas\Config\Menus\Item($args[0]);
+            });
+            $this->bind('SelectableOption', function($app, $args) {
+                  return new \Kabas\Config\FieldTypes\Option($args[0]);
+            });
+            $this->bind('ImageItem', function($app, $args) {
+                  return new \Kabas\Objects\Image\Item($args[0]);
+            });
+      }
+
       /**
        * Start up the application
        * @return void
        */
       public function boot()
       {
-            $this->config = new Config\Container();
-            $this->config->initParts();
-            $this->request = new Http\Request();
-            $this->router = new Http\Router();
-            $this->response = new Http\Response();
+            $pages = $this->make('Kabas\Config\Pages\Container');
+            $parts = $this->make('Kabas\Config\Parts\Container');
+            $menus = $this->make('Kabas\Config\Menus\Container');
+            $this->config->initParts($pages, $parts, $menus);
             $this->setConstant();
       }
 

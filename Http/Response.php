@@ -26,7 +26,7 @@ class Response
             $page = App::config()->pages->items[$pageID];
             $pageTemplate = Text::toNamespace($page->template);
             $themeTemplate = '\Theme\\' . App::config()->settings->site->theme .'\Pages\\' . $pageTemplate;
-            new $themeTemplate($page);
+            App::getInstance()->make($themeTemplate, [$page]);
             return;
       }
 

@@ -50,7 +50,7 @@ class Container
             require_once($path . $filename);
             $class = '\Kabas\Config\FieldTypes\\' . ucfirst($fieldType);
             if(class_exists($class)) {
-                  $instance = new $class;
+                  $instance = App::getInstance()->make($class);
                   $this->types[$instance->type] = $instance;
             }
       }
