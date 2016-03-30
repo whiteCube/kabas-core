@@ -15,6 +15,7 @@ class Router
       public function __construct()
       {
             $this->route = $this->getRoute();
+            $this->loadRoutes();
       }
 
       /**
