@@ -13,7 +13,7 @@ class Image extends Item
       {
             parent::__construct($fieldName, $data);
             if($this->data) {
-                  $this->file = App::getInstance()->make('ImageItem', [$this->data]);
+                  $this->file = App::getInstance()->make('\Kabas\Objects\Image\Item', [$this->data]);
             }
       }
 
