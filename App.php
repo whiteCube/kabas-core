@@ -55,30 +55,9 @@ class App extends Container
                   $fieldTypes = $this->make('Kabas\Config\FieldTypes\Container');
                   return new \Kabas\Config\Container($settings, $fieldTypes);
             });
-            $this->singleton('request', function() {
-                  return new \Kabas\Http\Request();
-            });
-            $this->singleton('router', function() {
-                  return new \Kabas\Http\Router();
-            });
-            $this->singleton('response', function() {
-                  return new \Kabas\Http\Response();
-            });
-            $this->bind('PageItem', function($app, $args) {
-                  return new \Kabas\Config\Pages\Item($args[0]);
-            });
-            $this->bind('PartItem', function($app, $args) {
-                  return new \Kabas\Config\Parts\Item($args[0]);
-            });
-            $this->bind('MenuItem', function($app, $args) {
-                  return new \Kabas\Config\Menus\Item($args[0]);
-            });
-            $this->bind('SelectableOption', function($app, $args) {
-                  return new \Kabas\Config\FieldTypes\Option($args[0]);
-            });
-            $this->bind('ImageItem', function($app, $args) {
-                  return new \Kabas\Objects\Image\Item($args[0]);
-            });
+            $this->singleton('request', '\Kabas\Http\Request');
+            $this->singleton('router', '\Kabas\Http\Router');
+            $this->singleton('response', '\Kabas\Http\Response');
       }
 
       /**

@@ -12,7 +12,7 @@ class Selectable
             $this->fieldName = $fieldName;
             $data = (array) $data;
             foreach($data as $option) {
-                  $this->data[$option->id] = App::getInstance()->make('SelectableOption', [$option]);
+                  $this->data[$option->id] = App::getInstance()->make('\Kabas\Config\FieldTypes\Option', [$option]);
             }
             if(!$this->allowsMultipleValues && isset($fieldName)) {
                   try { $this->checkValues(); }

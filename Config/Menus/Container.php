@@ -36,7 +36,7 @@ class Container
                   if(is_array($file)) {
                         $this->loop($file);
                   } else {
-                        $this->items[$file->id] = App::getInstance()->make('MenuItem', [$file]);
+                        $this->items[$file->id] = App::getInstance()->make('Kabas\Config\Menus\Item', [$file]);
                   }
             }
       }
