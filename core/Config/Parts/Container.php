@@ -8,22 +8,6 @@ use Kabas\App;
 class Container
 {
       /**
-       * Recursively go through the files array to instanciate parts
-       * @param  array $files
-       * @return void
-       */
-      public function loop($files)
-      {
-            foreach($files as $file) {
-                  if(is_array($file)) {
-                        $this->loop($file);
-                  } else {
-                        $this->items[$file->id] = new Item($file);
-                  }
-            }
-      }
-
-      /**
        * Check if part exists in content
        * @param  string  $partID
        * @return boolean
@@ -69,29 +53,6 @@ class Container
             $path = THEME_PATH . DS . 'parts' . DS . $partID;
             $file = File::loadJsonFromDir($path);
             $this->items[$partID]->fields = $file[0]->fields;
-      }
-
-      /**
-       * Recursively go through the files array to add
-       * fields to the corresponding item
-       * @return void
-       */
-      public function loopAndAddFields($files)
-      {
-            // foreach($files as $id => $file) {
-            //       $this->items[$id]->fields = $file[0]->fields;
-            // }
-      }
-
-      /**
-       * Loads the fields object for each part from the theme
-       * @return void
-       */
-      public function loadFields()
-      {
-            // $path = 'themes' . DIRECTORY_SEPARATOR . App::config()->settings->site->theme . DIRECTORY_SEPARATOR . 'parts';
-            // $files = File::loadJsonFromDir($path);
-            // $this->loopAndAddFields($files);
       }
 
 }

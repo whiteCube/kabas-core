@@ -51,12 +51,10 @@ class App
       public function boot()
       {
             $this->config = new Config\Container();
-            $this->config->initSettings();
+            $this->config->initParts();
             $this->request = new Http\Request();
             $this->router = new Http\Router();
             $this->response = new Http\Response();
-            $this->config->initParts();
-            $this->router->loadRoutes();
             $this->setConstant();
       }
 
@@ -79,16 +77,6 @@ class App
       {
             $loader = new FileLoader(__DIR__ . '/../themes/'. $this->config->settings->site->theme);
             $loader->autoload();
-      }
-
-      /**
-       * Load the fields for each page
-       * @return void
-       */
-      public function loadFields()
-      {
-            $this->config->pages->loadFields();
-            $this->config->parts->loadFields();
       }
 
       /**

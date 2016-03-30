@@ -16,7 +16,7 @@ class Container
        * Load json files and instanciate pages
        * @return void
        */
-      public function instanciatePages()
+      private function instanciatePages()
       {
             $this->items = [];
             $lang = App::config()->settings->site->lang->active;
@@ -30,7 +30,7 @@ class Container
        * @param  array $files
        * @return void
        */
-      public function loop($files)
+      private function loop($files)
       {
             foreach($files as $file) {
                   if(is_array($file)) {
@@ -42,26 +42,10 @@ class Container
       }
 
       /**
-       * Recursively go through the files array to add
-       * fields to the corresponding item
+       * Load the fields object from the theme.
        * @return void
        */
-      public function loopAndAddFields($files)
-      {
-            foreach($files as $file) {
-                  if(is_array($file)) {
-                        $this->loopAndAddFields($file);
-                  } else {
-                        $this->items[$file->id]->fields = $file->fields;
-                  }
-            }
-      }
-
-      /**
-       * Loads the fields object from the theme.
-       * @return void
-       */
-      public function loadFields()
+      public function loadCurrentPageFields()
       {
             $template = App::router()->getCurrentPageTemplate();
             $path =

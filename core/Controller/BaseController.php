@@ -40,6 +40,7 @@ class BaseController
        */
       protected function constructViewData()
       {
+            App::config()->pages->loadCurrentPageFields();
             $this->checkValues('pages');
             $this->checkValues('parts');
 
@@ -92,7 +93,6 @@ class BaseController
                               echo $e->getMessage();
                               die();
                         }
-
 
                         $class = get_class(App::config()->fieldTypes->types[$type]);
                         if(isset($fieldDetails->allowsMultipleValues) && $type === 'select') {
