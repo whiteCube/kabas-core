@@ -7,56 +7,6 @@ use Kabas\App;
 
 class Container
 {
-      public function __construct()
-      {
-            $this->instanciateParts();
-            $this->instanciateHeader();
-            $this->instanciateFooter();
-      }
-
-      /**
-       * Load json files and instanciate parts
-       * @return void
-       */
-      public function instanciateParts()
-      {
-            $this->items = [];
-            $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'parts';
-            $files = File::loadJsonFromDir($path);
-            $this->loop($files);
-      }
-
-      /**
-       * Instanciate the header part
-       * @return void
-       */
-      public function instanciateHeader()
-      {
-            $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'header.json';
-            $file = File::loadJson($path);
-            if(isset($file)){
-                  $file->template = "header";
-                  $this->items['header'] = new Item($file);
-            }
-      }
-
-      /**
-       * Instanciate the footer part
-       * @return void
-       */
-      public function instanciateFooter()
-      {
-            $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'footer.json';
-            $file = File::loadJson($path);
-            if(isset($file)) {
-                  $file->template = "footer";
-                  $this->items['footer'] = new Item($file);
-            }
-      }
-
       /**
        * Recursively go through the files array to instanciate parts
        * @param  array $files
@@ -96,16 +46,41 @@ class Container
       }
 
       /**
+       * Load the specified part into memory.
+       * @param  string $partID
+       * @return void
+       */
+      public function loadPart($partID)
+      {
+            $lang = App::config()->settings->site->lang->active;
+            $path = 'content' . DS . $lang . DS . 'parts' . DS . $partID . '.json';
+            $file = File::loadJson($path);
+            $this->items[$partID] = new Item($file);
+            $this->loadPartFields($partID);
+      }
+
+      /**
+       * Read the fields for the specified part and load them into memory.
+       * @param  string $partID
+       * @return void
+       */
+      public function loadPartFields($partID)
+      {
+            $path = THEME_PATH . DS . 'parts' . DS . $partID;
+            $file = File::loadJsonFromDir($path);
+            $this->items[$partID]->fields = $file[0]->fields;
+      }
+
+      /**
        * Recursively go through the files array to add
        * fields to the corresponding item
        * @return void
        */
       public function loopAndAddFields($files)
       {
-            foreach($files as $id => $file) {
-                  $this->items[$id]->fields = $file[0]->fields;
-            }
-
+            // foreach($files as $id => $file) {
+            //       $this->items[$id]->fields = $file[0]->fields;
+            // }
       }
 
       /**
@@ -114,9 +89,9 @@ class Container
        */
       public function loadFields()
       {
-            $path = 'themes' . DIRECTORY_SEPARATOR . App::config()->settings->site->theme . DIRECTORY_SEPARATOR . 'parts';
-            $files = File::loadJsonFromDir($path);
-            $this->loopAndAddFields($files);
+            // $path = 'themes' . DIRECTORY_SEPARATOR . App::config()->settings->site->theme . DIRECTORY_SEPARATOR . 'parts';
+            // $files = File::loadJsonFromDir($path);
+            // $this->loopAndAddFields($files);
       }
 
 }
