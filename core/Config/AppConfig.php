@@ -13,11 +13,26 @@
 return [
 
       /**
-       * The driver used to get your site's data in the config and content
+       * The default driver used to get your site's data in the config and content
        * folders. Only JSON is supported at the moment.
        * @var string
        */
       'driver' => 'Json',
+
+      /**
+       * The mysql configuration (in case you want to use Eloquent in your models)
+       * @var array
+       */
+      'mysql' => [
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'kabas',
+            'username'  => 'root',
+            'password'  => 'root',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+      ],
 
       'imageDriver' => 'GD',
 

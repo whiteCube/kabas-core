@@ -3,13 +3,12 @@
 namespace Theme\Void\Parts;
 
 use \Kabas\Controller\BaseController;
-use \Kabas\Utils\Model;
+use Theme\Void\Models\News as NewsModel;
 
 class News extends BaseController
 {
       public function setup()
       {
-            $model = Model::get('news');
-            $this->data->news = $model->getAll();
+            $this->data->news = NewsModel::find(1)->get();
       }
 }
