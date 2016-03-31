@@ -22,12 +22,14 @@ class Model
             return $this->fields->$val;
       }
 
-      public function __call($name, $args)
-      {
-            $resp = call_user_func_array([$this->model, $name], $args);
-            $instance->parse($resp);
-            return $resp;
-      }
+      // We don't need this for now
+
+      // public function __call($name, $args)
+      // {
+      //       $resp = call_user_func_array([$this->model, $name], $args);
+      //       $instance->parse($resp);
+      //       return $resp;
+      // }
 
       public static function __callStatic($name, $args)
       {
@@ -39,13 +41,17 @@ class Model
 
       private function parse($response)
       {
+            // var_dump($response);
       }
 
       private function makeModel()
       {
             $this->checkDriver();
             $class = Text::toNamespace($this->driver);
-            $this->model = App::getInstance()->make('Kabas\Drivers\\' . $class, [[], static::$table]);
+            $modelInfo = new \stdClass();
+            $modelInfo->table = static::$table;
+            $modelInfo->name = 'news';
+            $this->model = App::getInstance()->make('Kabas\Drivers\\' . $class, [[], $modelInfo]);
       }
 
       private function checkDriver()

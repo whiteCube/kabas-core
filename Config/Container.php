@@ -7,12 +7,13 @@ use \Kabas\Utils\Benchmark;
 
 class Container
 {
-      public function __construct(Settings\Container $settings, FieldTypes\Container $fieldTypes)
+      public function __construct(Settings\Container $settings, FieldTypes\Container $fieldTypes, Models\Container $models)
       {
             $this->loadAppConfig();
             $this->initDriver();
             $this->settings = $settings;
             $this->fieldTypes = $fieldTypes;
+            $this->models = $models;
       }
 
       /**
