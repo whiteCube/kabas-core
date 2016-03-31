@@ -8,7 +8,8 @@
     ],
     "require": {
         "intervention/image": "^2.3",
-        "illuminate/container": "^5.2"
+        "illuminate/container": "^5.2",
+        "illuminate/database": "^5.2"
     },
     "autoload": {
           "psr-4": {
