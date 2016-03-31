@@ -8,29 +8,54 @@ use \Illuminate\Database\Capsule\Manager as Capsule;
 
 class Eloquent extends IlluminateEloquent
 {
-      protected static $kabasTable;
+      protected static $modelInfo;
 
-      public function __construct(array $attributes = [], $table = null)
+      public function __construct(array $attributes = [], $modelInfo = null)
       {
-            self::$kabasTable = $table;
-            $this->table = $table;
-            $this->capsule = new Capsule;
-            $this->capsule->addConnection(App::config()->appConfig['mysql']);
-            $this->capsule->bootEloquent();
+            self::$modelInfo = $modelInfo;
+            $this->table = $modelInfo->table;
+            $capsule = new Capsule;
+            $capsule->addConnection(App::config()->appConfig['mysql']);
+            $capsule->bootEloquent();
             parent::__construct($attributes);
       }
 
       /**
+       * Run the Eloquent get method and then instanciate FieldTypes
+       * for every field we get back.
+       * @return Kollection
+       */
+      public function get()
+      {
+            App::config()->models->loadModel(static::$modelInfo->name);
+            $collection = parent::get();
+            foreach($collection as $item) {
+                  foreach($item->attributes as $key => $field) {
+                        if(array_key_exists($key, App::config()->models->items[static::$modelInfo->name])) {
+                              $type = App::config()->models->items[static::$modelInfo->name]->$key->type;
+                              App::config()->fieldTypes->exists($type);
+                              $class = get_class(App::config()->fieldTypes->types[$type]);
+                              $item->$key = App::getInstance()->make($class, [$key, $field]);
+                        }
+                  }
+            }
+            return $collection;
+      }
+
+
+
+
+      /**
        *
        *	All of the code below is overridden Eloquent methods we had to tweak
-       *	in order to keep a reference to the static::$kabasTable property
+       *	in order to keep a reference to the static::$modelInfo property
        *	everytime this class is instanciated. Best not to touch!
-       * 	
+       *
        */
 
       public static function observe($class, $priority = 0)
       {
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             $className = is_string($class) ? $class : get_class($class);
             foreach ($instance->getObservableEvents() as $event) {
                   if (method_exists($class, $event)) {
@@ -41,7 +66,7 @@ class Eloquent extends IlluminateEloquent
 
       public function newInstance($attributes = [], $exists = false)
       {
-            $model = new static((array) $attributes, static::$kabasTable);
+            $model = new static((array) $attributes, static::$modelInfo);
             $model->exists = $exists;
             return $model;
       }
@@ -49,7 +74,7 @@ class Eloquent extends IlluminateEloquent
 
       public static function hydrate(array $items, $connection = null)
       {
-            $instance = (new static([], static::$kabasTable))->setConnection($connection);
+            $instance = (new static([], static::$modelInfo))->setConnection($connection);
             $items = array_map(function ($item) use ($instance) {
                   return $instance->newFromBuilder($item);
             }, $items);
@@ -58,21 +83,21 @@ class Eloquent extends IlluminateEloquent
 
       public static function hydrateRaw($query, $bindings = [], $connection = null)
       {
-            $instance = (new static([], static::$kabasTable))->setConnection($connection);
+            $instance = (new static([], static::$modelInfo))->setConnection($connection);
             $items = $instance->getConnection()->select($query, $bindings);
             return static::hydrate($items, $connection);
       }
 
       public static function create(array $attributes = [])
       {
-            $model = new static($attributes, static::$kabasTable);
+            $model = new static($attributes, static::$modelInfo);
             $model->save();
             return $model;
       }
 
       public static function forceCreate(array $attributes)
       {
-            $model = new static([], static::$kabasTable);
+            $model = new static([], static::$modelInfo);
             return static::unguarded(function () use ($model, $attributes) {
                   return $model->create($attributes);
             });
@@ -80,26 +105,26 @@ class Eloquent extends IlluminateEloquent
 
       public static function query()
       {
-            return (new static([], static::$kabasTable))->newQuery();
+            return (new static([], static::$modelInfo))->newQuery();
       }
 
       public static function on($connection = null)
       {
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             $instance->setConnection($connection);
             return $instance->newQuery();
       }
 
       public static function onWriteConnection()
       {
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             return $instance->newQuery()->useWritePdo();
       }
 
       public static function all($columns = ['*'])
       {
             $columns = is_array($columns) ? $columns : func_get_args();
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             return $instance->newQuery()->get($columns);
       }
 
@@ -108,7 +133,7 @@ class Eloquent extends IlluminateEloquent
             if (is_string($relations)) {
                   $relations = func_get_args();
             }
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             return $instance->newQuery()->with($relations);
       }
 
@@ -116,7 +141,7 @@ class Eloquent extends IlluminateEloquent
       {
             $count = 0;
             $ids = is_array($ids) ? $ids : func_get_args();
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             $key = $instance->getKeyName();
             foreach ($instance->whereIn($key, $ids)->get() as $model) {
                   if ($model->delete()) {
@@ -131,7 +156,7 @@ class Eloquent extends IlluminateEloquent
             if (! isset(static::$dispatcher)) {
             return;
             }
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             foreach ($instance->getObservableEvents() as $event) {
             static::$dispatcher->forget("eloquent.{$event}: ".static::class);
             }
@@ -145,14 +170,14 @@ class Eloquent extends IlluminateEloquent
                   $this->getUpdatedAtColumn(),
             ];
             $attributes = Arr::except($this->attributes, $except);
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             $instance->setRawAttributes($attributes);
             return $instance->setRelations($this->relations);
       }
 
       public static function __callStatic($method, $parameters)
       {
-            $instance = new static([], static::$kabasTable);
+            $instance = new static([], static::$modelInfo);
             return call_user_func_array([$instance, $method], $parameters);
       }
 
