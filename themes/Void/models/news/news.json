@@ -1,0 +1,16 @@
+{
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "News article title",
+                  "defaultValue": ""
+            },
+            "content": {
+                  "type": "textarea",
+                  "label": "Content",
+                  "description": "Content of your news article",
+                  "defaultValue": ""
+            }
+      }
+}

@@ -1,0 +1,16 @@
+{
+      "type": "news",
+      "driver": "json",
+      "items": [
+            {
+                  "id": 1,
+                  "title": "First news",
+                  "content": "Content of the first news! This is exciting isn't it?"
+            },
+            {
+                  "id": 2,
+                  "title": "Second news",
+                  "content": "Content of the second news! Wooooo?"
+            }
+      ]
+}
