@@ -50,11 +50,7 @@ class App extends Container
 
       public function registerBindings()
       {
-            $this->singleton('config', function() {
-                  $settings = $this->make('Kabas\Config\Settings\Container');
-                  $fieldTypes = $this->make('Kabas\Config\FieldTypes\Container');
-                  return new \Kabas\Config\Container($settings, $fieldTypes);
-            });
+            $this->singleton('config', '\Kabas\Config\Container');
             $this->singleton('request', '\Kabas\Http\Request');
             $this->singleton('router', '\Kabas\Http\Router');
             $this->singleton('response', '\Kabas\Http\Response');
