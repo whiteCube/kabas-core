@@ -11,6 +11,12 @@
                   "label": "Content",
                   "description": "Content of your news article",
                   "defaultValue": ""
+            },
+            "image": {
+                  "type": "image",
+                  "label": "Image",
+                  "desctiption": "Image of your article",
+                  "defaultValue": "banner.jpg"
             }
       }
 }
