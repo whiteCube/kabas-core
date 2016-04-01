@@ -11,6 +11,7 @@ class Image extends Item
 
       public function __construct($fieldName = null, $data = null)
       {
+            if(is_string($data)) $data = json_decode($data);
             parent::__construct($fieldName, $data);
             if($this->data) {
                   $this->file = App::getInstance()->make('\Kabas\Objects\Image\Item', [$this->data]);
@@ -31,9 +32,5 @@ class Image extends Item
       {
             return call_user_func_array([$this->file, $name], $args);
       }
-
-
-
-
 
 }
