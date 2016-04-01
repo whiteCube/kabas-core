@@ -188,7 +188,6 @@ class Editor
 
       public function save()
       {
-
             if(!$this->fileExists()) $this->executeActions()->save($this->intervention->dirname . DS . $this->lastFileName);
             $this->history = [];
             return $this->lastFileName;
