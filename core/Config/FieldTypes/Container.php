@@ -10,7 +10,7 @@ class Container
        * All the supported field types
        * @var array
        */
-      public $supportedTypes = [];
+      protected $supportedTypes = [];
 
       /**
        * Instances of the field types we need
@@ -29,11 +29,12 @@ class Container
        */
       public function loadFieldTypes()
       {
-            $path = __DIR__ . DIRECTORY_SEPARATOR . 'Types' . DIRECTORY_SEPARATOR;
+            $path = __DIR__ . DS . 'Types' . DS;
             $data = scandir($path);
             foreach($data as $file) {
                   if($file !== '.' && $file !== '..') {
-                        $this->supportedTypes[] = strtolower(basename($file, '.php'));
+                        $this->loadFieldType($file);
+
                   }
             }
       }
@@ -43,16 +44,20 @@ class Container
        * @param  string $fieldType
        * @return void
        */
-      public function loadFieldType($fieldType)
+      public function loadFieldType($file)
       {
-            $filename = ucfirst($fieldType) . '.php';
-            $path = __DIR__ . DIRECTORY_SEPARATOR . 'Types' . DIRECTORY_SEPARATOR;
-            require_once($path . $filename);
-            $class = '\Kabas\Config\FieldTypes\\' . ucfirst($fieldType);
-            if(class_exists($class)) {
-                  $instance = App::getInstance()->make($class);
-                  $this->types[$instance->type] = $instance;
-            }
+            $type = $this->getFieldTypeObject($file);
+            $this->supportedTypes[$type->name] = $type;
+            require_once($type->path);
+      }
+
+      protected function getFieldTypeObject($file)
+      {
+            $type = new \stdClass();
+            $type->name = strtolower(basename($file, '.php'));
+            $type->class = '\Kabas\Config\FieldTypes\\' . ucfirst($type->name);
+            $type->path = __DIR__ . DS . 'Types' . DS . $file;
+            return $type;
       }
 
       /**
@@ -62,13 +67,18 @@ class Container
        */
       public function exists($type)
       {
-            if(in_array($type, $this->supportedTypes)) {
-                  if(!array_key_exists($type, $this->types)) $this->loadFieldType($type);
+            if($this->getClass($type)) {
                   return true;
             } else {
                   $error = 'Type "' . $type . '" is not a supported field type.';
                   throw new \Kabas\Exceptions\TypeException($error);
             }
+      }
+
+      public function getClass($type)
+      {
+            if(isset($this->supportedTypes[$type])) return $this->supportedTypes[$type];
+            return false;
       }
 
 }

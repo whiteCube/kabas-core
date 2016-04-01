@@ -87,7 +87,7 @@ class View
             $oIterator = new RecursiveIteratorIterator($oDirectory);
             foreach($oIterator as $oFile) {
                   if ($oFile->getFilename() == $view) {
-                        return $oFile->getPath() . DIRECTORY_SEPARATOR . $oFile->getFilename();
+                        return $oFile->getPath() . DS . $oFile->getFilename();
                   }
             }
       }

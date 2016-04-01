@@ -21,6 +21,7 @@ class Model
       {
             $instance = new static;
             $resp = call_user_func_array([$instance->model, $name], $args);
+            // var_dump($resp);
             return $resp;
       }
 

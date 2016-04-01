@@ -20,7 +20,7 @@ class Container
       {
             $this->items = [];
             $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DIRECTORY_SEPARATOR . $lang . DIRECTORY_SEPARATOR . 'pages';
+            $path = 'content' . DS . $lang . DS . 'pages';
             $files = File::loadJsonFromDir($path);
             $this->loop($files);
       }
@@ -50,11 +50,11 @@ class Container
             $template = App::router()->getCurrentPageTemplate();
             $path =
                   'themes'
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . App::config()->settings->site->theme
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . 'pages'
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . $template;
 
             $file = File::loadJsonFromDir($path);

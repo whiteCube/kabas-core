@@ -107,15 +107,15 @@ class Assets
       {
             $dir =
                   App::router()->baseUrl
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . 'themes'
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . App::config()->settings->site->theme
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . 'assets'
-                  . DIRECTORY_SEPARATOR
+                  . DS
                   . $dir
-                  . DIRECTORY_SEPARATOR;
+                  . DS;
 
             return $dir;
       }

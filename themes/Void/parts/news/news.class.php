@@ -9,6 +9,7 @@ class News extends BaseController
 {
       public function setup()
       {
-            $this->data->news = NewsModel::find(1)->get();
+            $news = NewsModel::all();
+            $this->data->news = $news;
       }
 }

@@ -17,24 +17,16 @@ class Eloquent extends IlluminateEloquent
             $capsule = new Capsule;
             $capsule->addConnection(App::config()->appConfig['mysql']);
             $capsule->bootEloquent();
+            App::config()->models->loadModel($modelInfo);
             parent::__construct($attributes);
       }
 
-      /**
-       * Run the Eloquent get method and then instanciate FieldTypes
-       * for every field we get back.
-       * @return Kollection
-       */
-      public function get()
+      protected function loopThroughFields($item)
       {
-            App::config()->models->loadModel(static::$modelInfo->path);
-            $collection = parent::get();
-            foreach($collection as $item) {
-                  foreach($item->attributes as $key => $field) {
-                        $this->instanciateField($item, $key, $field);
-                  }
+            foreach($item as $key => $value) {
+                  $item->$key = self::instanciateField($key, $value);
             }
-            return $collection;
+            return $item;
       }
 
       /**
@@ -44,14 +36,21 @@ class Eloquent extends IlluminateEloquent
        * @param  string $field
        * @return void
        */
-      private function instanciateField($item, $fieldName, $field)
+      protected static function instanciateField($key, $value)
       {
-            if(array_key_exists($fieldName, App::config()->models->items[static::$modelInfo->path->filename])) {
-                  $type = App::config()->models->items[static::$modelInfo->path->filename]->$fieldName->type;
+            $modelName = static::$modelInfo->path->filename;
+            if(!App::config()->models->fieldExists($key, $modelName)) return $value;
+
+            try {
+                  $type = App::config()->models->items[$modelName]->$key->type;
                   App::config()->fieldTypes->exists($type);
-                  $class = get_class(App::config()->fieldTypes->types[$type]);
-                  $item->$fieldName = App::getInstance()->make($class, [$fieldName, $field]);
-            }
+            } catch (\Kabas\Exceptions\TypeException $e) {
+                  //    TODO: handle exception
+                  die();
+            };
+
+            $class = App::config()->fieldTypes->getClass($type)->class;
+            return App::getInstance()->make($class, [$key, $value]);
       }
 
 
@@ -64,6 +63,16 @@ class Eloquent extends IlluminateEloquent
        *	everytime this class is instanciated. Best not to touch!
        *
        */
+
+
+       public static function all($columns = ['*'])
+       {
+           $columns = is_array($columns) ? $columns : func_get_args();
+
+           $instance = new static([], static::$modelInfo);
+
+           return $instance->newQuery()->get($columns);
+       }
 
       public static function observe($class, $priority = 0)
       {
@@ -88,6 +97,7 @@ class Eloquent extends IlluminateEloquent
       {
             $instance = (new static([], static::$modelInfo))->setConnection($connection);
             $items = array_map(function ($item) use ($instance) {
+                  $item = $instance->loopThroughFields($item);
                   return $instance->newFromBuilder($item);
             }, $items);
             return $instance->newCollection($items);
@@ -131,13 +141,6 @@ class Eloquent extends IlluminateEloquent
       {
             $instance = new static([], static::$modelInfo);
             return $instance->newQuery()->useWritePdo();
-      }
-
-      public static function all($columns = ['*'])
-      {
-            $columns = is_array($columns) ? $columns : func_get_args();
-            $instance = new static([], static::$modelInfo);
-            return $instance->newQuery()->get($columns);
       }
 
       public static function with($relations)
@@ -189,7 +192,9 @@ class Eloquent extends IlluminateEloquent
 
       public static function __callStatic($method, $parameters)
       {
+            var_dump('test'); die();
             $instance = new static([], static::$modelInfo);
+            // var_dump('lolcats', $method, static::$modelInfo);
             return call_user_func_array([$instance, $method], $parameters);
       }
 

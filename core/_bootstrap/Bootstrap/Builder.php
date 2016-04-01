@@ -14,14 +14,14 @@ class Builder
       {
             $this->buildExclude( $dir );
             $this->scan( $dir );
-            $this->write( __DIR__ . DIRECTORY_SEPARATOR . FileLoader::$fileLoad );
+            $this->write( __DIR__ . DS . FileLoader::$fileLoad );
       }
 
       protected function buildExclude( $dir )
       {
             array_push($this->exclude, FileLoader::$dirBootstrap);
             foreach ($this->exclude as $i => $s) {
-                  $this->exclude[$i] = $dir . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $s);
+                  $this->exclude[$i] = $dir . DS . str_replace('/', DS, $s);
             }
       }
 
@@ -38,7 +38,7 @@ class Builder
             $aFilesUnderscored = []; $aFilesRegular = []; $aDir = [];
             foreach ($a as $s) {
                   if(!in_array($s, $this->globalExclude)){
-                        $path = $dir . DIRECTORY_SEPARATOR . $s;
+                        $path = $dir . DS . $s;
                         if(!in_array($path, $this->exclude)) {
                               if( is_file($path) ) {
                                     if(substr($s, 0, 1) == '_') array_push($aFilesUnderscored, ['type' => 'file', 'path' => $path]);

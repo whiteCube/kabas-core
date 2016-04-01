@@ -146,8 +146,8 @@ class App extends Container
       protected function setConstants()
       {
             define('CORE_PATH', __dir__);
-            define('BASE_PATH', preg_replace('/(\\' . DIRECTORY_SEPARATOR . 'core)?/', '', CORE_PATH));
-            define('THEME_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->settings->site->theme);
+            define('BASE_PATH', preg_replace('/(\\' . DS . 'core)?/', '', CORE_PATH));
+            define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . $this->config->settings->site->theme);
       }
 
 }

@@ -32,8 +32,8 @@ class File
 
             foreach($data as $item) {
                   if($item !== '.' && $item !== '..') {
-                        if(is_dir($dirPath . DIRECTORY_SEPARATOR . $item)) {
-                              $items[$item] = self::parseDirectory($dirPath . DIRECTORY_SEPARATOR . $item);
+                        if(is_dir($dirPath . DS . $item)) {
+                              $items[$item] = self::parseDirectory($dirPath . DS . $item);
                         } else {
                               $items[] = $item;
                         }
@@ -54,11 +54,11 @@ class File
 
             foreach($data as $item) {
                   if($item !== '.' && $item !== '..') {
-                        if(is_dir($dirPath . DIRECTORY_SEPARATOR . $item)) {
-                              $items[$item] = self::loadJsonFromDir($dirPath . DIRECTORY_SEPARATOR . $item);
+                        if(is_dir($dirPath . DS . $item)) {
+                              $items[$item] = self::loadJsonFromDir($dirPath . DS . $item);
                         } else {
                               if(self::isJson($item)){
-                                    $items[] = self::loadJson($dirPath . DIRECTORY_SEPARATOR . $item);
+                                    $items[] = self::loadJson($dirPath . DS . $item);
                               }
                         }
                   }
