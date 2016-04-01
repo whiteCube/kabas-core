@@ -40,7 +40,7 @@ class FileLoader
 
       protected function loadBuild()
       {
-            if( App::isDebug() || !file_exists( __DIR__ . DIRECTORY_SEPARATOR . self::$fileLoad ) ){
+            if( App::isDebug() || !file_exists( __DIR__ . DS . self::$fileLoad ) ){
                   $this->build();
             } else {
                   $this->loadFiles();
@@ -49,14 +49,14 @@ class FileLoader
 
       protected function build()
       {
-            require_once( __DIR__ . DIRECTORY_SEPARATOR . self::$fileBuilder );
+            require_once( __DIR__ . DS . self::$fileBuilder );
             $builder = new Builder( $this->dir );
             $this->files = $builder->files;
       }
 
       protected function loadFiles()
       {
-            $this->files = include( __DIR__ . DIRECTORY_SEPARATOR . self::$fileLoad );
+            $this->files = include( __DIR__ . DS . self::$fileLoad );
       }
 
 }

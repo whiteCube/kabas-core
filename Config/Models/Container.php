@@ -14,8 +14,10 @@ class Container
        */
       public function loadModel($modelInfo)
       {
-            $this->items[$modelInfo->filename] = [];
-            $this->loadModelFields($modelInfo);
+            if(!isset($this->items[$modelInfo->path->filename])) {
+                  $this->items[$modelInfo->path->filename] = [];
+                  $this->loadModelFields($modelInfo);
+            }
       }
 
       /**
@@ -25,8 +27,13 @@ class Container
        */
       public function loadModelFields($modelInfo)
       {
-            $file = File::loadJsonFromDir($modelInfo->path);
-            $this->items[$modelInfo->filename] = $file[0]->fields;
+            $file = File::loadJsonFromDir($modelInfo->path->path);
+            $this->items[$modelInfo->path->filename] = $file[0]->fields;
+      }
+
+      public function fieldExists($fieldName, $model)
+      {
+            return isset($this->items[$model]->$fieldName);
       }
 
 }
