@@ -8,36 +8,14 @@ use Kabas\App;
 class Container
 {
       /**
-       * Check if part exists in content
-       * @param  string  $partID
-       * @return boolean
-       */
-      public function hasPart($partID)
-      {
-            if(array_key_exists($partID, $this->items)) return true;
-            return false;
-      }
-
-      /**
-       * Get part if it exists
-       * @param  string $partID
-       * @return object
-       */
-      public function getPart($partID)
-      {
-            if($this->hasPart($partID)) return $this->items[$partID];
-            else return 'error, part does not exist';
-      }
-
-      /**
        * Load the specified part into memory.
        * @param  string $partID
        * @return void
        */
-      public function loadModel($modelID)
+      public function loadModel($modelInfo)
       {
-            $this->items[$modelID] = [];
-            $this->loadModelFields($modelID);
+            $this->items[$modelInfo->filename] = [];
+            $this->loadModelFields($modelInfo);
       }
 
       /**
@@ -45,11 +23,10 @@ class Container
        * @param  string $partID
        * @return void
        */
-      public function loadModelFields($modelID)
+      public function loadModelFields($modelInfo)
       {
-            $path = THEME_PATH . DS . 'models' . DS . $modelID;
-            $file = File::loadJsonFromDir($path);
-            $this->items[$modelID] = $file[0]->fields;
+            $file = File::loadJsonFromDir($modelInfo->path);
+            $this->items[$modelInfo->filename] = $file[0]->fields;
       }
 
 }

@@ -27,19 +27,31 @@ class Eloquent extends IlluminateEloquent
        */
       public function get()
       {
-            App::config()->models->loadModel(static::$modelInfo->name);
+            App::config()->models->loadModel(static::$modelInfo->path);
             $collection = parent::get();
             foreach($collection as $item) {
                   foreach($item->attributes as $key => $field) {
-                        if(array_key_exists($key, App::config()->models->items[static::$modelInfo->name])) {
-                              $type = App::config()->models->items[static::$modelInfo->name]->$key->type;
-                              App::config()->fieldTypes->exists($type);
-                              $class = get_class(App::config()->fieldTypes->types[$type]);
-                              $item->$key = App::getInstance()->make($class, [$key, $field]);
-                        }
+                        $this->instanciateField($item, $key, $field);
                   }
             }
             return $collection;
+      }
+
+      /**
+       * Instanciate a Kabas FieldType.
+       * @param  object $item
+       * @param  string $fieldName
+       * @param  string $field
+       * @return void
+       */
+      private function instanciateField($item, $fieldName, $field)
+      {
+            if(array_key_exists($fieldName, App::config()->models->items[static::$modelInfo->path->filename])) {
+                  $type = App::config()->models->items[static::$modelInfo->path->filename]->$fieldName->type;
+                  App::config()->fieldTypes->exists($type);
+                  $class = get_class(App::config()->fieldTypes->types[$type]);
+                  $item->$fieldName = App::getInstance()->make($class, [$fieldName, $field]);
+            }
       }
 
 
