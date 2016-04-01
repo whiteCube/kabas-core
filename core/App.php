@@ -62,11 +62,12 @@ class App extends Container
        */
       public function boot()
       {
+            $this->setBaseConstants();
             $pages = $this->make('Kabas\Config\Pages\Container');
             $parts = $this->make('Kabas\Config\Parts\Container');
             $menus = $this->make('Kabas\Config\Menus\Container');
             $this->config->initParts($pages, $parts, $menus);
-            $this->setConstant();
+            $this->setConstants();
       }
 
       /**
@@ -132,12 +133,18 @@ class App extends Container
        * Checks if app is in debug mode
        * @return boolean
        */
-      static function isDebug() {
+      static function isDebug()
+      {
             return static::DEBUG;
       }
 
-      protected function setConstant(){
+      protected function setBaseConstants()
+      {
             define('DS', DIRECTORY_SEPARATOR);
+      }
+
+      protected function setConstants()
+      {
             define('CORE_PATH', __dir__);
             define('BASE_PATH', preg_replace('/(\\' . DIRECTORY_SEPARATOR . 'core)?/', '', CORE_PATH));
             define('THEME_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'themes' . DIRECTORY_SEPARATOR . $this->config->settings->site->theme);
