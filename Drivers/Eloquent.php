@@ -71,6 +71,15 @@ class Eloquent extends IlluminateEloquent
        */
 
 
+      public function setAttribute($key, $value)
+      {
+            if((is_object($value) && get_class($value) !== 'Carbon\Carbon') || is_array($value)) {
+                  $value = json_encode((array) $value);
+            }
+            parent::setAttribute($key, $value);
+      }
+
+
        public static function all($columns = ['*'])
        {
             $columns = is_array($columns) ? $columns : func_get_args();
