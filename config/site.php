@@ -11,7 +11,7 @@ return [
        * must have its own folder inside the content folder.
        */
       "lang" => [
-            "default" => "en-US",
+            "default" => "fr-FR",
             "available" => [ "en-US", "fr-FR" ]
       ],
 
