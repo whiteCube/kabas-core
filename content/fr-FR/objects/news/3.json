@@ -1,0 +1,9 @@
+{
+      "id": 3,
+      "title": "Third news",
+      "content": "Content of the third news!",
+      "image": {
+            "src": "banner.jpg",
+            "alt": "Article 3's image"
+      }
+}

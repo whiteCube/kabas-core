@@ -19,6 +19,12 @@ class Json
             }
       }
 
+      public static function __callStatic($method, $parameters)
+      {
+            $instance = self::getInstance();
+            if(method_exists($instance, $method)) call_user_func_array([$instance, $method], $parameters);
+      }
+
       /**
        * Get instance of this driver in static calls
        * @return \Kabas\Drivers\Json
@@ -98,6 +104,13 @@ class Json
             return $newItem;
       }
 
+      protected function getStackedItems()
+      {
+            $instance = self::getInstance();
+            if(!isset($this->stackedItems)) return File::loadJsonFromDir($instance->getContentPath());
+            return $this->stackedItems;
+      }
+
       /**
        * Get all entries
        * @return array
@@ -127,6 +140,106 @@ class Json
             $item = $instance->getColumns($item, $columns);
             $item = $instance->instanciateFields($item, $columns);
             return $item;
+      }
+
+      /**
+       * Specify a condition for the items to retrieve.
+       * @param  string $column
+       * @param  string $operator
+       * @param  mixed $value
+       * @param  bool $boolean
+       * @return $this
+       */
+      public function where($column, $arg1 = null, $arg2 = null, $boolean = null)
+      {
+            switch(func_num_args()) {
+                  case 2: $this->applyWhere($column, '=', $arg1); break;
+                  default: $this->applyWhere($column, $arg1, $arg2);
+            }
+            return $this;
+      }
+
+      protected function applyWhere($column, $operator, $value)
+      {
+            $items = $this->getStackedItems();
+            $this->stackedItems = [];
+            foreach($items as $item) {
+                  if(isset($item->$column) && $this->testCondition($operator, $item->$column, $value)) {
+                        $this->stackedItems[] = $item;
+                  }
+            }
+      }
+
+      protected function testCondition($operator, $v, $value)
+      {
+            switch($operator){
+                  case '=':   return $v === $value; break;
+                  case '!=':  return $v !== $value; break;
+                  case '>':   return $v > $value; break;
+                  case '>=':  return $v >= $value; break;
+                  case '<':   return $v < $value; break;
+                  case '<=':  return $v <= $value; break;
+                  default:    return $v === $value;
+            }
+      }
+
+      /**
+       * Limit the number of entries you recieve.
+       * @param  int $limit
+       * @return $this
+       */
+      public function limit($limit)
+      {
+            $limit = intval($limit);
+            if($limit <= 0) return 'error';
+            $this->limit = $limit;
+            return $this;
+      }
+
+      /**
+       * Sort the items.
+       * @param  string $column
+       * @param  string $direction
+       * @return $this
+       */
+      public function orderBy($column, $direction = 'asc')
+      {
+            $items = $this->getStackedItems();
+
+            usort($items, function($a, $b) use ($column, $direction) {
+                  if($direction === 'asc') return $a->$column > $b->$column;
+                  if($direction === 'desc') return $a->$column < $b->$column;
+            });
+
+            $this->stackedItems = $items;
+
+            return $this;
+
+      }
+
+      /**
+       * Get the fields by instanciating each stacked item.
+       * @param  array $columns
+       * @return array
+       */
+      public function get($columns = null)
+      {
+            $stackedItems = $this->applyLimit();
+            $items = [];
+            foreach($stackedItems as $item) {
+                  $items[] = $this->instanciateFields($item, $columns);
+            }
+            return $items;
+      }
+
+      /**
+       * Applies the defined item count limit.
+       * @return array
+       */
+      public function applyLimit()
+      {
+            if(isset($this->limit)) return array_slice($this->getStackedItems(), 0, $this->limit);
+            return $this->getStackedItems();
       }
 
 }
