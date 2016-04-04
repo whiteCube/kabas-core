@@ -10,7 +10,7 @@ class Container
        * All the supported field types
        * @var array
        */
-      protected $supportedTypes = [];
+      public $supportedTypes = [];
 
       /**
        * Instances of the field types we need

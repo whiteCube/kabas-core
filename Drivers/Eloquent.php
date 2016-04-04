@@ -45,7 +45,9 @@ class Eloquent extends IlluminateEloquent
                   $type = App::config()->models->items[$modelName]->$key->type;
                   App::config()->fieldTypes->exists($type);
             } catch (\Kabas\Exceptions\TypeException $e) {
-                  //    TODO: handle exception
+                  $e->setFieldName($key, $modelName);
+                  $e->showAvailableTypes();
+                  echo $e->getMessage();
                   die();
             };
 
@@ -67,11 +69,9 @@ class Eloquent extends IlluminateEloquent
 
        public static function all($columns = ['*'])
        {
-           $columns = is_array($columns) ? $columns : func_get_args();
-
-           $instance = new static([], static::$modelInfo);
-
-           return $instance->newQuery()->get($columns);
+            $columns = is_array($columns) ? $columns : func_get_args();
+            $instance = new static([], static::$modelInfo);
+            return $instance->newQuery()->get($columns);
        }
 
       public static function observe($class, $priority = 0)
