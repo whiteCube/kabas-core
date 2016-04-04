@@ -192,9 +192,7 @@ class Eloquent extends IlluminateEloquent
 
       public static function __callStatic($method, $parameters)
       {
-            var_dump('test'); die();
             $instance = new static([], static::$modelInfo);
-            // var_dump('lolcats', $method, static::$modelInfo);
             return call_user_func_array([$instance, $method], $parameters);
       }
 
