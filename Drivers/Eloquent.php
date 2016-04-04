@@ -15,7 +15,7 @@ class Eloquent extends IlluminateEloquent
             self::$modelInfo = $modelInfo;
             $this->table = $modelInfo->table;
             $capsule = new Capsule;
-            $capsule->addConnection(App::config()->appConfig['mysql']);
+            $capsule->addConnection((array) App::config()->settings->database);
             $capsule->bootEloquent();
             App::config()->models->loadModel($modelInfo);
             parent::__construct($attributes);
