@@ -147,6 +147,7 @@ class App extends Container
       {
             define('CORE_PATH', __dir__);
             define('BASE_PATH', preg_replace('/(\\' . DS . 'core)?/', '', CORE_PATH));
+            define('CONTENT_PATH', BASE_PATH . DS . 'content');
             define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . $this->config->settings->site->theme);
       }
 

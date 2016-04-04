@@ -1,0 +1,9 @@
+{
+      "id": 2,
+      "title": "Second news",
+      "content": "Content of the second news!",
+      "image": {
+            "src": "article2json.jpg",
+            "alt": "Article 2's image"
+      }
+}

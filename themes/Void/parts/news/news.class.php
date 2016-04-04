@@ -10,6 +10,8 @@ class News extends BaseController
       public function setup()
       {
             $news = NewsModel::all();
+            var_dump($news);
+            die();
             $this->data->news = $news;
       }
 }
