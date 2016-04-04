@@ -13,6 +13,8 @@ class Eloquent extends IlluminateEloquent
       public function __construct(array $attributes = [], $modelInfo = null)
       {
             self::$modelInfo = $modelInfo;
+            $this->fillable = $modelInfo->fillable;
+            $this->guarded = $modelInfo->guarded;
             $this->table = $modelInfo->table;
             $capsule = new Capsule;
             $capsule->addConnection((array) App::config()->settings->database);

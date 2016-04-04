@@ -11,6 +11,8 @@ class Model
       protected $fields;
       protected $model;
       protected static $table;
+      protected static $fillable;
+      protected static $guarded;
       protected static $instance;
 
       public function __construct()
@@ -75,6 +77,8 @@ class Model
             $class = Text::toNamespace($this->driver);
             $modelInfo = new \stdClass();
             $modelInfo->table = static::$table;
+            $modelInfo->fillable = static::$fillable;
+            $modelInfo->guarded = static::$guarded;
             $modelInfo->path = $this->getDir();
             $this->model = App::getInstance()->make('Kabas\Drivers\\' . $class, [[], $modelInfo]);
       }
