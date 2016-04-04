@@ -21,6 +21,11 @@ class Eloquent extends IlluminateEloquent
             parent::__construct($attributes);
       }
 
+      /**
+       * Call instanciateField on every field from the model
+       * @param  object $item
+       * @return object
+       */
       protected function loopThroughFields($item)
       {
             foreach($item as $key => $value) {
@@ -31,10 +36,9 @@ class Eloquent extends IlluminateEloquent
 
       /**
        * Instanciate a Kabas FieldType.
-       * @param  object $item
-       * @param  string $fieldName
-       * @param  string $field
-       * @return void
+       * @param  string $key
+       * @param  string $value
+       * @return \Kabas\Config\FieldTypes\[type]
        */
       protected static function instanciateField($key, $value)
       {
