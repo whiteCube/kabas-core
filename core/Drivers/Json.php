@@ -242,4 +242,23 @@ class Json
             return $this->getStackedItems();
       }
 
+      public function save()
+      {
+
+      }
+
+      public function create($data)
+      {
+            if(!isset($data['id'])) $data['id'] = $this->getAutoIncrementedId();
+            File::writeJson($data, $this->getContentPath() . DS . $data['id'] . '.json');
+      }
+
+      protected function getAutoIncrementedId()
+      {
+            $files = scandir($this->getContentPath());
+            $lastIndex = count($files) - 1;
+            $lastId = intval(pathinfo($files[$lastIndex], PATHINFO_FILENAME));
+            return ++$lastId;
+      }
+
 }

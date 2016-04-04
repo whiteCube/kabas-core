@@ -20,6 +20,11 @@ class File
             }
       }
 
+      static function writeJson($data, $path)
+      {
+            file_put_contents($path, json_encode($data));
+      }
+
       /**
        * Get directory and subdirectory structure
        * @param  string $dirPath
