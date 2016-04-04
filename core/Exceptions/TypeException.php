@@ -30,8 +30,7 @@ class TypeException extends Exception
       public function showAvailableTypes()
       {
             $this->message = $this->message . '<pre>Available field types: ';
-
-            foreach(App::config()->fieldTypes->types as $typeName => $type) {
+            foreach(App::config()->fieldTypes->supportedTypes as $typeName => $type) {
                   $this->message = $this->message . '<br>' . $typeName;
             }
             $this->message .= "</pre>";
