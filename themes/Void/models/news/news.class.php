@@ -8,5 +8,4 @@ class News extends Model
 {
       protected $driver = 'eloquent';
       protected static $table = 'news';
-
 }
