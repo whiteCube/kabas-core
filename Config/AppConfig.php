@@ -17,24 +17,12 @@ return [
        * folders. Only JSON is supported at the moment.
        * @var string
        */
-      'driver' => 'Json',
+      'driver' => 'json',
 
       /**
-       * The mysql configuration (in case you want to use Eloquent in your models)
-       * @var array
+       * The driver used by Intervention Image (GD | imagick)
        */
-      'mysql' => [
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'kabas',
-            'username'  => 'root',
-            'password'  => 'root',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-      ],
-
-      'imageDriver' => 'GD',
+      'imageDriver' => 'imagick',
 
       /**
        * Aliases for classes
