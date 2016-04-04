@@ -22,8 +22,7 @@ class Request
        */
       public function isPost()
       {
-            if($this->method === 'POST') return true;
-            return false;
+            return $this->method === 'POST';
       }
 
       /**
@@ -32,8 +31,7 @@ class Request
        */
       public function isGet()
       {
-            if($this->method === 'GET') return true;
-            return false;
+            return $this->method === 'GET';
       }
 
       protected function constructData()

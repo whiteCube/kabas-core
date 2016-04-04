@@ -6,6 +6,6 @@ use Kabas\Model\Model;
 
 class News extends Model
 {
-      protected $driver = 'json';
+      protected $driver = 'eloquent';
       protected static $table = 'news';
 }

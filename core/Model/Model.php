@@ -9,20 +9,40 @@ class Model
 {
       protected $driver;
       protected $fields;
+      protected $model;
       protected static $table;
       protected static $instance;
 
       public function __construct()
       {
+            self::$instance = $this;
             $this->makeModel();
+      }
+
+      public function __set($name, $value)
+      {
+            $instance = self::getInstance();
+            $instance->model->$name = $value;
+      }
+
+      public function __call($name, $args)
+      {
+            $instance = self::getInstance();
+            $resp = call_user_func_array([$instance->model, $name], $args);
+            return $resp;
       }
 
       public static function __callStatic($name, $args)
       {
             $instance = new static;
             $resp = call_user_func_array([$instance->model, $name], $args);
-            // var_dump($resp);
             return $resp;
+      }
+
+      static function getInstance()
+      {
+            if(!isset(self::$instance)) self::$instance = new static;
+            return self::$instance;
       }
 
       /**
