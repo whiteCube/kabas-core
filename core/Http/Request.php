@@ -13,6 +13,7 @@ class Request
       public function __construct()
       {
             $this->method = $_SERVER['REQUEST_METHOD'];
+            $this->constructData();
       }
 
       /**
@@ -33,5 +34,11 @@ class Request
       {
             if($this->method === 'GET') return true;
             return false;
+      }
+
+      protected function constructData()
+      {
+            $this->get = (object) $_GET;
+            $this->post = (object) $_POST;
       }
 }
