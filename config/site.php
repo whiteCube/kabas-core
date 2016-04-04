@@ -15,6 +15,9 @@ return [
             "available" => [ "en-US", "fr-FR" ]
       ],
 
+      /**
+       * Meta information about your site.
+       */
       "meta" => [
             "description" => "This is the default description for your site",
             "keywords" => "Default keywords that describe your site"
