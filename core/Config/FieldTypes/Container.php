@@ -24,7 +24,7 @@ class Container
       }
 
       /**
-       * Load the names of the supported field types.
+       * Load the supported field types.
        * @return void
        */
       public function loadFieldTypes()
@@ -51,6 +51,11 @@ class Container
             require_once($type->path);
       }
 
+      /**
+       * Get FieldType info
+       * @param  string $file
+       * @return object
+       */
       protected function getFieldTypeObject($file)
       {
             $type = new \stdClass();
@@ -75,6 +80,11 @@ class Container
             }
       }
 
+      /**
+       * Get a FieldType class if it exists
+       * @param  string $type
+       * @return string | bool
+       */
       public function getClass($type)
       {
             if(isset($this->supportedTypes[$type])) return $this->supportedTypes[$type];
