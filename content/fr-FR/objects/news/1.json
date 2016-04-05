@@ -1,9 +1,9 @@
 {
-      "id": 1,
-      "title": "First news",
-      "content": "Content of the first news! This is exciting isn't it?",
-      "image": {
-            "src": "article1json.jpg",
-            "alt": "Article 1's image"
-      }
+    "id": 1,
+    "title": "First news!",
+    "content": "Content of the First news!",
+    "image": {
+        "src": "article1json.jpg",
+        "alt": "Article 1's image"
+    }
 }

@@ -1,1 +1,9 @@
-{"title":"Title of this test news article","content":"Content of this test news article","image":{"src":"article2.jpg","alt":"Alt of the image"},"id":4}
+{
+    "title": "News number 4!",
+    "content": "Content of this test news article",
+    "image": {
+        "src": "article2.jpg",
+        "alt": "Alt of the image"
+    },
+    "id": 4
+}
