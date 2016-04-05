@@ -20,9 +20,15 @@ class File
             }
       }
 
+      /**
+       * Writes data to a json file.
+       * @param  mixed $data
+       * @param  string $path
+       * @return void
+       */
       static function writeJson($data, $path)
       {
-            file_put_contents($path, json_encode($data));
+            file_put_contents($path . '.json', json_encode($data));
       }
 
       /**
