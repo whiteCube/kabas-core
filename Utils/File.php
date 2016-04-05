@@ -28,7 +28,12 @@ class File
        */
       static function writeJson($data, $path)
       {
-            file_put_contents($path . '.json', json_encode($data));
+            file_put_contents($path . '.json', json_encode($data, JSON_PRETTY_PRINT));
+      }
+
+      static function deleteJson($path)
+      {
+            unlink($path . '.json');
       }
 
       /**

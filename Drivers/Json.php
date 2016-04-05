@@ -5,15 +5,19 @@ namespace Kabas\Drivers;
 use \Kabas\App;
 use \Kabas\Utils\File;
 
-class Json
+class Json implements \IteratorAggregate
 {
       protected static $instance;
       protected static $modelInfo;
       protected $attributes = [];
+      protected $hasStacked;
+      protected $limit;
+      protected $stackedItems = [];
 
       public function __construct($uselesss = null, $modelInfo = null)
       {
             self::$instance = $this;
+            $this->hasStacked = false;
             if(isset($modelInfo)) {
                   self::$modelInfo = $modelInfo;
                   App::config()->models->loadModel($modelInfo);
@@ -28,12 +32,18 @@ class Json
 
       public function __set($name, $value)
       {
+            $this->attributes['original']->$name = $value;
             $this->attributes[$name] = $value;
       }
 
       public function __get($name)
       {
             return $this->attributes[$name];
+      }
+
+      public function getIterator()
+      {
+            return new \ArrayIterator($this->stackedItems);
       }
 
       /**
@@ -66,10 +76,13 @@ class Json
       {
             $instance = self::getInstance();
             $item = self::getColumns($item, $columns);
+            $newItem = new \stdClass;
+            $newItem->original = new \stdClass;
             foreach($item as $key => $value) {
-                  $item->$key = $instance->instanciateField($key, $value);
+                  $newItem->original->$key = $value;
+                  $newItem->$key = $instance->instanciateField($key, $value);
             }
-            return $item;
+            return $newItem;
       }
 
       /**
@@ -123,8 +136,9 @@ class Json
       protected function getStackedItems()
       {
             $instance = self::getInstance();
-            if(!isset($this->stackedItems)) return File::loadJsonFromDir($instance->getContentPath());
-            return $this->stackedItems;
+            if(($this->hasStacked)) return $this->stackedItems;
+            $this->hasStacked = true;
+            return File::loadJsonFromDir($instance->getContentPath());
       }
 
       /**
@@ -139,7 +153,8 @@ class Json
             foreach($items as $key => $item) {
                   $items[$key] = $instance->instanciateFields($item, $columns);
             }
-            return $items;
+            $instance->stackedItems = $items;
+            return $instance;
       }
 
       /**
@@ -154,8 +169,8 @@ class Json
             $path = $instance->getContentPath() . DS . $id . '.json';
             $item = File::loadJson($path);
             $item = $instance->getColumns($item, $columns);
-            $item = $instance->instanciateFields($item, $columns);
-            return $item;
+            $instance->attributes = (array) $instance->instanciateFields($item, $columns);
+            return $instance;
       }
 
       /**
@@ -241,11 +256,15 @@ class Json
       public function get($columns = null)
       {
             $stackedItems = $this->applyLimit();
-            $items = [];
-            foreach($stackedItems as $item) {
-                  $items[] = $this->instanciateFields($item, $columns);
+            $this->stackedItems = [];
+            if(count($stackedItems) === 1) {
+                  $this->attributes = (array) $this->instanciateFields($stackedItems[0], $columns);
+                  return $this;
             }
-            return $items;
+            foreach($stackedItems as $item) {
+                  $this->stackedItems[] = $this->instanciateFields($item, $columns);
+            }
+            return $this;
       }
 
       /**
@@ -254,8 +273,17 @@ class Json
        */
       public function applyLimit()
       {
-            if(isset($this->limit)) return array_slice($this->getStackedItems(), 0, $this->limit);
+            if(!is_null($this->limit)) return array_slice($this->getStackedItems(), 0, $this->limit);
             return $this->getStackedItems();
+      }
+
+      /**
+       * Check if current model exists.
+       * @return bool
+       */
+      protected function exists()
+      {
+            return isset($this->stackedItems[0]->id) || isset($this->attributes['id']);
       }
 
       /**
@@ -264,7 +292,13 @@ class Json
        */
       public function save()
       {
-            $this->create($this->attributes);
+            if(!$this->exists()) $this->create($this->attributes);
+            $this->update($this->attributes);
+      }
+
+      public function update($data)
+      {
+            $this->create((array) $data['original']);
       }
 
       /**
@@ -276,6 +310,22 @@ class Json
       {
             if(!isset($data['id'])) $data['id'] = $this->getAutoIncrementedId();
             File::writeJson($data, $this->getContentPath() . DS . $data['id']);
+      }
+
+      /**
+       * Delete a single or multiple items.
+       * @return void
+       */
+      public function delete()
+      {
+            $stackedItems = $this->applyLimit();
+            if(empty($stackedItems)) {
+                  File::deleteJson($this->getContentPath() . DS . $this->attributes['id']);
+                  return;
+            }
+            foreach($stackedItems as $item) {
+                  File::deleteJson($this->getContentPath() . DS . $item->id);
+            }
       }
 
       /**
