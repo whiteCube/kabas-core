@@ -41,6 +41,10 @@ class Model
             return $resp;
       }
 
+      /**
+       * Get instance of this Model class.
+       * @return $this
+       */
       static function getInstance()
       {
             if(!isset(self::$instance)) self::$instance = new static;
