@@ -12,15 +12,11 @@ class News extends BaseController
       {
             if(App::request()->isPost()) {
                   $article = new NewsModel;
-                  $article->create([
-                        'title' => App::request()->post->title,
-                        'content' => App::request()->post->content,
-                        'image' => ['src' => App::request()->post->imageSrc, 'alt' => App::request()->post->imageAlt]
-                  ]);
-                  // $article->title = App::request()->post->title;
-                  // $article->content = App::request()->post->content;
-                  // $article->image = ['src' => App::request()->post->imageSrc, 'alt' => App::request()->post->imageAlt];
-                  // $article->save();
+                  $article->title = App::request()->post->title;
+                  $article->content = App::request()->post->content;
+                  $article->image = ['src' => App::request()->post->imageSrc, 'alt' => App::request()->post->imageAlt];
+                  $article->save();
+                  die();
             }
             $news = NewsModel::orderBy('id', 'desc')->get();
             $this->data->news = $news;

@@ -9,6 +9,7 @@ class Json
 {
       protected static $instance;
       protected static $modelInfo;
+      protected $attributes = [];
 
       public function __construct($uselesss = null, $modelInfo = null)
       {
@@ -23,6 +24,16 @@ class Json
       {
             $instance = self::getInstance();
             if(method_exists($instance, $method)) call_user_func_array([$instance, $method], $parameters);
+      }
+
+      public function __set($name, $value)
+      {
+            $this->attributes[$name] = $value;
+      }
+
+      public function __get($name)
+      {
+            return $this->attributes[$name];
       }
 
       /**
@@ -104,6 +115,11 @@ class Json
             return $newItem;
       }
 
+      /**
+       * Get the current stack of items if it exists,
+       * if not create one by getting all items.
+       * @return array
+       */
       protected function getStackedItems()
       {
             $instance = self::getInstance();
@@ -242,17 +258,30 @@ class Json
             return $this->getStackedItems();
       }
 
+      /**
+       * Save the current model.
+       * @return void
+       */
       public function save()
       {
-
+            $this->create($this->attributes);
       }
 
+      /**
+       * Create a new json file with the provided data.
+       * @param  array $data
+       * @return void
+       */
       public function create($data)
       {
             if(!isset($data['id'])) $data['id'] = $this->getAutoIncrementedId();
             File::writeJson($data, $this->getContentPath() . DS . $data['id'] . '.json');
       }
 
+      /**
+       * Takes the last item in the folder and increments its ID.
+       * @return int
+       */
       protected function getAutoIncrementedId()
       {
             $files = scandir($this->getContentPath());
