@@ -275,7 +275,7 @@ class Json
       public function create($data)
       {
             if(!isset($data['id'])) $data['id'] = $this->getAutoIncrementedId();
-            File::writeJson($data, $this->getContentPath() . DS . $data['id'] . '.json');
+            File::writeJson($data, $this->getContentPath() . DS . $data['id']);
       }
 
       /**
