@@ -1,5 +1,6 @@
 {
       "id": 2,
+      "slug": "article_2",
       "title": "Second news",
       "content": "Content of the second news!",
       "image": {

@@ -1,5 +1,6 @@
 {
       "id": 3,
+      "slug": "article-3",
       "title": "Third news",
       "content": "Content of the third news!",
       "image": {

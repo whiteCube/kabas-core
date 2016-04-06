@@ -1,5 +1,5 @@
 {
-      "route": "/news/view/{id}",
+      "route": "/news/{slug}",
       "id": "newsItem",
       "template": "newsItem",
       "meta": {

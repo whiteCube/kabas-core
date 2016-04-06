@@ -8,8 +8,8 @@ use Kabas\App;
 
 class NewsItem extends BaseController
 {
-      protected function setup($id)
+      protected function setup($slug)
       {
-            $this->data->news = News::find($id);
+            $this->data->news = News::where('slug', $slug)->get();
       }
 }

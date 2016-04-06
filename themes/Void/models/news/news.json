@@ -1,5 +1,11 @@
 {
       "fields": {
+            "slug": {
+                  "type": "text",
+                  "label": "Slug",
+                  "description": "The slug of your news article",
+                  "defaultValue": ""
+            },
             "title": {
                   "type": "text",
                   "label": "Title",
