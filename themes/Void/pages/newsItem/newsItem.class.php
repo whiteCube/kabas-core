@@ -11,5 +11,6 @@ class NewsItem extends BaseController
       protected function setup($slug)
       {
             $this->data->news = News::where('slug', $slug)->get();
+            if(!$this->data->news) die('no matches, handled in controller');
       }
 }
