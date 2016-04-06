@@ -2,8 +2,8 @@
 
 namespace Kabas\View;
 
-use \RecursiveDirectoryIterator;
-use \RecursiveIteratorIterator;
+use \RecursiveDirectoryIterator as RDI;
+use \RecursiveIteratorIterator as RII;
 use \Kabas\Utils\Assets;
 use Kabas\Utils\Url;
 use \Kabas\App;
@@ -83,8 +83,8 @@ class View
        * @return string
        */
       protected function getTemplatePath($view, $baseDir) {
-            $oDirectory = new RecursiveDirectoryIterator($baseDir);
-            $oIterator = new RecursiveIteratorIterator($oDirectory);
+            $oDirectory = new RDI($baseDir);
+            $oIterator = new RII($oDirectory);
             foreach($oIterator as $oFile) {
                   if ($oFile->getFilename() == $view) {
                         return $oFile->getPath() . DS . $oFile->getFilename();
