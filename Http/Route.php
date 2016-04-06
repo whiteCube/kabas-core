@@ -59,7 +59,7 @@ class Route
        */
       public function matches($route)
       {
-            return !!preg_match_all($this->regex, $route, $matches);
+            return !!preg_match_all($this->regex, $route);
       }
 
       /**
