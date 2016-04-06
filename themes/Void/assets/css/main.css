@@ -3,3 +3,8 @@ body {
       color: rgb(44, 45, 54);
       padding: 3em;
 }
+
+a {
+      color: #439963;
+      text-decoration: none;
+}
