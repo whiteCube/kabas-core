@@ -91,6 +91,10 @@ class Router
             } else return '404';
       }
 
+      /**
+       * Get the current page's template name.
+       * @return string
+       */
       public function getCurrentPageTemplate()
       {
             if(isset(App::config()->pages->items[$this->getCurrentPageID()])) {
@@ -98,6 +102,10 @@ class Router
             }
       }
 
+      /**
+       * Get the parameters from the url.
+       * @return array
+       */
       public function getParams()
       {
             return $this->routes[$this->route]->getParams($this->routeWithParams);
