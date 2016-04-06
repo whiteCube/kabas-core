@@ -12,6 +12,8 @@ class Router
        */
       public $routes = [];
 
+      protected $previouslyChecked = [];
+
       public function __construct()
       {
             $this->route = $this->getRoute();
@@ -25,7 +27,7 @@ class Router
       public function loadRoutes()
       {
             foreach (App::config()->pages->items as $page) {
-                  $this->routes[$page->route] = $page->id;
+                  $this->routes[$page->route] = App::getInstance()->make('Kabas\Http\Route', [$page]);
             }
       }
 
@@ -66,7 +68,16 @@ class Router
       public function routeExists($route = null)
       {
             if($route === null) $route = $this->route;
-            return array_key_exists($route, $this->routes);
+            if(!empty($this->previouslyChecked[$route])) return true;
+            foreach($this->routes as $definedRoute) {
+                  if($definedRoute->matches($route)) {
+                        $this->routeWithParams = $route;
+                        $this->route = $definedRoute->string;
+                        $this->previouslyChecked[$this->route] = true;
+                        return true;
+                  }
+            }
+            return false;
       }
 
       /**
@@ -76,7 +87,7 @@ class Router
       public function getCurrentPageID()
       {
             if($this->routeExists()) {
-                  return $this->routes[$this->route];
+                  return $this->routes[$this->route]->pageID;
             } else return '404';
       }
 
@@ -85,6 +96,11 @@ class Router
             if(isset(App::config()->pages->items[$this->getCurrentPageID()])) {
                   return App::config()->pages->items[$this->getCurrentPageID()]->template;
             }
+      }
+
+      public function getParams()
+      {
+            return $this->routes[$this->route]->getParams($this->routeWithParams);
       }
 
 }

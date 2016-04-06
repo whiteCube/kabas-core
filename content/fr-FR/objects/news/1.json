@@ -1,6 +1,6 @@
 {
     "id": 1,
-    "title": "First news!",
+    "title": "First article",
     "content": "Content of the First news!",
     "image": {
         "src": "article1json.jpg",

@@ -13,11 +13,11 @@ class Url
        */
       static function to($pageID)
       {
-            foreach(App::router()->routes as $route => $id) {
-                  if($pageID === $id) {
+            foreach(App::router()->routes as $route) {
+                  if($pageID === $route->pageID) {
                         if(App::router()->hasLangInUrl) $lang = '/' . App::config()->settings->site->lang->active;
                         else $lang = '';
-                        return self::base() . $lang . $route;
+                        return self::base() . $lang . $route->string;
                   }
             }
       }
