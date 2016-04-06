@@ -13,6 +13,7 @@ class BaseController
       public function __construct($view)
       {
             $this->defaultTemplateName = $view->template;
+            $this->type = $this->getType();
             $this->viewID = $view->id;
             $this->data = isset($view->data) ? $view->data : new \stdClass;
             $this->options = isset($view->options) ? $view->options : null;
@@ -21,6 +22,11 @@ class BaseController
             call_user_func_array([$this, 'setup'], $params);
             $this->checkLinkedFiles();
             $this->render($this->constructViewData());
+      }
+
+      public function getType()
+      {
+            return strtolower(explode('\\', get_class($this))[2]);
       }
 
       public function __call($method, $args)
@@ -36,8 +42,7 @@ class BaseController
       protected function constructViewData()
       {
             App::config()->pages->loadCurrentPageFields();
-            $this->checkValues('pages');
-            $this->checkValues('parts');
+            $this->checkValues($this->type);
 
             $data = $this->data;
             $data->options = $this->options;
@@ -53,7 +58,7 @@ class BaseController
       */
       protected function render($data)
       {
-            View::make($this->view, $data);
+            View::make($this->view, $data, $this->type);
       }
 
       /**
