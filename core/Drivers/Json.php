@@ -168,7 +168,7 @@ class Json implements \IteratorAggregate
                   $items[$key] = $instance->instanciateFields($item, $columns);
             }
             $instance->stackedItems = $items;
-            if(count($stackedItems) === 0) return null;
+            if(count($instance->stackedItems) === 0) return null;
             return $instance;
       }
 
