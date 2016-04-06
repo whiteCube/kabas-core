@@ -57,7 +57,9 @@ class Assets
                         $assets[$location] = $assets[$location] . $asset;
                   }
             }
-            $page = str_replace($matches[0], $assets, $page);
+            if(!empty($assets)){
+                  $page = str_replace($matches[0], $assets, $page);
+            }
             return $page;
       }
 
