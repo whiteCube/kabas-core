@@ -5,7 +5,8 @@
       <?php Assets::add('header', 'main.css'); ?>
 </head>
 <div class="header">
-      <h1><?= $title ?></h1>
+      <h1><?= $title ?> <code class="version"><?= $version ?></code></h1>
+
       <h2><?= $baseline ?></h2>
 </div>
 <a href="<?= Url::lang('fr-FR'); ?>">Français</a>
