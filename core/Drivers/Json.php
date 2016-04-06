@@ -74,6 +74,7 @@ class Json implements \IteratorAggregate
        */
       protected function instanciateFields($item, $columns)
       {
+            if(is_null($item)) return;
             $instance = self::getInstance();
             $item = self::getColumns($item, $columns);
             $newItem = new \stdClass;
@@ -167,6 +168,7 @@ class Json implements \IteratorAggregate
                   $items[$key] = $instance->instanciateFields($item, $columns);
             }
             $instance->stackedItems = $items;
+            if(count($stackedItems) === 0) return null;
             return $instance;
       }
 
@@ -188,6 +190,7 @@ class Json implements \IteratorAggregate
             } else {
                   $path = $instance->getContentPath() . DS . $key . '.json';
                   $item = File::loadJson($path);
+                  if(empty($item)) return null;
                   $item = $instance->getColumns($item, $columns);
                   $instance->attributes = (array) $instance->instanciateFields($item, $columns);
             }
@@ -288,6 +291,7 @@ class Json implements \IteratorAggregate
       {
             $stackedItems = $this->applyLimit();
             $this->stackedItems = [];
+            if(count($stackedItems) === 0) return null;
             if(count($stackedItems) === 1) {
                   $this->attributes = (array) $this->instanciateFields($stackedItems[0], $columns);
                   return $this;
