@@ -1,0 +1,9 @@
+{
+      "route": "/news",
+      "id": "news",
+      "template": "news",
+      "data": {
+            "title": "Les actualités Kabas",
+            "description": "Restez informés sur ce qui se passe dans le monde de Kabas !"
+      }
+}

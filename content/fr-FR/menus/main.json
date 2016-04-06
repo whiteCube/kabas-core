@@ -2,19 +2,14 @@
       "id": "main",
       "template": "main",
       "links": {
-            "home": {
-                  "label": "Accueil"
-            },
+            "home": { "label": "Accueil" },
+            "news": { "label": "Actualités" },
             "contact": {
                   "label": "Contact",
                   "subitems": {
-                        "about": {
-                              "label": "À propos"
-                        }
+                        "about": { "label": "À propos" }
                   }
             },
-            "nos-services": {
-                  "label": "Nos services"
-            }
+            "nos-services": { "label": "Nos services" }
       }
 }

@@ -1,0 +1,16 @@
+{
+      "fields": {
+            "title": {
+                  "type": "text",
+                  "label": "Title",
+                  "description": "The news page title",
+                  "defaultValue": "Default title value"
+            },
+            "description": {
+                  "type": "text",
+                  "label": "Introduction",
+                  "description": "The news page description",
+                  "defaultValue": "Default description value"
+            }
+      }
+}
