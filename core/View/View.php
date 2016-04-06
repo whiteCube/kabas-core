@@ -14,9 +14,7 @@ class View
 
       public function __construct($view, $data, $type)
       {
-            if(self::isFirstView($view)){
-                  ob_start();
-            }
+            if(self::isFirstView($view)) ob_start();
 
             extract((array) $data);
             include $this->getTemplateFile($view, $type);
@@ -40,12 +38,8 @@ class View
                   self::$isFirst = $view;
                   return true;
             }
-            else if(self::$isFirst === $view) {
-                  return true;
-            }
-            else {
-                  return false;
-            }
+            else if(self::$isFirst === $view) return true;
+            return false;
       }
 
       /**
@@ -70,7 +64,7 @@ class View
             $app = App::getInstance();
 
             $themeName = $app->config->settings->site->theme;
-            $baseDir = __DIR__ . '/../../themes/' . $themeName . DS . $type;
+            $baseDir = THEME_PATH . DS . $type;
             $view = $this->checkViewExtension($view);
 
             return $this->getTemplatePath($view, $baseDir);
@@ -100,10 +94,7 @@ class View
        */
       protected function checkViewExtension($view)
       {
-            if(strpos($view, '.php') !== false) {
-                  return $view;
-            } else {
-                  return $view . '.php';
-            }
+            if(strpos($view, '.php') !== false) return $view;
+            return $view . '.php';
       }
 }
