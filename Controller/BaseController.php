@@ -27,7 +27,7 @@ class BaseController
 
       public function __call($method, $args)
       {
-
+            if($method !== 'setup') throw new \Exception('Method does not exist:' . $method);
       }
 
       /**
