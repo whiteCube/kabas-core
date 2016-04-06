@@ -87,7 +87,7 @@ class App extends Container
        */
       public function loadTheme()
       {
-            $loader = new FileLoader(__DIR__ . '/../themes/'. $this->config->settings->site->theme);
+            $loader = new FileLoader(THEME_PATH);
             $loader->autoload();
       }
 
@@ -141,13 +141,15 @@ class App extends Container
       protected function setBaseConstants()
       {
             define('DS', DIRECTORY_SEPARATOR);
+            define('CORE_PATH', __dir__);
+            define('BASE_PATH', preg_replace('/(\\' . DS . 'core)?/', '', CORE_PATH));
+            define('CONTENT_PATH', BASE_PATH . DS . 'content');
+            define('CONFIG_PATH', BASE_PATH . DS . 'config');
       }
 
       protected function setConstants()
       {
-            define('CORE_PATH', __dir__);
-            define('BASE_PATH', preg_replace('/(\\' . DS . 'core)?/', '', CORE_PATH));
-            define('CONTENT_PATH', BASE_PATH . DS . 'content');
+
             define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . $this->config->settings->site->theme);
       }
 

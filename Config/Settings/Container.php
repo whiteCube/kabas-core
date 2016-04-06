@@ -17,9 +17,9 @@ class Container
        */
       private function loadConfigs()
       {
-            $this->database = json_decode(json_encode(include __DIR__ . '/../../../config/database.php'));
-            $this->site = json_decode(json_encode(include __DIR__ . '/../../../config/site.php'));
-            $this->social = json_decode(json_encode(include __DIR__ . '/../../../config/social.php'));
+            $this->database = json_decode(json_encode(include CONFIG_PATH . DS . 'database.php'));
+            $this->site = json_decode(json_encode(include CONFIG_PATH . DS . 'site.php'));
+            $this->social = json_decode(json_encode(include CONFIG_PATH . DS . 'social.php'));
 
             $this->detectLang();
       }
