@@ -24,14 +24,19 @@ class BaseController
             $this->render($this->constructViewData());
       }
 
-      public function getType()
-      {
-            return strtolower(explode('\\', get_class($this))[2]);
-      }
 
       public function __call($method, $args)
       {
 
+      }
+
+      /**
+       * Get the type of this template
+       * @return string
+       */
+      public function getType()
+      {
+            return strtolower(explode('\\', get_class($this))[2]);
       }
 
       /**
