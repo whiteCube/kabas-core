@@ -46,7 +46,7 @@ class Route
                         $this->parameters[] = $parameter;
                   }
             }
-            $regex = str_replace($matches[0], '(.[^\/]?)', str_replace('/', '\/', $regex));
+            $regex = str_replace($matches[0], '(.[^\/]*)', str_replace('/', '\/', $regex));
             $regex = '/^\/' . $regex . '\/?$/';
 
             return $regex;
