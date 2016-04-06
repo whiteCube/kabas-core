@@ -1,19 +1,19 @@
 <ul class="menu">
       <?php foreach($menu as $menuItem): ?>
             <li>
-                  <a href="<?= $menuItem->url ?>" style="color: <?= $options->color; ?>"><?= $menuItem->label ?></a>
+                  <a href="<?= $menuItem->url ?>"><?= $menuItem->label ?></a>
                   <?php if($menuItem->hasSubmenu()): ?>
                         <ul>
                               <?php foreach($menuItem->subitems as $subItem): ?>
                               <li>
-                                    <a href="<?= $subItem->url ?>"  style="color: <?= $options->color; ?>">
+                                    <a href="<?= $subItem->url ?>">
                                           <?= $subItem->label ?>
                                     </a>
                                     <?php if($subItem->hasSubmenu()): ?>
                                           <ul>
                                                 <?php foreach($subItem->subitems as $subItem): ?>
                                                 <li>
-                                                      <a href="<?= $subItem->url ?>"  style="color: <?= $options->color; ?>">
+                                                      <a href="<?= $subItem->url ?>">
                                                             <?= $subItem->label ?>
                                                       </a>
 

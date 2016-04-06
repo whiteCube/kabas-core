@@ -16,8 +16,5 @@
             "nos-services": {
                   "label": "Nos services"
             }
-      },
-      "options": {
-            "color": "rgb(226, 69, 69)"
       }
 }
