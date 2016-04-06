@@ -80,9 +80,22 @@ class Json implements \IteratorAggregate
             $newItem->original = new \stdClass;
             foreach($item as $key => $value) {
                   $newItem->original->$key = $value;
-                  $newItem->$key = $instance->instanciateField($key, $value);
+                  if(!$this->isInstanciatedField($value)) {
+                        $newItem->$key = $instance->instanciateField($key, $value);
+                  }
             }
             return $newItem;
+      }
+
+      /**
+       * Check if field has already been instanciated.
+       * @param  mixed  $field
+       * @return boolean
+       */
+      public function isInstanciatedField($field)
+      {
+            if(is_object($field) && strpos(get_class($field), 'Kabas\Config\FieldTypes') !== false) return true;
+            return false;
       }
 
       /**
@@ -158,18 +171,26 @@ class Json implements \IteratorAggregate
       }
 
       /**
-       * Find a single entry by id
-       * @param  string $id
+       * Find entries by id
+       * @param  mixed $key
        * @param  array $columns
        * @return object
        */
-      static function find($id, $columns = null)
+      static function find($key, $columns = null)
       {
             $instance = self::getInstance();
-            $path = $instance->getContentPath() . DS . $id . '.json';
-            $item = File::loadJson($path);
-            $item = $instance->getColumns($item, $columns);
-            $instance->attributes = (array) $instance->instanciateFields($item, $columns);
+            if(is_array($key)) {
+                  foreach($key as $k) {
+                        $path = $instance->getContentPath() . DS . $k . '.json';
+                        $item = File::loadJson($path);
+                        $instance->stackedItems[] = $instance->instanciateFields($item, $columns);
+                  }
+            } else {
+                  $path = $instance->getContentPath() . DS . $key . '.json';
+                  $item = File::loadJson($path);
+                  $item = $instance->getColumns($item, $columns);
+                  $instance->attributes = (array) $instance->instanciateFields($item, $columns);
+            }
             return $instance;
       }
 
@@ -225,6 +246,16 @@ class Json implements \IteratorAggregate
             if($limit <= 0) return 'error';
             $this->limit = $limit;
             return $this;
+      }
+
+      /**
+       * Alias to limit.
+       * @param  int $number
+       * @return $this
+       */
+      public function take($number)
+      {
+            return $this->limit($number);
       }
 
       /**
@@ -288,12 +319,14 @@ class Json implements \IteratorAggregate
 
       /**
        * Save the current model.
-       * @return void
+       * @return $this
        */
       public function save()
       {
             if(!$this->exists()) $this->create($this->attributes);
             $this->update($this->attributes);
+            $this->attributes = (array) $this->instanciateFields($this->attributes, null);
+            return $this;
       }
 
       public function update($data)
@@ -326,6 +359,18 @@ class Json implements \IteratorAggregate
             foreach($stackedItems as $item) {
                   File::deleteJson($this->getContentPath() . DS . $item->id);
             }
+      }
+
+      /**
+       * Get the first item from the stack.
+       * @return $this
+       */
+      public function first($columns = null)
+      {
+            $items = $this->getStackedItems();
+            $this->stackedItems = [];
+            $this->attributes = (array) $this->instanciateFields($items[0], $columns);
+            return $this;
       }
 
       /**
