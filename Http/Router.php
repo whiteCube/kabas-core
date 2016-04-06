@@ -108,7 +108,10 @@ class Router
        */
       public function getParams()
       {
-            return $this->routes[$this->route]->getParams($this->routeWithParams);
+            if($this->routeExists()) {
+                  return $this->routes[$this->route]->getParams($this->routeWithParams);
+            }
+            return [];
       }
 
 }
