@@ -59,7 +59,7 @@ class Route
        */
       public function matches($route)
       {
-            return !!preg_match_all($this->regex, $route);
+            return !!preg_match($this->regex, $route);
       }
 
       /**
@@ -70,7 +70,22 @@ class Route
       public function getParams($route)
       {
             preg_match_all($this->regex, $route, $matches);
-            if(!empty($matches[1])) $this->parameters = array_combine($this->parameters, $matches[1]);
+            $matches = $this->flattenMatches($matches);
+            if(!empty($matches)) $this->parameters = array_combine($this->parameters, $matches);
             return $this->parameters;
+      }
+
+      /**
+       * Remove unneeded data from preg_match_all and flatten
+       * the array so we can use it easily.
+       * @param  array $matches
+       * @return array
+       */
+      public function flattenMatches($matches)
+      {
+            array_shift($matches);
+            $flattened = [];
+            array_walk_recursive($matches, function($val) use (&$flattened) { $flattened[] = $val; });
+            return $flattened;
       }
 }
