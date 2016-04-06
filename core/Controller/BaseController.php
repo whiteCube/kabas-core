@@ -14,23 +14,18 @@ class BaseController
       {
             $this->defaultTemplateName = $view->template;
             $this->viewID = $view->id;
-            $this->data = $view->data;
+            $this->data = isset($view->data) ? $view->data : new \stdClass;
             $this->options = isset($view->options) ? $view->options : null;
             $this->meta = isset($view->meta) ? $view->meta : null;
-
-            $this->setup();
+            $params = App::router()->getParams();
+            call_user_func_array([$this, 'setup'], $params);
             $this->checkLinkedFiles();
             $this->render($this->constructViewData());
       }
 
-      /**
-       * In this function you get the chance to process the data inside
-       * $this->data and $this->options before it is passed on to the
-       * view. Please re-declare it in your template's controller.
-       * @return void
-       */
-      protected function setup()
+      public function __call($method, $args)
       {
+
       }
 
       /**
