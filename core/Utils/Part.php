@@ -8,7 +8,7 @@ use \Kabas\View\View;
 class Part
 {
       /**
-       * Get and display the menu with the corresponding ID onto the page.
+       * Get and display the part with the corresponding ID onto the page.
        * @param  string $partID
        * @return void
        */
