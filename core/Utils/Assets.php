@@ -11,7 +11,7 @@ class Assets
        * Keeps track of all required assets
        * @var array
        */
-      private static $required = [];
+      protected static $required = [];
 
       /**
        * Adds an asset dependency.
@@ -66,7 +66,7 @@ class Assets
        * @param  string $asset
        * @return string
        */
-      static function generateTag($asset)
+      protected static function generateTag($asset)
       {
             $type = self::getType($asset);
 
@@ -103,7 +103,7 @@ class Assets
        * @param  string $dir
        * @return string
        */
-      static function getDir($dir)
+      protected static function getDir($dir)
       {
             $dir =
                   App::router()->baseUrl
