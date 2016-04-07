@@ -33,7 +33,6 @@ return [
             'Benchmark' => Kabas\Utils\Benchmark::class,
             'Menu' => Kabas\Utils\Menu::class,
             'Meta' => Kabas\Utils\Meta::class,
-            'Model' => Kabas\Utils\Model::class,
             'Page' => Kabas\Utils\Page::class,
             'Part' => Kabas\Utils\Part::class,
             'Url' => Kabas\Utils\Url::class,
