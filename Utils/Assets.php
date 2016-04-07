@@ -91,7 +91,7 @@ class Assets
        * @param  string $asset
        * @return string
        */
-      static function getType($asset)
+      protected static function getType($asset)
       {
             $exploded = explode('.', $asset);
             $index = count($exploded) - 1;
