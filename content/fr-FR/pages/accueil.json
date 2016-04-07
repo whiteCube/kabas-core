@@ -2,6 +2,7 @@
       "route": "/",
       "id": "home",
       "template": "homepage",
+      "title": "Kabas | Accueil",
       "meta": {
             "description": "Description of your page",
             "keywords": "keywords go here"
