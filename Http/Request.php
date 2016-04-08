@@ -34,6 +34,15 @@ class Request
             return $this->method === 'GET';
       }
 
+      /**
+       * Get the request method.
+       * @return string
+       */
+      public function method()
+      {
+            return $this->method;
+      }
+
       protected function constructData()
       {
             $this->get = (object) $_GET;
