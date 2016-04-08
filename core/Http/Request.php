@@ -43,6 +43,10 @@ class Request
             return $this->method;
       }
 
+      /**
+       * Casts $_GET and $_POST as objects
+       * @return void
+       */
       protected function constructData()
       {
             $this->get = (object) $_GET;
