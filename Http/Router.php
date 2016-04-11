@@ -110,6 +110,14 @@ class Router
             return false;
       }
 
+      public function getRouteById($id)
+      {
+            foreach ($this->routes as $route) {
+                  if($route->pageID === $id) return $route;
+            }
+            return false;
+      }
+
       /**
        * Check if current route exists and return the corresponding page ID
        * @return string
@@ -138,10 +146,13 @@ class Router
        */
       public function getParams()
       {
+            $aParams = [];
             if($this->routeExists()) {
-                  return $this->routes[$this->route]->getParams($this->routeWithParams);
+                  foreach ($this->routes[$this->route]->getRouteParameters($this->routeWithParams) as $param) {
+                        $aParams[$param->variable] = $param->value;
+                  }
             }
-            return [];
+            return $aParams;
       }
 
 }

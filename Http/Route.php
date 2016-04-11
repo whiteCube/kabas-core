@@ -31,6 +31,11 @@ class Route
             $this->pageID = $page->id;
       }
 
+      public function getParameters()
+      {
+            return $this->parameters;
+      }
+
       /**
        * Generate a regex to match this route.
        * @return string
@@ -38,18 +43,34 @@ class Route
       protected function generateRegex()
       {
             if($this->string === '') return '/^\s*$/';
-
             $regex =  trim(strtolower($this->string), '/');
-            preg_match_all('/\{(.[^\{\}\/]+)\}/', $regex, $matches);
-            if(isset($matches[1])) {
-                  foreach($matches[1] as $parameter) {
-                        $this->parameters[] = $parameter;
-                  }
-            }
-            $regex = str_replace($matches[0], '(.[^\/]*)', str_replace('/', '\/', $regex));
-            $regex = '/^\/' . $regex . '\/?$/';
-
+            $regex = $this->parseParameters($regex);
+            $regex = preg_replace('/([^\\\])\//', '$1\/', $regex);
+            $regex = strlen($regex) ? '/^\/' . $regex . '\/?$/' : '/^\/?$/';
             return $regex;
+      }
+
+      protected function parseParameters($regex)
+      {
+            preg_match_all('/\{([a-zA-Z0-9]*)(?:::)?(\/.[^\/]+\/+)?(\?)?\}/', $regex, $a);
+            foreach ($a[0] as $i => $param) {
+                  $param = $this->getParameter($param, $a[1][$i], $a[2][$i], $a[3][$i]);
+                  $regex = str_replace($param->string, $param->regex, $regex);
+                  $this->parameters[] = $param;
+            }
+            return $regex;
+      }
+
+      protected function getParameter($string, $variable, $regex, $optional)
+      {
+            $o = new \stdClass();
+            $o->string = $string;
+            $o->variable = $variable;
+            $o->isRequired = $optional === '?' ? false : true;
+            $o->regex = strlen($regex) ? '(' . trim($regex,'/') . ')' : '(.[^\/]*)';
+            if(!$o->isRequired) $o->regex .= '?';
+            $o->value = null;
+            return $o;
       }
 
       /**
@@ -67,25 +88,14 @@ class Route
        * @param  string $route
        * @return array
        */
-      public function getParams($route)
+      public function getRouteParameters($route)
       {
-            preg_match_all($this->regex, $route, $matches);
-            $matches = $this->flattenMatches($matches);
-            if(!empty($matches)) $this->parameters = array_combine($this->parameters, $matches);
+            preg_match($this->regex, $route, $matches);
+            array_shift($matches);
+            foreach ($matches as $i => $value) {
+                  $this->parameters[$i]->value = urldecode($value);
+            }
             return $this->parameters;
       }
 
-      /**
-       * Remove unneeded data from preg_match_all and flatten
-       * the array so we can use it easily.
-       * @param  array $matches
-       * @return array
-       */
-      public function flattenMatches($matches)
-      {
-            array_shift($matches);
-            $flattened = [];
-            array_walk_recursive($matches, function($val) use (&$flattened) { $flattened[] = $val; });
-            return $flattened;
-      }
 }
