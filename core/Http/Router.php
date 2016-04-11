@@ -37,26 +37,51 @@ class Router
        */
       public function getRoute()
       {
-            $pathToIgnore = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
-            $this->baseUrl = 'http://' . $_SERVER['SERVER_NAME'] . $pathToIgnore;
-            if($pathToIgnore !== '') {
-                  $route = explode($pathToIgnore, $_SERVER['REQUEST_URI'])[1];
-            } else {
-                  $route = $_SERVER['REQUEST_URI'];
-            }
+            $route = $this->removeBasePath();
+            $route = $this->handleLang($route);
+            return $route;
+      }
+
+      /**
+       * Check for lang in URL.
+       * @param  string $route
+       * @return string
+       */
+      protected function handleLang($route)
+      {
             $routeParts = explode('/', $route);
             $this->hasLangInUrl = false;
             foreach(App::config()->settings->site->lang->available as $lang) {
-                  foreach($routeParts as $routePart) {
-                        if($routePart === $lang) {
-                              $this->hasLangInUrl = true;
-                              App::config()->settings->site->lang->active = $lang;
-                              $route = str_ireplace('/'.$lang, '', $route);
-                              if($route === '') $route = '/';
-                        }
+                  if(in_array($lang, $routeParts)) {
+                        $this->hasLangInUrl = true;
+                        App::config()->settings->site->lang->active = $lang;
+                        $route = str_replace('/'. $lang, '', $route);
+                        if($route === '') $route = '/';
                   }
             }
             return $route;
+      }
+
+      /**
+       * Removes any subdirectories the CMS may be in.
+       * @return string
+       */
+      protected function removeBasePath()
+      {
+            $basePath = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
+            $this->setBaseUrl($basePath);
+            return str_replace($basePath, '', $_SERVER['REQUEST_URI']);
+      }
+
+      /**
+       * Set the base URL to generate links later.
+       * @param string $pathToIgnore
+       */
+      protected function setBaseUrl($basePath)
+      {
+            $ssl = !empty( $_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+            $protocol = 'http' . ($ssl ? 's' : '');
+            $this->baseUrl = $protocol . '://' . $_SERVER['HTTP_HOST'] . $basePath;
       }
 
       /**

@@ -38,6 +38,6 @@ class Url
        */
       static function base()
       {
-            return $baseUrl = 'http://' . $_SERVER['SERVER_NAME'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
+            return $baseUrl = 'http://' . $_SERVER['HTTP_HOST'] . explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
       }
 }
