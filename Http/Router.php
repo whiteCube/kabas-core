@@ -12,6 +12,11 @@ class Router
        */
       public $routes = [];
 
+      /**
+       * Contains routes that have already been regex validated
+       * so they don't need to be regex'd again for performance
+       * @var array
+       */
       protected $previouslyChecked = [];
 
       public function __construct()
