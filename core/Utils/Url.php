@@ -11,15 +11,46 @@ class Url
        * @param  string $pageID
        * @return string
        */
-      static function to($pageID)
+      static function to($pageID, $params = [], $lang = null)
       {
-            foreach(App::router()->routes as $route) {
-                  if($pageID === $route->pageID) {
-                        if(App::router()->hasLangInUrl) $lang = '/' . App::config()->settings->site->lang->active;
-                        else $lang = '';
-                        return self::base() . $lang . $route->string;
+            $route = App::router()->getRouteById($pageID);
+            if (!$route) {
+                  // TODO: Exception (route does not exist)
+                  echo 'error'; die();
+            }
+            $params = self::makeParams($params, $route);
+
+            return self::base() . self::getUrlLangString($lang) . self::fillRouteWithParams($route, $params);
+
+      }
+
+      protected static function getUrlLangString($lang)
+      {
+            if($lang) return '/' . $lang;
+            else if(App::router()->hasLangInUrl) return '/' . App::config()->settings->site->lang->active;
+            else return '';
+      }
+
+      protected static function fillRouteWithParams($route, $params)
+      {
+            $str = $route->string;
+            foreach($route->getParameters() as $parameter){
+                  if($parameter->isRequired && !array_key_exists($parameter->variable, $params)){
+                        // TODO: Exception
+                        echo 'error'; die();
+                  } else if(array_key_exists($parameter->variable, $params)) {
+                        $str = str_replace($parameter->string, $params[$parameter->variable], $str);
+                  } else {
+                        $str = str_replace($parameter->string, '', $str);
                   }
             }
+            return $str;
+      }
+
+      protected static function makeParams($params, $route)
+      {
+            if(!is_array($params)) $params = [$route->getParameters()[0]->variable => $params];
+            return $params;
       }
 
       /**
