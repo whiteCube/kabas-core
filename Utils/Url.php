@@ -15,8 +15,7 @@ class Url
       {
             $route = App::router()->getRouteById($pageID);
             if (!$route) {
-                  // TODO: Exception (route does not exist)
-                  echo 'error'; die();
+                  throw new \Exception('Page does not exist');
             }
             $params = self::makeParams($params, $route);
 
