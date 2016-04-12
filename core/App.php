@@ -117,7 +117,7 @@ class App extends Container
       public function react()
       {
             $this->page = $this->router->getCurrentPageID();
-            $this->response->send($this->page);
+            $this->response->init($this->page);
       }
 
       /**
