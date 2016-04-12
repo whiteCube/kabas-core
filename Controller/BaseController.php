@@ -2,8 +2,9 @@
 
 namespace Kabas\Controller;
 
-use Kabas\View\View;
 use Kabas\App;
+use Kabas\Utils\Url;
+use Kabas\View\View;
 
 class BaseController
 {
@@ -19,14 +20,30 @@ class BaseController
             $this->options = isset($view->options) ? $view->options : null;
             $this->meta = isset($view->meta) ? $view->meta : null;
             $params = App::router()->getParams();
-            call_user_func_array([$this, 'setup'], $params);
+            $response = call_user_func_array([$this, 'setup'], $params);
             $this->checkLinkedFiles();
-            $this->render($this->constructViewData());
+            if(is_null($response)) {
+                  $response = $this->view($this->view, $this->data, $this->type);
+            }
+            App::response()->send($response);
       }
 
       public function __call($method, $args)
       {
             if($method !== 'setup') throw new \Exception('Method does not exist:' . $method);
+      }
+
+      public function redirect($pageID, $params = [], $lang = null)
+      {
+            $redirect = App::getInstance()->make('Kabas\Http\Responses\Redirect', [$pageID, $params, $lang]);
+            return $redirect;
+      }
+
+      public function view($view, $data)
+      {
+            $data = $this->constructViewData($data);
+            $view = App::getInstance()->make('Kabas\Http\Responses\View', [$view, $data, $this->type]);
+            return $view;
       }
 
       /**
@@ -43,12 +60,11 @@ class BaseController
        * that can be passed to the view.
        * @return stdClass
        */
-      protected function constructViewData()
+      protected function constructViewData($data)
       {
             App::config()->pages->loadCurrentPageFields();
             $this->checkValues($this->type);
 
-            $data = $this->data;
             $data->options = $this->options;
             $data->meta = $this->meta;
 
