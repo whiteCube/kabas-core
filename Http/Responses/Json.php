@@ -6,7 +6,6 @@ use Kabas\Http\Response;
 
 class Json extends Response
 {
-
       protected $pretty = false;
 
       public function __construct($data)
