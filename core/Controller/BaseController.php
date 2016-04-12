@@ -72,16 +72,6 @@ class BaseController
       }
 
       /**
-      * Render the current view onto the page.
-      * @param  stdClass $data
-      * @return void
-      */
-      protected function render($data)
-      {
-            View::make($this->view, $data, $this->type);
-      }
-
-      /**
        * Check if the theme provided a custom template filename
        * @return void
        */
