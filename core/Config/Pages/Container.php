@@ -62,4 +62,9 @@ class Container
             $this->items[App::router()->getCurrentPageID()]->fields = $fields;
       }
 
+      public function getPage($id)
+      {
+            if(array_key_exists($id, $this->items)) return $this->items[$id];
+      }
+
 }
