@@ -35,15 +35,18 @@ class BaseController
 
       public function redirect($pageID, $params = [], $lang = null)
       {
-            $redirect = App::getInstance()->make('Kabas\Http\Responses\Redirect', [$pageID, $params, $lang]);
-            return $redirect;
+            return App::getInstance()->make('Kabas\Http\Responses\Redirect', [$pageID, $params, $lang]);
       }
 
       public function view($view, $data)
       {
             $data = $this->constructViewData($data);
-            $view = App::getInstance()->make('Kabas\Http\Responses\View', [$view, $data, $this->type]);
-            return $view;
+            return App::getInstance()->make('Kabas\Http\Responses\View', [$view, $data, $this->type]);
+      }
+
+      public function json($data)
+      {
+            return App::getInstance()->make('Kabas\Http\Responses\Json', [$data]);
       }
 
       /**
