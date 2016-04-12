@@ -106,7 +106,7 @@ class Item
             } else {
                   if(get_class($this) !== 'Kabas\Objects\Image\Item') $image = $this->file;
                   else $image = $this;
-                  return Url::base() . '/themes/' . App::config()->settings->site->theme . '/assets/img/' . $image->file;
+                  return Url::base() . '/themes/' . App::theme() . '/assets/img/' . $image->file;
             }
       }
 

@@ -110,7 +110,7 @@ class Assets
                   . DS
                   . 'themes'
                   . DS
-                  . App::config()->settings->site->theme
+                  . App::theme()
                   . DS
                   . 'assets'
                   . DS

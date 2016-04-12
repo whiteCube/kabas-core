@@ -51,7 +51,7 @@ class Container
             $path =
                   'themes'
                   . DS
-                  . App::config()->settings->site->theme
+                  . App::theme()
                   . DS
                   . 'pages'
                   . DS

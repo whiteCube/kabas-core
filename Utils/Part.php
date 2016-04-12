@@ -18,7 +18,7 @@ class Part
             $part = App::config()->parts->getPart($partID);
             $partTemplate = Text::toNamespace($part->template);
 
-            $themeTemplate = '\Theme\\' . App::config()->settings->site->theme .'\Parts\\' . $partTemplate;
+            $themeTemplate = '\Theme\\' . App::theme() .'\Parts\\' . $partTemplate;
             App::getInstance()->make($themeTemplate, [$part]);
       }
 
