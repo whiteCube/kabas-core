@@ -7,6 +7,9 @@
 <?php foreach($news as $newsItem): ?>
 <article style="display: inline-block; width: 30%; margin-right: 2%;">
       <h3><a href="<?= Url::to('newsItem', $newsItem->slug) ?>"><?= $newsItem->title ?></a></h3>
+      <p>
+            <?= $newsItem->created_at->formatLocalized('%A %d %B %Y') ?> (<?= $newsItem->created_at->diffForHumans() ?>)
+      </p>
       <img src="<?= $newsItem->image->fit(450, 300)->apply()->src() ?>" alt="<?= $newsItem->image->alt() ?>" />
       <p><?= $newsItem->content ?></p>
 </article>

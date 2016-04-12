@@ -21,8 +21,14 @@
             "image": {
                   "type": "image",
                   "label": "Image",
-                  "desctiption": "Image of your article",
+                  "description": "Image of your article",
                   "defaultValue": "banner.jpg"
+            },
+            "created_at": {
+                  "type": "date",
+                  "label": "Created at",
+                  "description": "Creation date for this news article",
+                  "defaultValue": ""
             }
       }
 }

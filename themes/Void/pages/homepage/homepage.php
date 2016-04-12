@@ -6,6 +6,7 @@
 </p>
 
 <?php Part::get('news'); ?>
+<?php Part::get('dates'); ?>
 <?php Part::get('colors'); ?>
 <?php Part::get('links'); ?>
 <?php Part::get('images'); ?>

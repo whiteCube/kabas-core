@@ -10,7 +10,9 @@ class News extends BaseController
 {
       protected function setup()
       {
-
+            setlocale(LC_ALL, 'fr_BE');
+            \Carbon\Carbon::setLocale('fr');
+            
             if(App::request()->isPost()){
                   $this->saveNews();
             }

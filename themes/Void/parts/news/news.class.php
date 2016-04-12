@@ -10,6 +10,8 @@ class News extends BaseController
 {
       public function setup()
       {
+            setlocale(LC_ALL, 'fr_BE');
+            \Carbon\Carbon::setLocale('fr');
             $news = NewsModel::orderBy('id', 'desc')->limit(2)->get();
             $this->data->news = $news;
       }
