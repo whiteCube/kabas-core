@@ -2,8 +2,9 @@
 
 namespace Kabas\Http;
 
-use Kabas\Utils\Text;
 use \Kabas\App;
+use Kabas\View\View;
+use Kabas\Utils\Text;
 
 class Response
 {
@@ -16,20 +17,14 @@ class Response
        */
       public function init($pageID)
       {
-            if($pageID === null || $pageID === '404' || $pageID === '' ){
-                  http_response_code(404);
-                  if(array_key_exists('404', App::config()->pages->items)) {
-                        $pageID = '404';
-                  } else {
-                        echo '404 par défaut';
-                        return;
-                  }
-            }
-            $page = App::config()->pages->items[$pageID];
-            $pageTemplate = Text::toNamespace($page->template);
-            $themeTemplate = '\Theme\\' . App::config()->settings->site->theme .'\Pages\\' . $pageTemplate;
-            App::getInstance()->make($themeTemplate, [$page]);
-            return;
+            $page = App::config()->pages->getPage($pageID);
+
+            if(!$page) return View::notFound();
+
+            $controllerName = Text::toNamespace($page->template);
+            $pageController = '\Theme\\' . App::theme() .'\Pages\\' . $controllerName;
+
+            return App::getInstance()->make($pageController, [$page]);
       }
 
       /**
@@ -62,6 +57,7 @@ class Response
       public function send($response)
       {
             if(!is_null($response)) return $response->run();
+            else throw new \Exception('No response defined');
       }
 
       /**
