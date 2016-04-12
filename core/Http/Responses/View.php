@@ -7,7 +7,6 @@ use Kabas\Http\Response;
 
 class View extends Response
 {
-
       public function __construct($view, $data, $type)
       {
             $this->view = $view;
