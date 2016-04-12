@@ -34,7 +34,7 @@ class Response
        */
       public function headers($headers)
       {
-            $this->headers = $this->headers + $headers;
+            $this->headers += $headers;
             return $this;
       }
 
