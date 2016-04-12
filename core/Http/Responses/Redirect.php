@@ -14,6 +14,10 @@ class Redirect extends Response
             $this->lang = $lang;
       }
 
+      /**
+       * Executes the response. Called automatically.
+       * @return void
+       */
       public function run()
       {
             $this->setHeaders();
