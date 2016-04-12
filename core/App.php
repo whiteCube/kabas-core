@@ -149,7 +149,6 @@ class App extends Container
 
       protected function setConstants()
       {
-
             define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . $this->config->settings->site->theme);
       }
 
