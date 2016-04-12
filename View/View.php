@@ -97,4 +97,13 @@ class View
             if(strpos($view, '.php') !== false) return $view;
             return $view . '.php';
       }
+
+      /**
+       * Shows the default 404 page.
+       * @return void
+       */
+      static function notFound()
+      {
+            require '404.php';
+      }
 }
