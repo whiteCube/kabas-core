@@ -14,6 +14,10 @@ class View extends Response
             $this->type = $type;
       }
 
+      /**
+       * Executes the response. Called automatically.
+       * @return void
+       */
       public function run()
       {
             $this->setHeaders();
