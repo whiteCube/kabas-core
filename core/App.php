@@ -138,6 +138,15 @@ class App extends Container
             return static::DEBUG;
       }
 
+      /**
+       * Get the name of the active theme
+       * @return string
+       */
+      static function theme()
+      {
+            return self::config()->settings->site->theme;
+      }
+
       protected function setBaseConstants()
       {
             define('DS', DIRECTORY_SEPARATOR);
