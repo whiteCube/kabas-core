@@ -28,13 +28,13 @@ class Response
       }
 
       /**
-       * Set HTTP headers for the response.
+       * Add HTTP headers for the response.
        * @param  array $headers
        * @return $this
        */
       public function headers($headers)
       {
-            $this->headers = $headers;
+            $this->headers = $this->headers + $headers;
             return $this;
       }
 
