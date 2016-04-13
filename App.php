@@ -67,6 +67,7 @@ class App extends Container
             $parts = $this->make('Kabas\Config\Parts\Container');
             $menus = $this->make('Kabas\Config\Menus\Container');
             $this->config->initParts($pages, $parts, $menus);
+            $this->session = $this->make('Kabas\Session\SessionManager');
             $this->setConstants();
       }
 
@@ -118,6 +119,7 @@ class App extends Container
       {
             $this->page = $this->router->getCurrentPageID();
             $this->response->init($this->page);
+            $this->session->write();
       }
 
       /**
