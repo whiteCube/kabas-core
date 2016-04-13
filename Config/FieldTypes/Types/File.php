@@ -11,7 +11,7 @@ class File extends Item
        * @param  mixed $value
        * @return bool
        */
-      public function condition($value)
+      public function condition()
       {
             return true;
       }

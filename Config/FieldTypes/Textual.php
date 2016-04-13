@@ -6,9 +6,9 @@ class Textual extends Item
 {
       protected $modified;
 
-      public function condition($value)
+      public function condition()
       {
-            return is_string($value);
+            return is_string($this->data);
       }
 
       public function __toString()

@@ -24,9 +24,9 @@ class Option extends Item
        * @param  mixed $value
        * @return bool
        */
-      public function condition($value)
+      public function condition()
       {
-            return is_bool($value);
+            return is_bool($this->data);
       }
 
       /**

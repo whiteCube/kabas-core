@@ -23,7 +23,7 @@ class Item
 
       public function __toString()
       {
-            return $this->data;
+            return (string) $this->data;
       }
 
       public function __call($name, $arguments)
@@ -31,6 +31,13 @@ class Item
             if(!method_exists($this, $name)) {
                   echo '<pre>Error: Method "' . $name . '" does not exist for field type → "' . $this->type .'"</pre>';
             }
+      }
+
+      public function input($attributes = [])
+      {
+            // TODO: make this rock.
+            // $attributes
+            // return '<input type="' . $this->type . '" value="' . $val . '" />';
       }
 
       /**
@@ -41,7 +48,7 @@ class Item
        */
       public function check($field, $value)
       {
-            if(!$this->condition($value)) {
+            if(!$this->condition()) {
                   $error = 'Field "' . $field . '" has an incorrect value → type "' . $this->type . '".';
                   throw new \Kabas\Exceptions\TypeException($error);
             }

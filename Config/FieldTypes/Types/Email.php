@@ -11,9 +11,9 @@ class Email extends Item
        * @param  mixed $value
        * @return bool
        */
-      public function condition($value)
+      public function condition()
       {
-            return (gettype($value) === 'string' && filter_var($value, FILTER_VALIDATE_EMAIL));
+            return (gettype($this->data) === 'string' && filter_var($this->data, FILTER_VALIDATE_EMAIL));
       }
-
+      // TODO: parse
 }

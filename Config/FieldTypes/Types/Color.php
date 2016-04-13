@@ -11,9 +11,9 @@ class Color extends Item
        * @param  mixed $value
        * @return bool
        */
-      public function condition($value)
+      public function condition()
       {
-            return gettype($value) === 'string';
+            return gettype($this->data) === 'string';
       }
 
       /**
@@ -65,7 +65,7 @@ class Color extends Item
        * @param  string $rgbString
        * @return object
        */
-      public function rgbStringToObject($rgbString)
+      protected function rgbStringToObject($rgbString)
       {
             if(!is_string($rgbString)) return false;
 

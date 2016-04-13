@@ -35,9 +35,9 @@ class Url extends Item
        * @param  mixed $value
        * @return bool
        */
-      public function condition($value)
+      public function condition()
       {
-            return filter_var($value, FILTER_VALIDATE_URL);
+            return filter_var($this->data, FILTER_VALIDATE_URL);
       }
 
       /**
