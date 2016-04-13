@@ -15,5 +15,13 @@ class Email extends Item
       {
             return (gettype($this->data) === 'string' && filter_var($this->data, FILTER_VALIDATE_EMAIL));
       }
-      // TODO: parse
+
+      public function parse()
+      {
+            $parts = explode('@', $this->data);
+            $o = new \stdClass();
+            $o->local = $parts[0];
+            $o->domain = $parts[1];
+            return $o;
+      }
 }
