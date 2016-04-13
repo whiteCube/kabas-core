@@ -16,6 +16,10 @@ class Email extends Item
             return (gettype($this->data) === 'string' && filter_var($this->data, FILTER_VALIDATE_EMAIL));
       }
 
+      /**
+       * Parse the e-mail address to get the local part and the domain.
+       * @return object
+       */
       public function parse()
       {
             $parts = explode('@', $this->data);
@@ -23,5 +27,23 @@ class Email extends Item
             $o->local = $parts[0];
             $o->domain = $parts[1];
             return $o;
+      }
+
+      /**
+       * Get the local part of the e-mail.
+       * @return sting
+       */
+      public function local()
+      {
+            return $this->parse()->local;
+      }
+
+      /**
+       * Get the domain of the e-mail.
+       * @return string
+       */
+      public function domain()
+      {
+            return $this->parse()->domain;
       }
 }
