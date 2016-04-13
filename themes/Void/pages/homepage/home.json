@@ -11,6 +11,12 @@
                   "label": "Introduction",
                   "description": "Your homepage's introduction text",
                   "defaultValue": "Default intro value"
+            },
+            "number1": {
+                  "type": "number"
+            },
+            "number2": {
+                  "type": "number"
             }
       }
 }

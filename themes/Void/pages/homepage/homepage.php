@@ -5,6 +5,15 @@
       <?= $intro->baseHeading(4)->length(200) ?>
 </p>
 
+
+
+
+
+<?php var_dump($number1->floatval() + $number2->i); ?>
+
+
+
+
 <?php Part::get('news'); ?>
 <?php Part::get('dates'); ?>
 <?php Part::get('colors'); ?>
