@@ -5,7 +5,7 @@ namespace Kabas\Config\FieldTypes;
 use Kabas\Exceptions\TypeException;
 use Kabas\App;
 
-class Selectable
+class Selectable implements \IteratorAggregate
 {
       public function __construct($fieldName = null, $data = null)
       {
@@ -29,6 +29,11 @@ class Selectable
             if(!method_exists($this, $name) && method_exists($this->data[$key], $name)) {
                   return $this->data[$key]->$name($arguments);
             }
+      }
+
+      public function getIterator()
+      {
+            return new \ArrayIterator($this->data);
       }
 
       /**

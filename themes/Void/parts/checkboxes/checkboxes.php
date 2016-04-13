@@ -1,6 +1,6 @@
 <div>
       <h2><?= $title ?></h2>
-      <?php foreach($faveFoods->all() as $checkbox): ?>
+      <?php foreach($faveFoods as $checkbox): ?>
             <p>
                   <strong><?= $checkbox->isSelected() ? '●' : '○' ?> <?= $checkbox->label() ?></strong>
             </p>
