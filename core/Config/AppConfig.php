@@ -36,5 +36,6 @@ return [
             'Page' => Kabas\Utils\Page::class,
             'Part' => Kabas\Utils\Part::class,
             'Url' => Kabas\Utils\Url::class,
+            'Session' => Kabas\Utils\Session::class
       ],
 ];
