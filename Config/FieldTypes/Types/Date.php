@@ -21,7 +21,7 @@ class Date extends Item
        */
       public function condition()
       {
-            return true;
+            return strtotime($this->data);
       }
 
       public function __get($key)
