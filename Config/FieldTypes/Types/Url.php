@@ -37,7 +37,7 @@ class Url extends Item
        */
       public function condition()
       {
-            return filter_var($this->data, FILTER_VALIDATE_URL);
+            return filter_var($this->data->href, FILTER_VALIDATE_URL);
       }
 
       /**
