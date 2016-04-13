@@ -7,7 +7,7 @@
                   "defaultValue": "Default title value"
             },
             "intro": {
-                  "type": "text",
+                  "type": "wysiwyg",
                   "label": "Introduction",
                   "description": "Your homepage's introduction text",
                   "defaultValue": "Default intro value"

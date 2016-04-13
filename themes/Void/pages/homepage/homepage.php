@@ -2,7 +2,7 @@
 
 <h2><?= $title ?></h2>
 <p>
-      <?= $intro ?>
+      <?= $intro->baseHeading(4)->length(200) ?>
 </p>
 
 <?php Part::get('news'); ?>

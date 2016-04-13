@@ -9,7 +9,8 @@
     "require": {
         "intervention/image": "^2.3",
         "illuminate/container": "^5.2",
-        "illuminate/database": "^5.2"
+        "illuminate/database": "^5.2",
+        "erusev/parsedown-extra": "^0.7.1"
     },
     "autoload": {
           "psr-4": {
