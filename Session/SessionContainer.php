@@ -6,6 +6,7 @@ class SessionContainer
 {
       protected $flash;
       protected $content;
+      protected $flashToDelete;
 
       public function __construct($sessionData)
       {
@@ -14,16 +15,20 @@ class SessionContainer
             $this->boot($sessionData);
       }
 
-      public function __sleep()
+      public function serialize()
       {
-            // TODO: cleanup before serialize
+            var_dump($this->flash);
+            return serialize([$this->flash, $this->content]);
       }
 
       protected function boot($sessionData)
       {
             $a = unserialize($sessionData);
-            // TODO: fill flash and content
-            // keep a trace of the flash items so we can delete them later
+            if(isset($a[0])) $this->flash = $a[0];
+            if(isset($a[1])) $this->content = $a[1];
+            var_dump($this->flash);
+            $this->content = $a[1];
+            $this->flashToDelete = $a[0];
       }
 
       public function flash()
@@ -43,7 +48,7 @@ class SessionContainer
 
       public function __get($key)
       {
-            return $this->content->$key;
+            return isset($this->content->$key) ? $this->content->$key : false;
       }
 
       public function setFlash($key, $value)
@@ -54,5 +59,25 @@ class SessionContainer
       public function getFlash($key)
       {
             return $this->flash->$key;
+      }
+
+      public function hasFlash($key = null)
+      {
+            if($key) return property_exists($this->flash, $key);
+            return !empty($this->flash);
+      }
+
+      public function getFlashToDelete()
+      {
+            return $this->flashToDelete;
+      }
+
+      public function deleteAllFlash()
+      {
+            var_dump('before', $this->flashToDelete);
+            foreach($this->flashToDelete as $key => $value){
+                  if($this->hasFlash($key)) unset($this->flash->$key);
+            }
+            var_dump('after', $this->flash);
       }
 }
