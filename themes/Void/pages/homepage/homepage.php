@@ -5,12 +5,12 @@
       <?= $intro->baseHeading(5) ?>
 </p>
 
-<?php Part::get('news', ['title' => 'lol']); ?>
-<?php Part::dates(['title' => $title]); ?>
-<?php Part::get('colors'); ?>
-<?php Part::get('links'); ?>
-<?php Part::get('images'); ?>
-<?php Part::get('checkboxes'); ?>
-<?php Part::get('section1'); ?>
+<?php Part::news(); ?>
+<?php Part::dates(); ?>
+<?php Part::colors(); ?>
+<?php Part::links(); ?>
+<?php Part::images(); ?>
+<?php Part::checkboxes(); ?>
+<?php Part::section1(); ?>
 
 <?php Part::footer(); ?>
