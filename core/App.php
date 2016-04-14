@@ -119,7 +119,7 @@ class App extends Container
       {
             $this->page = $this->router->getCurrentPageID();
             $this->response->init($this->page);
-            $this->session->write();
+            $this->session->finish();
       }
 
       /**

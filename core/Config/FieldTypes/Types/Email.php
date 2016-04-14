@@ -26,6 +26,8 @@ class Email extends Item
             $o = new \stdClass();
             $o->local = $parts[0];
             $o->domain = $parts[1];
+            // TODO: add extension
+            // TODO: add subdomain
             return $o;
       }
 

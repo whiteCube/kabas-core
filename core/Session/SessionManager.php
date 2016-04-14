@@ -12,7 +12,9 @@ class SessionManager
       public function __construct()
       {
             $this->hasBooted = session_start();
-            $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$_SESSION['kabas']]);
+            $sessionData = isset($_SESSION['kabas']) ? $_SESSION['kabas'] : '';
+            var_dump($sessionData);
+            $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$sessionData]);
       }
 
       public function put($key, $value)
@@ -30,8 +32,25 @@ class SessionManager
             $this->container->setFlash($key, $value);
       }
 
+      public function forget($key)
+      {
+            unset($this->container->$key);
+      }
+
+      public function finish()
+      {
+            $this->clearFlash();
+            $this->write();
+      }
+
+      public function clearFlash()
+      {
+            if($this->container->hasFlash()) $this->container->deleteAllFlash();
+      }
+
       public function write()
       {
-            $_SESSION['kabas'] = serialize($this->container);
+            $_SESSION['kabas'] = $this->container->serialize();
+            var_dump($_SESSION['kabas']);
       }
 }
