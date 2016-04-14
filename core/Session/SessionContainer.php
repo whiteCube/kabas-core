@@ -17,7 +17,6 @@ class SessionContainer
 
       public function serialize()
       {
-            var_dump($this->flash);
             return serialize([$this->flash, $this->content]);
       }
 
