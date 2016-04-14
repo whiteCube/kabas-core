@@ -6,7 +6,7 @@
 </p>
 
 <?php Part::get('news', ['title' => 'lol']); ?>
-<?php Part::dates(['title' => 'test']); ?>
+<?php Part::dates(['title' => $title]); ?>
 <?php Part::get('colors'); ?>
 <?php Part::get('links'); ?>
 <?php Part::get('images'); ?>

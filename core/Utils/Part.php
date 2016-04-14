@@ -34,6 +34,7 @@ class Part
       {
             if(!empty($params)){
                   foreach($params as $key => $value){
+                        if(is_object($value)) $value = (string) $value;
                         $part->data->$key = $value;
                   }
             }
