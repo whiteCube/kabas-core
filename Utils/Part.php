@@ -12,31 +12,31 @@ class Part
        * @param  string $partID
        * @return void
        */
-      static function get($partID)
+      static function get($partID, $params = [])
       {
             App::config()->parts->loadPart($partID);
             $part = App::config()->parts->getPart($partID);
             $partTemplate = Text::toNamespace($part->template);
 
+            $part = self::overrideParams($part, $params);
+
             $themeTemplate = '\Theme\\' . App::theme() .'\Parts\\' . $partTemplate;
             App::getInstance()->make($themeTemplate, [$part]);
       }
 
-      /**
-       * Get and display the site's header
-       * @return void
-       */
-      static function header()
+      static function __callStatic($method, $params)
       {
-            self::get('header');
+            if(!empty($params)) $params = $params[0];
+            self::get($method, $params);
       }
 
-      /**
-       * Get and display the site's footer
-       * @return void
-       */
-      static function footer()
+      static function overrideParams($part, $params)
       {
-            self::get('footer');
+            if(!empty($params)){
+                  foreach($params as $key => $value){
+                        $part->data->$key = $value;
+                  }
+            }
+            return $part;
       }
 }
