@@ -25,7 +25,6 @@ class SessionContainer
             $a = unserialize($sessionData);
             if(isset($a[0])) $this->flash = $a[0];
             if(isset($a[1])) $this->content = $a[1];
-            var_dump($this->flash);
             $this->content = $a[1];
             $this->flashToDelete = $a[0];
       }
@@ -73,10 +72,8 @@ class SessionContainer
 
       public function deleteAllFlash()
       {
-            var_dump('before', $this->flashToDelete);
             foreach($this->flashToDelete as $key => $value){
                   if($this->hasFlash($key)) unset($this->flash->$key);
             }
-            var_dump('after', $this->flash);
       }
 }

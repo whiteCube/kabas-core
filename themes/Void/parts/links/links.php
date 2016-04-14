@@ -4,5 +4,4 @@
       <p>
             Parsing:
       </p>
-      <?php var_dump($link1->parse()); ?>
 </div>
