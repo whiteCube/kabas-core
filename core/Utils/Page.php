@@ -16,4 +16,9 @@ class Page
             $pageTitle = App::config()->pages->items[$pageID]->title;
             return $pageTitle;
       }
+
+      static function id()
+      {
+            return App::router()->getCurrentPageID();
+      }
 }
