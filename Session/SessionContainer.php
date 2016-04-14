@@ -12,7 +12,9 @@ class SessionContainer
       {
             $this->flash = new \stdClass;
             $this->content = new \stdClass;
+            $this->flashToDelete = new \stdClass;
             $this->boot($sessionData);
+            // var_dump($sessionData);
       }
 
       public function serialize()
@@ -25,8 +27,7 @@ class SessionContainer
             $a = unserialize($sessionData);
             if(isset($a[0])) $this->flash = $a[0];
             if(isset($a[1])) $this->content = $a[1];
-            $this->content = $a[1];
-            $this->flashToDelete = $a[0];
+            $this->flashToDelete = clone $this->flash;
       }
 
       public function flash()
@@ -62,7 +63,7 @@ class SessionContainer
       public function hasFlash($key = null)
       {
             if($key) return property_exists($this->flash, $key);
-            return !empty($this->flash);
+            return !empty((array) $this->flash);
       }
 
       public function getFlashToDelete()
@@ -72,8 +73,10 @@ class SessionContainer
 
       public function deleteAllFlash()
       {
+            // var_dump('clearing flash items', $this->flashToDelete);
             foreach($this->flashToDelete as $key => $value){
                   if($this->hasFlash($key)) unset($this->flash->$key);
             }
+            // var_dump('remaining flash items', $this->flash);
       }
 }

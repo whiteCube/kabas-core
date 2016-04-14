@@ -42,6 +42,16 @@ class SessionManager
             $this->write();
       }
 
+      public function hasFlash()
+      {
+            return $this->container->hasFlash();
+      }
+
+      public function getFlash($key)
+      {
+            return $this->container->getFlash($key);
+      }
+
       public function clearFlash()
       {
             if($this->container->hasFlash()) $this->container->deleteAllFlash();
@@ -50,5 +60,6 @@ class SessionManager
       public function write()
       {
             $_SESSION['kabas'] = $this->container->serialize();
+            // var_dump($_SESSION['kabas']);
       }
 }
