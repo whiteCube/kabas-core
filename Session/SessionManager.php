@@ -13,7 +13,6 @@ class SessionManager
       {
             $this->hasBooted = session_start();
             $sessionData = isset($_SESSION['kabas']) ? $_SESSION['kabas'] : '';
-            var_dump($sessionData);
             $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$sessionData]);
       }
 
@@ -51,6 +50,5 @@ class SessionManager
       public function write()
       {
             $_SESSION['kabas'] = $this->container->serialize();
-            var_dump($_SESSION['kabas']);
       }
 }
