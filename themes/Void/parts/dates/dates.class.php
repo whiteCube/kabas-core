@@ -6,5 +6,8 @@ use \Kabas\Controller\BaseController;
 
 class Dates extends BaseController
 {
+      public function setup()
+      {
 
+      }
 }

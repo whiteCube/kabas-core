@@ -6,5 +6,8 @@ use \Kabas\Controller\BaseController;
 
 class Images extends BaseController
 {
+      public function setup()
+      {
 
+      }
 }

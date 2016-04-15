@@ -50,6 +50,7 @@ class App extends Container
 
       public function registerBindings()
       {
+            // $this->singleton('session','Kabas\Session\SessionManager');
             $this->singleton('config', '\Kabas\Config\Container');
             $this->singleton('request', '\Kabas\Http\Request');
             $this->singleton('router', '\Kabas\Http\Router');
@@ -66,8 +67,9 @@ class App extends Container
             $pages = $this->make('Kabas\Config\Pages\Container');
             $parts = $this->make('Kabas\Config\Parts\Container');
             $menus = $this->make('Kabas\Config\Menus\Container');
-            $this->config->initParts($pages, $parts, $menus);
             $this->session = $this->make('Kabas\Session\SessionManager');
+            $this->config->initParts($pages, $parts, $menus);
+
             $this->setConstants();
       }
 
@@ -119,7 +121,7 @@ class App extends Container
       {
             $this->page = $this->router->getCurrentPageID();
             $this->response->init($this->page);
-            $this->session->finish();
+            $this->session->write();
       }
 
       /**

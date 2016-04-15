@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Kabas - Build custom easy websites in a record time
  *

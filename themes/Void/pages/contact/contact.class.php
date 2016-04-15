@@ -9,8 +9,6 @@ class Contact extends BaseController
 {
       public function setup()
       {
-            if(Session::hasFlash()){
-                  var_dump(Session::getFlash('flash'));
-            }
+            
       }
 }

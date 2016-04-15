@@ -6,5 +6,8 @@ use \Kabas\Controller\BaseController;
 
 class Colors extends BaseController
 {
+      public function setup()
+      {
 
+      }
 }

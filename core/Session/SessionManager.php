@@ -6,13 +6,14 @@ use Kabas\App;
 
 class SessionManager
 {
+      protected $sessionName = 'kabas';
       protected $hasBooted = false;
       protected $container;
 
       public function __construct()
       {
             $this->hasBooted = session_start();
-            $sessionData = isset($_SESSION['kabas']) ? $_SESSION['kabas'] : '';
+            $sessionData = isset($_SESSION[$this->sessionName]) ? $_SESSION[$this->sessionName] : '';
             $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$sessionData]);
       }
 
@@ -31,15 +32,14 @@ class SessionManager
             $this->container->setFlash($key, $value);
       }
 
+      public function reflash()
+      {
+            $this->container->reflash();
+      }
+
       public function forget($key)
       {
             unset($this->container->$key);
-      }
-
-      public function finish()
-      {
-            $this->clearFlash();
-            $this->write();
       }
 
       public function hasFlash()
@@ -52,14 +52,9 @@ class SessionManager
             return $this->container->getFlash($key);
       }
 
-      public function clearFlash()
-      {
-            if($this->container->hasFlash()) $this->container->deleteAllFlash();
-      }
 
       public function write()
       {
-            $_SESSION['kabas'] = $this->container->serialize();
-            // var_dump($_SESSION['kabas']);
+            $_SESSION[$this->sessionName] = $this->container->serialize();
       }
 }
