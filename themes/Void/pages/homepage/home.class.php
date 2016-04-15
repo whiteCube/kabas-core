@@ -10,7 +10,6 @@ class Homepage extends BaseController
       // protected $view = 'home.php';
       protected function setup()
       {
-            echo 'yo';
             \Session::flash('magueule','connard');
       }
 }
