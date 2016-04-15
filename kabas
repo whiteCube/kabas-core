@@ -1,0 +1,7 @@
+#!/usr/bin/php
+<?php
+array_shift($argv);
+
+require "core/_bootstrap/autoload.php";
+
+new Kabas\Cmd\Commander($argv);
