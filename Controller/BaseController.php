@@ -8,8 +8,9 @@ use Kabas\View\View;
 
 class BaseController
 {
-      protected $view;
+      protected $viewName;
       protected $config;
+      protected $fnInit = 'setup';
 
       public function __construct($view)
       {
@@ -20,17 +21,17 @@ class BaseController
             $this->options = isset($view->options) ? $view->options : null;
             $this->meta = isset($view->meta) ? $view->meta : null;
             $params = App::router()->getParams();
-            $response = call_user_func_array([$this, 'setup'], $params);
+            $response = call_user_func_array([$this, $this->fnInit], $params);
             $this->checkLinkedFiles();
             if(is_null($response)) {
-                  $response = $this->view($this->view, $this->data, $this->type);
+                  $response = $this->view($this->viewName, $this->data);
             }
             App::response()->send($response);
       }
 
       public function __call($method, $args)
       {
-            if($method !== 'setup') throw new \Exception('Method does not exist:' . $method);
+            return false;
       }
 
       public function redirect($pageID, $params = [], $lang = null)
@@ -80,7 +81,7 @@ class BaseController
        */
       protected function checkLinkedFiles()
       {
-            if(!$this->view) $this->view = $this->guessViewFile();
+            if(!$this->viewName) $this->viewName = $this->guessViewFile();
       }
 
       /**

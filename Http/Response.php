@@ -23,8 +23,7 @@ class Response
 
             $controllerName = Text::toNamespace($page->template);
             $pageController = '\Theme\\' . App::theme() .'\Pages\\' . $controllerName;
-
-            return App::getInstance()->make($pageController, [$page]);
+            App::getInstance()->make($pageController, [$page]);
       }
 
       /**
