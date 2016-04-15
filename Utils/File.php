@@ -31,6 +31,27 @@ class File
             file_put_contents($path . '.json', json_encode($data, JSON_PRETTY_PRINT));
       }
 
+      /**
+       * Write data to a file
+       * @param  string $data
+       * @param  string $path
+       * @return void
+       */
+      static function write($data, $path)
+      {
+            file_put_contents($path, $data);
+      }
+
+      /**
+       * Get the contents of a file
+       * @param  string $path
+       * @return string
+       */
+      static function read($path)
+      {
+            return file_get_contents($path);
+      }
+
       static function deleteJson($path)
       {
             unlink($path . '.json');
