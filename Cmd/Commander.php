@@ -11,8 +11,8 @@ class Commander
       {
             $this->command = array_shift($args);
             $this->arguments = $args;
-            $config = (require "config/site.php");
-            $this->theme = $config['theme'];
+            $this->config = (require "config/site.php");
+            $this->theme = $this->config['theme'];
             $this->setConstants();
             $this->executeCommand();
       }
@@ -29,6 +29,7 @@ class Commander
             define('THEME_PAGES', THEME_PATH . 'pages');
             define('THEME_PARTS', THEME_PATH . 'parts');
             define('THEME_MENUS', THEME_PATH . 'menus');
+            define('THEME_MODELS', THEME_PATH . 'models');
       }
 
       /**
@@ -45,6 +46,9 @@ class Commander
                   case 'make:page': $this->makePage(); break;
                   case 'make:part': $this->makePart(); break;
                   case 'make:menu': $this->makeMenu(); break;
+                  case 'make:model': $this->makeModel(); break;
+                  case 'content:page': $this->makePageContent(); break;
+                  case 'content:part': $this->makePartContent(); break;
                   default: echo "\n\033[31mKabas: Command '". $this->command ."' not found!\nUse \"php kabas help\" to view available commands.\n"; break;
             }
       }
@@ -90,13 +94,13 @@ class Commander
       public function makePage()
       {
             $page = $this->arguments[0];
-            if(!$part)  die("\n\033[31mKabas: Missing argument 1 for make:page\nPlease specify the name of your page (e.g. php kabas make:page contact)\n");
+            if(!$page) die("\n\033[31mKabas: Missing argument 1 for make:page\nPlease specify the name of your page (e.g. php kabas make:page contact)\n");
             $path = THEME_PAGES . DS . $page;
             echo "Kabas: Making page " . $page;
             mkdir($path);
-            $this->makeController($path, $page, 'Pages', '\Kabas\Controller\BaseController', 'BaseController');
-            $this->makeTemplate($path, $page);
-            $this->makeConfig($path, $page);
+            $this->makeControllerFile($path, $page, 'Pages', '\Kabas\Controller\BaseController', 'BaseController');
+            $this->makeTemplateFile($path, $page);
+            $this->makeConfigFile($path, $page);
             echo "\nWriting files to: " . $path;
             echo "\n\033[32mDone!";
       }
@@ -112,9 +116,9 @@ class Commander
             $path = THEME_PARTS . DS . $part;
             echo "Kabas: Making part " . $part;
             mkdir($path);
-            $this->makeController($path, $part, 'Parts', '\Kabas\Controller\BaseController', 'BaseController');
-            $this->makeTemplate($path, $part);
-            $this->makeConfig($path, $part);
+            $this->makeControllerFile($path, $part, 'Parts', '\Kabas\Controller\BaseController', 'BaseController');
+            $this->makeTemplateFile($path, $part);
+            $this->makeConfigFile($path, $part);
             echo "\nWriting files to: " . $path;
             echo "\n\033[32mDone!";
       }
@@ -126,14 +130,41 @@ class Commander
       public function makeMenu()
       {
             $menu = $this->arguments[0];
-            if(!$part)  die("\n\033[31mKabas: Missing argument 1 for make:menu\nPlease specify the name of your menu (e.g. php kabas make:menu main)\n");
+            if(!$menu) die("\n\033[31mKabas: Missing argument 1 for make:menu\nPlease specify the name of your menu (e.g. php kabas make:menu main)\n");
             $path = THEME_MENUS . DS . $menu;
             echo "Kabas: Making menu " . $menu;
             mkdir($path);
-            $this->makeController($path, $menu, 'Menus', 'Kabas\Controller\MenuController', 'MenuController');
-            $this->makeTemplate($path, $menu);
+            $this->makeControllerFile($path, $menu, 'Menus', 'Kabas\Controller\MenuController', 'MenuController');
+            $this->makeTemplateFile($path, $menu);
             echo "\nWriting files to: " . $path;
             echo "\n\033[32mDone!";
+      }
+
+      public function makeModel()
+      {
+            $model = $this->arguments[0];
+            $driver = $this->arguments[1];
+            if(!$model) die("\n\033[31mKabas: Missing argument 1 for make:model\nPlease specify the name of your model (e.g. php kabas make:model news eloquent)\n");
+            if(!$driver) die("\n\033[31mKabas: Missing argument 2 for make:model\nPlease specify the driver of your model (e.g. php kabas make:model news eloquent)\n");
+            if($driver !== 'eloquent' && $driver !== 'json') die("\n\033[31mKabas: Please specify a valid driver to use with your model. ('eloquent' or 'json')\n");
+            $path = THEME_MODELS . DS . $model;
+            echo "Kabas: Making model " . $model;
+            mkdir($path);
+            $this->makeModelFile($model, $driver, $path);
+            $this->makeConfigFile($path, $model);
+            echo "\nWriting files to: " . $path;
+            echo "\n\033[32mDone!";
+      }
+
+      public function makeModelFile($model, $driver, $path)
+      {
+            $file = $path . DS . $model . '.class.php';
+            $fileContent = File::read(TEMPLATES . 'Model.php');
+            $fileContent = str_replace('TOREPLACEtheme', $this->theme, $fileContent);
+            $fileContent = str_replace('TOREPLACEdriver', $driver, $fileContent);
+            $fileContent = str_replace('TOREPLACEtable', $model, $fileContent);
+            $fileContent = str_replace('TOREPLACEmodel', Text::toNamespace($model), $fileContent);
+            File::write($fileContent, $file);
       }
 
       /**
@@ -145,7 +176,7 @@ class Commander
        * @param  strin $extends
        * @return void
        */
-      public function makeController($path, $template, $type, $use, $extends)
+      public function makeControllerFile($path, $template, $type, $use, $extends)
       {
             $file = $path . DS . $template . '.class.php';
             $fileContent = File::read(TEMPLATES . 'Controller.php');
@@ -163,7 +194,7 @@ class Commander
        * @param  string $template
        * @return void
        */
-      public function makeTemplate($path, $template)
+      public function makeTemplateFile($path, $template)
       {
             $file = $path . DS . $template . '.php';
             File::write('', $file);
@@ -175,9 +206,114 @@ class Commander
        * @param  string $template
        * @return void
        */
-      public function makeConfig($path, $template)
+      public function makeConfigFile($path, $template)
       {
             $file = $path . DS . $template;
             File::writeJson(["fields" => new \stdClass], $file);
       }
+
+      public function makeContentFile($path, $template, $type, $fields = null)
+      {
+            $file = $path . DS . $template;
+            if(!$fields) $fields = new \stdClass;
+
+            $fileContents = [];
+            if($type === 'pages') $fileContents['route'] = '';
+            $fileContents['id'] = $template;
+            $fileContents['template'] = $template;
+            if($type === 'pages') $fileContents['title'] = '';
+            $fileContents['data'] = $fields;
+            $fileContents['options'] = new \stdClass;
+
+            File::writeJson($fileContents, $file);
+      }
+
+      public function makePageContent()
+      {
+            $page = array_shift($this->arguments);
+            $langs = $this->arguments;
+            $langs = $this->checkLangs($langs);
+            echo 'Kabas: making content for page ' . $page;
+            foreach($langs as $lang) {
+                  $path = 'content' . DS . $lang . DS . 'pages';
+                  $fields = $this->fetchFields('pages', $page);
+                  $this->makeContentFile($path, $page, 'pages', $fields);
+            }
+
+            echo "\nWriting files to: " . $path;
+            echo "\n\033[32mDone!";
+      }
+
+      public function makePartContent()
+      {
+            $part = array_shift($this->arguments);
+            $langs = $this->arguments;
+            $langs = $this->checkLangs($langs);
+            echo 'Kabas: making content for part ' . $part;
+            foreach($langs as $lang) {
+                  $path = 'content' . DS . $lang . DS . 'parts';
+                  $fields = $this->fetchFields('parts', $part);
+                  $this->makeContentFile($path, $part, 'parts', $fields);
+            }
+
+            echo "\nWriting files to: " . $path;
+            echo "\n\033[32mDone!";
+      }
+
+      public function checkLangs($langs)
+      {
+            $availableLangs = $this->config['lang']['available'];
+            if(!$langs) return $availableLangs;
+            else {
+                  foreach($langs as $lang) {
+                        if(!in_array($lang, $availableLangs)){
+                              die("\n\033[31mKabas: Lang $lang does not currently exist. Please create the appropriate content subfolder.\n");
+                        }
+                  }
+                  return $langs;
+            }
+      }
+
+      public function fetchFields($type, $template)
+      {
+            $path = THEME_PATH . DS . $type . DS . $template . DS . $template . '.json';
+            $config = File::loadJson($path);
+            foreach($config->fields as $key => $field){
+                  $fields[$key] = $this->formatFieldContent($field);
+            }
+            return $fields;
+      }
+
+      public function formatFieldContent($field)
+      {
+            switch($field->type){
+                  case 'image':
+                        $field = new \stdClass;
+                        $field->src = '';
+                        $field->alt = '';
+                        break;
+                  case 'url':
+                        $field = new \stdClass;
+                        $field->href = '';
+                        $field->label = '';
+                        $field->title = '';
+                        break;
+                  case 'checkbox':
+                  case 'radio':
+                  case 'select':
+                        $field = [];
+                        $field[0] = new \stdClass;
+                        $field[0]->id = '';
+                        $field[0]->label = '';
+                        $field[0]->selected = false;
+                        break;
+                  case 'number':
+                        $field = 0;
+                        break;
+                  default: $field = '';
+            }
+
+            return $field;
+      }
+
 }
