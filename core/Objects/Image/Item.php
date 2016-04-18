@@ -17,6 +17,7 @@ class Item
 
       public function __construct($file)
       {
+            if(is_array($file)) $file = (object) $file;
             $cond = (strpos($file->src, 'http://') !== false && strpos($file->src, 'http://') === 0) ||
                     (strpos($file->src, 'https://') !== false && strpos($file->src, 'https://') === 0);
             if($cond) {
