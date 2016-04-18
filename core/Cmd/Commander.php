@@ -49,6 +49,7 @@ class Commander
                   case 'make:model': $this->makeModel(); break;
                   case 'content:page': $this->makePageContent(); break;
                   case 'content:part': $this->makePartContent(); break;
+                  case 'content:menu': $this->makeMenuContent(); break;
                   default: echo "\n\033[31mKabas: Command '". $this->command ."' not found!\nUse \"php kabas help\" to view available commands.\n"; break;
             }
       }
@@ -241,7 +242,8 @@ class Commander
             $fileContents['id'] = $template;
             $fileContents['template'] = $template;
             if($type === 'pages') $fileContents['title'] = '';
-            $fileContents['data'] = $fields;
+            if($type !== 'menus') $fileContents['data'] = $fields;
+            if($type === 'menus') $fileContents['links'] = new \stdClass;
             $fileContents['options'] = new \stdClass;
 
             File::writeJson($fileContents, $file);
@@ -261,9 +263,8 @@ class Commander
                   $path = 'content' . DS . $lang . DS . 'pages';
                   $fields = $this->fetchFields('pages', $page);
                   $this->makeContentFile($path, $page, 'pages', $fields);
+                  echo "\nWriting files to: " . $path;
             }
-
-            echo "\nWriting files to: " . $path;
             echo "\n\033[32mDone!";
       }
 
@@ -281,9 +282,26 @@ class Commander
                   $path = 'content' . DS . $lang . DS . 'parts';
                   $fields = $this->fetchFields('parts', $part);
                   $this->makeContentFile($path, $part, 'parts', $fields);
+                  echo "\nWriting files to: " . $path;
             }
+            echo "\n\033[32mDone!";
+      }
 
-            echo "\nWriting files to: " . $path;
+      /**
+       * Make a content file for a menu.
+       * @return void
+       */
+      public function makeMenuContent()
+      {
+            $menu = array_shift($this->arguments);
+            $langs = $this->arguments;
+            $langs = $this->checkLangs($langs);
+            echo 'Kabas: making content for menu ' . $menu;
+            foreach($langs as $lang) {
+                  $path = 'content' . DS . $lang . DS . 'menus';
+                  $this->makeContentFile($path, $menu, 'menus');
+                  echo "\nWriting files to: " . $path;
+            }
             echo "\n\033[32mDone!";
       }
 
