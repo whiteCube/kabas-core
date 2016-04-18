@@ -18,6 +18,7 @@ class Json implements \IteratorAggregate
       {
             self::$instance = $this;
             $this->hasStacked = false;
+            $this->attributes['original'] = new \stdClass;
             if(isset($modelInfo)) {
                   self::$modelInfo = $modelInfo;
                   App::config()->models->loadModel($modelInfo);
@@ -327,9 +328,13 @@ class Json implements \IteratorAggregate
        */
       public function save()
       {
-            if(!$this->exists()) $this->create($this->attributes);
-            $this->update($this->attributes);
-            $this->attributes = (array) $this->instanciateFields($this->attributes, null);
+            $attributes = $this->attributes;
+            unset($attributes['original']);
+            if(!$this->exists()) $this->create($attributes);
+            else {
+                  $this->update($attributes);
+                  $this->attributes = (array) $this->instanciateFields($attributes, null);
+            }
             return $this;
       }
 
@@ -363,6 +368,19 @@ class Json implements \IteratorAggregate
             foreach($stackedItems as $item) {
                   File::deleteJson($this->getContentPath() . DS . $item->id);
             }
+      }
+
+      /**
+       * Fill the model with an array of attributes.
+       * @param  array $data
+       * @return $this
+       */
+      public function fill($data)
+      {
+            foreach($data as $key => $value){
+                  $this->$key = $value;
+            }
+            return $this;
       }
 
       /**
