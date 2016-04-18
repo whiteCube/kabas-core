@@ -186,7 +186,9 @@ class Json implements \IteratorAggregate
                   foreach($key as $k) {
                         $path = $instance->getContentPath() . DS . $k . '.json';
                         $item = File::loadJson($path);
-                        $instance->stackedItems[] = $instance->instanciateFields($item, $columns);
+                        if($item){
+                              $instance->stackedItems[$k] = $instance->instanciateFields($item, $columns);
+                        }
                   }
             } else {
                   $path = $instance->getContentPath() . DS . $key . '.json';
@@ -368,6 +370,22 @@ class Json implements \IteratorAggregate
             foreach($stackedItems as $item) {
                   File::deleteJson($this->getContentPath() . DS . $item->id);
             }
+      }
+
+      /**
+       * Deletes entries.
+       * @param  mixed $ids
+       * @return $this
+       */
+      public function destroy($ids)
+      {
+            if(!is_array($ids)) $ids = [$id];
+            $this->find($ids);
+            if(!empty($this->stackedItems)) {
+                  $this->hasStacked = true;
+                  $this->delete();
+            }
+            return $this;
       }
 
       /**
