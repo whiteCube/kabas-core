@@ -3,7 +3,7 @@
 namespace Theme\Void\Pages;
 
 use Kabas\Controller\BaseController;
-use Kabas\Utils\Session;
+use \Session;
 
 class Contact extends BaseController
 {

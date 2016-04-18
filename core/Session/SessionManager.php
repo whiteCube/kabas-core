@@ -27,6 +27,23 @@ class SessionManager
             return $this->container->$key;
       }
 
+      public function pull($key)
+      {
+            $value = $this->get($key);
+            $this->forget($key);
+            return $value;
+      }
+
+      public function all()
+      {
+            return $this->container->all();
+      }
+
+      public function flush()
+      {
+            $this->container->flush();
+      }
+
       public function flash($key, $value)
       {
             $this->container->setFlash($key, $value);
@@ -45,6 +62,11 @@ class SessionManager
       public function forget($key)
       {
             unset($this->container->$key);
+      }
+
+      public function has($key)
+      {
+            return isset($this->container->$key);
       }
 
       public function hasFlash($key = null)

@@ -15,21 +15,6 @@ class SessionContainer
 
       }
 
-      public function serialize()
-      {
-            return serialize([$this->flash->get(), $this->content]);
-      }
-
-      public function reflash()
-      {
-            $this->flash->reflash();
-      }
-
-      public function keep($key)
-      {
-            $this->flash->keep($key);
-      }
-
       public function __set($key, $value)
       {
             $this->content->$key = $value;
@@ -38,6 +23,41 @@ class SessionContainer
       public function __get($key)
       {
             return isset($this->content->$key) ? $this->content->$key : false;
+      }
+
+      public function __isset($key)
+      {
+            return isset($this->content->$key);
+      }
+
+      public function __unset($key)
+      {
+            unset($this->content->$key);
+      }
+
+      public function serialize()
+      {
+            return serialize([$this->flash->get(), $this->content]);
+      }
+
+      public function all()
+      {
+            return $this->content;
+      }
+
+      public function flush()
+      {
+            $this->content = new \stdClass;
+      }
+
+      public function reflash()
+      {
+            $this->flash->reflash();
+      }
+
+      public function keep($keys)
+      {
+            $this->flash->keep($keys);
       }
 
       public function setFlash($key, $value)
@@ -52,8 +72,8 @@ class SessionContainer
 
       public function hasFlash($key = null)
       {
-            if($key) return property_exists($this->flash, $key);
-            return !empty((array) $this->flash);
+            if($key) return $this->flash->has($key);
+            return !$this->flash->isEmpty();
       }
 
 }
