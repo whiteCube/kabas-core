@@ -140,6 +140,10 @@ class Commander
             echo "\n\033[32mDone!";
       }
 
+      /**
+       * Make the complete structure for a new model.
+       * @return void
+       */
       public function makeModel()
       {
             $model = $this->arguments[0];
@@ -156,6 +160,13 @@ class Commander
             echo "\n\033[32mDone!";
       }
 
+      /**
+       * Create a new model file.
+       * @param  string $model
+       * @param  string $driver
+       * @param  string $path
+       * @return void
+       */
       public function makeModelFile($model, $driver, $path)
       {
             $file = $path . DS . $model . '.class.php';
@@ -212,6 +223,14 @@ class Commander
             File::writeJson(["fields" => new \stdClass], $file);
       }
 
+      /**
+       * Make a content file.
+       * @param  string $path
+       * @param  string $template
+       * @param  string $type
+       * @param  object $fields
+       * @return void
+       */
       public function makeContentFile($path, $template, $type, $fields = null)
       {
             $file = $path . DS . $template;
@@ -228,6 +247,10 @@ class Commander
             File::writeJson($fileContents, $file);
       }
 
+      /**
+       * Make a content file for a page
+       * @return void
+       */
       public function makePageContent()
       {
             $page = array_shift($this->arguments);
@@ -244,6 +267,10 @@ class Commander
             echo "\n\033[32mDone!";
       }
 
+      /**
+       * Make a content file for a part.
+       * @return void
+       */
       public function makePartContent()
       {
             $part = array_shift($this->arguments);
@@ -260,6 +287,11 @@ class Commander
             echo "\n\033[32mDone!";
       }
 
+      /**
+       * Checks that specified langs exist in application.
+       * @param  array $langs
+       * @return array
+       */
       public function checkLangs($langs)
       {
             $availableLangs = $this->config['lang']['available'];
@@ -274,6 +306,12 @@ class Commander
             }
       }
 
+      /**
+       * Get the field descriptions of the specified template.
+       * @param  string $type
+       * @param  string $template
+       * @return array
+       */
       public function fetchFields($type, $template)
       {
             $path = THEME_PATH . DS . $type . DS . $template . DS . $template . '.json';
@@ -284,6 +322,11 @@ class Commander
             return $fields;
       }
 
+      /**
+       * Format the field so it can be filled with content later.
+       * @param  object $field
+       * @return mixed
+       */
       public function formatFieldContent($field)
       {
             switch($field->type){
