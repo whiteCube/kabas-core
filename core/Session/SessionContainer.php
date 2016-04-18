@@ -35,6 +35,10 @@ class SessionContainer
             unset($this->content->$key);
       }
 
+      /**
+       * Serialize the session data.
+       * @return string
+       */
       public function serialize()
       {
             return serialize([$this->flash->get(), $this->content]);
