@@ -37,21 +37,25 @@ class SessionManager
             $this->container->reflash();
       }
 
+      public function keep($keys)
+      {
+            $this->container->keep($keys);
+      }
+
       public function forget($key)
       {
             unset($this->container->$key);
       }
 
-      public function hasFlash()
+      public function hasFlash($key = null)
       {
-            return $this->container->hasFlash();
+            return $this->container->hasFlash($key);
       }
 
       public function getFlash($key)
       {
             return $this->container->getFlash($key);
       }
-
 
       public function write()
       {
