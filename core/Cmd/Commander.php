@@ -50,6 +50,7 @@ class Commander
                   case 'content:page': $this->makePageContent(); break;
                   case 'content:part': $this->makePartContent(); break;
                   case 'content:menu': $this->makeMenuContent(); break;
+                  case 'content:model': $this->makeModelContent(); break;
                   default: echo "\n\033[31mKabas: Command '". $this->command ."' not found!\nUse \"php kabas help\" to view available commands.\n"; break;
             }
       }
@@ -249,6 +250,17 @@ class Commander
             File::writeJson($fileContents, $file);
       }
 
+      public function makeObjectFile($path, $model, $fields)
+      {
+            $path = $path . DS . $model;
+            $files = scandir($path);
+            $lastIndex = count($files) - 1;
+            $lastId = intval(pathinfo($files[$lastIndex], PATHINFO_FILENAME));
+            $id = ++$lastId;
+            $file = $path . DS . $id;
+            File::writeJson($fields, $file);
+      }
+
       /**
        * Make a content file for a page
        * @return void
@@ -300,6 +312,22 @@ class Commander
             foreach($langs as $lang) {
                   $path = 'content' . DS . $lang . DS . 'menus';
                   $this->makeContentFile($path, $menu, 'menus');
+                  echo "\nWriting files to: " . $path;
+            }
+            echo "\n\033[32mDone!";
+      }
+
+      public function makeModelContent()
+      {
+            $model = array_shift($this->arguments);
+            $langs = $this->arguments;
+            $langs = $this->checkLangs($langs);
+            echo 'Kabas: making content for model ' . $model;
+            foreach($langs as $lang) {
+                  $path = 'content' . DS . $lang . DS . 'objects';
+                  mkdir($path . DS . $model, 0777, true);
+                  $fields = $this->fetchFields('models', $model);
+                  $this->makeObjectFile($path, $model, $fields);
                   echo "\nWriting files to: " . $path;
             }
             echo "\n\033[32mDone!";
