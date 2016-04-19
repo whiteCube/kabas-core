@@ -13,39 +13,16 @@ class JsonException extends Exception
             $parser = new JsonParser();
             $lint = $parser->lint($json)->getMessage();
             $title = 'JsonException ('. json_last_error_msg() .')';
-            $type = 'JsonException ('. json_last_error_msg() .')';
+            $type = $title;
             $message = 'Error reading JSON file <code>"' . $path . '"</code>. ';
             $hint = 'Please make sure the file strictly follows the JSON syntax (no extra commas allowed, double quotes, etc.)';
 
             if(ob_get_level()) ob_clean();
 
             ob_start();
-            include(__DIR__ . DS . 'Error.php');
+            include(__DIR__ . DS . 'ErrorTemplate.php');
             $template = ob_get_clean();
 
             parent::__construct($template, $code, $previous);
-      }
-
-      /**
-       * Show the concerned field and its template in the error message.
-       * @param string $fieldName
-       * @param string $viewID
-       */
-      public function setFieldName($fieldName, $viewID)
-      {
-            $this->message = $this->message . '<pre><strong>field "' . $fieldName . '" in template "' . $viewID . '"</strong></pre>';
-      }
-
-      /**
-       * Show the currently supported field types.
-       * @return void
-       */
-      public function showAvailableTypes()
-      {
-            $this->message = $this->message . '<pre>Available field types: ';
-            foreach(App::config()->fieldTypes->supportedTypes as $typeName => $type) {
-                  $this->message = $this->message . '<br>' . $typeName;
-            }
-            $this->message .= "</pre>";
       }
 }
