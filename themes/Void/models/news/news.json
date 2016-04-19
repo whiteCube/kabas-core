@@ -25,10 +25,10 @@
                   "defaultValue": "banner.jpg"
             },
             "created_at": {
-                  "type": "date",
-                  "label": "Created at",
-                  "description": "Creation date for this news article",
-                  "defaultValue": ""
+                  "type": "date"
+            },
+            "updated_at": {
+                  "type": "date"
             }
       }
 }
