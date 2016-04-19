@@ -319,8 +319,12 @@ class Json implements \IteratorAggregate
        * Check if current model exists.
        * @return bool
        */
-      protected function exists()
+      protected function exists($id = null)
       {
+            if($id){
+                  $results = $this->where('id', $id);
+                  return count($results) > 0;
+            }
             return isset($this->stackedItems[0]->id) || isset($this->attributes['id']);
       }
 
@@ -331,18 +335,28 @@ class Json implements \IteratorAggregate
       public function save()
       {
             $attributes = $this->attributes;
-            unset($attributes['original']);
-            if(!$this->exists()) $this->create($attributes);
-            else {
-                  $this->update($attributes);
-                  $this->attributes = (array) $this->instanciateFields($attributes, null);
+
+            if(!empty((array) $attributes['original'])){
+                  if(!$this->exists()) $this->create($attributes['original']);
+                  else {
+                        $this->update($attributes['original']);
+                        $this->attributes = (array) $this->instanciateFields($attributes, null);
+                  }
+            } else {
+                  foreach($this->getStackedItems() as $item){
+                        if(!$this->exists($item->id)) $this->create((array) $item);
+                        else $this->update((array) $item);
+                  }
             }
+
             return $this;
       }
 
       public function update($data)
       {
-            $this->create((array) $data['original']);
+            $data = (object) $data;
+            if(isset($data->updated_at)) $data->updated_at = \Carbon\Carbon::now()->toDateTimeString();
+            $this->create((array) $data);
       }
 
       /**
@@ -423,6 +437,15 @@ class Json implements \IteratorAggregate
             $lastIndex = count($files) - 1;
             $lastId = intval(pathinfo($files[$lastIndex], PATHINFO_FILENAME));
             return ++$lastId;
+      }
+
+      /**
+       * Update the model's update timestamp
+       * @return void
+       */
+      public function touch()
+      {
+            return $this->save();
       }
 
 }
