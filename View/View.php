@@ -104,6 +104,7 @@ class View
        */
       static function notFound()
       {
+            if(ob_get_level()) ob_clean();
             require '404.php';
       }
 }
