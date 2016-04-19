@@ -9,8 +9,18 @@ class TypeException extends Exception
 {
       public function __construct($message, $code = 0, Exception $previous = null)
       {
-            $message = '<pre>🤔 <span style="color: red;">Kabas TypeException: </span> ' . $message . '</pre>';
-            parent::__construct($message, $code, $previous);
+            $title = 'TypeException';
+            $type = $title;
+            $hint = $this->showAvailableTypes();
+
+            if(ob_get_level()) ob_clean();
+
+            ob_start();
+            include(__DIR__ . DS . 'ErrorTemplate.php');
+            $template = ob_get_clean();
+
+
+            parent::__construct($template, $code, $previous);
       }
 
       /**
@@ -29,10 +39,11 @@ class TypeException extends Exception
        */
       public function showAvailableTypes()
       {
-            $this->message = $this->message . '<pre>Available field types: ';
+            $hint = 'Available field types: <ul>';
             foreach(App::config()->fieldTypes->supportedTypes as $typeName => $type) {
-                  $this->message = $this->message . '<br>' . $typeName;
+                  $hint .= '<li><code>' . $typeName . '</code></li>';
             }
-            $this->message .= "</pre>";
+            $hint .= "</ul>";
+            return $hint;
       }
 }
