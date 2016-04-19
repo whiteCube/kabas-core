@@ -76,14 +76,13 @@ class Json implements \IteratorAggregate
       protected function instanciateFields($item, $columns)
       {
             if(is_null($item)) return;
-            $instance = self::getInstance();
-            $item = self::getColumns($item, $columns);
+            $item = $this->getColumns($item, $columns);
             $newItem = new \stdClass;
             $newItem->original = new \stdClass;
             foreach($item as $key => $value) {
                   $newItem->original->$key = $value;
                   if(!$this->isInstanciatedField($value)) {
-                        $newItem->$key = $instance->instanciateField($key, $value);
+                        $newItem->$key = $this->instanciateField($key, $value);
                   }
             }
             return $newItem;
@@ -131,7 +130,7 @@ class Json implements \IteratorAggregate
        * @param  array $columns
        * @return object
        */
-      static function getColumns($item, $columns)
+      public function getColumns($item, $columns)
       {
             if(!isset($columns)) return $item;
             $newItem = new \stdClass();
@@ -150,27 +149,25 @@ class Json implements \IteratorAggregate
        */
       protected function getStackedItems()
       {
-            $instance = self::getInstance();
             if(($this->hasStacked)) return $this->stackedItems;
             $this->hasStacked = true;
-            return File::loadJsonFromDir($instance->getContentPath());
+            return File::loadJsonFromDir($this->getContentPath());
       }
 
       /**
        * Get all entries
        * @return array
        */
-      static function all($columns = null)
+      public function all($columns = null)
       {
-            $instance = self::getInstance();
-            $path = $instance->getContentPath();
+            $path = $this->getContentPath();
             $items = File::loadJsonFromDir($path);
             foreach($items as $key => $item) {
-                  $items[$key] = $instance->instanciateFields($item, $columns);
+                  $items[$key] = $this->instanciateFields($item, $columns);
             }
-            $instance->stackedItems = $items;
-            if(count($instance->stackedItems) === 0) return null;
-            return $instance;
+            $this->stackedItems = $items;
+            if(count($this->stackedItems) === 0) return null;
+            return $this;
       }
 
       /**
@@ -179,25 +176,30 @@ class Json implements \IteratorAggregate
        * @param  array $columns
        * @return object
        */
-      static function find($key, $columns = null)
+      public function find($key, $columns = null)
       {
-            $instance = self::getInstance();
             if(is_array($key)) {
-                  foreach($key as $k) {
-                        $path = $instance->getContentPath() . DS . $k . '.json';
-                        $item = File::loadJson($path);
-                        if($item){
-                              $instance->stackedItems[$k] = $instance->instanciateFields($item, $columns);
-                        }
-                  }
+                  $this->findMany($key, $columns);
             } else {
-                  $path = $instance->getContentPath() . DS . $key . '.json';
+                  $path = $this->getContentPath() . DS . $key . '.json';
                   $item = File::loadJson($path);
                   if(empty($item)) return null;
-                  $item = $instance->getColumns($item, $columns);
-                  $instance->attributes = (array) $instance->instanciateFields($item, $columns);
+                  $item = $this->getColumns($item, $columns);
+                  $this->attributes = (array) $this->instanciateFields($item, $columns);
             }
-            return $instance;
+            return $this;
+      }
+
+      public function findMany($ids, $columns = null)
+      {
+            foreach($ids as $id) {
+                  $path = $this->getContentPath() . DS . $id . '.json';
+                  $item = File::loadJson($path);
+                  if($item){
+                        $this->stackedItems[$id] = $this->instanciateFields($item, $columns);
+                  }
+            }
+            return $this;
       }
 
       /**
@@ -451,6 +453,41 @@ class Json implements \IteratorAggregate
       public function touch()
       {
             return $this->save();
+      }
+
+      /**
+       * Get the table for this model
+       * @return string
+       */
+      public function getTable()
+      {
+            return self::$modelInfo->table;
+      }
+
+      /**
+       * Convert the model to an array.
+       * @return array
+       */
+      public function toArray()
+      {
+            $arr = [];
+            $items = $this->getStackedItems();
+            if(count($items) === 1) return (array) $this->instanciateFields($items[0], null);
+            foreach($items as $item) {
+                  $arr[] = (array) $this->instanciateFields($item, null);
+            }
+            return $arr;
+      }
+
+      /**
+       * Convert the model instance to JSON.
+       * @return string
+       */
+      public function toJson()
+      {
+            $items = $this->getStackedItems();
+            if(count($items) === 1) $items = $items[0];
+            return json_encode($items);
       }
 
 }
