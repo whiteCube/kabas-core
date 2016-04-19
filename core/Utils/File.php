@@ -3,6 +3,7 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
+use Kabas\Exceptions\JsonException;
 
 class File
 {
@@ -14,8 +15,18 @@ class File
       static function loadJson($filePath)
       {
             if(file_exists($filePath)){
-                  $string = file_get_contents($filePath);
-                  $json = json_decode($string);
+                  try {
+                        $string = file_get_contents($filePath);
+                        $json = json_decode($string);
+                        if(!$json){
+                              throw new JsonException($filePath, $string);
+                        }
+                  } catch (JsonException $e) {
+                        echo $e->getMessage();
+                        die();
+                  }
+
+
                   return $json;
             }
       }
