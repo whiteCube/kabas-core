@@ -354,9 +354,9 @@ class Json implements \IteratorAggregate
 
       public function update($data)
       {
-            $data = (object) $data;
-            if(isset($data->updated_at)) $data->updated_at = \Carbon\Carbon::now()->toDateTimeString();
-            $this->create((array) $data);
+            $data = (array) $data;
+            if(isset($data['updated_at'])) $data['updated_at'] = \Carbon\Carbon::now()->toDateTimeString();
+            $this->create($data);
       }
 
       /**
