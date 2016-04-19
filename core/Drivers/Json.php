@@ -352,6 +352,11 @@ class Json implements \IteratorAggregate
             return $this;
       }
 
+      /**
+       * Update a model.
+       * @param  mixed $data
+       * @return void
+       */
       public function update($data)
       {
             $data = (array) $data;
