@@ -4,6 +4,8 @@ namespace Kabas\Drivers;
 
 use \Kabas\App;
 use \Kabas\Utils\File;
+use Kabas\Exceptions\ModelNotFoundException;
+use Kabas\Exceptions\MassAssignmentException;
 
 class Json implements \IteratorAggregate
 {
@@ -13,6 +15,10 @@ class Json implements \IteratorAggregate
       protected $hasStacked;
       protected $limit;
       protected $stackedItems = [];
+      protected $fillable = [];
+      protected $guarded = [];
+      protected $original;
+      protected $columns;
 
       public function __construct($uselesss = null, $modelInfo = null)
       {
@@ -20,6 +26,8 @@ class Json implements \IteratorAggregate
             $this->hasStacked = false;
             $this->attributes['original'] = new \stdClass;
             if(isset($modelInfo)) {
+                  $this->fillable = $modelInfo->fillable;
+                  $this->guarded = $modelInfo->guarded;
                   self::$modelInfo = $modelInfo;
                   App::config()->models->loadModel($modelInfo);
             }
@@ -134,6 +142,7 @@ class Json implements \IteratorAggregate
       {
             if(!isset($columns)) return $item;
             $newItem = new \stdClass();
+            if(is_string($columns)) $columns = [$columns];
             foreach($columns as $column){
                   foreach($item as $key => $value) {
                         if($key === $column) $newItem->$key = $value;
@@ -160,10 +169,11 @@ class Json implements \IteratorAggregate
        */
       public function all($columns = null)
       {
+            if($columns) $this->columns = $columns;
             $path = $this->getContentPath();
             $items = File::loadJsonFromDir($path);
             foreach($items as $key => $item) {
-                  $items[$key] = $this->instanciateFields($item, $columns);
+                  $items[$key] = $this->instanciateFields($item, $this->columns);
             }
             $this->stackedItems = $items;
             if(count($this->stackedItems) === 0) return null;
@@ -178,25 +188,33 @@ class Json implements \IteratorAggregate
        */
       public function find($key, $columns = null)
       {
+            if($columns) $this->columns = $columns;
             if(is_array($key)) {
-                  $this->findMany($key, $columns);
+                  $this->findMany($key, $this->columns);
             } else {
                   $path = $this->getContentPath() . DS . $key . '.json';
                   $item = File::loadJson($path);
                   if(empty($item)) return null;
-                  $item = $this->getColumns($item, $columns);
-                  $this->attributes = (array) $this->instanciateFields($item, $columns);
+                  $item = $this->getColumns($item, $this->columns);
+                  $this->attributes = (array) $this->instanciateFields($item, $this->columns);
             }
             return $this;
       }
 
+      /**
+       * Find multiple entries.
+       * @param  array $ids
+       * @param  array $columns
+       * @return $this
+       */
       public function findMany($ids, $columns = null)
       {
+            if($columns) $this->columns = $columns;
             foreach($ids as $id) {
                   $path = $this->getContentPath() . DS . $id . '.json';
                   $item = File::loadJson($path);
                   if($item){
-                        $this->stackedItems[$id] = $this->instanciateFields($item, $columns);
+                        $this->stackedItems[$id] = $this->instanciateFields($item, $this->columns);
                   }
             }
             return $this;
@@ -205,29 +223,62 @@ class Json implements \IteratorAggregate
       /**
        * Specify a condition for the items to retrieve.
        * @param  string $column
-       * @param  string $operator
-       * @param  mixed $value
+       * @param  string $arg1
+       * @param  mixed $arg2
        * @param  bool $boolean
        * @return $this
        */
       public function where($column, $arg1 = null, $arg2 = null, $boolean = null)
       {
-            switch(func_num_args()) {
-                  case 2: $this->applyWhere($column, '=', $arg1); break;
-                  default: $this->applyWhere($column, $arg1, $arg2);
+
+            if(is_array($column)) {
+                  foreach($column as $key => $value){
+                        $this->where($key, $value);
+                  }
+                  return $this;
             }
+            $items = $this->getStackedItems();
+            switch(func_num_args()) {
+                  case 2: $result = $this->applyWhere($column, '=', $arg1, $items); break;
+                  default: $result = $this->applyWhere($column, $arg1, $arg2, $items);
+            }
+            $this->stackedItems = $result;
             return $this;
       }
 
-      protected function applyWhere($column, $operator, $value)
+      /**
+       * Add an "or where" clause to the query.
+       * @param  string $column
+       * @param  string $arg1
+       * @param  mixed $arg2
+       * @return $this
+       */
+      public function orWhere($column, $arg1 = null, $arg2 = null)
       {
-            $items = $this->getStackedItems();
-            $this->stackedItems = [];
+            if(is_array($column)) {
+                  foreach($column as $key => $value){
+                        $this->where($key, $value);
+                  }
+                  return $this;
+            }
+            $items = File::loadJsonFromDir($this->getContentPath());
+            switch(func_num_args()) {
+                  case 2: $result = $this->applyWhere($column, '=', $arg1, $items); break;
+                  default: $result = $this->applyWhere($column, $arg1, $arg2, $items);
+            }
+            $this->stackedItems = array_merge($this->stackedItems, $result);
+            return $this;
+      }
+
+      protected function applyWhere($column, $operator, $value, $items)
+      {
+            $result = [];
             foreach($items as $item) {
                   if(isset($item->$column) && $this->testCondition($operator, $item->$column, $value)) {
-                        $this->stackedItems[] = $item;
+                        $result[] = $item;
                   }
             }
+            return $result;
       }
 
       protected function testCondition($operator, $v, $value)
@@ -294,15 +345,16 @@ class Json implements \IteratorAggregate
        */
       public function get($columns = null)
       {
+            if($columns) $this->columns = $columns;
             $stackedItems = $this->applyLimit();
             $this->stackedItems = [];
             if(count($stackedItems) === 0) return null;
             if(count($stackedItems) === 1) {
-                  $this->attributes = (array) $this->instanciateFields($stackedItems[0], $columns);
+                  $this->attributes = (array) $this->instanciateFields($stackedItems[0], $this->columns);
                   return $this;
             }
             foreach($stackedItems as $item) {
-                  $this->stackedItems[] = $this->instanciateFields($item, $columns);
+                  $this->stackedItems[] = $this->instanciateFields($item, $this->columns);
             }
             return $this;
       }
@@ -417,21 +469,64 @@ class Json implements \IteratorAggregate
       public function fill($data)
       {
             foreach($data as $key => $value){
-                  $this->$key = $value;
+                  if($this->isFillable($key)) $this->$key = $value;
+                  else throw new MassAssignmentException($key);
             }
             return $this;
       }
 
       /**
+       * Get the fillable attributes for the model.
+       * @return array
+       */
+      public function getFillable()
+      {
+            return $this->fillable;
+      }
+
+      /**
+       * Get the guarded attributes for the model.
+       * @return array
+       */
+      public function getGuarded()
+      {
+            return $this->guarded;
+      }
+
+      /**
+       * Determine if the given attribute may be mass assigned.
+       * @param  string  $key
+       * @return bool
+       */
+      public function isFillable($key)
+      {
+            if(in_array($key, $this->getFillable())) return true;
+            if($this->isGuarded($key)) return false;
+      }
+
+      /**
+       * Determine if the given key is guarded.
+       *
+       * @param  string  $key
+       * @return bool
+       */
+      public function isGuarded($key)
+      {
+            return in_array($key, $this->getGuarded()) || $this->getGuarded() == ['*'];
+      }
+
+      /**
        * Get the first item from the stack.
-       * @return $this
+       * @return $this|null
        */
       public function first($columns = null)
       {
             $items = $this->getStackedItems();
-            $this->stackedItems = [];
-            $this->attributes = (array) $this->instanciateFields($items[0], $columns);
-            return $this;
+            if($items){
+                  $this->stackedItems = [];
+                  $this->attributes = (array) $this->instanciateFields($items[0], $columns);
+                  return $this;
+            }
       }
 
       /**
@@ -488,6 +583,173 @@ class Json implements \IteratorAggregate
             $items = $this->getStackedItems();
             if(count($items) === 1) $items = $items[0];
             return json_encode($items);
+      }
+
+      /**
+       * Get a single column's value from the first result of the query.
+       * @param  string $column
+       * @return mixed
+       */
+      public function value($column)
+      {
+            $item = $this->getStackedItems()[0];
+            return $item->$column;
+      }
+
+      /**
+       * Find a model or throw an exception
+       * @param  string $id
+       * @param  array $columns
+       * @return $this
+       */
+      public function findOrFail($id, $columns = null)
+      {
+            $result = $this->find($id, $columns);
+            if(!$result) throw new ModelNotFoundException(self::$modelInfo->table);
+            return $this;
+      }
+
+      /**
+       * Fetch the first model or throw an exception.
+       * @param  array $columns
+       * @return $this
+       */
+      public function firstOrFail($columns = null)
+      {
+            $item = $this->first($columns);
+            if(!$item) throw new ModelNotFoundException(self::$modelInfo->table);
+            return $this;
+      }
+
+      /**
+       * Find the models or return a fresh instance
+       * @param  string $id
+       * @param  array $columns
+       * @return $this
+       */
+      public function findOrNew($id, $columns = null)
+      {
+            $this->find($id, $columns);
+            return $this;
+      }
+
+      /**
+       * Get the first record matching the attributes or instanciate it.
+       * @param  array $attributes
+       * @return $this
+       */
+      public function firstOrNew($attributes)
+      {
+            $this->where($attributes)->first();
+            return $this;
+      }
+
+      /**
+       * Get the first record matching the attributes or create it.
+       * @param  array $attributes
+       * @return $this
+       */
+      public function firstOrCreate($attributes)
+      {
+            $item = $this->where($attributes)->first();
+            if(!$item) $this->create($attributes);
+            return $this;
+      }
+
+      /**
+       * Create or update a record matching the attributes, and fill it with values.
+       * @param  array $attributes
+       * @param  array $values
+       * @return $this
+       */
+      public function updateOrCreate($attributes, $values = [])
+      {
+            $item = $this->firstOrNew($attributes);
+            $item->fill($values)->save();
+            return $this;
+      }
+
+      /**
+       * Alias for the "pluck" method
+       * @param  string $column
+       * @return $this
+       */
+      public function lists($column)
+      {
+            return $this->pluck($column);
+      }
+
+      /**
+       * Get an array with the values of a given column.
+       * @param  string $column
+       * @return array
+       */
+      public function pluck($column)
+      {
+            $items = $this->getStackedItems();
+            foreach($items as $key => $item){
+                  $item = $this->instanciateFields($item, [$column]);
+                  if(property_exists($item, $column)){
+                        $items[$key] = $item->$column;
+                  } else {
+                        $items[$key] = null;
+                  }
+            }
+            return $items;
+      }
+
+      /**
+       * Increment a column's value by a given amount.
+       * @param  string  $column
+       * @param  integer $amount
+       * @return void
+       */
+      public function increment($column, $amount = 1)
+      {
+            $items = $this->getStackedItems();
+            foreach($items as $item) {
+                  $item->$column += $amount;
+            }
+            $this->save();
+      }
+
+      /**
+      * Decrement a column's value by a given amount.
+      * @param  string  $column
+      * @param  integer $amount
+      * @return void
+      */
+      public function decrement($column, $amount = 1)
+      {
+            $items = $this->getStackedItems();
+            foreach($items as $item) {
+                  $item->$column -= $amount;
+            }
+            $this->save();
+      }
+
+      /**
+       * Set the columns to be selected.
+       * @param  string|array $columns
+       * @return $this
+       */
+      public function select($columns)
+      {
+            if(is_string($columns)) $columns = [$columns];
+            $this->columns = $columns;
+            return $this;
+      }
+
+      /**
+       * Add columns to be selected.
+       * @param string|array $columns
+       * @return $this
+       */
+      public function addSelect($columns)
+      {
+            if(is_string($columns)) $columns = [$columns];
+            $this->columns = array_merge($this->columns, $columns);
+            return $this;
       }
 
 }
