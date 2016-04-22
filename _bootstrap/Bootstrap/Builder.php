@@ -7,7 +7,7 @@ class Builder
 
       public $files = [];
 
-      protected $exclude = [ 'autoload.php' ];
+      protected $exclude = [ 'autoload.php', '.git', 'node_modules' ];
       protected $globalExclude = [ '.', '..', '.DS_Store', 'Thumbs.db' ];
 
       function __construct( $dir )
@@ -29,8 +29,18 @@ class Builder
       {
             foreach ( $this->sort( scandir( $dir ), $dir ) as $a) {
                   if( $a['type'] == 'file' ) array_push($this->files, $a['path']);
-                  else{ $this->scan( $a['path'] ); }
+                  else{
+                        if(!$this->excluded($a)){
+                              $this->scan( $a['path'] );
+                        }
+                  }
             }
+      }
+
+      protected function excluded($dir)
+      {
+            $pathinfo = pathinfo($dir['path']);
+            return in_array($pathinfo['basename'], $this->exclude);
       }
 
       protected function sort( $a, $dir )
