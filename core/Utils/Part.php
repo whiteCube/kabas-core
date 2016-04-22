@@ -18,7 +18,7 @@ class Part
             $part = App::config()->parts->getPart($partID);
             $partTemplate = Text::toNamespace($part->template);
 
-            $part = self::overrideParams($part, $params);
+            $part = self::addParams($part, $params);
 
             $themeTemplate = '\Theme\\' . App::theme() .'\Parts\\' . $partTemplate;
             App::getInstance()->make($themeTemplate, [$part]);
@@ -30,11 +30,16 @@ class Part
             self::get($method, $params);
       }
 
-      static function overrideParams($part, $params)
+      /**
+       * Add parameters to the part data
+       * @param  object $part
+       * @param  array $params
+       * @return object
+       */
+      static function addParams($part, $params)
       {
             if(!empty($params)){
                   foreach($params as $key => $value){
-                        // if(is_object($value)) $value = (string) $value;
                         $part->data->$key = $value;
                   }
             }
