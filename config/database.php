@@ -3,7 +3,7 @@
 return [
       'driver'    => 'mysql',
       'host'      => 'localhost',
-      'database'  => 'kabas',
+      'database'  => 'infogestion',
       'username'  => 'root',
       'password'  => 'root',
       'charset'   => 'utf8',

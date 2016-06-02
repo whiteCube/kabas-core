@@ -4,7 +4,7 @@ return [
       /**
        * The name of the theme you want to use on your site.
        */
-      "theme" => "Void",
+      "theme" => "Test",
 
       /**
        * The languages available on your site. Each available language
@@ -12,7 +12,7 @@ return [
        */
       "lang" => [
             "default" => "fr-FR",
-            "available" => [ "en-US", "fr-FR" ]
+            "available" => [ "fr-FR" ]
       ],
 
       /**

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cbd788669c66407ff79b0c1781394656",
-    "content-hash": "4e08c6215980b8ac140f745d9716fb06",
+    "hash": "c867cb37a07fe4baad0ff107237c338d",
+    "content-hash": "afbc65f5f05d658f7cc58b462d643fa5",
     "packages": [
         {
             "name": "cilex/cilex",
@@ -1346,6 +1346,56 @@
                 "php"
             ],
             "time": "2014-07-23 18:24:17"
+        },
+        {
+            "name": "nyratas/php-console-log",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Nyratas/php-console-log.git",
+                "reference": "89f3dfe6ce4e92f1a3fdd02ba17ede3ad713fcbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Nyratas/php-console-log/zipball/89f3dfe6ce4e92f1a3fdd02ba17ede3ad713fcbe",
+                "reference": "89f3dfe6ce4e92f1a3fdd02ba17ede3ad713fcbe",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPConsoleLog": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Van den Bos",
+                    "email": "toon@whitecube.be",
+                    "homepage": "https://be.linkedin.com/in/toon-van-den-bos-40461264",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Displays var_dump()s in the browser's JavaScript console.",
+            "homepage": "https://github.com/Nyratas/php-console-log",
+            "keywords": [
+                "console",
+                "console.log",
+                "debug",
+                "error",
+                "javascript",
+                "log",
+                "logging",
+                "php",
+                "var_dump"
+            ],
+            "time": "2016-05-26 12:18:30"
         },
         {
             "name": "paragonie/random_compat",

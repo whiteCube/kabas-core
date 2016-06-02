@@ -5,8 +5,9 @@
  * @package  Kabas
  * @author   WhiteCube <hello@whitecube.be>
  */
-
-
+ error_reporting(E_ALL);
+ ini_set("display_errors", 1);
+ setlocale(LC_TIME, 'fr_FR');
 /*
 |--------------------------------------------------------------------------
 | Start point

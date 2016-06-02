@@ -1,9 +1,0 @@
-{
-      "route": "/news/{slug}",
-      "id": "newsItem",
-      "template": "newsItem",
-      "meta": {
-            "description": "Description of your page",
-            "keywords": "keywords go here"
-      }
-}

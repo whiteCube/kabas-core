@@ -1,11 +1,10 @@
 {
-    "id": 1,
-    "slug": "article-1",
-    "title": "First article",
-    "content": "Content of the First news!",
+    "slug": "",
+    "title": "Facturation à un organisme public & TVA",
+    "content": "Facturation à un organisme public ! Depuis ce 01-01-2016, la TVA sur une facture établie à une autorité...",
+    "date": "1461160862",
     "image": {
-        "src": "article1json.jpg",
-        "alt": "Article 1's image"
-    },
-    "created_at": "2016-04-01 16:10:37"
+        "src": "",
+        "alt": ""
+    }
 }

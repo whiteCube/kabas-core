@@ -3,13 +3,10 @@
       "template": "main",
       "links": {
             "home": { "label": "Accueil" },
-            "news": { "label": "Actualités" },
-            "contact": {
-                  "label": "Contact",
-                  "subitems": {
-                        "about": { "label": "À propos" }
-                  }
-            },
-            "nos-services": { "label": "Nos services" }
+            "asset": { "label": "Nos atouts" },
+            "company": { "label": "Notre société" },
+            "documents": { "label": "Documents" },
+            "assistance": { "label": "Assistance" },
+            "contact": { "label": "Contact" }
       }
 }

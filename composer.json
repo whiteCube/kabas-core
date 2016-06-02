@@ -11,7 +11,8 @@
         "illuminate/container": "^5.2",
         "illuminate/database": "^5.2",
         "erusev/parsedown-extra": "^0.7.1",
-        "seld/jsonlint": "^1.4"
+        "seld/jsonlint": "^1.4",
+        "nyratas/php-console-log": "^1.1"
     },
     "autoload": {
           "psr-4": {

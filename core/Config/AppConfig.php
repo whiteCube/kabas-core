@@ -22,7 +22,7 @@ return [
       /**
        * The driver used by Intervention Image (GD | imagick)
        */
-      'imageDriver' => 'imagick',
+      'imageDriver' => 'GD',
 
       /**
        * Aliases for classes

@@ -2,9 +2,9 @@
       "route": "/news",
       "id": "news",
       "template": "news",
-      "title": "Kabas | Actualités",
+      "title": "Infogestions | Actualités",
       "data": {
-            "title": "Les actualités Kabas",
-            "description": "Restez informés sur ce qui se passe dans le monde de Kabas !"
+            "title": "Les actualités",
+            "description": "Restez informés sur ce qui se passe dans le monde de la comptabilité !"
       }
 }
