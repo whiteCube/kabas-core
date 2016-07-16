@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\Parts;
+namespace Kabas\Content\Partials;
 
 use \Kabas\Utils\File;
 use Kabas\App;
@@ -39,7 +39,7 @@ class Container
             $lang = App::config()->settings->site->lang->active;
             $path = 'content' . DS . $lang . DS . 'parts' . DS . $partID . '.json';
             $file = File::loadJson($path);
-            $this->items[$partID] = App::getInstance()->make('\Kabas\Config\Parts\Item', [$file]);
+            $this->items[$partID] = App::getInstance()->make('\Kabas\Content\Partials\Item', [$file]);
             $this->loadPartFields($partID);
       }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\Pages;
+namespace Kabas\Content\Pages;
 
 use Kabas\App;
 
