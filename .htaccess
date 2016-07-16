@@ -1,10 +1,10 @@
 <IfModule mod_rewrite.c>
       RewriteEngine on
-      # Redirect Trailing Slashes If Not A Folder...
+      # Remove trailing slashes
       RewriteCond %{REQUEST_FILENAME} !-d
       RewriteRule ^(.*)/$ /$1 [L,R=301]
 
-      # Handle Front Controller...
+      # Forward to front controller
       RewriteCond %{REQUEST_FILENAME} !-d
       RewriteCond %{REQUEST_FILENAME} !-f
       RewriteRule ^ index.php [L]

@@ -1,13 +1,16 @@
 <?php
+
 /**
- * Kabas - Build custom easy websites in a record time
+ * Kabas - Build custom websites in a record time
  *
  * @package  Kabas
  * @author   WhiteCube <hello@whitecube.be>
  */
- error_reporting(E_ALL);
- ini_set("display_errors", 1);
- setlocale(LC_TIME, 'fr_FR');
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+setlocale(LC_TIME, 'fr_FR');
+
 /*
 |--------------------------------------------------------------------------
 | Start point

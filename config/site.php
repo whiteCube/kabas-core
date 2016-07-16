@@ -4,23 +4,23 @@ return [
       /**
        * The name of the theme you want to use on your site.
        */
-      "theme" => "Test",
+      "theme" => "Example",
 
       /**
        * The languages available on your site. Each available language
        * must have its own folder inside the content folder.
        */
       "lang" => [
-            "default" => "fr-FR",
-            "available" => [ "fr-FR" ]
+            "default" => "en-GB",
+            "available" => [ "en-GB" ]
       ],
 
       /**
-       * Meta information about your site.
+       * Default meta information about your site.
        */
       "meta" => [
-            "description" => "This is the default description for your site",
-            "keywords" => "Default keywords that describe your site"
+            "description" => "This is the website's default description",
+            "keywords" => "Default keywords for meta:keywords"
       ]
 
 ];

@@ -1,5 +1,13 @@
-
+# Ignore themes
+/themes/*
+!/themes/Example/
 !/themes/README.md
-/vendor/
+
+# Ignore vendor files
+/vendor/*
+
+# Ignore autoload
 /core/_bootstrap/Bootstrap/autoload-build.php
-/content/
+
+# Ignore content
+/content/*
