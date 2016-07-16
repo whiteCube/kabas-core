@@ -9,17 +9,17 @@ class File
 {
       /**
        * Get the contents of a json file
-       * @param  string $filePath
+       * @param  string $file
        * @return object the json data
        */
-      static function loadJson($filePath)
+      static function loadJson($file)
       {
-            if(file_exists($filePath)){
+            if(file_exists($file)){
                   try {
-                        $string = file_get_contents($filePath);
+                        $string = file_get_contents($file);
                         $json = json_decode($string);
                         if(!$json){
-                              throw new JsonException($filePath, $string);
+                              throw new JsonException($file, $string);
                         }
                   } catch (JsonException $e) {
                         echo $e->getMessage();
@@ -70,18 +70,18 @@ class File
 
       /**
        * Get directory and subdirectory structure
-       * @param  string $dirPath
+       * @param  string $path
        * @return array
        */
-      static function parseDirectory($dirPath)
+      static function parseDirectory($path)
       {
-            $data = scandir($dirPath);
+            $data = scandir($path);
             $items = [];
 
             foreach($data as $item) {
                   if($item !== '.' && $item !== '..') {
-                        if(is_dir($dirPath . DS . $item)) {
-                              $items[$item] = self::parseDirectory($dirPath . DS . $item);
+                        if(is_dir($path . DS . $item)) {
+                              $items[$item] = self::parseDirectory($path . DS . $item);
                         } else {
                               $items[] = $item;
                         }
@@ -92,21 +92,20 @@ class File
 
       /**
        * Read all files in directory and load their content if they're json
-       * @param  string $dirPath
+       * @param  string $path
        * @return array
        */
-      static function loadJsonFromDir($dirPath)
+      static function loadJsonFromDir($path)
       {
-            $data = scandir($dirPath);
             $items = [];
-
-            foreach($data as $item) {
-                  if($item !== '.' && $item !== '..') {
-                        if(is_dir($dirPath . DS . $item)) {
-                              $items[$item] = self::loadJsonFromDir($dirPath . DS . $item);
-                        } else {
-                              if(self::isJson($item)){
-                                    $items[] = self::loadJson($dirPath . DS . $item);
+            if($path = realpath($path)){
+                  foreach(scandir($path) as $item) {
+                        if($item !== '.' && $item !== '..') {
+                              if(is_dir($path . DS . $item)) {
+                                    $items[$item] = self::loadJsonFromDir($path . DS . $item);
+                              }
+                              elseif(self::isJson($item)){
+                                    $items[] = self::loadJson($path . DS . $item);
                               }
                         }
                   }
