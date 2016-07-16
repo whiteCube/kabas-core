@@ -54,8 +54,7 @@ class View
       }
 
       /**
-       * Find the base directory of the theme
-       * and look for the template file within.
+       * Looks for the template file within its direcotry.
        * @param  string $view
        * @return string
        */
@@ -64,23 +63,7 @@ class View
             $directory = THEME_PATH . DS . 'views' . DS . $directory;
             $view = $this->checkViewExtension($view);
 
-            return $this->getTemplatePath($view, $directory);
-      }
-
-      /**
-       * Finds the template file in its directory
-       * @param  string $view       the name of the view file
-       * @param  string $baseDir    the directory we want to search into
-       * @return string
-       */
-      protected function getTemplatePath($view, $baseDir) {
-            $oDirectory = new RDI($baseDir);
-            $oIterator = new RII($oDirectory);
-            foreach($oIterator as $oFile) {
-                  if ($oFile->getFilename() == $view) {
-                        return $oFile->getPath() . DS . $oFile->getFilename();
-                  }
-            }
+            return $directory . DS . $view;
       }
 
       /**
