@@ -11,3 +11,7 @@
 
 # Ignore content
 /content/*
+
+# Ignore things
+composer.lock
+.DS_Store
