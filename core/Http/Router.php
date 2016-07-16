@@ -31,7 +31,7 @@ class Router
        */
       public function loadRoutes()
       {
-            foreach (App::config()->pages->items as $page) {
+            foreach (App::content()->pages->items as $page) {
                   $this->routes[$page->route] = App::getInstance()->make('Kabas\Http\Route', [$page]);
             }
       }

@@ -37,12 +37,4 @@ class Container
             $driver = App::getInstance()->make($driverName);
             App::setDriver($driver);
       }
-
-      public function initParts(Pages\Container $pages, Parts\Container $parts, Menus\Container $menus)
-      {
-            $this->pages = $pages;
-            $this->parts = $parts;
-            $this->menus = $menus;
-      }
-
 }

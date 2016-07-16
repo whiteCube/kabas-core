@@ -17,13 +17,11 @@ class Response
        */
       public function init($pageID)
       {
-            $page = App::config()->pages->getPage($pageID);
-
+            $page = App::content()->pages->getPage($pageID);
             if(!$page) return View::notFound();
-
-            $controllerName = Text::toNamespace($page->template);
-            $pageController = '\Theme\\' . App::theme() .'\Pages\\' . $controllerName;
-            App::getInstance()->make($pageController, [$page]);
+            $controller = '\Theme\\' . App::theme() .'\Pages\\' . Text::toNamespace($page->template);
+            if(!class_exists($controller)) $controller = \Kabas\Controller\PageController::class;
+            App::getInstance()->make($controller, [$page]);
       }
 
       /**
