@@ -3,7 +3,6 @@
 namespace Kabas;
 
 use WhiteCube\Bootstrap\FileLoader;
-use \Kabas\Utils\Benchmark;
 use \Illuminate\Container\Container;
 
 class App extends Container
@@ -34,11 +33,8 @@ class App extends Container
 
       public function __construct()
       {
-            Benchmark::start('start to finish');
             self::$instance = $this;
-
             $this->registerBindings();
-
       }
 
       public static function __callStatic($name, $arguments)
@@ -64,9 +60,9 @@ class App extends Container
       public function boot()
       {
             $this->setBaseConstants();
-            $pages = $this->make('Kabas\Config\Pages\Container');
-            $parts = $this->make('Kabas\Config\Parts\Container');
-            $menus = $this->make('Kabas\Config\Menus\Container');
+            $pages = $this->make('Kabas\Content\Pages\Container');
+            $parts = $this->make('Kabas\Content\Partials\Container');
+            $menus = $this->make('Kabas\Content\Menus\Container');
             $this->session = $this->make('Kabas\Session\SessionManager');
             $this->config->initParts($pages, $parts, $menus);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\Menus;
+namespace Kabas\Content\Menus;
 
 use \Kabas\Utils\File;
 use \Kabas\App;
@@ -36,7 +36,7 @@ class Container
                   if(is_array($file)) {
                         $this->loop($file);
                   } else {
-                        $this->items[$file->id] = App::getInstance()->make('Kabas\Config\Menus\Item', [$file]);
+                        $this->items[$file->id] = App::getInstance()->make('Kabas\Content\Menus\Item', [$file]);
                   }
             }
       }

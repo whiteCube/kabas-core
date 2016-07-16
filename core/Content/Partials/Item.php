@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\Parts;
+namespace Kabas\Content\Partials;
 
 class Item
 {
