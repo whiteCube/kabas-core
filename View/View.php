@@ -12,12 +12,12 @@ class View
 {
       private static $isFirst;
 
-      public function __construct($view, $data, $type)
+      public function __construct($view, $data, $directory)
       {
             if(self::isFirstView($view)) ob_start();
 
             extract((array) $data);
-            include $this->getTemplateFile($view, $type);
+            include $this->getTemplateFile($view, $directory);
 
             if(self::isFirstView($view)){
                   $page = ob_get_contents();
@@ -59,15 +59,12 @@ class View
        * @param  string $view
        * @return string
        */
-      protected function getTemplateFile($view, $type)
+      protected function getTemplateFile($view, $directory)
       {
-            $app = App::getInstance();
-
-            $themeName = $app->config->settings->site->theme;
-            $baseDir = THEME_PATH . DS . $type;
+            $directory = THEME_PATH . DS . 'views' . DS . $directory;
             $view = $this->checkViewExtension($view);
 
-            return $this->getTemplatePath($view, $baseDir);
+            return $this->getTemplatePath($view, $directory);
       }
 
       /**

@@ -7,6 +7,8 @@ use Kabas\App;
 
 class MenuController
 {
+      protected $directory = 'menus';
+      protected $type = 'menu';
       protected $view;
       protected $config;
 

@@ -58,7 +58,7 @@ class Container
                   . $template;
 
             $file = File::loadJsonFromDir($path);
-            $fields = isset($file[0]->fields) ? $file[0]->fields : new stdClass;
+            $fields = isset($file[0]->fields) ? $file[0]->fields : new \stdClass;
             $this->items[App::router()->getCurrentPageID()]->fields = $fields;
       }
 

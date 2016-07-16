@@ -15,7 +15,6 @@ class BaseController
       public function __construct($view)
       {
             $this->defaultTemplateName = $view->template;
-            $this->type = $this->getType();
             $this->viewID = $view->id;
             $this->data = isset($view->data) ? $view->data : new \stdClass;
             $this->options = isset($view->options) ? $view->options : null;
@@ -42,21 +41,12 @@ class BaseController
       public function view($view, $data)
       {
             $data = $this->constructViewData($data);
-            return App::getInstance()->make('Kabas\Http\Responses\View', [$view, $data, $this->type]);
+            return App::getInstance()->make('Kabas\Http\Responses\View', [$view, $data, $this->directory]);
       }
 
       public function json($data)
       {
             return App::getInstance()->make('Kabas\Http\Responses\Json', [$data]);
-      }
-
-      /**
-       * Get the type of this template
-       * @return string
-       */
-      public function getType()
-      {
-            return strtolower(explode('\\', get_class($this))[2]);
       }
 
       /**
@@ -66,8 +56,8 @@ class BaseController
        */
       protected function constructViewData($data)
       {
-            App::config()->pages->loadCurrentPageFields();
-            $this->checkValues($this->type);
+            App::content()->pages->loadCurrentPageFields();
+            $this->checkValues();
 
             $data->options = $this->options;
             $data->meta = $this->meta;
@@ -87,13 +77,14 @@ class BaseController
       /**
        * Complete data with default values and then check
        * if values correspond to types.
-       * @param  string $type
        * @return void
        */
-      protected function checkValues($type)
+      protected function checkValues()
       {
-            if(isset(App::config()->$type->items[$this->viewID])){
-                  foreach(App::config()->$type->items[$this->viewID]->fields as $fieldName => $fieldDetails) {
+            // TODO: check this function since architectural changes
+            $type = $this->type;
+            if(isset(App::content()->$type->items[$this->viewID])){
+                  foreach(App::content()->$type->items[$this->viewID]->fields as $fieldName => $fieldDetails) {
                         $type = $fieldDetails->type;
 
                         if(!isset($this->data->$fieldName)) {

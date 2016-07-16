@@ -34,6 +34,7 @@ class App extends Container
       public function __construct()
       {
             self::$instance = $this;
+            $this->setBaseConstants();
             $this->registerBindings();
       }
 
@@ -48,6 +49,7 @@ class App extends Container
       {
             // $this->singleton('session','Kabas\Session\SessionManager');
             $this->singleton('config', '\Kabas\Config\Container');
+            $this->singleton('content', '\Kabas\Content\Container');
             $this->singleton('request', '\Kabas\Http\Request');
             $this->singleton('router', '\Kabas\Http\Router');
             $this->singleton('response', '\Kabas\Http\Response');
@@ -59,13 +61,7 @@ class App extends Container
        */
       public function boot()
       {
-            $this->setBaseConstants();
-            $pages = $this->make('Kabas\Content\Pages\Container');
-            $parts = $this->make('Kabas\Content\Partials\Container');
-            $menus = $this->make('Kabas\Content\Menus\Container');
             $this->session = $this->make('Kabas\Session\SessionManager');
-            $this->config->initParts($pages, $parts, $menus);
-
             $this->setConstants();
       }
 
