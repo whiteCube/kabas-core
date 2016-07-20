@@ -2,6 +2,8 @@
 
 namespace Kabas\Http;
 
+use \Kabas\App;
+
 class Route
 {
       /**
@@ -9,7 +11,7 @@ class Route
        * ex: '/news/{id}'
        * @var string
        */
-      public $string;
+      protected $string;
 
       /**
        * The regular expression to match this route's string.
@@ -21,19 +23,20 @@ class Route
        * List of parameters in the route.
        * @var array
        */
-      protected $parameters = [];
+      public $parameters = [];
+
+
+      /**
+       * Target page's identifier
+       * @var object
+       */
+      public $page;
 
       public function __construct($page)
       {
-            $this->template = $page->template;
+            $this->page = $page->id;
             $this->string = $page->route;
             $this->regex = $this->generateRegex();
-            $this->pageID = $page->id;
-      }
-
-      public function getParameters()
-      {
-            return $this->parameters;
       }
 
       /**
@@ -43,7 +46,7 @@ class Route
       protected function generateRegex()
       {
             if($this->string === '') return '/^\s*$/';
-            $regex =  trim(strtolower($this->string), '/');
+            $regex = trim(strtolower($this->string), '/');
             $regex = $this->parseParameters($regex);
             $regex = preg_replace('/([^\\\])\//', '$1\/', $regex);
             $regex = strlen($regex) ? '/^\/' . $regex . '\/?$/' : '/^\/?$/';
@@ -85,11 +88,13 @@ class Route
 
       /**
        * Get the list of parameters for the specified route.
+       * If no route is specified, test current one.
        * @param  string $route
        * @return array
        */
-      public function getRouteParameters($route)
+      public function getParameters($route = null)
       {
+            if(!$route) $route = App::router()->getRoute();
             preg_match($this->regex, $route, $matches);
             array_shift($matches);
             foreach ($matches as $i => $value) {

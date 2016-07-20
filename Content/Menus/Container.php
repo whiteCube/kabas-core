@@ -2,43 +2,19 @@
 
 namespace Kabas\Content\Menus;
 
-use \Kabas\Utils\File;
 use \Kabas\App;
+use \Kabas\Content\BaseContainer;
 
-class Container
+class Container extends BaseContainer
 {
-      public function __construct()
+      protected function getPath()
       {
-            $this->instanciateMenus();
+            return parent::getPath() . DS . 'menus';
       }
 
-      /**
-       * Load json files and instanciate parts
-       * @return void
-       */
-      public function instanciateMenus()
+      protected function makeItem($file)
       {
-            $this->items = [];
-            $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DS . $lang . DS . 'menus';
-            $files = File::loadJsonFromDir($path);
-            $this->loop($files);
-      }
-
-      /**
-       * Recursively go through the files array to instanciate menus
-       * @param  array $files
-       * @return void
-       */
-      public function loop($files)
-      {
-            foreach($files as $file) {
-                  if(is_array($file)) {
-                        $this->loop($file);
-                  } else {
-                        $this->items[$file->id] = App::getInstance()->make('Kabas\Content\Menus\Item', [$file]);
-                  }
-            }
+            return App::getInstance()->make('\Kabas\Content\Menus\Item', [$file]);
       }
 
       /**

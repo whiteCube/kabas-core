@@ -21,8 +21,5 @@ $app = new Kabas\App();
 |
 */
 $app->boot();
-$app->loadAliases();
-$app->loadTheme();
-$app->react();
 
 return $app;

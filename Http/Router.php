@@ -6,105 +6,185 @@ use \Kabas\App;
 
 class Router
 {
+      protected $rootURL;
+
+      protected $baseURL;
+
+      protected $subdirectory;
+
+      protected $query;
+
+      protected $route;
+
+      /**
+       * Lang code of current request
+       * as defined in /config/site
+       * @var string
+       */
+      public $lang = false;
+
+      /**
+       * Current matching route
+       * @var object
+       */
+      protected $current;
+
+      /**
+       * 404 route
+       * @var object
+       */
+      protected $notFound;
+
       /**
        * Routes for the current application
        * @var array
        */
-      public $routes = [];
+      protected $routes = [];
 
       /**
        * Contains routes that have already been regex validated
        * so they don't need to be regex'd again for performance
        * @var array
        */
-      protected $previouslyChecked = [];
+      protected $matchesCache = [];
 
       public function __construct()
       {
-            $this->route = $this->getRoute();
-            $this->loadRoutes();
+            $this->subdirectory = $this->getSubdirectory();
+            $this->rootURL = $this->getRootURL();
+            $this->baseURL = $this->getBaseURL();
+            $this->query = $this->getQuery();
+            $this->route = $this->getCleanQuery();
+            $this->setLang();
       }
 
       /**
-       * Iterate through pages from config to create routes
+       * Loads defined the routes
        * @return void
        */
-      public function loadRoutes()
+      public function init()
       {
             foreach (App::content()->pages->items as $page) {
-                  $this->routes[$page->route] = App::getInstance()->make('Kabas\Http\Route', [$page]);
+                  $this->routes[] = App::getInstance()->make('Kabas\Http\Route', [$page]);
             }
+            $this->notFound = App::getInstance()->make('Kabas\Http\RouteNotFound');
       }
 
       /**
-       * Get the current route
-       * @return string
+       * Get the current route query
+       * @return void
        */
       public function getRoute()
       {
-            $route = $this->removeBasePath();
-            $route = $this->handleLang($route);
-            return $route;
+            return $this->route;
       }
 
       /**
-       * Check for lang in URL.
-       * @param  string $route
+       * Retrieves the subdirectory the CMS may be in.
        * @return string
        */
-      protected function handleLang($route)
+
+      protected function getSubdirectory()
       {
-            $routeParts = explode('/', $route);
-            $this->hasLangInUrl = false;
-            foreach(App::config()->settings->site->lang->available as $lang) {
-                  if(in_array($lang, $routeParts)) {
-                        $this->hasLangInUrl = true;
-                        App::config()->settings->site->lang->active = $lang;
-                        $route = str_replace('/'. $lang, '', $route);
-                        if($route === '') $route = '/';
-                  }
-            }
-            return $route;
+            preg_match('/(.+)?index.php$/', $_SERVER['SCRIPT_NAME'], $a);
+            if(strlen($a[1]) > 1) return (substr($a[1], 0, 1) == '/' ? '' : '/') . rtrim($a[1], '/');
+            return '';
       }
 
       /**
-       * Removes any subdirectories the CMS may be in.
+       * Retrieves the domain's root URL
        * @return string
        */
-      protected function removeBasePath()
-      {
-            $basePath = explode('/index.php', $_SERVER['SCRIPT_NAME'])[0];
-            $this->setBaseUrl($basePath);
-            return str_replace($basePath, '', $_SERVER['REQUEST_URI']);
-      }
 
-      /**
-       * Set the base URL to generate links later.
-       * @param string $pathToIgnore
-       */
-      protected function setBaseUrl($basePath)
+      protected function getRootURL()
       {
             $ssl = !empty( $_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
-            $protocol = 'http' . ($ssl ? 's' : '');
-            $this->baseUrl = $protocol . '://' . $_SERVER['HTTP_HOST'] . $basePath;
+            return 'http' . ($ssl ? 's' : '') . '://' . rtrim($_SERVER['HTTP_HOST'],'/');
+      }
+
+      /**
+       * Builds the base URL to Kabas's root
+       * @return string
+       */
+
+      protected function getBaseURL()
+      {
+            return $this->rootURL . $this->subdirectory . '/';
+      }
+
+      /**
+       * Retrieves the "route" from current request
+       * @return string
+       */
+      protected function getQuery()
+      {
+            $s = trim(substr($_SERVER['REQUEST_URI'], strlen($this->subdirectory)),'/');
+            if(!strlen($s)) return '/';
+            return '/' . $s . '/';
+      }
+
+      /**
+       * Get the lang-cleared route
+       * @return string
+       */
+      public function getCleanQuery()
+      {
+            preg_match('/^\/([^\/]+)?/', $this->query, $a);
+            if(isset($a[1]) && in_array($a[1], App::config()->settings->site->lang->available)){
+                  $this->lang = $a[1];
+                  return substr($this->query, strlen($a[0]));
+            }
+            return $this->query;
+      }
+
+      /**
+       * Sets automatic lang if request didn't
+       * contain language information
+       * @return string
+       */
+
+      protected function setLang()
+      {
+            if(!$this->lang) $this->lang = $this->detectLang();
+      }
+
+      /**
+       * Trys to get the browser's language.
+       * If site doesn't support said lang, returns the default one.
+       * @return string
+       */
+      protected function detectLang()
+      {
+            $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
+            if(in_array($lang, App::config()->settings->site->lang->available)) return $lang;
+            return App::config()->settings->site->lang->default;
       }
 
       /**
        * Check if specified route exists in the application.
-       * If no route is specified, checks the current one.
        * @param  string $route (optional)
        * @return boolean
        */
       public function routeExists($route = null)
       {
+            if($this->getMatchingRoute($route) !== false) return true;
+            return false;
+      }
+
+      /**
+       * Returns route that matches the query
+       * If no query is specified, checks the current one.
+       * @return string
+       */
+      public function getMatchingRoute($route = null)
+      {
             if($route === null) $route = $this->route;
-            if(!empty($this->previouslyChecked[$route])) return true;
-            foreach($this->routes as $definedRoute) {
-                  if($definedRoute->matches($route)) {
-                        $this->routeWithParams = $route;
-                        $this->route = $definedRoute->string;
-                        $this->previouslyChecked[$this->route] = true;
-                        return true;
+            if(array_key_exists($route, $this->matchesCache)) return $this->matchesCache[$route];
+            $this->matchesCache[$route] = false;
+            foreach($this->routes as $item) {
+                  if($item->matches($route)) {
+                        $this->matchesCache[$route] = $item;
+                        return $item;
                   }
             }
             return false;
@@ -119,40 +199,23 @@ class Router
       }
 
       /**
-       * Check if current route exists and return the corresponding page ID
-       * @return string
+       * Finds or/and returns the currently matching route
+       * @return object
        */
-      public function getCurrentPageID()
+      public function getCurrent()
       {
-            if($this->routeExists()) {
-                  return $this->routes[$this->route]->pageID;
-            } else return '404';
+            if(is_null($this->current)) $this->current = $this->getMatchingRoute();
+            if($this->current === false) return $this->get404();
+            return $this->current;
       }
 
       /**
-       * Get the current page's template name.
-       * @return string
+       * Returns the NotFound route
+       * @return object
        */
-      public function getCurrentPageTemplate()
+      public function get404()
       {
-            if(isset(App::config()->pages->items[$this->getCurrentPageID()])) {
-                  return App::config()->pages->items[$this->getCurrentPageID()]->template;
-            }
-      }
-
-      /**
-       * Get the parameters from the url.
-       * @return array
-       */
-      public function getParams()
-      {
-            $aParams = [];
-            if($this->routeExists()) {
-                  foreach ($this->routes[$this->route]->getRouteParameters($this->routeWithParams) as $param) {
-                        $aParams[$param->variable] = $param->value;
-                  }
-            }
-            return $aParams;
+            return $this->notFound;
       }
 
 }

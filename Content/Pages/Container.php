@@ -2,43 +2,20 @@
 
 namespace Kabas\Content\Pages;
 
-use \Kabas\Utils\File;
 use \Kabas\App;
+use \Kabas\Utils\File;
+use \Kabas\Content\BaseContainer;
 
-class Container
+class Container extends BaseContainer
 {
-      public function __construct()
+      protected function getPath()
       {
-            $this->instanciatePages();
+            return parent::getPath() . DS . 'pages';
       }
 
-      /**
-       * Load json files and instanciate pages
-       * @return void
-       */
-      private function instanciatePages()
+      protected function makeItem($file)
       {
-            $this->items = [];
-            $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DS . $lang . DS . 'pages';
-            $files = File::loadJsonFromDir($path);
-            $this->loop($files);
-      }
-
-      /**
-       * Recursively go through the files array to instanciate pages
-       * @param  array $files
-       * @return void
-       */
-      private function loop($files)
-      {
-            foreach($files as $file) {
-                  if(is_array($file)) {
-                        $this->loop($file);
-                  } else {
-                        $this->items[$file->id] = App::getInstance()->make('\Kabas\Content\Pages\Item', [$file]);
-                  }
-            }
+            return App::getInstance()->make('\Kabas\Content\Pages\Item', [$file]);
       }
 
       /**
@@ -47,19 +24,11 @@ class Container
        */
       public function loadCurrentPageFields()
       {
-            $template = App::router()->getCurrentPageTemplate();
-            $path =
-                  'themes'
-                  . DS
-                  . App::theme()
-                  . DS
-                  . 'pages'
-                  . DS
-                  . $template;
-
+            $template = $this->getPage(App::router()->getCurrent()->page)->template;
+            $path = THEME_PATH . DS . 'structures' . DS . 'templates' . DS . $template;
             $file = File::loadJsonFromDir($path);
             $fields = isset($file[0]->fields) ? $file[0]->fields : new \stdClass;
-            $this->items[App::router()->getCurrentPageID()]->fields = $fields;
+            $this->items[App::router()->getCurrent()->page]->fields = $fields;
       }
 
       public function getPage($id)

@@ -33,7 +33,7 @@ class Url
       protected static function fillRouteWithParams($route, $params)
       {
             $str = $route->string;
-            foreach($route->getParameters() as $parameter){
+            foreach($route->parameters as $parameter){
                   if($parameter->isRequired && !array_key_exists($parameter->variable, $params)){
                         // TODO: Exception
                         echo 'error'; die();
@@ -48,7 +48,7 @@ class Url
 
       protected static function makeParams($params, $route)
       {
-            if(!is_array($params)) $params = [$route->getParameters()[0]->variable => $params];
+            if(!is_array($params)) $params = [$route->parameters[0]->variable => $params];
             return $params;
       }
 

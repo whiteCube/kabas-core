@@ -19,7 +19,7 @@ class BaseController
             $this->data = isset($view->data) ? $view->data : new \stdClass;
             $this->options = isset($view->options) ? $view->options : null;
             $this->meta = isset($view->meta) ? $view->meta : null;
-            $params = App::router()->getParams();
+            $params = App::router()->getCurrent()->getParameters();
             $response = call_user_func_array([$this, $this->fnInit], $params);
             $this->checkLinkedFiles();
             if(is_null($response)) {
