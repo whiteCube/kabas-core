@@ -6,37 +6,41 @@ use \Kabas\App;
 
 class Container
 {
+      public $database;
+
+      public $site;
+
+      public $social;
+
       public function __construct()
       {
-            $this->loadConfigs();
+            $this->database = $this->load('database.php');
+            $this->site = $this->load('site.php');
+            $this->social = $this->load('social.php');
       }
 
       /**
-       * Load all configs
-       * @return void
+       * Returns an object containing a config file
+       * @return object
        */
-      private function loadConfigs()
+      protected function load($file)
       {
-            $this->database = json_decode(json_encode(include CONFIG_PATH . DS . 'database.php'));
-            $this->site = json_decode(json_encode(include CONFIG_PATH . DS . 'site.php'));
-            $this->social = json_decode(json_encode(include CONFIG_PATH . DS . 'social.php'));
-
-            $this->detectLang();
+            return $this->toObject(include(CONFIG_PATH . DS . $file));
       }
 
       /**
-       * Detect browser language and set it as site lang.
-       * If site doesn't support said lang, set it to the default one.
-       * @return void
+       * Turns an array to a stdClass recursively
+       * @return object
        */
-      protected function detectLang()
+      protected function toObject($a)
       {
-            $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
-            if(in_array($lang, $this->site->lang->available)){
-                  $this->site->lang->active = $lang;
-            } else {
-                  $this->site->lang->active = $this->site->lang->default;
+            $o = new \stdClass();
+            foreach ($a as $key => $value) {
+                  if(is_numeric($key)) return $a;
+                  if(is_array($value)) $o->$key = $this->toObject($value);
+                  else $o->$key = $value;
             }
+            return $o;
       }
 
 }

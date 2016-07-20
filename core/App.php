@@ -49,9 +49,10 @@ class App extends Container
       {
             // $this->singleton('session','Kabas\Session\SessionManager');
             $this->singleton('config', '\Kabas\Config\Container');
+            $this->setThemePath();
+            $this->singleton('router', '\Kabas\Http\Router');
             $this->singleton('content', '\Kabas\Content\Container');
             $this->singleton('request', '\Kabas\Http\Request');
-            $this->singleton('router', '\Kabas\Http\Router');
             $this->singleton('response', '\Kabas\Http\Response');
       }
 
@@ -62,7 +63,9 @@ class App extends Container
       public function boot()
       {
             $this->session = $this->make('Kabas\Session\SessionManager');
-            $this->setConstants();
+            $this->loadAliases();
+            $this->loadTheme();
+            $this->react();
       }
 
       /**
@@ -111,7 +114,8 @@ class App extends Container
        */
       public function react()
       {
-            $this->page = $this->router->getCurrentPageID();
+            $this->router->init();
+            $this->page = $this->router->getCurrent()->page;
             $this->response->init($this->page);
             $this->session->write();
       }
@@ -152,7 +156,7 @@ class App extends Container
             define('CONFIG_PATH', BASE_PATH . DS . 'config');
       }
 
-      protected function setConstants()
+      protected function setThemePath()
       {
             define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . $this->config->settings->site->theme);
       }

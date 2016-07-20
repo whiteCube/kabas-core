@@ -1,0 +1,16 @@
+{
+      "fields": {
+            "test": {
+                  "type": "text",
+                  "label": "Title (hidden)",
+                  "description": "",
+                  "default": "Navigation"
+            },
+            "jumpTo": {
+                  "type": "text",
+                  "label": "Go to menu (hidden)",
+                  "description": "By providing this value, the website's accessibility will be enhanced.",
+                  "default": "Go to the main navigation menu"
+            }
+      }
+}
