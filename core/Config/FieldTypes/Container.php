@@ -72,12 +72,8 @@ class Container
        */
       public function exists($type)
       {
-            if($this->getClass($type)) {
-                  return true;
-            } else {
-                  $error = 'Type "' . $type . '" is not a supported field type.';
-                  throw new \Kabas\Exceptions\TypeException($error);
-            }
+            if($this->getClass($type)) return true;
+            return false;
       }
 
       /**
@@ -87,7 +83,7 @@ class Container
        */
       public function getClass($type)
       {
-            if(isset($this->supportedTypes[$type])) return $this->supportedTypes[$type];
+            if(isset($this->supportedTypes[$type])) return $this->supportedTypes[$type]->class;
             return false;
       }
 

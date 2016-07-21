@@ -2,17 +2,29 @@
 
 namespace Kabas\Content\Pages;
 
-use Kabas\App;
+use \Kabas\App;
+use \Kabas\Content\BaseItem;
 
-class Item
+class Item extends BaseItem
 {
-      public function __construct($data)
+      protected $structureDir = 'templates';
+
+      public $route;
+
+      public $meta;
+
+      public $title;
+
+      protected function setData($data)
       {
-            $this->route = isset($data->route) ? $data->route : null;
-            $this->id = isset($data->id) ? $data->id : null;
-            $this->template = isset($data->template) ? $data->template : null;
-            $this->meta = isset($data->meta) ? $data->meta : App::config()->settings->site->meta;
-            $this->title = isset($data->title) ? $data->title : null;
-            $this->data = isset($data->data) ? $data->data : null;
+            $this->route = isset($data->route) ? $data->route : false;
+            $this->title = isset($data->title) ? $data->title : false;
+            $this->meta = $this->getMeta($data);
+      }
+
+      protected function getMeta($data)
+      {
+            // TODO : merge default site meta with given meta
+            return isset($data->meta) ? $data->meta : App::config()->settings->site->meta;
       }
 }
