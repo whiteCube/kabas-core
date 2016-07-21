@@ -7,11 +7,10 @@ use Kabas\Http\Response;
 
 class View extends Response
 {
-      public function __construct($view, $data, $type)
+      public function __construct($view, $item)
       {
             $this->view = $view;
-            $this->data = $data;
-            $this->type = $type;
+            $this->item = $item;
       }
 
       /**
@@ -21,6 +20,6 @@ class View extends Response
       public function run()
       {
             $this->setHeaders();
-            ViewEngine::make($this->view, $this->data, $this->type);
+            ViewEngine::make($this->view, $this->item->data, $this->item->directory);
       }
 }

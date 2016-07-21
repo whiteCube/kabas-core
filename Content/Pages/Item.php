@@ -7,7 +7,7 @@ use \Kabas\Content\BaseItem;
 
 class Item extends BaseItem
 {
-      protected $structureDir = 'templates';
+      public $directory = 'templates';
 
       public $route;
 
