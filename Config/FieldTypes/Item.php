@@ -5,10 +5,14 @@ namespace Kabas\Config\FieldTypes;
 class Item
 {
       public $type;
+
       public $fieldName;
+
       public $data;
 
-      public function __construct($fieldName = null, $data = null)
+      public $multi = false;
+
+      public function __construct($fieldName = null, $data = null, $multiVal = null)
       {
             $this->fieldName = $fieldName;
             $this->data = $data;

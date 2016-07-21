@@ -14,6 +14,7 @@ class BaseController
 
       public function __construct($view)
       {
+        var_dump($view);die();
             $this->defaultTemplateName = $view->template;
             $this->viewID = $view->id;
             $this->data = isset($view->data) ? $view->data : new \stdClass;
@@ -56,12 +57,9 @@ class BaseController
        */
       protected function constructViewData($data)
       {
-            App::content()->pages->loadCurrentPageFields();
-            $this->checkValues();
-
+            App::content()->pages->getCurrent()->loadFields();
             $data->options = $this->options;
             $data->meta = $this->meta;
-
             return $data;
       }
 
@@ -72,42 +70,6 @@ class BaseController
       protected function checkLinkedFiles()
       {
             if(!$this->viewName) $this->viewName = $this->guessViewFile();
-      }
-
-      /**
-       * Complete data with default values and then check
-       * if values correspond to types.
-       * @return void
-       */
-      protected function checkValues()
-      {
-            // TODO: check this function since architectural changes
-            $type = $this->type;
-            if(isset(App::content()->$type->items[$this->viewID])){
-                  foreach(App::content()->$type->items[$this->viewID]->fields as $fieldName => $fieldDetails) {
-                        $type = $fieldDetails->type;
-
-                        if(!isset($this->data->$fieldName)) {
-                              $this->data->$fieldName = $fieldDetails->defaultValue;
-                        }
-
-                        try { App::config()->fieldTypes->exists($type); }
-                        catch (\Kabas\Exceptions\TypeException $e) {
-                              $e->setFieldName($fieldName, $this->viewID);
-                              $e->showAvailableTypes();
-                              echo $e->getMessage();
-                              die();
-                        }
-
-                        $class = App::config()->fieldTypes->getClass($type)->class;
-                        if(isset($fieldDetails->allowsMultipleValues) && $type === 'select') {
-                              $this->data->$fieldName = App::getInstance()->make($class, [$fieldName, $this->data->$fieldName, $fieldDetails->allowsMultipleValues]);
-                        } else {
-                              $this->data->$fieldName = App::getInstance()->make($class, [$fieldName, $this->data->$fieldName]);
-                        }
-
-                  }
-            }
       }
 
       /**

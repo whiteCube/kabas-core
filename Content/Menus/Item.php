@@ -4,11 +4,15 @@ namespace Kabas\Config\Menus;
 
 class Item
 {
-      public function __construct($data)
+      protected $structureDir = 'menus';
+
+      public $options;
+
+      public $links;
+
+      protected function setData($data)
       {
-            $this->id         = isset($data->id) ? $data->id : null;
-            $this->template   = isset($data->template) ? $data->template : null;
-            $this->links      = isset($data->links) ? $data->links : null;
-            $this->options    = isset($data->options) ? $data->options : null;
+            $this->links = isset($data->links) ? $data->links : false;
+            $this->options = isset($data->options) ? $data->options : false;
       }
 }

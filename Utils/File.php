@@ -18,15 +18,12 @@ class File
                   try {
                         $string = file_get_contents($file);
                         $json = json_decode($string);
-                        if(!$json){
-                              throw new JsonException($file, $string);
-                        }
-                  } catch (JsonException $e) {
+                        if(!$json) throw new JsonException($file, $string);
+                  }
+                  catch (JsonException $e) {
                         echo $e->getMessage();
                         die();
                   }
-
-
                   return $json;
             }
       }

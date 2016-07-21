@@ -2,13 +2,16 @@
 
 namespace Kabas\Content\Partials;
 
-class Item
+use \Kabas\Content\BaseItem;
+
+class Item extends BaseItem
 {
-      public function __construct($data)
+      protected $structureDir = 'partials';
+
+      public $options;
+
+      protected function setData($data)
       {
-            $this->id = isset($data->id) ? $data->id : null;
-            $this->template = isset($data->template) ? $data->template : null;
-            $this->options = isset($data->options) ? $data->options : null;
-            $this->data = isset($data->data) ? $data->data : null;
+            $this->options = isset($data->options) ? $data->options : false;
       }
 }
