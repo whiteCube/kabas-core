@@ -4,7 +4,6 @@ namespace Kabas\Controller;
 
 class PageController extends BaseController
 {
-      protected $directory = 'templates';
       protected $type = 'page';
 
       /**

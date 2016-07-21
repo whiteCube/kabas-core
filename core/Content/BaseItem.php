@@ -13,9 +13,11 @@ class BaseItem
 
       public $data;
 
+      public $options;
+
       public $fields;
 
-      protected $structureDir;
+      public $directory;
 
       protected $structure;
 
@@ -23,8 +25,15 @@ class BaseItem
       {
             $this->id = isset($data->id) ? $data->id : false;
             $this->template = isset($data->template) ? $data->template : false;
-            $this->data = isset($data->data) ? $data->data : false;
+            $this->data = isset($data->data) ? $data->data : new \stdClass();
+            $this->options = isset($data->options) ? $data->options : new \stdClass();
             $this->setData($data);
+      }
+
+      public function build($data)
+      {
+            $this->mergeData($data);
+            $this->loadFields();
       }
 
       public function loadFields()
@@ -32,6 +41,20 @@ class BaseItem
             $structure = $this->getStructure();
             $this->fields = isset($structure->fields) ? $structure->fields : new \stdClass();
             $this->updateData();
+      }
+
+      protected function setData($data)
+      {
+            return null;
+      }
+
+      protected function mergeData($data)
+      {
+            if($data){
+                  foreach ($data as $key => $value) {
+                        $this->data->$key = $value;
+                  }
+            }
       }
 
       protected function getStructure()
@@ -43,7 +66,7 @@ class BaseItem
       protected function getStructureFile()
       {
             $path = THEME_PATH . DS . 'structures' . DS;
-            $path .= $this->structureDir . DS;
+            $path .= $this->directory . DS;
             $path .= $this->template . '.json';
             return $path;
       }
