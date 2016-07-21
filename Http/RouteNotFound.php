@@ -9,7 +9,7 @@ class RouteNotFound extends Route
       {
             $this->string = false;
             $this->regex = false;
-            $this->pageID = '404';
+            $this->page = '404';
       }
 
       public function matches($route)
