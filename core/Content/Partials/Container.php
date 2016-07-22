@@ -67,6 +67,12 @@ class Container extends BaseContainer
             // if the controller exists
             $controller = $this->getController($id);
             if($controller) return $this->loadFromController($id, $controller);
+            // Controller does not exist either.
+            // check view file
+            $view = $this->getView($id);
+            if($view) return $this->loadFromView($id, $view);
+            // Not found.
+            throw new NotFoundException('partial', $id);
       }
 
       protected function loadFromContent($file)
@@ -86,11 +92,31 @@ class Container extends BaseContainer
                   $file->template = $ref->getStaticPropertyValue('template');
                   return $file;
             }
+            else{
+                  $file->template = $this->getView($id) ? $id : null;
+                  if(!$file->template) throw new NotFoundException('partial', $id);
+            }
+            return $file;
+      }
+
+      protected function loadFromView($id, $view)
+      {
+            $file = new \stdClass();
+            $file->id = $id;
+            $file->controller = null;
+            $file->template = $id;
+            return $file;
       }
 
       protected function getController($id)
       {
             $c = '\Theme\\' . App::theme() .'\Partials\\' . Text::toNamespace($id);
             if(class_exists($c)) return $c;
+      }
+
+      protected function getView($id)
+      {
+            $f = THEME_PATH . DS . 'views' . DS . 'partials' . DS . $id . '.php';
+            return realpath($f);
       }
 }
