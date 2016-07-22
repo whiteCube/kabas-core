@@ -8,7 +8,7 @@ class Builder
       public $files = [];
 
       protected $exclude = [ 'autoload.php', '.git', 'node_modules' ];
-      protected $globalExclude = [ '.', '..', '.DS_Store', 'Thumbs.db' ];
+      protected $globalExclude = [ '.', '..', 'views' ];
 
       function __construct( $dir )
       {
@@ -51,8 +51,11 @@ class Builder
                         $path = $dir . DS . $s;
                         if(!in_array($path, $this->exclude)) {
                               if( is_file($path) ) {
-                                    if(substr($s, 0, 1) == '_') array_push($aFilesUnderscored, ['type' => 'file', 'path' => $path]);
-                                    else array_push($aFilesRegular, ['type' => 'file', 'path' => $path]);
+                                    $ext = strtolower(pathinfo($s, PATHINFO_EXTENSION));
+                                    if($ext == 'php'){
+                                          if(substr($s, 0, 1) == '_') array_push($aFilesUnderscored, ['type' => 'file', 'path' => $path]);
+                                          else array_push($aFilesRegular, ['type' => 'file', 'path' => $path]);
+                                    }
                               }
                               else{
                                     array_push($aDir, ['type' => 'dir', 'path' => $path]);

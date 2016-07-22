@@ -29,10 +29,7 @@ class FileLoader
       public function autoload()
       {
             foreach ($this->files as $s) {
-                  $filename = pathinfo($s, PATHINFO_FILENAME);
-                  if(strpos($filename, '.class') !== false) {
-                        require_once($s);
-                  }
+                  require_once($s);
             }
       }
 
@@ -42,7 +39,8 @@ class FileLoader
       {
             if( App::isDebug() || !file_exists( __DIR__ . DS . self::$fileLoad ) ){
                   $this->build();
-            } else {
+            }
+            else{
                   $this->loadFiles();
             }
       }
