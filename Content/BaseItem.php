@@ -78,7 +78,7 @@ class BaseItem
                         $this->data->$key = isset($field->default) ? $field->default : null;
                   }
                   try { 
-                        $this->makeFieldData($key, $field);
+                        $this->makeFieldData($key, $this->secureField($field));
                   }
                   catch (\Kabas\Exceptions\TypeException $e) {
                         $e->setFieldName($key, $this->id);
@@ -91,13 +91,23 @@ class BaseItem
 
       protected function makeFieldData($key, $field)
       {
-            $type = isset($field->type) ? $field->type : 'text';
-            if(!App::config()->fieldTypes->exists($type)){
-                  $error = 'Type "' . $type . '" is not a supported field type.';
+            if(!App::config()->fieldTypes->exists($field->type)){
+                  $error = 'Type "' . $field->type . '" is not a supported field type.';
                   throw new \Kabas\Exceptions\TypeException($error);
             }
-            $class = App::config()->fieldTypes->getClass($type);
-            $multi = isset($field->multiple) ? $field->multiple : false;
-            $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $multi]);
+            $class = App::config()->fieldTypes->getClass($field->type);
+            $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $field->multiple]);
+      }
+
+      protected function secureField($item)
+      {
+            //    TODO : this should actualy happen in the fieldType's class.
+            $field = new \stdClass();
+            $field->type = isset($item->type) ? $item->type : 'text';
+            $field->label = isset($item->label) ? $item->label : ucfirst($field->type);
+            $field->description = @$item->description ? $item->description : null;
+            $field->default = @$item->default;
+            $field->multiple = @$item->multiple ? true : false;
+            return $field;
       }
 }
