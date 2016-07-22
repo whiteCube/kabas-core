@@ -2,57 +2,55 @@
 
 namespace Kabas\Content\Partials;
 
+use \Kabas\App;
 use \Kabas\Utils\File;
-use Kabas\App;
+use \Kabas\Content\BaseContainer;
 
-class Container
+class Container extends BaseContainer
 {
-      /**
-       * Check if part exists in content
-       * @param  string  $partID
-       * @return boolean
-       */
-      public function hasPart($partID)
+      public function __construct()
       {
-            if(array_key_exists($partID, $this->items)) return true;
-            return false;
-      }
-
-      /**
-       * Get part if it exists
-       * @param  string $partID
-       * @return object
-       */
-      public function getPart($partID)
-      {
-            if($this->hasPart($partID)) return $this->items[$partID];
-            else return 'error, part does not exist';
+            $this->path = $this->getPath();
       }
 
       /**
        * Load the specified part into memory.
-       * @param  string $partID
-       * @return void
+       * @param  string $part
+       * @return object
        */
-      public function loadPart($partID)
+      public function load($part)
       {
-            $lang = App::config()->settings->site->lang->active;
-            $path = 'content' . DS . $lang . DS . 'parts' . DS . $partID . '.json';
-            $file = File::loadJson($path);
-            $this->items[$partID] = App::getInstance()->make('\Kabas\Content\Partials\Item', [$file]);
-            $this->loadPartFields($partID);
+            $file = File::loadJson($this->getFile($part));
+            $this->items[$part] = $this->makeItem($file);
+            return $this->get($part);
       }
 
       /**
-       * Read the fields for the specified part and load them into memory.
-       * @param  string $partID
-       * @return void
+       * Returns path to partials directory
+       * @return string
        */
-      public function loadPartFields($partID)
+      protected function getPath()
       {
-            $path = THEME_PATH . DS . 'parts' . DS . $partID;
-            $file = File::loadJsonFromDir($path);
-            $this->items[$partID]->fields = $file[0]->fields;
+            return parent::getPath() . DS . 'partials';
       }
 
+      /**
+       * Returns path to partial JSON file
+       * @param  string $file
+       * @return string
+       */
+      protected function getFile($file)
+      {
+            return $this->path . DS . $file . '.json';
+      }
+
+      /**
+       * returns an item the container should store
+       * @param  object $file
+       * @return object
+       */
+      protected function makeItem($file)
+      {
+            return App::getInstance()->make('\Kabas\Content\Partials\Item', [$file]);
+      }
 }

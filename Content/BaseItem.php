@@ -30,7 +30,7 @@ class BaseItem
             $this->setData($data);
       }
 
-      public function build($data)
+      public function build($data = null)
       {
             $this->mergeData($data);
             $this->loadFields();
@@ -41,6 +41,13 @@ class BaseItem
             $structure = $this->getStructure();
             $this->fields = isset($structure->fields) ? $structure->fields : new \stdClass();
             $this->updateData();
+      }
+
+      public function set($data)
+      {
+            foreach ($data as $key => $value) {
+                  $this->data->$key->set($value);
+            }
       }
 
       protected function setData($data)

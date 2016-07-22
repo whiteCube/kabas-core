@@ -37,6 +37,11 @@ class Item
             }
       }
 
+      public function set($value)
+      {
+            $this->data = $value;
+      }
+
       public function input($attributes = [])
       {
             // TODO: make this rock.
