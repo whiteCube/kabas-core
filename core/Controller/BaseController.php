@@ -10,7 +10,7 @@ class BaseController
 {
       protected $item;
 
-      protected $template = false;
+      static $template = false;
 
       public function __construct($view)
       {
@@ -50,7 +50,7 @@ class BaseController
        */
       protected function getTemplateName()
       {
-            if($this->template) return $this->template;
+            if(self::$template) return self::$template;
             return $this->item->template;
       }
 

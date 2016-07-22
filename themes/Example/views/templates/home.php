@@ -18,5 +18,5 @@
       <footer class="intro__end">
             <p class="intro__version">version <?= \Kabas\App::VERSION ?></p>
       </footer>
-</div></body>
-</html>
+</div>
+<?php Part::foot();?>
