@@ -8,7 +8,7 @@ class Assets
 {
       /**
        * Default location tag
-       * @var array
+       * @var string
        */
       protected static $placeholder = '<meta name="kabas-assets-location" value="%s">';
 
@@ -19,18 +19,19 @@ class Assets
       protected static $required = [];
 
       /**
-       * Adds an asset dependency.
+       * Adds an assets dependency.
        * @param  string $location
        * @param  string $src
        * @return void
        */
-      static function add($location, $src)
+      public static function add($location, $src)
       {
-            if(!isset(self::$required[$location])) {
-                  self::$required[$location] = [];
-            }
-            if(!in_array($src, self::$required[$location])){
-                  self::$required[$location][] = $src;
+            if(!isset(self::$required[$location])) self::$required[$location] = [];
+            if(is_string($src)) self::pushToLocation($location, $src);
+            else if(is_array($src)) {
+                  foreach ($src as $item) {
+                        self::add($location, $item);
+                  }
             }
       }
 
@@ -41,7 +42,7 @@ class Assets
        * @param  string $src (optional)
        * @return void
        */
-      static function here($location, $src = null)
+      public static function here($location, $src = null)
       {
             echo self::getLocationTag($location) . PHP_EOL;
             if($src) self::add($location, $src);
@@ -52,13 +53,26 @@ class Assets
        * @param  string $page
        * @return string
        */
-      static function load($page)
+      public static function load($page)
       {
             preg_match_all(self::getLocationPattern(), $page, $matches);
             foreach($matches[1] as $i => $location) {
                   $page = self::includeLocation($location, self::getLocationAssets($location), $matches[0][$i], $page);
             }
             return $page;
+      }
+
+      /**
+       * Adds a dependency to location
+       * @param  string $location
+       * @param  string $src
+       * @return void
+       */
+      protected static function pushToLocation($location, $src)
+      {
+            if(!in_array($src, self::$required[$location])){
+                  self::$required[$location][] = $src;
+            }
       }
 
       /**
