@@ -7,18 +7,29 @@ use Kabas\App;
 class Page
 {
       /**
-       * Get the title of the page
+       * Get the title of the current page
        * @return string
        */
       static function title()
       {
-            $pageID = App::router()->getCurrentPageID();
-            $pageTitle = App::config()->pages->items[$pageID]->title;
-            return $pageTitle;
+            return App::content()->pages->getCurrent()->title;
       }
 
+      /**
+       * Get the identifier of the current page
+       * @return string
+       */
       static function id()
       {
-            return App::router()->getCurrentPageID();
+            return App::content()->pages->getCurrent()->id;
+      }
+
+      /**
+       * Get the current language code
+       * @return string
+       */
+      static function lang()
+      {
+            return App::router()->lang;
       }
 }

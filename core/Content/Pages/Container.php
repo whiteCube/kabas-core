@@ -17,15 +17,8 @@ class Container extends BaseContainer
             return App::getInstance()->make('\Kabas\Content\Pages\Item', [$file]);
       }
 
-      public function getPage($id)
-      {
-            if(array_key_exists($id, $this->items)) return $this->items[$id];
-            return false;
-      }
-
       public function getCurrent()
       {
-            return $this->getPage(App::router()->getCurrent()->page);
+            return $this->get(App::router()->getCurrent()->page);
       }
-
 }

@@ -22,6 +22,28 @@ class BaseContainer
       }
 
       /**
+       * Check if item exists
+       * @param  string $id
+       * @return boolean
+       */
+      public function has($id)
+      {
+            if(array_key_exists($id, $this->items)) return true;
+            return false;
+      }
+
+      /**
+       * Get item if it exists
+       * @param  string $part
+       * @return object
+       */
+      public function get($id)
+      {
+            if($this->has($id)) return $this->items[$id];
+            return false;
+      }
+
+      /**
        * Returns path to content files
        * @return string
        */
@@ -45,6 +67,7 @@ class BaseContainer
 
       /**
        * returns an item the container should store
+       * @param  object $file
        * @return object
        */
       protected function makeItem($file)

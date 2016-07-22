@@ -17,7 +17,7 @@ class Response
        */
       public function init($pageID)
       {
-            $page = App::content()->pages->getPage($pageID);
+            $page = App::content()->pages->get($pageID);
             if(!$page) return View::notFound();
             $controller = '\Theme\\' . App::theme() .'\Pages\\' . Text::toNamespace($page->template);
             if(!class_exists($controller)) $controller = \Kabas\Controller\PageController::class;

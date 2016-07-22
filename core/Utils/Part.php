@@ -3,46 +3,26 @@
 namespace Kabas\Utils;
 
 use \Kabas\App;
-use \Kabas\View\View;
 
 class Part
 {
       /**
        * Get and display the part with the corresponding ID onto the page.
-       * @param  string $partID
+       * @param  string $part
        * @return void
        */
-      static function get($partID, $params = [])
+      static function get($part, $params = [])
       {
-            App::config()->parts->loadPart($partID);
-            $part = App::config()->parts->getPart($partID);
-            $partTemplate = Text::toNamespace($part->template);
-
-            $part = self::addParams($part, $params);
-
-            $themeTemplate = '\Theme\\' . App::theme() .'\Parts\\' . $partTemplate;
-            App::getInstance()->make($themeTemplate, [$part]);
+            $part = App::content()->partials->load($part);
+            $part->set($params);
+            $controller = '\Theme\\' . App::theme() .'\Partials\\' . Text::toNamespace($part->template);
+            if(!class_exists($controller)) $controller = \Kabas\Controller\PartialController::class;
+            App::getInstance()->make($controller, [$part]);
       }
 
       static function __callStatic($method, $params)
       {
             if(!empty($params)) $params = $params[0];
             self::get($method, $params);
-      }
-
-      /**
-       * Add parameters to the part data
-       * @param  object $part
-       * @param  array $params
-       * @return object
-       */
-      static function addParams($part, $params)
-      {
-            if(!empty($params)){
-                  foreach($params as $key => $value){
-                        $part->data->$key = $value;
-                  }
-            }
-            return $part;
       }
 }

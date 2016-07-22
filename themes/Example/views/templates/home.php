@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-      <meta charset="UTF-8">
-      <title>Test</title>
-      <?php Assets::here('header', 'css/example.css'); ?>
-</head>
-<body><div class="intro">
+<?php Part::head();?>
+<div class="intro">
       <header class="intro__head">
             <h1 class="intro__logo">Kabas</h1>
             <p class="intro__baseline">Thought for humans, built for developers.</p>
