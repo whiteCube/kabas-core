@@ -158,7 +158,7 @@ class App extends Container
 
       protected function setThemePath()
       {
-            define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . $this->config->settings->site->theme);
+            define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . self::theme());
       }
 
 }

@@ -2,11 +2,16 @@
 
 namespace Kabas\Utils;
 
-use Kabas\View\View;
-use Kabas\App;
+use \Kabas\App;
 
 class Assets
 {
+      /**
+       * Default location tag
+       * @var array
+       */
+      protected static $placeholder = '<meta name="kabas-assets-location" value="%s">';
+
       /**
        * Keeps track of all required assets
        * @var array
@@ -15,17 +20,17 @@ class Assets
 
       /**
        * Adds an asset dependency.
-       * @param  string $location Where the asset will be loaded
-       * @param  string $path     Path of the asset
+       * @param  string $location
+       * @param  string $src
        * @return void
        */
-      static function add($location, $path)
+      static function add($location, $src)
       {
             if(!isset(self::$required[$location])) {
                   self::$required[$location] = [];
             }
-            if(!in_array($path, self::$required[$location])){
-                  self::$required[$location][] = $path;
+            if(!in_array($src, self::$required[$location])){
+                  self::$required[$location][] = $src;
             }
       }
 
@@ -33,90 +38,151 @@ class Assets
        * Add a marker to pinpoint the location where
        * the assets will be loaded.
        * @param  string $location
+       * @param  string $src (optional)
        * @return void
        */
-      static function here($location)
+      static function here($location, $src = null)
       {
-            echo "@@@ASSETS-" . $location . '@@@';
+            echo self::getLocationTag($location) . PHP_EOL;
+            if($src) self::add($location, $src);
       }
 
       /**
        * Takes the page buffer and loads the assets at the marked positions.
-       * @param  string $page The buffered page
-       * @return string       The buffered page with the assets loaded
+       * @param  string $page
+       * @return string
        */
       static function load($page)
       {
-            $pattern = '/@@@ASSETS-(.+?)@@@/';
-            preg_match_all($pattern, $page, $matches);
-            foreach($matches[1] as $location) {
-                  if(!isset(self::$required[$location])) { $assets[$location] = ''; break; }
-                  foreach(self::$required[$location] as $asset) {
-                        if(!isset($assets[$location])) { $assets[$location] = ''; }
-                        $asset = self::generateTag($asset);
-                        $assets[$location] = $assets[$location] . $asset;
-                  }
+            preg_match_all(self::getLocationPattern(), $page, $matches);
+            foreach($matches[1] as $i => $location) {
+                  $page = self::includeLocation($location, self::getLocationAssets($location), $matches[0][$i], $page);
             }
-            if(!empty($assets)) $page = str_replace($matches[0], $assets, $page);
             return $page;
       }
 
       /**
        * Generate the proper tag for an asset.
-       * @param  string $asset
+       * @param  object $asset
        * @return string
        */
-      protected static function generateTag($asset)
+      protected static function getTag($asset)
       {
-            $type = self::getType($asset);
-
-            switch($type) {
+            switch($asset->type) {
                   case 'css':
-                        $assetPath = self::getDir('css') . $asset;
-                        $tag = '<link rel="stylesheet" type="text/css" href="' . $assetPath . '" />';
+                        return '<link rel="stylesheet" type="text/css" href="' . $asset->src . '" />';
                         break;
                   case 'js':
-                        $assetPath = self::getDir('js') . $asset;
-                        $tag = '<script src="' . $assetPath . '"></script>';
+                        return '<script type="text/javascript" src="' . $asset->src . '"></script>';
                         break;
                   default:
-                        return;
+                        return '<link rel="icon" href="' . $asset->src . '" />';
+                        break;
             }
-
-            return $tag;
       }
 
       /**
-       * Get the type of the asset from its extension.
-       * @param  string $asset
+       * returns the asset's extension
+       * @param  string $path
        * @return string
        */
-      protected static function getType($asset)
+      protected static function getType($path)
       {
-            $exploded = explode('.', $asset);
-            $index = count($exploded) - 1;
-            return $exploded[$index];
+            return strtolower(pathinfo($path, PATHINFO_EXTENSION));
       }
 
       /**
-       * Get the full path for an asset directory
-       * @param  string $dir
+       * returns the asset's HREF
+       * @param  string $src
        * @return string
        */
-      protected static function getDir($dir)
+      protected static function getSrc($src)
       {
-            $dir =
-                  App::router()->baseUrl
-                  . DS
-                  . 'themes'
-                  . DS
-                  . App::theme()
-                  . DS
-                  . 'assets'
-                  . DS
-                  . $dir
-                  . DS;
+            $s = Url::base();
+            $s .= 'themes/' . App::theme() . '/public/';
+            $s .= $src;
+            return $s;
+      }
 
-            return $dir;
+      /**
+       * returns a location's placeholder tag
+       * @param  string $location
+       * @return string
+       */
+      protected static function getLocationTag($location)
+      {
+            return sprintf(self::$placeholder, $location);
+      }
+
+      /**
+       * returns a generic regex pattern for placeholders
+       * @return string
+       */
+      protected static function getLocationPattern()
+      {
+            $s = '/';
+            $s .= sprintf(self::$placeholder, '(.+)?');
+            return $s .= '/';
+      }
+
+      /**
+       * returns all available assets for a location
+       * @param  string $location
+       * @return array
+       */
+      protected static function getLocationAssets($location)
+      {
+            $a = [];
+            if(isset(self::$required[$location])){
+                  foreach (self::$required[$location] as $src) {
+                        if($src = self::getAsset($src)) array_push($a, $src);
+                  }
+            }
+            return $a;
+      }
+
+      /**
+       * returns an asset object if it exists
+       * @param  string $src
+       * @return object
+       */
+      protected static function getAsset($src)
+      {
+            $asset = new \stdClass();
+            $asset->path = realpath(THEME_PATH . DS . 'public' . DS . $src);
+            if(!$asset->path) return false;
+            $asset->type = self::getType($asset->path);
+            $asset->src = self::getSrc($src);
+            $asset->tag = self::getTag($asset);
+            return $asset;
+      }
+
+      /**
+       * Replaces a location's placeholder with its registered assets.
+       * Returns updated page
+       * @param  string $location
+       * @param  array $assets
+       * @param  string $placeholder
+       * @param  string $page
+       * @return string
+       */
+      protected static function includeLocation($location, $assets, $placeholder, $page)
+      {
+            $page = str_replace($placeholder, self::getTagsString($assets), $page);
+            return $page;
+      }
+
+      /**
+       * returns all tags from assets array in one string
+       * @param  array $assets
+       * @return string
+       */
+      protected static function getTagsString($assets)
+      {
+            $s = '';
+            foreach ($assets as $asset) {
+                  $s .= $asset->tag . PHP_EOL;
+            }
+            return $s;
       }
 }
