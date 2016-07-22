@@ -12,8 +12,8 @@
       </header>
       <main class="intro__content">
             <section class="welcome">
-                  <h2 class="welcome__title">Great to see you!</h2>
-                  <p>This is the default Kabas theme. It's only purpose is to show you all the possibilities. Ready? Go.</p>
+                  <h2 class="welcome__title"><?= $title;?></h2>
+                  <div class="welcome__content"><?= $text->baseHeading(3);?></div>
             </section>
             <nav class="next">
                   <h2 class="next__title">What's next?</h2>

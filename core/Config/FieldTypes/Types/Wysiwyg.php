@@ -15,7 +15,7 @@ class Wysiwyg extends Textual
 
       protected $output;
 
-      public function __construct($fieldName = null, $data = null)
+      public function __construct($fieldName = null, $data = null, $multiVal = null)
       {
             parent::__construct($fieldName, $data);
             $this->raw = $data;
@@ -60,10 +60,10 @@ class Wysiwyg extends Textual
       }
 
       protected function formatHeadings($s)
-     {
+      {
            $this->makeReplacementHeadings($this->registerHeadings($s));
            return str_replace($this->headingOriginal, $this->headingReplace, $s);
-     }
+      }
 
       protected function makeReplacementHeadings($a)
       {
