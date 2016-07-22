@@ -1,9 +1,6 @@
 <?php Part::head();?>
 <div class="intro">
-      <header class="intro__head">
-            <h1 class="intro__logo">Kabas</h1>
-            <p class="intro__baseline">Thought for humans, built for developers.</p>
-      </header>
+      <?php Part::header();?>
       <main class="intro__content">
             <section class="welcome">
                   <h2 class="welcome__title"><?= $title;?></h2>
@@ -15,8 +12,6 @@
                   <a href="#" class="next__item">Test</a>
             </nav>
       </main>
-      <footer class="intro__end">
-            <p class="intro__version">version <?= \Kabas\App::VERSION ?></p>
-      </footer>
+      <?php Part::footer();?>
 </div>
 <?php Part::foot();?>

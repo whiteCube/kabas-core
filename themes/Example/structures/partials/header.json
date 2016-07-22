@@ -1,0 +1,8 @@
+{
+      "fields": {
+            "baseline": {
+                  "label": "Logo baseline",
+                  "default": "Thought for humans, built for developers."
+            }
+      }
+}
