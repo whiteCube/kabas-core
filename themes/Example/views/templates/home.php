@@ -3,8 +3,7 @@
 <head>
       <meta charset="UTF-8">
       <title>Test</title>
-      <?php Assets::here('header'); ?>
-      <?php Assets::add('header', 'css/example.css'); ?>
+      <?php Assets::here('header', 'css/example.css'); ?>
 </head>
 <body>
       <div class="intro">

@@ -80,6 +80,16 @@ class Router
       }
 
       /**
+       * Get the current route query
+       * @return void
+       */
+
+      public function getBase()
+      {
+            return $this->baseURL;
+      }
+
+      /**
        * Retrieves the subdirectory the CMS may be in.
        * @return string
        */
