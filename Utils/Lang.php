@@ -44,4 +44,13 @@ class Lang
             }
             return false;
       }
+
+      /**
+       * Get the current language code
+       * @return string
+       */
+      static function current()
+      {
+            return App::router()->lang;
+      }
 }

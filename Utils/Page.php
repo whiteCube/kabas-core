@@ -23,13 +23,4 @@ class Page
       {
             return App::content()->pages->getCurrent()->id;
       }
-
-      /**
-       * Get the current language code
-       * @return string
-       */
-      static function lang()
-      {
-            return App::router()->lang;
-      }
 }

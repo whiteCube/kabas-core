@@ -5,7 +5,6 @@ namespace Kabas\View;
 use \RecursiveDirectoryIterator as RDI;
 use \RecursiveIteratorIterator as RII;
 use \Kabas\Utils\Assets;
-use Kabas\Utils\Url;
 use \Kabas\App;
 
 class View
