@@ -3,6 +3,7 @@
 namespace Kabas\Http;
 
 use \Kabas\App;
+use \Kabas\Utils\Lang;
 
 class Router
 {
@@ -21,7 +22,7 @@ class Router
        * as defined in /config/site
        * @var string
        */
-      public $lang = false;
+      public $lang;
 
       /**
        * Current matching route
@@ -140,8 +141,8 @@ class Router
       public function getCleanQuery()
       {
             preg_match('/^\/([^\/]+)?/', $this->query, $a);
-            if(isset($a[1]) && in_array($a[1], App::config()->settings->site->lang->available)){
-                  $this->lang = $a[1];
+            if(isset($a[1]) && $lang = Lang::is($a[1])){
+                  $this->lang = $lang;
                   return substr($this->query, strlen($a[0]));
             }
             return $this->query;
@@ -166,8 +167,8 @@ class Router
       protected function detectLang()
       {
             $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
-            if(in_array($lang, App::config()->settings->site->lang->available)) return $lang;
-            return App::config()->settings->site->lang->default;
+            if($lang = Lang::is($lang)) return $lang;
+            return Lang::getDefault();
       }
 
       /**
@@ -200,7 +201,7 @@ class Router
             return false;
       }
 
-      public function getRouteById($id)
+      public function getRouteByPage($id)
       {
             foreach ($this->routes as $route) {
                   if($route->page === $id) return $route;

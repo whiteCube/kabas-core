@@ -3,31 +3,35 @@
 namespace Kabas\Utils;
 
 use \Kabas\App;
+use \Kabas\Utils\Lang;
 
 class Url
 {
       /**
        * Get the URI to the desired page
-       * @param  string $pageID
+       * @param  string $id
+       * @param  array $params (optionnal)
+       * @param  string $lang (optionnal)
        * @return string
        */
-      static function to($pageID, $params = [], $lang = null)
+      static function to($id, $params = [], $lang = null)
       {
-            $route = App::router()->getRouteById($pageID);
-            if (!$route) {
-                  throw new \Exception('Page does not exist');
-            }
+            $route = App::router()->getRouteByPage($id);
+            if (!$route) throw new \Exception('Page does not exist');
             $params = self::makeParams($params, $route);
-
             return self::base() . self::getUrlLangString($lang) . self::fillRouteWithParams($route, $params);
 
       }
 
-      protected static function getUrlLangString($lang)
+      protected static function getUrlLangString($lang){
+            if($lang = self::getUrlLangAlias($lang)) return '/' . $lang;
+            return '';
+      }
+
+      protected static function getUrlLangAlias($lang)
       {
-            if($lang) return '/' . $lang;
-            else if(App::router()->lang) return '/' . App::router()->lang;
-            else return '';
+            if($lang) return self::getUrlLang($lang);
+            return self::getUrlLang(App::router()->lang);
       }
 
       protected static function fillRouteWithParams($route, $params)
@@ -68,6 +72,18 @@ class Url
        */
       static function base()
       {
-            return App::router()->getBase();
+            return trim(App::router()->getBase(), '/');
+      }
+
+      /**
+       * Returns an URL-clean version of the language
+       * @param  string $lang
+       * @return string
+       */
+      static function getUrlLang($lang)
+      {
+            $lang = Lang::is($lang);
+            if($lang && $lang !== Lang::getDefault()) return Lang::alias($lang);
+            return false;
       }
 }
