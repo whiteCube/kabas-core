@@ -26,7 +26,7 @@ class Url
       protected static function getUrlLangString($lang)
       {
             if($lang) return '/' . $lang;
-            else if(App::router()->hasLangInUrl) return '/' . App::config()->settings->site->lang->active;
+            else if(App::router()->lang) return '/' . App::router()->lang;
             else return '';
       }
 

@@ -20,6 +20,15 @@ class View extends Response
       public function run()
       {
             $this->setHeaders();
-            ViewEngine::make($this->view, $this->item->data, $this->item->directory);
+            ViewEngine::make($this->view, $this->getData(), $this->item->directory);
+      }
+
+      protected function getData()
+      {
+            $o = $this->item->data;
+            if(get_class($this->item) == 'Kabas\Content\Menus\Item'){
+                  $o->items = $this->item->items;
+            }
+            return $o;
       }
 }

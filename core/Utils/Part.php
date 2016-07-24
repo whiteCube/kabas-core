@@ -9,6 +9,7 @@ class Part
       /**
        * Get and display the part with the corresponding ID onto the page.
        * @param  string $part
+       * @param  array $params (optionnal)
        * @return void
        */
       static function get($part, $params = [])

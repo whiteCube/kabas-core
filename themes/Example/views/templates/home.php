@@ -6,11 +6,7 @@
                   <h2 class="welcome__title"><?= $title;?></h2>
                   <div class="welcome__content"><?= $text->baseHeading(3);?></div>
             </section>
-            <nav class="next">
-                  <h2 class="next__title">What's next?</h2>
-                  <p>Let us help you during the first steps on this Kabas website.</p>
-                  <a href="#" class="next__item">Test</a>
-            </nav>
+            <?php Menu::main();?>
       </main>
       <?php Part::footer();?>
 </div>

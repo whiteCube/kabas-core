@@ -203,7 +203,7 @@ class Router
       public function getRouteById($id)
       {
             foreach ($this->routes as $route) {
-                  if($route->pageID === $id) return $route;
+                  if($route->page === $id) return $route;
             }
             return false;
       }

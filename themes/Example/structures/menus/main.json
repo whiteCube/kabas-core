@@ -22,15 +22,12 @@
       "fields": {
             "title": {
                   "type": "text",
-                  "label": "Title (hidden)",
-                  "description": "",
+                  "label": "Title",
                   "default": "Navigation"
             },
-            "jumpTo": {
-                  "type": "text",
-                  "label": "Go to menu (hidden)",
-                  "description": "By providing this value, the website's accessibility will be enhanced.",
-                  "default": "Go to the main navigation menu"
+            "content": {
+                  "type": "wysiwyg",
+                  "label": "Navigation description"
             }
       }
 }
