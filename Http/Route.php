@@ -11,7 +11,7 @@ class Route
        * ex: '/news/{id}'
        * @var string
        */
-      protected $string;
+      public $string;
 
       /**
        * The regular expression to match this route's string.

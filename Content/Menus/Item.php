@@ -1,15 +1,17 @@
 <?php
 
-namespace Kabas\Config\Menus;
+namespace Kabas\Content\Menus;
 
-class Item
+use \Kabas\Content\BaseItem;
+
+class Item extends BaseItem
 {
       public $directory = 'menus';
 
-      public $links;
+      public $items;
 
       protected function setData($data)
       {
-            $this->links = isset($data->links) ? $data->links : false;
+            $this->items = isset($data->items) ? $data->items : false;
       }
 }
