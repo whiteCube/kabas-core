@@ -12,7 +12,10 @@ return [
        */
       "lang" => [
             "default" => "en-GB",
-            "available" => [ "en-GB" ]
+            "available" => [
+                  "en-GB" => "EN",
+                  "de-DE" => "de"
+            ]
       ],
 
       /**

@@ -113,7 +113,7 @@ class Assets
       protected static function getSrc($src)
       {
             $s = Url::base();
-            $s .= 'themes/' . App::theme() . '/public/';
+            $s .= '/themes/' . App::theme() . '/public/';
             $s .= $src;
             return $s;
       }
