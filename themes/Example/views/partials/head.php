@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= Page::lang();?>">
+<html lang="<?= Lang::current();?>">
 <head>
       <meta charset="UTF-8">
       <title><?= Page::title() . $titleSuffix;?></title>
