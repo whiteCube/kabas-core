@@ -23,6 +23,57 @@ class Url
 
       }
 
+      /**
+       * Generate an URL to the current page in another language.
+       * @param  string $lang
+       * @return string
+       */
+      static function lang($lang)
+      {
+            return self::base() . '/' . $lang . App::router()->route;
+      }
+
+      /**
+       * Get the base url of the site
+       * @return string
+       */
+      static function base()
+      {
+            return trim(App::router()->getBase(), '/');
+      }
+
+      /**
+       * Returns an URL-clean version of the language
+       * @param  string $lang
+       * @return string
+       */
+      static function getUrlLang($lang)
+      {
+            $lang = Lang::is($lang);
+            if($lang && $lang !== Lang::getDefault()) return Lang::alias($lang);
+            return false;
+      }
+
+      /**
+       * Returns Kabas-parsed URL
+       * @param  string $url
+       * @return object
+       */
+      static function parse($url)
+      {
+            return App::router()->parseUrl($url);
+      }
+
+      /**
+       * Returns route found in URL
+       * @param  string $url
+       * @return object
+       */
+      static function route($url)
+      {
+            return App::router()->extractRoute($url);
+      }
+
       protected static function getUrlLangString($lang){
             if($lang = self::getUrlLangAlias($lang)) return '/' . $lang;
             return '';
@@ -54,36 +105,5 @@ class Url
       {
             if(!is_array($params)) $params = [$route->parameters[0]->variable => $params];
             return $params;
-      }
-
-      /**
-       * Generate an URL to the current page in another language.
-       * @param  string $lang
-       * @return string
-       */
-      static function lang($lang)
-      {
-            return self::base() . '/' . $lang . App::router()->route;
-      }
-
-      /**
-       * Get the base url of the site
-       * @return string
-       */
-      static function base()
-      {
-            return trim(App::router()->getBase(), '/');
-      }
-
-      /**
-       * Returns an URL-clean version of the language
-       * @param  string $lang
-       * @return string
-       */
-      static function getUrlLang($lang)
-      {
-            $lang = Lang::is($lang);
-            if($lang && $lang !== Lang::getDefault()) return Lang::alias($lang);
-            return false;
       }
 }
