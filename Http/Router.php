@@ -54,8 +54,8 @@ class Router
             $this->subdirectory = $this->getSubdirectory();
             $this->rootURL = $this->getRootURL();
             $this->baseURL = $this->getBaseURL();
-            $this->query = $this->getQuery();
-            $this->route = $this->getCleanQuery();
+            $this->query = $this->getQuery($_SERVER['REQUEST_URI']);
+            $this->route = $this->getCleanQuery($this->query);
             $this->setLang();
       }
 
@@ -124,12 +124,13 @@ class Router
       }
 
       /**
-       * Retrieves the "route" from current request
+       * Retrieves the path from URI
+       * @param  string $uri
        * @return string
        */
-      protected function getQuery()
+      protected function getQuery($uri)
       {
-            $s = trim(substr($_SERVER['REQUEST_URI'], strlen($this->subdirectory)),'/');
+            $s = trim(substr($uri, strlen($this->subdirectory)),'/');
             if(!strlen($s)) return '/';
             return '/' . $s . '/';
       }
@@ -138,14 +139,14 @@ class Router
        * Get the lang-cleared route
        * @return string
        */
-      public function getCleanQuery()
+      public function getCleanQuery($uri, $hasSet = true)
       {
-            preg_match('/^\/([^\/]+)?/', $this->query, $a);
+            preg_match('/^\/([^\/]+)?/', $uri, $a);
             if(isset($a[1]) && $lang = Lang::is($a[1])){
-                  $this->lang = $lang;
-                  return substr($this->query, strlen($a[0]));
+                  if($hasSet) $this->lang = $lang;
+                  return substr($uri, strlen($a[0]));
             }
-            return $this->query;
+            return $uri;
       }
 
       /**
@@ -227,6 +228,45 @@ class Router
       public function get404()
       {
             return $this->notFound;
+      }
+
+      /**
+       * Returns the usable route from an URL
+       * @param  string $url
+       * @return string
+       */
+      public function extractRoute($url)
+      {
+            $url = $this->parseUrl($url);
+            if($url->base == $this->baseURL) return $url->route;
+            return false;
+      }
+
+      /**
+       * Returns useful information about given URL
+       * @param  string $url
+       * @return object
+       */
+      protected function parseUrl($url)
+      {
+            $a = $a = parse_url($url);
+            $o = new \stdClass();
+            $o->root = isset($a['scheme']) ? $a['scheme'] . '://' : '';
+            $o->root .= isset($a['host']) ? $a['host'] : '';
+            $o->root .= isset($a['port']) ? ':' . $a['port'] : '';
+            $o->base = false;
+            $o->query = false;
+            $o->route = false;
+            if(isset($a['path'])){
+                  $o->base = $o->root;
+                  if(strlen($this->subdirectory) && strpos($a['path'], $this->subdirectory) === 0){
+                        $o->base .= $this->subdirectory;
+                  } 
+                  $o->base .= '/';
+                  $o->query = $this->getQuery($a['path']);
+                  $o->route = $this->getCleanQuery($o->query);
+            }
+            return $o;
       }
 
 }
