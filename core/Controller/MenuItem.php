@@ -4,6 +4,7 @@ namespace Kabas\Controller;
 
 use \Kabas\App;
 use \Kabas\Utils\Url;
+use \Kabas\Utils\Page;
 
 class MenuItem
 {
@@ -15,6 +16,8 @@ class MenuItem
 
       public $page;
 
+      public $active;
+
       protected $attributes;
 
       public function __construct($item)
@@ -22,6 +25,7 @@ class MenuItem
             $this->attributes = $item;
             $this->url = $this->getTargetUrl();
             $this->label = $this->getLabel();
+            $this->active = $this->getLocalActive();
             $this->cleanAttributes();
       }
 
@@ -62,6 +66,22 @@ class MenuItem
       public function isPage()
       {
             if($this->page) return true;
+            return false;
+      }
+
+      /**
+       * Checks if this page or sub-pages is/are active
+       * @param  boolean $checkSub (optionnal)
+       * @return array
+       */
+      public function isActive($checkSub = true)
+      {
+            if($this->active) return true;
+            if($checkSub && $this->items){
+                  foreach ($this->items as $sub) {
+                        if($sub->isActive()) return true;
+                  }
+            }
             return false;
       }
 
@@ -118,5 +138,36 @@ class MenuItem
       protected function cleanSub()
       {
             unset($this->attributes->items);
+      }
+
+      /**
+       * Checks if this page is the active one
+       * @return boolean
+       */
+      protected function getLocalActive()
+      {
+            if($this->page) return $this->isPageActive();
+            return $this->isUrlActive();
+      }
+
+      /**
+       * Checks if page is active
+       * @return boolean
+       */
+      protected function isPageActive()
+      {
+            if($this->page->id == Page::id()) return true;
+            return false;
+      }
+
+      /**
+       * Checks if URL is active
+       * @return boolean
+       */
+      protected function isUrlActive()
+      {
+            $route = App::router()->extractRoute($this->url);
+            if($route) return App::router()->getCurrent()->matches($route);
+            return false;
       }
 }
