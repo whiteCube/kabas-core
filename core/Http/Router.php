@@ -247,7 +247,7 @@ class Router
        * @param  string $url
        * @return object
        */
-      protected function parseUrl($url)
+      public function parseUrl($url)
       {
             $a = $a = parse_url($url);
             $o = new \stdClass();

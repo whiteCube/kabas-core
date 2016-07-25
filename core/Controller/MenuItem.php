@@ -166,7 +166,7 @@ class MenuItem
        */
       protected function isUrlActive()
       {
-            $route = App::router()->extractRoute($this->url);
+            $route = Url::route($this->url);
             if($route) return App::router()->getCurrent()->matches($route);
             return false;
       }
