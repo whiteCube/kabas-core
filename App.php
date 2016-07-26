@@ -50,6 +50,7 @@ class App extends Container
             // $this->singleton('session','Kabas\Session\SessionManager');
             $this->singleton('config', '\Kabas\Config\Container');
             $this->setThemePath();
+            $this->singleton('fields', '\Kabas\FieldTypes\Container');
             $this->singleton('router', '\Kabas\Http\Router');
             $this->singleton('content', '\Kabas\Content\Container');
             $this->singleton('request', '\Kabas\Http\Request');

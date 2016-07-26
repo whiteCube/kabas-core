@@ -40,7 +40,7 @@ class TypeException extends Exception
       public function showAvailableTypes()
       {
             $hint = 'Available field types: <ul>';
-            foreach(App::config()->fieldTypes->supportedTypes as $typeName => $type) {
+            foreach(App::fields()->supportedTypes as $typeName => $type) {
                   $hint .= '<li><code>' . $typeName . '</code></li>';
             }
             $hint .= "</ul>";

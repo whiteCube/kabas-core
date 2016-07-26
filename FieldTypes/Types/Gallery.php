@@ -1,10 +1,10 @@
 <?php
 
-namespace Kabas\Config\FieldTypes;
+namespace Kabas\FieldTypes;
 
-class FlexibleContent extends Item
+class Gallery extends Item
 {
-      public $type = "flexible-content";
+      public $type = "gallery";
 
       /**
        * Condition to check if the value is correct for this field type.

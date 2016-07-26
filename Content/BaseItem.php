@@ -98,11 +98,11 @@ class BaseItem
 
       protected function makeFieldData($key, $field)
       {
-            if(!App::config()->fieldTypes->exists($field->type)){
+            if(!App::fields()->exists($field->type)){
                   $error = 'Type "' . $field->type . '" is not a supported field type.';
                   throw new \Kabas\Exceptions\TypeException($error);
             }
-            $class = App::config()->fieldTypes->getClass($field->type);
+            $class = App::fields()->getClass($field->type);
             $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $field->multiple]);
       }
 

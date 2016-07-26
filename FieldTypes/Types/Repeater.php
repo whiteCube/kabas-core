@@ -1,10 +1,10 @@
 <?php
 
-namespace Kabas\Config\FieldTypes;
+namespace Kabas\FieldTypes;
 
-class File extends Item
+class Repeater extends Item
 {
-      public $type = "file";
+      public $type = "repeater";
 
       /**
        * Condition to check if the value is correct for this field type.

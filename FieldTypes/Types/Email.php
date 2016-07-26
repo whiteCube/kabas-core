@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\FieldTypes;
+namespace Kabas\FieldTypes;
 
 class Email extends Item
 {
