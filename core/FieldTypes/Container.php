@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\FieldTypes;
+namespace Kabas\FieldTypes;
 
 use Kabas\App;
 
@@ -60,7 +60,7 @@ class Container
       {
             $type = new \stdClass();
             $type->name = strtolower(basename($file, '.php'));
-            $type->class = '\Kabas\Config\FieldTypes\\' . ucfirst($type->name);
+            $type->class = '\Kabas\FieldTypes\\' . ucfirst($type->name);
             $type->path = __DIR__ . DS . 'Types' . DS . $file;
             return $type;
       }

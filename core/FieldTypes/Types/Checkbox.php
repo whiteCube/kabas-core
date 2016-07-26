@@ -1,10 +1,9 @@
 <?php
 
-namespace Kabas\Config\FieldTypes;
+namespace Kabas\FieldTypes;
 
 class Checkbox extends Selectable
 {
       public $type = "checkbox";
       protected $allowsMultipleValues = true;
-
 }

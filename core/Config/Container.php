@@ -7,12 +7,11 @@ use Kabas\Utils\Text;
 
 class Container
 {
-      public function __construct(Settings\Container $settings, FieldTypes\Container $fieldTypes, Models\Container $models)
+      public function __construct(Settings\Container $settings, Models\Container $models)
       {
             $this->loadAppConfig();
             $this->initDriver();
             $this->settings = $settings;
-            $this->fieldTypes = $fieldTypes;
             $this->models = $models;
       }
 

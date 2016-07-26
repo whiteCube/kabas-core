@@ -49,7 +49,7 @@ class Eloquent extends IlluminateEloquent
 
             try {
                   $type = App::config()->models->items[$modelName]->$key->type;
-                  App::config()->fieldTypes->exists($type);
+                  App::fields()->exists($type);
             } catch (\Kabas\Exceptions\TypeException $e) {
                   $e->setFieldName($key, $modelName);
                   $e->showAvailableTypes();
@@ -57,7 +57,7 @@ class Eloquent extends IlluminateEloquent
                   die();
             };
 
-            $class = App::config()->fieldTypes->getClass($type)->class;
+            $class = App::fields()->getClass($type)->class;
             return App::getInstance()->make($class, [$key, $value]);
       }
 
