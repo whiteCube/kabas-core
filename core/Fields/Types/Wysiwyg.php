@@ -7,40 +7,32 @@ use \Kabas\Fields\Textual;
 class Wysiwyg extends Textual
 {
       public $type = "wysiwyg";
-      protected $raw;
-
 
       protected $headingStart;
+
       protected $headingLowest = false;
+
       protected $headingOriginal = [];
+
       protected $headingReplace = [];
 
-      protected $output;
-
-      public function __construct($fieldName = null, $data = null, $multiVal = null)
+      protected function parse($value)
       {
-            parent::__construct($fieldName, $data);
-            $this->raw = $data;
-            $this->data = $this->parse($data);
+            $md = new \ParsedownExtra();
+            return $md->text($value);
       }
 
-      protected function parse($data)
+      public function headingLevel($level)
       {
-            return (new \ParsedownExtra())->text($data);
-      }
-
-      public function raw()
-      {
-            $this->modified = $this->raw;
+            $this->headingStart = intval($level);
+            $this->output = $this->formatHeadings($this->output);
             return $this;
       }
 
-      public function baseHeading($level)
+      protected function formatHeadings($s)
       {
-            $this->output = $this->getText();
-            $this->headingStart = $level;
-            $this->modified = $this->formatHeadings($this->output);
-            return $this;
+           $this->makeReplacementHeadings($this->registerHeadings($s));
+           return str_replace($this->headingOriginal, $this->headingReplace, $s);
       }
 
       protected function registerHeadings($s)
@@ -59,12 +51,6 @@ class Wysiwyg extends Textual
                   }
             }
             return $a;
-      }
-
-      protected function formatHeadings($s)
-      {
-           $this->makeReplacementHeadings($this->registerHeadings($s));
-           return str_replace($this->headingOriginal, $this->headingReplace, $s);
       }
 
       protected function makeReplacementHeadings($a)
