@@ -2,31 +2,25 @@
 
 namespace Kabas\Fields;
 
-class Option extends Item
+use \Kabas\Utils\Text;
+
+class Option
 {
-      public $type = "option";
+      protected $key;
 
-      public function __construct($option)
+      protected $label;
+
+      protected $selected;
+
+      public function __construct($key, $label, $parseKey = false)
       {
-            $this->fieldName = $option->id;
-            $this->data = $option;
-
-            if(isset($fieldName) && isset($data)) {
-                  try { $this->check($fieldName, $this->data->selected); }
-                  catch (\Kabas\Exceptions\TypeException $e) {
-                        echo $e->getMessage();
-                  }
-            }
+            $this->key = $key;
+            $this->label = trim($label);
       }
 
-      /**
-       * Condition to check if the value is correct for this field type.
-       * @param  mixed $value
-       * @return bool
-       */
-      public function condition()
+      public function __toString()
       {
-            return is_bool($this->data);
+            return (string) $this->label;
       }
 
       /**
@@ -35,7 +29,16 @@ class Option extends Item
        */
       public function label()
       {
-            return $this->data->label;
+            return $this->label;
+      }
+
+      /**
+       * Get option's orignal key
+       * @return string
+       */
+      public function key()
+      {
+            return $this->key;
       }
 
       /**
@@ -44,7 +47,29 @@ class Option extends Item
        */
       public function isSelected()
       {
-            return $this->data->selected;
+            return $this->selected;
+      }
+
+      /**
+       * Sets selected state
+       * @param  bool $status
+       * @return bool
+       */
+      public function setSelected($status)
+      {
+            return $this->selected = $status ? true : false;
+      }
+
+      /**
+       * Checks if given value matches with key or label
+       * @param  mixed $value
+       * @return bool
+       */
+      public function matches($value)
+      {
+            if($value === $this->key) return true;
+            if($value === $this->label) return true;
+            return false;
       }
 
 }

@@ -3,37 +3,13 @@
 namespace Kabas\Fields;
 
 use \Kabas\App;
-use \Kabas\Exceptions\TypeException;
 
-class Selectable implements \IteratorAggregate
+class Selectable extends Item implements \IteratorAggregate
 {
-      public function __construct($fieldName = null, $data = null)
-      {
-            $this->fieldName = $fieldName;
-            $data = (array) $data;
-            foreach($data as $option) {
-                  $this->data[$option->id] = App::getInstance()->make('\Kabas\Fields\Option', [$option]);
-            }
-            if(!$this->allowsMultipleValues && isset($fieldName)) {
-                  try { $this->checkValues(); }
-                  catch (TypeException $e) {
-                        echo $e->getMessage();
-                  }
-            }
-      }
 
-      public function __call($name, $arguments)
+      public function __toString()
       {
-            reset($this->data);
-            $key = key($this->data);
-            if(!method_exists($this, $name) && method_exists($this->data[$key], $name)) {
-                  return $this->data[$key]->$name($arguments);
-            }
-      }
-
-      public function getIterator()
-      {
-            return new \ArrayIterator($this->data);
+            return implode(', ', $this->getSelected());
       }
 
       /**
@@ -42,42 +18,124 @@ class Selectable implements \IteratorAggregate
        */
       public function all()
       {
-            return $this->data;
+            return $this->options;
       }
 
       /**
-       * Get an option by ID
-       * @param  string $id
+       * Get an option
+       * @param  string $value
        * @return Kabas\Fields\Option
        */
-      public function get($id)
+      public function get($value)
       {
-            return $this->data[$id];
+            foreach ($this->options as &$option) {
+                  if($option->matches($value)) return $option;
+            }
+            return false;
       }
 
       /**
-       * Get all selected options
+       * Gets all selected options
        * @return array
        */
       public function getSelected()
       {
-            $array = [];
-
-            foreach($this->data as $option) {
-                  if($option->isSelected()) $array[] = $option;
+            $selected = [];
+            foreach($this->options as &$option) {
+                  if($option->isSelected()){
+                        $selected[] = $option;
+                  }
             }
-
-            return $array;
+            return $selected;
       }
 
-      private function checkValues()
+      /**
+       * Overrides options list
+       * @param  array $options
+       * @return void
+       */
+      public function setOptions($options = array())
       {
-            $selectedCount = 0;
-            foreach($this->data as $option) {
-                  if($option->isSelected()) $selectedCount++;
+            $this->options = $this->makeOptions($options);
+      }
+
+      /**
+       * Makes item iterable
+       * @return array
+       */
+      public function getIterator()
+      {
+            return new \ArrayIterator($this->getSelected());
+      }
+
+      /**
+       * Checks if all values have existing options
+       * @return array
+       */
+      public function condition()
+      {
+            if($this->multiple){
+                  foreach ($this->value as $value) {
+                        if(!$this->get($value)) return false;
+                  }
             }
-            if($selectedCount > 1) {
-                  throw new TypeException('Field "' . $this->fieldName . '" only allows one selected value');
+            elseif(!$this->get($this->value)) return false;
+            return true;
+      }
+
+      /**
+       * Sets options & other field data
+       * @return array
+       */
+      protected function implement($structure)
+      {
+            parent::implement($structure);
+            $this->setMultiple(@$structure->multiple);
+            $this->setOptions(@$structure->options);
+      }
+
+      /**
+       * makes options from user defined list
+       * @return array
+       */
+      protected function makeOptions($options)
+      {
+            if(!is_array($options) && !is_object($options)) throw new \Exception('Selectable field requires a valid options list.');
+            $opts = [];
+            $formatKeys = is_array($options) ? true : false;
+            foreach($options as $key => $value){
+                  $opts[] = App::getInstance()->make('\Kabas\Fields\Option', [$key, $value, $formatKeys]);
+            }
+            return $opts;
+      }
+
+      /**
+       * Redefines options select status
+       * @param  mixed $value
+       * @return mixed
+       */
+      protected function parse($value)
+      {
+            $this->resetSelect();
+            if($this->multiple){
+                  foreach ($value as $val) {
+                        $this->parseValue($val);
+                  }
+            }
+            else $this->parseValue($value);
+      }
+
+      protected function parseValue($value)
+      {
+            if($option = $this->get($value)){
+                  $option->setSelected(true);
+            }
+      }
+
+      protected function resetSelect()
+      {
+            foreach ($this->options as $option) {
+                  $option->setSelected(false);
             }
       }
 }
