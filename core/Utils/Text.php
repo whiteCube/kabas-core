@@ -17,4 +17,18 @@ class Text
             $text = str_replace(' ', '', ucwords($text));
             return ucfirst($text);
       }
+
+      /**
+       * Formats a text to a url-friendly string
+       * @param  string $text
+       * @return string
+       */
+      static function toSlug($text)
+      {
+            $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+            $text = preg_replace("/[^a-zA-Z0-9\/_| -]/", '', $text);
+            $text = strtolower(trim($text, '-'));
+            $text = preg_replace("/[\/_| -]+/", '-', $text);
+            return $text;
+      }
 }
