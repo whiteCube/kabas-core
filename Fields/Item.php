@@ -8,16 +8,25 @@ class Item
 
       public $name;
 
-      public $value;
-
       public $output;
 
-      public $multiple = false;
+      protected $value;
 
-      public function __construct($name = null, $value = null, $multiple = null)
+      protected $default;
+
+      protected $label;
+
+      protected $description;
+
+      protected $options;
+
+      protected $multiple = false;
+
+
+      public function __construct($name = null, $value = null, $structure = null)
       {
             $this->name = $name;
-            $this->multiple = is_null($multiple) ? $this->multiple : $multiple;
+            $this->implement($structure);
             $this->set($value);
 
             if(!is_null($this->name) && !is_null($this->value)) {
@@ -48,9 +57,20 @@ class Item
        */
       public function set($value)
       {
+            if($this->default && is_null($value)) $value = $this->default;
             if($this->multiple && !is_array($value)) $value = [$value];
             $this->value = $value;
             $this->output = $this->parse($value);
+      }
+
+      /**
+       * Defines multiple-values mode
+       * @param  boolean $value
+       * @return void
+       */
+      public function setMultiple($value)
+      {
+            $this->multiple = is_null($multiple) ? $this->multiple : $multiple;
       }
 
       /**
@@ -90,6 +110,18 @@ class Item
       {
             $value = is_null($value) ? $this->value : $value;
             return $this->condition($value);
+      }
+
+      /**
+       * Builds field's attributes based on user-defined structure
+       * @param  object $structure
+       * @return void
+       */
+      protected function implement($structure)
+      {
+            $this->default = @$structure->default;
+            $this->label = isset($structure->label) ? trim($structure->label) : ucfirst($this->type);
+            $this->description = isset($structure->description) ? $structure->description : null;
       }
 
       /**

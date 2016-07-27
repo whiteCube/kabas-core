@@ -53,25 +53,17 @@ class Container
       }
 
       /**
-       * Check if field type is supported
-       * @param  string $type
-       * @return boolean
-       */
-      public function exists($type)
-      {
-            if($this->getClass($type)) return true;
-            return false;
-      }
-
-      /**
        * Get a FieldType class if it exists
        * @param  string $type
-       * @return string | bool
+       * @return string
        */
       public function getClass($type)
       {
             if(isset($this->supportedTypes[$type])) return $this->supportedTypes[$type]->class;
-            return false;
+            else{
+                  $error = 'Type "' . $type . '" is not a supported field type.';
+                  throw new \Kabas\Exceptions\TypeException($error);
+            }
       }
 
 }
