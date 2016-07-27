@@ -80,7 +80,7 @@ class Textual extends Item
             if (mb_strlen($string) > $length) {
                   $string = wordwrap($string, $length, '\break');
                   $string = explode('\break', $string, 2);
-                  $string = $string[0] . $append;
+                  $string = trim($string[0]) . $append;
             }
             $this->output = $string;
             return $this;
