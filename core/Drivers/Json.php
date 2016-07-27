@@ -4,8 +4,8 @@ namespace Kabas\Drivers;
 
 use \Kabas\App;
 use \Kabas\Utils\File;
-use Kabas\Exceptions\ModelNotFoundException;
-use Kabas\Exceptions\MassAssignmentException;
+use \Kabas\Exceptions\ModelNotFoundException;
+use \Kabas\Exceptions\MassAssignmentException;
 
 class Json implements \IteratorAggregate
 {
@@ -103,7 +103,7 @@ class Json implements \IteratorAggregate
        */
       public function isInstanciatedField($field)
       {
-            if(is_object($field) && strpos(get_class($field), 'Kabas\Config\FieldTypes') !== false) return true;
+            if(is_object($field) && strpos(get_class($field), 'Kabas\Fields') !== false) return true;
             return false;
       }
 
@@ -111,7 +111,7 @@ class Json implements \IteratorAggregate
        * Get an instance of the proper FieldType
        * @param  string $key
        * @param  mixed $value
-       * @return \Kabas\Config\FieldTypes\[type]
+       * @return \Kabas\Config\Fields\[type]
        */
       protected function instanciateField($key, $value)
       {

@@ -1,8 +1,9 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields;
 
-use Kabas\App;
+use \Kabas\App;
+use \Kabas\Utils\Text;
 
 class Container
 {
@@ -20,21 +21,9 @@ class Container
 
       public function __construct()
       {
-            $this->loadFieldTypes();
-      }
-
-      /**
-       * Load the supported field types.
-       * @return void
-       */
-      public function loadFieldTypes()
-      {
-            $path = __DIR__ . DS . 'Types' . DS;
-            $data = scandir($path);
-            foreach($data as $file) {
+            foreach(scandir( __DIR__ . DS . 'Types' ) as $file) {
                   if($file !== '.' && $file !== '..') {
                         $this->loadFieldType($file);
-
                   }
             }
       }
@@ -48,7 +37,6 @@ class Container
       {
             $type = $this->getFieldTypeObject($file);
             $this->supportedTypes[$type->name] = $type;
-            require_once($type->path);
       }
 
       /**
@@ -60,8 +48,7 @@ class Container
       {
             $type = new \stdClass();
             $type->name = strtolower(basename($file, '.php'));
-            $type->class = '\Kabas\FieldTypes\\' . ucfirst($type->name);
-            $type->path = __DIR__ . DS . 'Types' . DS . $file;
+            $type->class = '\\Kabas\\Fields\\Types\\' . Text::toNamespace($type->name);
             return $type;
       }
 

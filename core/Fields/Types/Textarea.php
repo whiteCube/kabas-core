@@ -1,6 +1,8 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields\Types;
+
+use \Kabas\Fields\Textual;
 
 class Textarea extends Textual
 {

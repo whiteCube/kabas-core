@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields;
 
 class Option extends Item
 {
