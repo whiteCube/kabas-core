@@ -28,13 +28,6 @@ class Item
             $this->name = $name;
             $this->implement($structure);
             $this->set($value);
-
-            if(!is_null($this->name) && !is_null($this->value)) {
-                  try { $this->check(); }
-                  catch (\Kabas\Exceptions\TypeException $e) {
-                        echo $e->getMessage();
-                  }
-            }
       }
 
       public function __toString()
@@ -58,9 +51,16 @@ class Item
       public function set($value)
       {
             if($this->default && is_null($value)) $value = $this->default;
-            if($this->multiple && !is_array($value)) $value = [$value];
+            if($this->multiple && !is_array($value) && !is_null($value)) $value = [$value];
             $this->value = $value;
             $this->output = $this->parse($value);
+
+            if(!is_null($this->name) && !is_null($this->value)) {
+                  try { $this->check(); }
+                  catch (\Kabas\Exceptions\TypeException $e) {
+                        echo $e->getMessage();
+                  }
+            }
       }
 
       /**
@@ -68,9 +68,9 @@ class Item
        * @param  boolean $value
        * @return void
        */
-      public function setMultiple($value)
+      public function setMultiple($value = null)
       {
-            $this->multiple = is_null($multiple) ? $this->multiple : $multiple;
+            $this->multiple = is_null($value) ? $this->multiple : $value;
       }
 
       /**
