@@ -15,12 +15,7 @@ class Number extends Item
        */
       public function condition()
       {
-            return gettype($this->data) === 'integer';
-      }
-
-      public function __toString()
-      {
-            return (string) $this->modified;
+            return is_numeric($this->value);
       }
 
       public function __get($key)
@@ -33,6 +28,75 @@ class Number extends Item
             return $this->convert($method);
       }
 
+      /**
+       * Updates output by adding the given value
+       * @param  mixed $number
+       * @return $this
+       */
+      public function add($number)
+      {
+            $this->output = ($this->output + $this->parse($number));
+            return $this;
+      }
+
+      /**
+       * Updates output by substracting the given value
+       * @param  mixed $number
+       * @return $this
+       */
+      public function subtract($number)
+      {
+            $this->output = ($this->output - $this->parse($number));
+            return $this;
+      }
+
+      /**
+       * Updates output by dividing its value with the given value
+       * @param  mixed $number
+       * @return $this
+       */
+      public function divide($number)
+      {
+            $this->output = ($this->output / $this->parse($number));
+            return $this;
+      }
+
+      /**
+       * Updates output by multiplying its value with the given value
+       * @param  mixed $number
+       * @return $this
+       */
+      public function multiply($number)
+      {
+            $this->output = ($this->output * $this->parse($number));
+            return $this;
+      }
+
+      /**
+       * Updates output with ceil()
+       * @return $this
+       */
+      public function ceil()
+      {
+            $this->output = ceil($this->output);
+            return $this;
+      }
+
+      /**
+       * Updates output with floor()
+       * @return $this
+       */
+      public function floor()
+      {
+            $this->output = floor($this->output);
+            return $this;
+      }
+
+      /**
+       * Converts value to new numeric type
+       * @param  string $key
+       * @return int | float
+       */
       protected function convert($key)
       {
             switch (strtolower($key)) {
@@ -42,55 +106,33 @@ class Number extends Item
                   case 'integer':
                   case 'parseint':
                   case 'intval':
-                        return (int) $this->getNumber();
+                        return intval($this->output);
                         break;
                   case 'f':
                   case 'float':
                   case 'tofloat':
                   case 'parsefloat':
                   case 'floatval':
-                        return (float) $this->getNumber();
+                        return floatval($this->output);
                         break;
             }
             return false;
       }
 
-      public function add($number)
+      /**
+       * Makes an output value (int/float) from value
+       * @param  mixed $value
+       * @return mixed
+       */
+      protected function parse($value)
       {
-            $number = $this->checkNumberType($number);
-            $this->modified = $this->getNumber() + $number;
-            return $this;
-      }
-
-      public function subtract($number)
-      {
-            $number = $this->checkNumberType($number);
-            $this->modified = $this->getNumber() - $number;
-            return $this;
-      }
-
-      public function divide($number)
-      {
-            $number = $this->checkNumberType($number);
-            $this->modified = $this->getNumber() / $number;
-            return $this;
-      }
-
-      public function multiply($number)
-      {
-            $number = $this->checkNumberType($number);
-            $this->modified = $this->getNumber() * $number;
-            return $this;
-      }
-
-      protected function checkNumberType($number)
-      {
-            if(is_object($number) && isset($number->data)) return $number->data;
-      }
-
-      protected function getNumber()
-      {
-            return isset($this->modified) ? $this->modified : $this->data;
+            if(!is_numeric($value)) return 0;
+            if(is_string($value)){
+                  $value = str_replace([' ',','], ['','.'], $value);
+                  if(strpos($value, '.') !== false) return floatval($value);
+                  return intval($value);
+            }
+            return $value;
       }
 
 }
