@@ -23,6 +23,7 @@ class BaseItem
 
       public function __construct($data)
       {
+            // TODO : load fields structure immediately, and update it later if needed (in build())
             $this->id = isset($data->id) ? $data->id : false;
             $this->template = isset($data->template) ? $data->template : false;
             $this->data = isset($data->data) ? $data->data : new \stdClass();
@@ -81,14 +82,13 @@ class BaseItem
       protected function updateData()
       {
             foreach ($this->fields as $key => $field) {
-                  if(!isset($this->data->$key)){
-                        $this->data->$key = isset($field->default) ? $field->default : null;
-                  }
+                  if(!isset($this->data->$key)) $this->data->$key = null;
                   try { 
-                        $this->makeFieldData($key, $this->secureField($field));
+                        $this->makeFieldData($key, $field);
                   }
                   catch (\Kabas\Exceptions\TypeException $e) {
                         $e->setFieldName($key, $this->id);
+                        // TODO : shouldn't showAvailableTypes be called systematically in getMessage ?
                         $e->showAvailableTypes();
                         echo $e->getMessage();
                         die();
@@ -98,23 +98,7 @@ class BaseItem
 
       protected function makeFieldData($key, $field)
       {
-            if(!App::fields()->exists($field->type)){
-                  $error = 'Type "' . $field->type . '" is not a supported field type.';
-                  throw new \Kabas\Exceptions\TypeException($error);
-            }
-            $class = App::fields()->getClass($field->type);
-            $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $field->multiple]);
-      }
-
-      protected function secureField($item)
-      {
-            //    TODO : this should actualy happen in the fieldType's class.
-            $field = new \stdClass();
-            $field->type = isset($item->type) ? $item->type : 'text';
-            $field->label = isset($item->label) ? $item->label : ucfirst($field->type);
-            $field->description = @$item->description ? $item->description : null;
-            $field->default = @$item->default;
-            $field->multiple = @$item->multiple ? true : false;
-            return $field;
+            $class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
+            $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $field]);
       }
 }
