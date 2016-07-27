@@ -4,16 +4,9 @@ namespace Kabas\Fields;
 
 class Textual extends Item
 {
-      protected $modified;
-
       public function condition()
       {
-            return is_string($this->data);
-      }
-
-      public function __toString()
-      {
-            return $this->getText();
+            return is_string($this->value);
       }
 
       /**
@@ -22,7 +15,7 @@ class Textual extends Item
        */
       public function uppercase()
       {
-            $this->modified = strtoupper($this->getText());
+            $this->output = strtoupper($this->output);
             return $this;
       }
 
@@ -32,7 +25,7 @@ class Textual extends Item
        */
       public function lowercase()
       {
-            $this->modified = strtolower($this->getText());
+            $this->output = strtolower($this->output);
             return $this;
       }
 
@@ -42,42 +35,54 @@ class Textual extends Item
        */
       public function escape()
       {
-            $this->modified = htmlentities($this->getText());
+            $this->output = htmlentities($this->output);
             return $this;
       }
 
+      /**
+       * Checks if output contains given substring
+       * @return boolean
+       */
       public function contains($string, $caseSensitive = true)
       {
-            if($caseSensitive) return strpos($this->getText(), $string) !== false;
-            return stripos($this->getText(), $string) !== false;
+            if($caseSensitive) return (strpos($this->output, $string) !== false);
+            return (stripos($this->output, $string) !== false);
+      }
+
+      /**
+       * Cuts a string after a specified amount of characters.
+       * Appends triple dots.
+       * @param  int $length
+       * @param  string $append
+       * @return $this
+       */
+      public function cut($length = 100, $append = "&nbsp;&hellip;")
+      {
+            $string = strip_tags($this->output);
+            if(mb_strlen($string) > $length){
+                  $string = mb_substr($string, 0, $length);
+                  $string .= is_string($append) ? $append : '';
+            }
+            $this->output = $string;
+            return $this;
       }
 
       /**
        * Cuts a string after a specified amount of characters,
        * without cutting inside a word. Appends triple dots.
        * @param  int $length
-       * @param  string  $append
+       * @param  string $append
        * @return $this
        */
-      public function length($length = 100, $append = "&nbsp;&hellip;")
+      public function shorten($length = 100, $append = "&nbsp;&hellip;")
       {
-            $string = $this->getText();
-            if (strlen($string) > $length) {
+            $string = strip_tags($this->output);
+            if (mb_strlen($string) > $length) {
                   $string = wordwrap($string, $length, '\break');
                   $string = explode('\break', $string, 2);
                   $string = $string[0] . $append;
             }
-            $this->modified = $string;
+            $this->output = $string;
             return $this;
-      }
-
-      /**
-       * Get the modified string if it has been modified, otherwise
-       * get the original data.
-       * @return string
-       */
-      public function getText()
-      {
-            return isset($this->modified) ? $this->modified : $this->data;
       }
 }
