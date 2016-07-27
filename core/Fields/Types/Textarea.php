@@ -8,4 +8,8 @@ class Textarea extends Textual
 {
       public $type = "textarea";
 
+      protected function parse($value)
+      {
+            return nl2br($value);
+      }
 }
