@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields;
 
 use \Kabas\App;
 use \Kabas\Exceptions\TypeException;
@@ -12,7 +12,7 @@ class Selectable implements \IteratorAggregate
             $this->fieldName = $fieldName;
             $data = (array) $data;
             foreach($data as $option) {
-                  $this->data[$option->id] = App::getInstance()->make('\Kabas\FieldTypes\Option', [$option]);
+                  $this->data[$option->id] = App::getInstance()->make('\Kabas\Fields\Option', [$option]);
             }
             if(!$this->allowsMultipleValues && isset($fieldName)) {
                   try { $this->checkValues(); }
@@ -48,7 +48,7 @@ class Selectable implements \IteratorAggregate
       /**
        * Get an option by ID
        * @param  string $id
-       * @return Kabas\FieldTypes\Option
+       * @return Kabas\Fields\Option
        */
       public function get($id)
       {

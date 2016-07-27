@@ -1,8 +1,9 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields\Types;
 
-use Kabas\App;
+use \Kabas\App;
+use \Kabas\Fields\Item;
 
 class Image extends Item
 {

@@ -1,8 +1,9 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields\Types;
 
 use \Carbon\Carbon;
+use \Kabas\Fields\Item;
 
 class Date extends Item
 {

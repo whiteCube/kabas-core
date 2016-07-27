@@ -1,10 +1,12 @@
 <?php
 
-namespace Kabas\FieldTypes;
+namespace Kabas\Fields\Types;
 
-class File extends Item
+use \Kabas\Fields\Item;
+
+class FlexibleContent extends Item
 {
-      public $type = "file";
+      public $type = "flexible-content";
 
       /**
        * Condition to check if the value is correct for this field type.

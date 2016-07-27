@@ -40,7 +40,7 @@ class Eloquent extends IlluminateEloquent
        * Instanciate a Kabas FieldType.
        * @param  string $key
        * @param  string $value
-       * @return \Kabas\Config\FieldTypes\[type]
+       * @return \Kabas\Fields\[type]
        */
       protected static function instanciateField($key, $value)
       {

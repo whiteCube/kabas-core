@@ -11,15 +11,10 @@ class Text
        */
       static function toNamespace($text)
       {
-            $formattedString = $text;
-
             $text = str_replace('-', ' ', $text);
             $text = str_replace('_', ' ', $text);
             $text = str_replace('.', ' ', $text);
-
-            $str = str_replace(' ', '', ucwords($text));
-            $str[0] = strtoupper($str[0]);
-
-            return $str;
+            $text = str_replace(' ', '', ucwords($text));
+            return ucfirst($text);
       }
 }
