@@ -9,7 +9,7 @@ class Selectable extends Item implements \IteratorAggregate
 
       public function __toString()
       {
-            return implode(', ', $this->getSelected());
+            return implode(', ', $this->labels());
       }
 
       /**
@@ -47,6 +47,52 @@ class Selectable extends Item implements \IteratorAggregate
                   }
             }
             return $selected;
+      }
+
+      /**
+       * Gets all labels from selected options
+       * @return array
+       */
+      public function labels()
+      {
+            $labels = [];
+            foreach ($this->getSelected() as $option) {
+                  $labels[] = $option->label();
+            }
+            return $labels;
+      }
+
+      /**
+       * Gets label from first selected option
+       * Usefull when not in multiple mode.
+       * @return string
+       */
+      public function label()
+      {
+            return $this->labels()[0];
+      }
+
+      /**
+       * Gets all keys from selected options
+       * @return array
+       */
+      public function keys()
+      {
+            $keys = [];
+            foreach ($this->getSelected() as $option) {
+                  $keys[] = $option->key();
+            }
+            return $keys;
+      }
+
+      /**
+       * Gets key from first selected option
+       * Usefull when not in multiple mode.
+       * @return string
+       */
+      public function key()
+      {
+            return $this->keys()[0];
       }
 
       /**
