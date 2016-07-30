@@ -38,4 +38,14 @@ class Url extends Item
             return UrlUtil::parse($this->value);
       }
 
+      /**
+       * Makes an output URL from value (without trailing slashes)
+       * @param  mixed $value
+       * @return mixed
+       */
+      protected function parse($value)
+      {
+            return trim($value, '/');
+      }
+
 }
