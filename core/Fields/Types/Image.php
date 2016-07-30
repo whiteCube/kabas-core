@@ -8,16 +8,6 @@ use \Kabas\Fields\Item;
 class Image extends Item
 {
       public $type = "image";
-      public $file;
-
-      public function __construct($fieldName = null, $data = null)
-      {
-            if(is_string($data)) $data = json_decode($data);
-            parent::__construct($fieldName, $data);
-            if($this->data) {
-                  $this->file = App::getInstance()->make('\Kabas\Objects\Image\Item', [$this->data]);
-            }
-      }
 
       /**
        * Condition to check if the value is correct for this field type.
@@ -31,7 +21,17 @@ class Image extends Item
 
       public function __call($name, $args)
       {
-            return call_user_func_array([$this->file, $name], $args);
+            return call_user_func_array([$this->output, $name], $args);
+      }
+
+      /**
+       * Makes an Image instance from value
+       * @param  mixed $value
+       * @return object
+       */
+      protected function parse($value)
+      {
+            return App::getInstance()->make('\Kabas\Objects\Image\Item', [$value]);
       }
 
 }

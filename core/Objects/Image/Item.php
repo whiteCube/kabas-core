@@ -8,33 +8,34 @@ use Kabas\App;
 
 class Item
 {
+      public $error = false;
+      public $path;
+      public $dirname;
       public $filename;
       public $extension;
-      public $path;
-      public $file;
+      public $src;
+      protected $renamed;
       protected $editor;
 
 
-      public function __construct($file)
+      public function __construct($content)
       {
-            if(is_array($file)) $file = (object) $file;
-            $cond = (strpos($file->src, 'http://') !== false && strpos($file->src, 'http://') === 0) ||
-                    (strpos($file->src, 'https://') !== false && strpos($file->src, 'https://') === 0);
-            if($cond) {
-                  $this->file = $file->src;
-            } else {
-                  $nameParts = explode('.', $file->src);
-                  $this->filename = $nameParts[0];
-                  $this->extension = $nameParts[1];
-                  $this->path = THEME_PATH . DS . 'assets' . DS . 'img' . DS;
+            if(is_array($content)) $content = (object) $content;
+            if(!is_object($content)) $this->error = true;
+            else{
+                  $this->setFile(@$content->path);
+                  $this->setAlt(@$content->alt);
             }
-            $this->file = $file->src;
-            $this->alt = $file->alt;
+      }
+
+      public function __toString()
+      {
+            return $this->apply()->src();
       }
 
       public function __call($name, $args)
       {
-            $this->makeEditor();
+            $this->makeEditor(false);
             call_user_func_array([$this->editor, $name], $args);
             return $this;
       }
@@ -83,36 +84,72 @@ class Item
 
       public function apply()
       {
-            if($this->editor) $this->file = $this->editor->save();
+            if($this->editor && $this->editor->hasChanges()) $this->renamed = $this->editor->save();
             return $this;
       }
 
       public function show($echo = true)
       {
-            $s = '<img src="' . $this->src() . '" alt="' . $this->alt() . '" />';
+            $s = '<img src="' . $this->__toString() . '" alt="' . $this->alt() . '" />';
             if($echo) echo($s);
             return $s;
       }
 
       public function alt()
       {
-            if(isset($this->alt)) return $this->alt;
-            return null;
+            return $this->alt;
       }
 
       public function src()
       {
-            if(strpos($this->file, 'http://') !== false && strpos($this->file, 'http://') === 0) {
-                  return $this->file;
-            } else {
-                  if(get_class($this) !== 'Kabas\Objects\Image\Item') $image = $this->file;
-                  else $image = $this;
-                  return Url::base() . '/themes/' . App::theme() . '/assets/img/' . $image->file;
+            return $this->src . $this->fullname();
+      }
+
+      public function fullname()
+      {
+            if($this->renamed) return $this->renamed;
+            return $this->filename . '.' . $this->extension;
+      }
+
+      protected function makeEditor($prepareIntervention = true)
+      {
+            if($this->error) throw new \Exception('Cannot edit image because of previous errors.');
+            elseif(!$this->editor) $this->editor = App::getInstance()->make(
+                  'Kabas\Objects\Image\Editor',
+                  [$this->dirname, $this->filename, $this->extension]
+            );
+            if($prepareIntervention) $this->editor->prepareIntervention();
+      }
+
+      protected function setFile($path)
+      {
+            if(!$path){
+                  $this->error = true;
+                  throw new \Exception('Image path is not defined.');
+            }
+            $this->path = realpath($path);
+            if(!$this->path){
+                  $this->error = true;
+                  throw new \Exception('Image path is not correct.');
+            }
+            else{
+                  $file = pathinfo($this->path);
+                  $this->dirname = isset($file['dirname']) ? $file['dirname'] : null;
+                  $this->filename = isset($file['filename']) ? $file['filename'] : null;
+                  $this->extension = isset($file['extension']) ? $file['extension'] : null;
+                  $this->src = Url::base() . '/content/uploads/';
             }
       }
 
-      protected function makeEditor()
+      protected function setAlt($string)
       {
-            if(!$this->editor) $this->editor = App::getInstance()->make('Kabas\Objects\Image\Editor', [$this->path . $this->file]);
+            $this->alt = $this->getAlt($string);
+      }
+
+      protected function getAlt($string = null)
+      {
+            if(is_string($string)) return $string;
+            if($this->filename) return $this->filename;
+            return '';
       }
 }
