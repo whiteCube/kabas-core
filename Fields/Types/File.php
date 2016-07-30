@@ -32,7 +32,7 @@ class File extends Item
       }
 
       /**
-       * Makes an output URL from value (without trailing slashes)
+       * Makes reference object and stores full path
        * @param  mixed $value
        * @return mixed
        */

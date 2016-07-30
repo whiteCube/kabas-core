@@ -7,13 +7,23 @@ use Kabas\App;
 
 class Editor
 {
-      protected $history = [];
       public $intervention;
-      protected $lastFileName;
 
-      function __construct($path)
+      protected $dirname;
+
+      protected $filename;
+
+      protected $extension;
+
+      protected $file;
+
+      protected $history = [];
+
+      function __construct($dir, $file, $extension)
       {
-            $this->path = $path;
+            $this->dirname = $dir;
+            $this->filename = $file;
+            $this->extension = $extension;
       }
 
       public function backup($name = null)
@@ -186,11 +196,21 @@ class Editor
             $this->history[] = $this->getAction('rotate', func_get_args(), 'rotate' . $angle);
       }
 
+      public function hasChanges()
+      {
+            if (count($this->history)) return true;
+            return false;
+      }
+
       public function save()
       {
-            if(!$this->fileExists()) $this->executeActions()->save($this->intervention->dirname . DS . $this->lastFileName);
+            $this->setFile();
+            if(!file_exists($this->dirname . DS . $this->file)) {
+                  $this->executeActions();
+                  $this->intervention->save($this->dirname . DS . $this->file);
+            }
             $this->history = [];
-            return $this->lastFileName;
+            return $this->file;
       }
 
       public function sharpen($amount)
@@ -213,12 +233,9 @@ class Editor
             $this->history[] = $this->getAction('widen', func_get_args(), 'widen' . $width);
       }
 
-      protected function fileExists()
+      protected function setFile()
       {
-            $pathParts = pathinfo($this->path);
-            $this->lastFileName = $pathParts['filename'] . $this->getHistoryString() . '.' . $pathParts['extension'];
-            if(file_exists($pathParts['dirname'] . DS . $this->lastFileName)) return true;
-            return false;
+            $this->file = $this->filename . $this->getHistoryString() . '.' . $this->extension;
       }
 
       protected function getHistoryString()
@@ -241,21 +258,25 @@ class Editor
 
       protected function executeActions()
       {
-            $this->intervention = App::getInstance()->make('Intervention\Image\ImageManager', [['driver' => App::config()->appConfig['imageDriver']]]);
-            $this->intervention = $this->intervention->make($this->path);
-
+            $this->prepareIntervention();
             if(!isset($this->intervention->filename)) {
-                  $file = explode('/', $this->path);
-                  $exploded = explode('.', $file[count($file) - 1]);
-                  $this->intervention->filename = $exploded[0];
-                  $this->intervention->extension = $exploded[1];
-                  $this->intervention->dirname = THEME_PATH . DS . 'assets' . DS . 'img' . DS;
+                  $this->intervention->filename = $this->filename;
+                  $this->intervention->extension = $this->extension;
+                  $this->intervention->dirname = $this->dirname;
             }
-
             foreach ($this->history as $o) {
                   $this->intervention = call_user_func_array([$this->intervention, $o->action], $o->args);
             }
+      }
 
-            return $this->intervention;
+      public function prepareIntervention()
+      {
+            if(!$this->intervention){
+                  $this->intervention = App::getInstance()->make(
+                        'Intervention\Image\ImageManager',
+                        [['driver' => App::config()->appConfig['imageDriver']]]
+                  );
+                  $this->intervention = $this->intervention->make($this->dirname . DS . $this->filename . '.' . $this->extension);
+            }
       }
 }
