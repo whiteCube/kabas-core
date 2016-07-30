@@ -9,12 +9,6 @@ class Date extends Item
 {
       public $type = "date";
 
-      public function __construct($fieldName = null, $data = null)
-      {
-            parent::__construct($fieldName, $data);
-            $this->data = new Carbon($data);
-      }
-
       /**
        * Condition to check if the value is correct for this field type.
        * @param  mixed $value
@@ -22,28 +16,33 @@ class Date extends Item
        */
       public function condition()
       {
-            return strtotime($this->data);
+            return strtotime($this->output);
       }
 
       public function __get($key)
       {
-            return $this->data->$key;
+            return $this->output->$key;
       }
 
       public function __set($key, $value)
       {
-            $this->data->$key = $value;
-            return $this->data;
+            $this->output->$key = $value;
+            return $this->output;
       }
 
       public function __call($method, $params)
       {
-            return call_user_func_array([$this->data, $method], $params);
+            return call_user_func_array([$this->output, $method], $params);
       }
 
-      public function __toString()
+      /**
+       * Makes a Carbon instance from value
+       * @param  mixed $value
+       * @return mixed
+       */
+      protected function parse($value)
       {
-            return $this->data->__toString();
+            return new Carbon($value);
       }
 
 }
