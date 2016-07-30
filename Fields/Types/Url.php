@@ -3,34 +3,11 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\Fields\Item;
+use \Kabas\Utils\Url as UrlUtil;
 
 class Url extends Item
 {
       public $type = "url";
-
-      public function __construct($fieldName = null, $data = null)
-      {
-            $this->fieldName = $fieldName;
-            $this->data = $data;
-
-            if(isset($data)) {
-                  $this->href = $data->href;
-                  $this->label = $data->label;
-                  $this->title = $data->title;
-            }
-
-            if(isset($this->fieldName) && isset($this->href)) {
-                  try { $this->check($fieldName, $this->href); }
-                  catch (\Kabas\Exceptions\TypeException $e) {
-                        echo $e->getMessage();
-                  }
-            }
-      }
-
-      public function __toString()
-      {
-            return $this->href;
-      }
 
       /**
        * Condition to check if the value is correct for this field type.
@@ -39,7 +16,7 @@ class Url extends Item
        */
       public function condition()
       {
-            return filter_var($this->data->href, FILTER_VALIDATE_URL);
+            return filter_var($this->value, FILTER_VALIDATE_URL);
       }
 
       /**
@@ -48,18 +25,17 @@ class Url extends Item
        */
       public function isLocal()
       {
-            $serverHost = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-            $linkHost = str_replace('www.', '', $this->parse()->host);
-            return $serverHost === $linkHost;
+            if(trim(UrlUtil::parse($this->value)->base, '/') == UrlUtil::base()) return true;
+            return false;
       }
 
       /**
        * Get the parsed url
        * @return object
        */
-      public function parse()
+      public function getParsed()
       {
-            return (object) parse_url($this->href);
+            return UrlUtil::parse($this->value);
       }
 
 }
