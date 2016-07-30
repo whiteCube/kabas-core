@@ -55,7 +55,7 @@ class Router
             $this->rootURL = $this->getRootURL();
             $this->baseURL = $this->getBaseURL();
             $this->query = $this->getQuery($_SERVER['REQUEST_URI']);
-            $this->route = $this->getCleanQuery($this->query);
+            $this->route = $this->getCleanQuery($this->query)->route;
             $this->setLang();
       }
 
@@ -137,16 +137,23 @@ class Router
 
       /**
        * Get the lang-cleared route
-       * @return string
+       * @return object
        */
       public function getCleanQuery($uri, $hasSet = true)
       {
             preg_match('/^\/([^\/]+)?/', $uri, $a);
+            $o = new \stdClass();
+            $o->lang = null;
+            $o->route = null;
             if(isset($a[1]) && $lang = Lang::is($a[1])){
+                  $o->lang = $lang;
+                  $o->route = substr($uri, strlen($a[0]));
                   if($hasSet) $this->lang = $lang;
-                  return substr($uri, strlen($a[0]));
             }
-            return $uri;
+            else{
+                  $o->route = $uri;
+            }
+            return $o;
       }
 
       /**
@@ -249,22 +256,26 @@ class Router
        */
       public function parseUrl($url)
       {
-            $a = $a = parse_url($url);
+            $a = parse_url($url);
             $o = new \stdClass();
             $o->root = isset($a['scheme']) ? $a['scheme'] . '://' : '';
             $o->root .= isset($a['host']) ? $a['host'] : '';
             $o->root .= isset($a['port']) ? ':' . $a['port'] : '';
             $o->base = false;
             $o->query = false;
+            $o->lang = false;
             $o->route = false;
             if(isset($a['path'])){
                   $o->base = $o->root;
                   if(strlen($this->subdirectory) && strpos($a['path'], $this->subdirectory) === 0){
                         $o->base .= $this->subdirectory;
-                  } 
+                        $o->query = $this->getQuery($a['path']);
+                  }
+                  else $o->query = $a['path'];
                   $o->base .= '/';
-                  $o->query = $this->getQuery($a['path']);
-                  $o->route = $this->getCleanQuery($o->query);
+                  $q = $this->getCleanQuery($o->query, false);
+                  $o->route = $q->route;
+                  if($q->lang) $o->lang = $q->lang;
             }
             return $o;
       }
