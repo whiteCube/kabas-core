@@ -2,20 +2,36 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\Fields\Item;
+use \Kabas\App;
+use \Kabas\Fields\Groupable;
 
-class Gallery extends Item
+class Gallery extends Groupable
 {
       public $type = "gallery";
 
+      protected $multiple = true;
+
       /**
-       * Condition to check if the value is correct for this field type.
-       * @param  mixed $value
-       * @return bool
+       * Returns options (not needed on this type)
+       * @return array
        */
-      public function condition()
+      protected function makeOptions($options)
       {
-            return true;
+            return $options;
       }
 
+      /**
+       * Makes an array of images
+       * @param  array $value
+       * @return array
+       */
+      protected function parse($value)
+      {
+            $a = [];
+            $class = App::fields()->getClass('image');
+            foreach ($value as $i => $item) {
+                  $a[] = App::getInstance()->make($class, [$this->name . '_' . $i, $item, $this]);
+            }
+            return $a;
+      }
 }
