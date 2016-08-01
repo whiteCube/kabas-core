@@ -3,16 +3,11 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\App;
-use \Kabas\Fields\Item;
+use \Kabas\Fields\Groupable;
 
-class Group extends Item implements \IteratorAggregate
+class Group extends Groupable
 {
       public $type = "group";
-
-      public function __toString()
-      {
-            return '#Field-group';
-      }
 
       public function __get($name)
       {
@@ -33,35 +28,6 @@ class Group extends Item implements \IteratorAggregate
       {
             if(isset($this->output[$key])) return $this->output[$key];
             return null;
-      }
-
-      /**
-       * Condition to check if the value is correct for this field type.
-       * @return bool
-       */
-      public function condition()
-      {
-            return true;
-      }
-
-      /**
-       * Sets options & other field data
-       * @return array
-       */
-      protected function implement($structure)
-      {
-            parent::implement($structure);
-            $this->setOptions(@$structure->options);
-      }
-
-      /**
-       * Overrides options list
-       * @param  object $options
-       * @return void
-       */
-      public function setOptions($options = array())
-      {
-            $this->options = $this->makeOptions($options);
       }
 
       /**
@@ -99,14 +65,5 @@ class Group extends Item implements \IteratorAggregate
                   }
             }
             return $a;
-      }
-
-      /**
-       * Makes item iterable
-       * @return array
-       */
-      public function getIterator()
-      {
-            return new \ArrayIterator($this->output);
       }
 }
