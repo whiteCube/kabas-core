@@ -9,6 +9,8 @@ class Group extends Groupable
 {
       public $type = "group";
 
+      protected $option;
+
       public function __get($name)
       {
             return $this->get($name);
@@ -31,22 +33,58 @@ class Group extends Groupable
       }
 
       /**
+       * retrieves current option key
+       * @return string
+       */
+      public function option()
+      {
+            return $this->option;
+      }
+
+      /**
+       * Condition to check if the value is correct for this field type.
+       * @return bool
+       */
+      public function condition()
+      {
+            return true;
+      }
+
+      /**
+       * Sets options & other field data
+       * @return array
+       */
+      protected function implement($structure)
+      {
+            parent::implement($structure);
+            $this->setOption(@$structure->option);
+      }
+
+      /**
+       * Sets option key if exists (used inside flexibleContent)
+       * @param  string $option
+       * @return void
+       */
+      public function setOption($option = null)
+      {
+            $this->option = is_string($option) ? $option : false;
+      }
+
+      /**
        * makes options from user defined list
        * @return array
        */
       protected function makeOptions($options)
       {
-            if(!is_array($options) && !is_object($options)) throw new \Exception('Field groups require a valid fields list.');
-            $opts = [];
-            foreach($options as $name => $field){
-                  $class = 
+            $a = [];
+            foreach(parent::makeOptions($options) as $name => $field){
                   $item = new \stdClass();
                   $item->name = $name;
                   $item->class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
                   $item->structure = $field;
-                  $opts[] = $item;
+                  $a[] = $item;
             }
-            return $opts;
+            return $a;
       }
 
       /**

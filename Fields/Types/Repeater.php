@@ -12,35 +12,16 @@ class Repeater extends Groupable
       protected $multiple = true;
 
       /**
-       * Condition to check if the value is correct for this field type.
-       * @return bool
-       */
-      public function condition()
-      {
-            return is_array($this->value);
-      }
-
-      /**
-       * makes options from user defined list
-       * @return array
-       */
-      protected function makeOptions($options)
-      {
-            if(!is_array($options) && !is_object($options)) throw new \Exception('Field groups require a valid fields list.');
-            return $options;
-      }
-
-      /**
-       * Makes an array of defined arrays
+       * Makes an array of defined groups
        * @param  array $value
        * @return array
        */
       protected function parse($value)
       {
             $a = [];
-            $group = App::fields()->getClass('group');
+            $class = App::fields()->getClass('group');
             foreach ($value as $i => $item) {
-                  $a[] = App::getInstance()->make($group, [$i, $item, $this]);
+                  $a[] = App::getInstance()->make($class, [$this->name . '_' . $i, $item, $this]);
             }
             return $a;
       }
