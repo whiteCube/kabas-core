@@ -47,7 +47,12 @@ class BaseItem
       public function set($data)
       {
             foreach ($data as $key => $value) {
-                  $this->data->$key->set($value);
+                  if(is_object($value) && is_subclass_of($value, \Kabas\Fields\Item::class)){
+                        $this->data->$key = $value;
+                  }
+                  else {
+                        $this->data->$key->set($value);
+                  }
             }
       }
 
