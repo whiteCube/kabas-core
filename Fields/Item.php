@@ -8,7 +8,7 @@ class Item
 
       public $name;
 
-      public $output;
+      protected $output;
 
       protected $value;
 
