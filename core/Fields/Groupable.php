@@ -17,7 +17,7 @@ class Groupable extends Item implements \IteratorAggregate
        */
       public function condition()
       {
-            return true;
+            return is_array($this->value);
       }
 
       /**
@@ -38,6 +38,16 @@ class Groupable extends Item implements \IteratorAggregate
       public function setOptions($options = array())
       {
             $this->options = $this->makeOptions($options);
+      }
+
+      /**
+       * makes options from user defined list
+       * @return array
+       */
+      protected function makeOptions($options)
+      {
+            if(!is_array($options) && !is_object($options)) throw new \Exception('Field groups require a valid fields list.');
+            return $options;
       }
 
       /**
