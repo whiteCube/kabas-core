@@ -21,15 +21,18 @@ class Container extends BaseContainer
        */
       public function load($part)
       {
-            if($item = $this->get($part)) return $item;
-
-            try { $item = $this->loadItem($part); }
-            catch (NotFoundException $e) {
-                  echo $e->getMessage();
-                  die();
+            $item = $this->get($part);
+            if(!$item) {
+                  try {
+                        $item = $this->loadItem($part);
+                        $this->items[$part] = $item;
+                  }
+                  catch (NotFoundException $e) {
+                        echo $e->getMessage();
+                        die();
+                  }
             }
-            $this->items[$part] = $this->makeItem($item);
-            return $this->get($part);
+            return $this->makeItem($item);
       }
 
       /**

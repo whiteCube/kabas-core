@@ -4,7 +4,7 @@ return [
       /**
        * The name of the theme you want to use on your site.
        */
-      "theme" => "Example",
+      "theme" => "Test",
 
       /**
        * The languages available on your site. Each available language
