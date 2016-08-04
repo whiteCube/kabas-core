@@ -15,8 +15,10 @@ class Part
       static function get($part, $params = [])
       {
             $part = App::content()->partials->load($part);
-            $part->set($params);
-            $part->make();
+            if($part){
+                  $part->set($params);
+                  $part->make();
+            }
       }
 
       static function __callStatic($method, $params)

@@ -15,8 +15,10 @@ class Menu
       static function get($menu, $params = [])
       {
             $menu = App::content()->menus->get($menu);
-            $menu->set($params);
-            $menu->make();
+            if($menu){
+                  $menu->set($params);
+                  $menu->make();
+            }
       }
 
       static function __callStatic($method, $params)
