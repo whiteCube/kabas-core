@@ -15,7 +15,7 @@ class View
       {
             if(self::isFirstView($_view)) ob_start();
 
-            if($_data = $this->getVarArray($_data)) extract($_data);
+            if(count($_data)) extract($_data);
             include($this->getTemplateFile($_view, $_directory));
 
             if(self::isFirstView($_view)) $this->showPage();
@@ -69,22 +69,6 @@ class View
       {
             if(strpos($view, '.php') !== false) return $view;
             return $view . '.php';
-      }
-
-      /**
-       * Makes an array from data object
-       * @param  object $data
-       * @return array
-       */
-      protected function getVarArray($data)
-      {
-            $a = [];
-            foreach ($data as $key => $value) {
-                  if(!is_numeric($key)){
-                        $a[$key] = $value;
-                  }
-            }
-            return $a;
       }
 
       protected function showPage()

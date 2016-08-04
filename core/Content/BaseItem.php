@@ -5,6 +5,7 @@ namespace Kabas\Content;
 use \Kabas\App;
 use \Kabas\Utils\File;
 use \Kabas\Utils\Text;
+use \Kabas\Fields\Item as Field;
 
 class BaseItem
 {
@@ -15,6 +16,8 @@ class BaseItem
       public $options;
 
       public $fields;
+
+      public $data;
 
       public $directory;
 
@@ -32,19 +35,22 @@ class BaseItem
             $this->setData($data);
       }
 
-      public function build($data = null)
-      {
-            $this->mergeData($data);
+      public function __set($key, $value){
+            if(isset($this->fields->$key)){
+                  if(is_subclass_of($value, Field::class)) $this->fields->$key = $value;
+                  else $this->fields->$key->set($value);
+            }
+            else{
+                  if(!$this->data) $this->data = new \stdClass();
+                  $this->data->$key = $value;
+            }
       }
 
       public function set($data)
       {
-            foreach ($data as $key => $value) {
-                  if(is_object($value) && is_subclass_of($value, \Kabas\Fields\Item::class)){
-                        $this->data->$key = $value;
-                  }
-                  else {
-                        $this->data->$key->set($value);
+            if(is_array($data) || is_object($data)){
+                  foreach ($data as $key => $value) {
+                        $this->__set($key, $value);
                   }
             }
       }
@@ -62,23 +68,21 @@ class BaseItem
       protected function loadFields($data = null)
       {
             $this->loadStructure();
-            $fields = new \stdClass();
+            $fields = null;
             if(!is_object($data)) $data = new \stdClass();
-            if(!isset($this->structure->fields)) return null;
-            foreach ($this->structure->fields as $key => $field) {
-                  $value = isset($data->$key) ? $data->key : null;
-                  $fields->$key = App::fields()->make($key, $field, $value);
-            }
-            return $fields;
-      }
-
-      protected function mergeData($data)
-      {
-            if($data){
-                  foreach ($data as $key => $value) {
-                        $this->data->$key = $value;
+            if(isset($this->structure->fields)){
+                  $fields = new \stdClass();
+                  foreach ($this->structure->fields as $key => $field) {
+                        $value = null;
+                        if(isset($data->$key)){
+                              $value = $data->$key;
+                              unset($data->$key);
+                        }
+                        $fields->$key = App::fields()->make($key, $field, $value);
                   }
             }
+            $this->set($data);
+            return $fields;
       }
 
       protected function loadStructure()

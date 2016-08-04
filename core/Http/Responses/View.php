@@ -23,13 +23,29 @@ class View extends Response
             ViewEngine::make($this->view, $this->getData(), $this->item->directory);
       }
 
+      /**
+       * Makes a variables array from item
+       * @return array
+       */
       protected function getData()
       {
-            $o = $this->item->fields;
-            if(is_null($o)) $o = new \stdClass();
+            $a = [];
+            $this->addVarsObject($a, $this->item->fields);
+            $this->addVarsObject($a, $this->item->data);
             if(get_class($this->item) == 'Kabas\Content\Menus\Item'){
-                  $o->items = $this->item->items;
+                  $a['items'] = $this->item->items;
             }
-            return $o;
+            return $a;
+      }
+
+      protected function addVarsObject(&$array, $object)
+      {
+            if(is_object($object)){
+                  foreach($object as $key => $value) {
+                        if(!is_numeric($key) && !isset($array[$key])){
+                              $array[$key] = $value;
+                        }
+                  }
+            }
       }
 }

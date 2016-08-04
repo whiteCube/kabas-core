@@ -35,7 +35,7 @@ class BaseController
 
       public function view($view, $data)
       {
-            $this->item->build($data);
+            $this->item->set($data);
             return App::getInstance()->make('Kabas\Http\Responses\View', [$view, $this->item]);
       }
 
