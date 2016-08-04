@@ -12,6 +12,23 @@ class FlexibleContent extends Groupable
       protected $multiple = true;
 
       /**
+       * makes options from user defined list
+       * @return array
+       */
+      protected function makeOptions($options)
+      {
+            $a = [];
+            foreach(parent::makeOptions($options) as $key => $field){
+                  $item = new \stdClass();
+                  $item->class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
+                  $item->structure = $field;
+                  $item->structure->option = $key;
+                  $a[] = $item;
+            }
+            return $a;
+      }
+
+      /**
        * Makes an array of defined groups
        * @param  array $value
        * @return array
@@ -19,22 +36,18 @@ class FlexibleContent extends Groupable
       protected function parse($value)
       {
             $a = [];
-            $class = App::fields()->getClass('group');
             foreach ($value as $i => $item) {
-                  if($group = $this->getStructure($item->option)){
-                        $a[] = App::getInstance()->make($class, [$this->name . '_' . $i, $item->value, $group]);
+                  if($option = $this->getOption($item->option)){
+                        $a[] = App::getInstance()->make($option->class, [$this->name . '_' . $i, $item->value, $option->structure]);
                   }
             }
             return $a;
       }
 
-      protected function getStructure($key)
+      protected function getOption($key)
       {
-            if(isset($this->options->$key)) {
-                  $group = new \stdClass();
-                  $group->option = $key;
-                  $group->options = $this->options->$key;
-                  return $group;
+            foreach ($this->options as $option) {
+                  if($option->structure->option === $key) return $option;
             }
             return false;
       }
