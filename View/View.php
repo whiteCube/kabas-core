@@ -11,19 +11,14 @@ class View
 {
       private static $isFirst;
 
-      public function __construct($view, $data, $directory)
+      public function __construct($_view, $_data, $_directory)
       {
-            if(self::isFirstView($view)) ob_start();
+            if(self::isFirstView($_view)) ob_start();
 
-            extract((array) $data);
-            include $this->getTemplateFile($view, $directory);
+            if($_data = $this->getVarArray($_data)) extract($_data);
+            include($this->getTemplateFile($_view, $_directory));
 
-            if(self::isFirstView($view)){
-                  $page = ob_get_contents();
-                  ob_end_clean();
-                  $page = Assets::load($page);
-                  echo $page;
-            }
+            if(self::isFirstView($_view)) $this->showPage();
       }
 
       /**
@@ -61,7 +56,6 @@ class View
       {
             $directory = THEME_PATH . DS . 'views' . DS . $directory;
             $view = $this->checkViewExtension($view);
-
             return $directory . DS . $view;
       }
 
@@ -75,6 +69,30 @@ class View
       {
             if(strpos($view, '.php') !== false) return $view;
             return $view . '.php';
+      }
+
+      /**
+       * Makes an array from data object
+       * @param  object $data
+       * @return array
+       */
+      protected function getVarArray($data)
+      {
+            $a = [];
+            foreach ($data as $key => $value) {
+                  if(!is_numeric($key)){
+                        $a[$key] = $value;
+                  }
+            }
+            return $a;
+      }
+
+      protected function showPage()
+      {
+            $page = ob_get_contents();
+            ob_end_clean();
+            $page = Assets::load($page);
+            echo $page;
       }
 
       /**
