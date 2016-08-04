@@ -12,9 +12,9 @@ class BaseController
 
       static $template = false;
 
-      public function __construct($view)
+      public function __construct($item)
       {
-            $this->item = $view;
+            $this->item = $item;
             $params = App::router()->getCurrent()->getParameters();
             $response = call_user_func_array([$this, 'setup'], $params);
             if(is_null($response)) {
