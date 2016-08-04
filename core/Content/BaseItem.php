@@ -12,8 +12,6 @@ class BaseItem
 
       public $template;
 
-      public $data;
-
       public $options;
 
       public $fields;
@@ -26,10 +24,9 @@ class BaseItem
 
       public function __construct($data)
       {
-            // TODO : load fields structure immediately, and update it later if needed (in build())
             $this->id = isset($data->id) ? $data->id : false;
             $this->template = isset($data->template) ? $data->template : false;
-            $this->data = isset($data->data) ? $data->data : new \stdClass();
+            $this->fields = $this->loadFields(@$data->data);
             $this->options = isset($data->options) ? $data->options : new \stdClass();
             $this->controller = $this->findControllerClass();
             $this->setData($data);
@@ -38,14 +35,6 @@ class BaseItem
       public function build($data = null)
       {
             $this->mergeData($data);
-            $this->loadFields();
-      }
-
-      public function loadFields()
-      {
-            $structure = $this->getStructure();
-            $this->fields = isset($structure->fields) ? $structure->fields : new \stdClass();
-            $this->updateData();
       }
 
       public function set($data)
@@ -70,6 +59,19 @@ class BaseItem
             return null;
       }
 
+      protected function loadFields($data = null)
+      {
+            $this->loadStructure();
+            $fields = new \stdClass();
+            if(!is_object($data)) $data = new \stdClass();
+            if(!isset($this->structure->fields)) return null;
+            foreach ($this->structure->fields as $key => $field) {
+                  $value = isset($data->$key) ? $data->key : null;
+                  $fields->$key = App::fields()->make($key, $field, $value);
+            }
+            return $fields;
+      }
+
       protected function mergeData($data)
       {
             if($data){
@@ -79,10 +81,9 @@ class BaseItem
             }
       }
 
-      protected function getStructure()
+      protected function loadStructure()
       {
             if(is_null($this->structure)) $this->structure = File::loadJson($this->getStructureFile());
-            return $this->structure;
       }
 
       protected function getStructureFile()
@@ -91,29 +92,6 @@ class BaseItem
             $path .= $this->directory . DS;
             $path .= $this->template . '.json';
             return $path;
-      }
-
-      protected function updateData()
-      {
-            foreach ($this->fields as $key => $field) {
-                  if(!isset($this->data->$key)) $this->data->$key = null;
-                  try { 
-                        $this->makeFieldData($key, $field);
-                  }
-                  catch (\Kabas\Exceptions\TypeException $e) {
-                        $e->setFieldName($key, $this->id);
-                        // TODO : shouldn't showAvailableTypes be called systematically in getMessage ?
-                        $e->showAvailableTypes();
-                        echo $e->getMessage();
-                        die();
-                  }
-            }
-      }
-
-      protected function makeFieldData($key, $field)
-      {
-            $class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
-            $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $field]);
       }
 
       protected function findControllerClass()

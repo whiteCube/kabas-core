@@ -25,7 +25,8 @@ class View extends Response
 
       protected function getData()
       {
-            $o = $this->item->data;
+            $o = $this->item->fields;
+            if(is_null($o)) $o = new \stdClass();
             if(get_class($this->item) == 'Kabas\Content\Menus\Item'){
                   $o->items = $this->item->items;
             }
