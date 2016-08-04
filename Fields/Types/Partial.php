@@ -9,6 +9,8 @@ class Partial extends Groupable
 {
       public $type = "partial";
 
+      protected $reference;
+
       public function __get($name)
       {
             return $this->get($name);
@@ -28,6 +30,15 @@ class Partial extends Groupable
       {
             if(isset($this->output[$key])) return $this->output[$key];
             return null;
+      }
+
+      public function render()
+      {
+            if($this->reference){
+                  $this->reference->set($this->output);
+                  $this->reference->make();
+            }
+            return $this;
       }
 
       /**
@@ -77,12 +88,8 @@ class Partial extends Groupable
       {
             $a = [];
             $fields = $this->getPartFields($options);
-            foreach($options as $name => $field){
-                  $item = new \stdClass();
-                  $item->name = $name;
-                  $item->class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
-                  $item->structure = $field;
-                  $a[] = $item;
+            foreach($fields as $name => $field){
+                  $a[$name] = $field;
             }
             return $a;
       }
@@ -95,11 +102,12 @@ class Partial extends Groupable
       protected function getPartFields($part)
       {
             $part = App::content()->partials->load($part);
-            // TO DO :
-            //    - check if part exists
-            //    - store part in this field (so it can be rendered)
-            //    - return part's fields structure
-            var_dump($part);die();
+            if($part){
+                  $this->reference = $part;
+                  if(is_object($part->fields)) return $part->fields;
+                  return [];
+            }
+            return false;
       }
 
 
@@ -111,12 +119,10 @@ class Partial extends Groupable
       protected function parse($value)
       {
             $a = [];
-            foreach ($this->options as $field) {
-                  if($field->class){
-                        $key = $field->name;
-                        $val = isset($value->$key) ? $value->$key : null;
-                        $a[$key] = App::getInstance()->make($field->class, [$key, $val, $field->structure]);
-                  }
+            foreach ($this->options as $key => $field) {
+                  $val = isset($value->$key) ? $value->$key : null;
+                  $a[$key] = clone $field;
+                  $a[$key]->set($val);
             }
             return $a;
       }
