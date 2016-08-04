@@ -3,8 +3,7 @@
 namespace Kabas\Http;
 
 use \Kabas\App;
-use Kabas\View\View;
-use Kabas\Utils\Text;
+use \Kabas\View\View;
 
 class Response
 {
@@ -19,9 +18,7 @@ class Response
       {
             $page = App::content()->pages->get($pageID);
             if(!$page) return View::notFound();
-            $controller = '\Theme\\' . App::theme() .'\Pages\\' . Text::toNamespace($page->template);
-            if(!class_exists($controller)) $controller = \Kabas\Controller\PageController::class;
-            App::getInstance()->make($controller, [$page]);
+            $page->make();
       }
 
       /**

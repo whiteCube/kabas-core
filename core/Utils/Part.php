@@ -16,9 +16,7 @@ class Part
       {
             $part = App::content()->partials->load($part);
             $part->set($params);
-            $controller = '\Theme\\' . App::theme() .'\Partials\\' . Text::toNamespace($part->template);
-            if(!class_exists($controller)) $controller = \Kabas\Controller\PartialController::class;
-            App::getInstance()->make($controller, [$part]);
+            $part->make();
       }
 
       static function __callStatic($method, $params)

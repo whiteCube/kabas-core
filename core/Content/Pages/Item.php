@@ -27,4 +27,15 @@ class Item extends BaseItem
             // TODO : merge default site meta with given meta
             return isset($data->meta) ? $data->meta : App::config()->settings->site->meta;
       }
+
+      protected function getTemplateNamespace()
+      {
+            return '\\Theme\\' . App::theme() .'\Pages\\' . parent::getTemplateNamespace();
+      }
+
+      protected function findControllerClass()
+      {
+            if($class = parent::findControllerClass()) return $class;
+            return \Kabas\Controller\PageController::class;
+      }
 }

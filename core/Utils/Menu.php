@@ -16,9 +16,7 @@ class Menu
       {
             $menu = App::content()->menus->get($menu);
             $menu->set($params);
-            $controller = '\Theme\\' . App::theme() .'\Menus\\' . Text::toNamespace($menu->template);
-            if(!class_exists($controller)) $controller = \Kabas\controller\MenuController::class;
-            App::getInstance()->make($controller, [$menu]);
+            $menu->make();
       }
 
       static function __callStatic($method, $params)

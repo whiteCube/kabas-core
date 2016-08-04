@@ -4,6 +4,7 @@ namespace Kabas\Content;
 
 use \Kabas\App;
 use \Kabas\Utils\File;
+use \Kabas\Utils\Text;
 
 class BaseItem
 {
@@ -19,6 +20,8 @@ class BaseItem
 
       public $directory;
 
+      protected $controller;
+
       protected $structure;
 
       public function __construct($data)
@@ -28,6 +31,7 @@ class BaseItem
             $this->template = isset($data->template) ? $data->template : false;
             $this->data = isset($data->data) ? $data->data : new \stdClass();
             $this->options = isset($data->options) ? $data->options : new \stdClass();
+            $this->controller = $this->findControllerClass();
             $this->setData($data);
       }
 
@@ -54,6 +58,11 @@ class BaseItem
                         $this->data->$key->set($value);
                   }
             }
+      }
+
+      public function make()
+      {
+            $this->controller = App::getInstance()->make($this->controller, [$this]);
       }
 
       protected function setData($data)
@@ -105,5 +114,17 @@ class BaseItem
       {
             $class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
             $this->data->$key = App::getInstance()->make($class, [$key, $this->data->$key, $field]);
+      }
+
+      protected function findControllerClass()
+      {
+            $class = $this->getTemplateNamespace();
+            if(class_exists($class)) return $class;
+            return false;
+      }
+
+      protected function getTemplateNamespace()
+      {
+            return Text::toNamespace($this->template);
       }
 }
