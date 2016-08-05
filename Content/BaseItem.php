@@ -65,11 +65,13 @@ class BaseItem
             return null;
       }
 
-      protected function loadFields($data = null)
+      protected function loadFields($obj = null)
       {
             $this->loadStructure();
             $fields = null;
-            if(!is_object($data)) $data = new \stdClass();
+
+            if(is_object($obj)) $data = clone($obj);
+            else $data = new \stdClass();
             if(isset($this->structure->fields)){
                   $fields = new \stdClass();
                   foreach ($this->structure->fields as $key => $field) {
