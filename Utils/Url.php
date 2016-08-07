@@ -3,6 +3,7 @@
 namespace Kabas\Utils;
 
 use \Kabas\App;
+use \Kabas\Utils\Assets;
 use \Kabas\Utils\Lang;
 
 class Url
@@ -40,6 +41,15 @@ class Url
       static function base()
       {
             return trim(App::router()->getBase(), '/');
+      }
+
+      /**
+       * Get the URL to given public asset in active theme
+       * @return string
+       */
+      static function asset($path)
+      {
+            return Assets::src($path);
       }
 
       /**
