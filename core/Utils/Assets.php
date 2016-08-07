@@ -63,6 +63,19 @@ class Assets
       }
 
       /**
+       * returns the asset's HREF
+       * @param  string $src
+       * @return string
+       */
+      public static function src($src)
+      {
+            $s = Url::base();
+            $s .= '/themes/' . App::theme() . '/public/';
+            $s .= $src;
+            return $s;
+      }
+
+      /**
        * Adds a dependency to location
        * @param  string $location
        * @param  string $src
@@ -103,19 +116,6 @@ class Assets
       protected static function getType($path)
       {
             return strtolower(pathinfo($path, PATHINFO_EXTENSION));
-      }
-
-      /**
-       * returns the asset's HREF
-       * @param  string $src
-       * @return string
-       */
-      protected static function getSrc($src)
-      {
-            $s = Url::base();
-            $s .= '/themes/' . App::theme() . '/public/';
-            $s .= $src;
-            return $s;
       }
 
       /**
@@ -166,7 +166,7 @@ class Assets
             $asset->path = realpath(THEME_PATH . DS . 'public' . DS . $src);
             if(!$asset->path) return false;
             $asset->type = self::getType($asset->path);
-            $asset->src = self::getSrc($src);
+            $asset->src = self::src($src);
             $asset->tag = self::getTag($asset);
             return $asset;
       }
