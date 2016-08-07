@@ -4,9 +4,9 @@ namespace Kabas\Fields;
 
 class Item
 {
-      public $type;
+      protected $type;
 
-      public $name;
+      protected $name;
 
       protected $output;
 
@@ -46,6 +46,78 @@ class Item
       }
 
       /**
+       * Retrieves the current field's type
+       * @return string
+       */
+      public function getType()
+      {
+            return $this->type;
+      }
+
+      /**
+       * Retrieves the current field's name
+       * @return string
+       */
+      public function getName()
+      {
+            return $this->name;
+      }
+
+      /**
+       * Retrieves the current field's raw value (as stored)
+       * @return mixed
+       */
+      public function getValue()
+      {
+            return $this->value;
+      }
+
+      /**
+       * Retrieves the current field's default value
+       * @return string
+       */
+      public function getDefault()
+      {
+            return $this->default;
+      }
+
+      /**
+       * Retrieves the current field's textual label
+       * @return string
+       */
+      public function getLabel()
+      {
+            return $this->label;
+      }
+
+      /**
+       * Retrieves the current field's textual description
+       * @return string
+       */
+      public function getDescription()
+      {
+            return $this->description;
+      }
+
+      /**
+       * Retrieves the current field's option name (inside flexiblecontent)
+       * @return string
+       */
+      public function getOption()
+      {
+            return $this->option;
+      }
+
+      /**
+       * Retrieves the current field's multiple-values state
+       * @return boolean
+       */
+      public function isMultiple()
+      {
+            return $this->multiple;
+      }
+
+      /**
        * Defines field's value and updates its output
        * @param  mixed $value
        * @return void
@@ -73,15 +145,6 @@ class Item
       public function setMultiple($value = null)
       {
             $this->multiple = is_null($value) ? $this->multiple : $value;
-      }
-
-      /**
-       * retrieves current option key
-       * @return string
-       */
-      public function option()
-      {
-            return $this->option;
       }
 
       /**

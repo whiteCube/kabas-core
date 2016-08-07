@@ -7,7 +7,7 @@ use \Kabas\Fields\Repeatable;
 
 class FlexibleContent extends Repeatable
 {
-      public $type = "flexiblecontent";
+      protected $type = "flexiblecontent";
 
       /**
        * makes options from user defined list
@@ -35,14 +35,14 @@ class FlexibleContent extends Repeatable
       {
             $a = [];
             foreach ($value as $i => $item) {
-                  if($option = $this->getOption($item->option)){
+                  if($option = $this->findOption($item->option)){
                         $a[] = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
                   }
             }
             return $a;
       }
 
-      protected function getOption($key)
+      protected function findOption($key)
       {
             foreach ($this->options as $option) {
                   if($option->structure->option === $key) return $option;

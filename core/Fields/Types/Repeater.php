@@ -7,7 +7,7 @@ use \Kabas\Fields\Repeatable;
 
 class Repeater extends Repeatable
 {
-      public $type = "repeater";
+      protected $type = "repeater";
 
       /**
        * Makes an array of defined groups

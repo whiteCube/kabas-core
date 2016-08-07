@@ -6,5 +6,5 @@ use \Kabas\Fields\Selectable;
 
 class Select extends Selectable
 {
-      public $type = "select";
+      protected $type = "select";
 }

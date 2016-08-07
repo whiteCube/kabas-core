@@ -6,7 +6,7 @@ use \Kabas\Fields\Textual;
 
 class Wysiwyg extends Textual
 {
-      public $type = "wysiwyg";
+      protected $type = "wysiwyg";
 
       protected $headingStart;
 

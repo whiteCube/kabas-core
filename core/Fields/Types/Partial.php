@@ -7,7 +7,7 @@ use \Kabas\Fields\Groupable;
 
 class Partial extends Groupable
 {
-      public $type = "partial";
+      protected $type = "partial";
 
       protected $reference;
 

@@ -6,5 +6,5 @@ use \Kabas\Fields\Textual;
 
 class Text extends Textual
 {
-      public $type = "text";
+      protected $type = "text";
 }

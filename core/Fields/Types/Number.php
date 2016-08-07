@@ -6,7 +6,7 @@ use \Kabas\Fields\Item;
 
 class Number extends Item
 {
-      public $type = "number";
+      protected $type = "number";
 
       /**
        * Condition to check if the value is correct for this field type.
