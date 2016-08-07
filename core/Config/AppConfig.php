@@ -31,12 +31,13 @@ return [
       'aliases' => [
             'Assets' => Kabas\Utils\Assets::class,
             'Benchmark' => Kabas\Utils\Benchmark::class,
+            'Lang' => Kabas\Utils\Lang::class,
             'Menu' => Kabas\Utils\Menu::class,
             'Meta' => Kabas\Utils\Meta::class,
             'Page' => Kabas\Utils\Page::class,
             'Part' => Kabas\Utils\Part::class,
-            'Url' => Kabas\Utils\Url::class,
             'Session' => Kabas\Utils\Session::class,
-            'Lang' => Kabas\Utils\Lang::class
+            'Text' => Kabas\Utils\Text::class,
+            'Url' => Kabas\Utils\Url::class
       ],
 ];
