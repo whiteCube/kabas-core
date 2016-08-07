@@ -6,7 +6,7 @@ use \Kabas\Fields\Item;
 
 class Color extends Item
 {
-      public $type = "color";
+      protected $type = "color";
 
       protected $mode = 'hex';
 

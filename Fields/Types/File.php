@@ -6,7 +6,7 @@ use \Kabas\Fields\Item;
 
 class File extends Item
 {
-      public $type = "file";
+      protected $type = "file";
 
       protected $reference;
 

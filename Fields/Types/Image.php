@@ -7,7 +7,7 @@ use \Kabas\Fields\Item;
 
 class Image extends Item
 {
-      public $type = "image";
+      protected $type = "image";
 
       /**
        * Condition to check if the value is correct for this field type.

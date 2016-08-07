@@ -6,7 +6,7 @@ use \Kabas\Fields\Textual;
 
 class Email extends Textual
 {
-      public $type = "email";
+      protected $type = "email";
 
       /**
        * Condition to check if the value is correct for this field type.

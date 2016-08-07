@@ -7,7 +7,7 @@ use \Kabas\Utils\Url as UrlUtil;
 
 class Url extends Item
 {
-      public $type = "url";
+      protected $type = "url";
 
       /**
        * Condition to check if the value is correct for this field type.

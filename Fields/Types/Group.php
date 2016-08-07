@@ -7,7 +7,7 @@ use \Kabas\Fields\Groupable;
 
 class Group extends Groupable
 {
-      public $type = "group";
+      protected $type = "group";
 
       /**
        * makes options from user defined list

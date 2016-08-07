@@ -7,7 +7,7 @@ use \Kabas\Fields\Repeatable;
 
 class Gallery extends Repeatable
 {
-      public $type = "gallery";
+      protected $type = "gallery";
 
       protected $multiple = true;
 
