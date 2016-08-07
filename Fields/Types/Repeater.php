@@ -3,13 +3,11 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\App;
-use \Kabas\Fields\Groupable;
+use \Kabas\Fields\Repeatable;
 
-class Repeater extends Groupable
+class Repeater extends Repeatable
 {
       public $type = "repeater";
-
-      protected $multiple = true;
 
       /**
        * Makes an array of defined groups
@@ -21,7 +19,7 @@ class Repeater extends Groupable
             $a = [];
             $class = App::fields()->getClass('group');
             foreach ($value as $i => $item) {
-                  $a[] = App::getInstance()->make($class, [$this->name . '_' . $i, $item, $this]);
+                  $a[] = App::getInstance()->make($class, [$this->getMultiFieldname($i), $item, $this]);
             }
             return $a;
       }

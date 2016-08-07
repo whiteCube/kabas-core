@@ -3,9 +3,9 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\App;
-use \Kabas\Fields\Groupable;
+use \Kabas\Fields\Repeatable;
 
-class Gallery extends Groupable
+class Gallery extends Repeatable
 {
       public $type = "gallery";
 

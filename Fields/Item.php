@@ -20,6 +20,8 @@ class Item
 
       protected $options;
 
+      protected $option;
+
       protected $multiple = false;
 
 
@@ -74,6 +76,25 @@ class Item
       }
 
       /**
+       * retrieves current option key
+       * @return string
+       */
+      public function option()
+      {
+            return $this->option;
+      }
+
+      /**
+       * Sets option key if exists (used inside flexibleContent)
+       * @param  string $option
+       * @return void
+       */
+      public function setOption($option = null)
+      {
+            $this->option = is_string($option) ? $option : false;
+      }
+
+      /**
        * Generates the right form tag for this field
        * @param  array $attributes
        * @return string
@@ -122,6 +143,7 @@ class Item
             $this->default = @$structure->default;
             $this->label = isset($structure->label) ? trim($structure->label) : ucfirst($this->type);
             $this->description = isset($structure->description) ? $structure->description : null;
+            $this->setOption(@$structure->option);
       }
 
       /**

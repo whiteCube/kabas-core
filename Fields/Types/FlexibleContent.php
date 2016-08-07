@@ -3,13 +3,11 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\App;
-use \Kabas\Fields\Groupable;
+use \Kabas\Fields\Repeatable;
 
-class FlexibleContent extends Groupable
+class FlexibleContent extends Repeatable
 {
       public $type = "flexiblecontent";
-
-      protected $multiple = true;
 
       /**
        * makes options from user defined list
@@ -38,7 +36,7 @@ class FlexibleContent extends Groupable
             $a = [];
             foreach ($value as $i => $item) {
                   if($option = $this->getOption($item->option)){
-                        $a[] = App::getInstance()->make($option->class, [$this->name . '_' . $i, $item->value, $option->structure]);
+                        $a[] = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
                   }
             }
             return $a;

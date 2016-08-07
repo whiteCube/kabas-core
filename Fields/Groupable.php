@@ -4,11 +4,27 @@ namespace Kabas\Fields;
 
 use \Kabas\App;
 
-class Groupable extends Item implements \IteratorAggregate
+class Groupable extends Aggregate
 {
-      public function __toString()
+      public function __get($name)
       {
-            return '#multiple-fields';
+            return $this->get($name);
+      }
+
+      public function __call($name, $params)
+      {
+            return $this->get($name);
+      }
+
+      /**
+       * Retrieves one of the contained fields
+       * @param  string $name
+       * @return object
+       */
+      public function get($key)
+      {
+            if(isset($this->output[$key])) return $this->output[$key];
+            return null;
       }
 
       /**
@@ -17,45 +33,6 @@ class Groupable extends Item implements \IteratorAggregate
        */
       public function condition()
       {
-            return is_array($this->value);
-      }
-
-      /**
-       * Sets options & other field data
-       * @return array
-       */
-      protected function implement($structure)
-      {
-            parent::implement($structure);
-            $this->setOptions(@$structure->options);
-      }
-
-      /**
-       * Overrides options list
-       * @param  object $options
-       * @return void
-       */
-      public function setOptions($options = array())
-      {
-            $this->options = $this->makeOptions($options);
-      }
-
-      /**
-       * makes options from user defined list
-       * @return array
-       */
-      protected function makeOptions($options)
-      {
-            if(!is_array($options) && !is_object($options)) throw new \Exception('Field groups require a valid fields list.');
-            return $options;
-      }
-
-      /**
-       * Makes item iterable
-       * @return array
-       */
-      public function getIterator()
-      {
-            return new \ArrayIterator($this->output);
+            return is_object($this->value);
       }
 }
