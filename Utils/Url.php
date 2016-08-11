@@ -53,6 +53,18 @@ class Url
       }
 
       /**
+       * Get the URL for given path
+       * @param  string $path
+       * @return string
+       */
+      static function toSrc($path)
+      {
+            if(strpos($path, BASE_PATH) !== 0) return false;
+            $path = trim(str_replace(DS, '/', substr($path, strlen(BASE_PATH))), '/');
+            return self::base() . '/' . $path;
+      }
+
+      /**
        * Returns an URL-clean version of the language
        * @param  string $lang
        * @return string
