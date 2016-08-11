@@ -102,7 +102,7 @@ class Item
 
       public function src()
       {
-            return $this->src . $this->fullname();
+            return $this->src . '/' . $this->fullname();
       }
 
       public function fullname()
@@ -113,31 +113,34 @@ class Item
 
       protected function makeEditor($prepareIntervention = true)
       {
-            if($this->error) throw new \Exception('Cannot edit image because of previous errors.');
-            elseif(!$this->editor) $this->editor = App::getInstance()->make(
-                  'Kabas\Objects\Image\Editor',
-                  [$this->dirname, $this->filename, $this->extension]
-            );
-            if($prepareIntervention) $this->editor->prepareIntervention();
+            if(!$this->error) {
+                  if(!$this->editor) {
+                        $this->editor = App::getInstance()->make(
+                              'Kabas\Objects\Image\Editor',
+                              [$this->dirname, $this->filename, $this->extension]
+                        );
+                  }
+                  if($prepareIntervention) $this->editor->prepareIntervention();
+            }
       }
 
       protected function setFile($path)
       {
-            if(!$path){
+            if(!$path) {
                   $this->error = true;
-                  throw new \Exception('Image path is not defined.');
+                  return false;
             }
             $this->path = realpath($path);
             if(!$this->path){
                   $this->error = true;
-                  throw new \Exception('Image path is not correct.');
+                  return false;
             }
             else{
                   $file = pathinfo($this->path);
                   $this->dirname = isset($file['dirname']) ? $file['dirname'] : null;
                   $this->filename = isset($file['filename']) ? $file['filename'] : null;
                   $this->extension = isset($file['extension']) ? $file['extension'] : null;
-                  $this->src = Url::base() . '/content/uploads/';
+                  $this->src = Url::fromPath($this->dirname);
             }
       }
 
