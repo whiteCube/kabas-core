@@ -20,11 +20,11 @@ class Assets
 
       /**
        * Adds an assets dependency.
-       * @param  string $location
        * @param  string $src
+       * @param  string $location
        * @return void
        */
-      public static function add($location, $src)
+      public static function add($src, $location)
       {
             if(!isset(self::$required[$location])) self::$required[$location] = [];
             if(is_string($src)) self::pushToLocation($location, $src);
@@ -45,7 +45,7 @@ class Assets
       public static function here($location, $src = null)
       {
             echo self::getLocationTag($location) . PHP_EOL;
-            if($src) self::add($location, $src);
+            if($src) self::add($src, $location);
       }
 
       /**
