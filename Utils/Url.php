@@ -57,7 +57,7 @@ class Url
        * @param  string $path
        * @return string
        */
-      static function toSrc($path)
+      static function fromPath($path)
       {
             if(strpos($path, BASE_PATH) !== 0) return false;
             $path = trim(str_replace(DS, '/', substr($path, strlen(BASE_PATH))), '/');
