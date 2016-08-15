@@ -25,16 +25,30 @@ class LinksContainer extends BaseContainer implements \IteratorAggregate
             }
       }
 
+      public function add($item)
+      {
+            $this->items[] = $this->makeItem($item);
+      }
+
+      public function remove($item)
+      {
+            $id = $item;
+            if(is_a($item, \Kabas\Content\Menus\LinkItem::class)) $id = $item->id;
+            foreach ($this->items as $key => $link) {
+                  if($link->id === $id) unset($this->items[$key]);
+            }
+      }
+
       protected function makeItems($items)
       {
             foreach ($items as $item) {
-                  $this->items[] = $this->makeItem($item);
+                  $this->add($item);
             }
       }
 
       protected function makeItem($item)
       {
-            return App::getInstance()->make('\Kabas\Content\Menus\LinkItem', [$item, $this->structure]);
+            return App::getInstance()->make('\Kabas\Content\Menus\LinkItem', [$item, count($this->items), $this->structure]);
       }
 
       /**

@@ -13,8 +13,9 @@ class LinkItem extends BaseItem
 
       public $active;
 
-      public function __construct($data, $structure)
+      public function __construct($data, $id, $structure)
       {
+            $this->id = $id;
             $this->structure = $structure;
             $this->fields = $this->loadFields($data);
             $this->controller = $this->findControllerClass();
