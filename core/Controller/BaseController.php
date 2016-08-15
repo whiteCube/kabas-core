@@ -23,6 +23,16 @@ class BaseController
             App::response()->send($response);
       }
 
+      public function __get($key)
+      {
+            return $this->item->$key;
+      }
+
+      public function __set($key, $value)
+      {
+            $this->item->$key = $value;
+      }
+
       public function __call($method, $args)
       {
             return false;

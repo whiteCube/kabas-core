@@ -15,8 +15,8 @@ class Main extends MenuController
       protected function setup()
       {
             // Remove the current page from menu
-            foreach ($this->item->items as $i => $item) {
-                  if($item->isActive()) $this->item->items->remove($item);
+            foreach ($this->items as $i => $item) {
+                  if($item->isActive()) $this->items->remove($item);
             }
       }
 }

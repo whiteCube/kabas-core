@@ -17,9 +17,14 @@ class MenuItem
             $this->item->active = $this->getLocalActive();
       }
 
-      public function __get($name)
+      public function __get($key)
       {
-            return $this->item->fields->$name;
+            return $this->item->$key;
+      }
+
+      public function __set($key, $value)
+      {
+            $this->item->$key = $value;
       }
 
       /**
@@ -28,8 +33,8 @@ class MenuItem
        */
       public function hasSub()
       {
-            if(is_null($this->item->items)) return false;
-            if(count($this->item->items)) return true;
+            if(is_null($this->items)) return false;
+            if(count($this->items)) return true;
             return false;
       }
 
@@ -39,7 +44,7 @@ class MenuItem
        */
       public function getSub()
       {
-            if($this->hasSub()) return $this->item->items;
+            if($this->hasSub()) return $this->items;
             return [];
       }
 
@@ -49,7 +54,7 @@ class MenuItem
        */
       public function isPage()
       {
-            return $this->item->url->hasTarget();
+            return $this->url->hasTarget();
       }
 
       /**
@@ -59,7 +64,7 @@ class MenuItem
        */
       public function isActive($checkSub = true)
       {
-            if($this->item->active) return true;
+            if($this->active) return true;
             if($checkSub && $this->hasSub()){
                   foreach ($this->getSub() as $item) {
                         if($item->isActive()) return true;
@@ -74,7 +79,7 @@ class MenuItem
        */
       protected function getTargetUrl()
       {
-            foreach ($this->item->fields as $field) {
+            foreach ($this->fields as $field) {
                   if($field->getType() == 'url') return $field;
             }
             return '#';
@@ -96,7 +101,7 @@ class MenuItem
        */
       protected function isPageActive()
       {
-            if($this->item->url->getTarget()->id == Page::id()) return true;
+            if($this->url->getTarget()->id == Page::id()) return true;
             return false;
       }
 
@@ -106,7 +111,7 @@ class MenuItem
        */
       protected function isUrlActive()
       {
-            $route = Url::route($this->item->url);
+            $route = Url::route($this->url);
             if($route) return App::router()->getCurrent()->matches($route);
             return false;
       }

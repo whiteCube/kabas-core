@@ -12,7 +12,7 @@ class MenuController extends BaseController
       public function __construct($view)
       {
             $this->item = $view;
-            $this->item->items->make();
+            $this->items->make();
             $response = $this->setup();
             if(is_null($response)){
                   $response = $this->view($this->getTemplateName(), false);
