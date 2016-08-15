@@ -29,7 +29,7 @@ class Item
       {
             $this->name = $name;
             $this->implement($structure);
-            $this->set($value);
+            $this->value = $value;
       }
 
       public function __toString()

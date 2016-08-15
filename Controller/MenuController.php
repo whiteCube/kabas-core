@@ -12,7 +12,7 @@ class MenuController extends BaseController
       public function __construct($view)
       {
             $this->item = $view;
-            $this->item->items = $this->makeItems($this->item->items);
+            $this->item->items->make();
             $response = $this->setup();
             if(is_null($response)){
                   $response = $this->view($this->getTemplateName(), false);
@@ -28,24 +28,4 @@ class MenuController extends BaseController
       {
             return null;
       }
-
-      /**
-       * Creates a MenuItem instance for each passed item and its sub-items
-       * @param  array $items
-       * @return array
-       */
-      protected function makeItems($items)
-      {
-            $nav = [];
-            foreach($items as $item) {
-                  $item = App::getInstance()->make('Kabas\Controller\MenuItem', [$item]);
-                  if($item->hasSub()) {
-                        $item->items = $this->makeItems($item->getSub());
-                        $item->cleanSub();
-                  }
-                  $nav[] = $item;
-            }
-            return $nav;
-      }
-
 }

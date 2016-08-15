@@ -11,9 +11,15 @@ class Item extends BaseItem
 
       public $items;
 
+      public function parse()
+      {
+            parent::parse();
+            $this->items->parse();
+      }
+
       protected function setData($data)
       {
-            $this->items = isset($data->items) ? $data->items : false;
+            $this->items = App::getInstance()->make('\Kabas\Content\Menus\LinksContainer', [@$data->items, @$this->structure->item]);
       }
 
       protected function getTemplateNamespace()
