@@ -16,7 +16,7 @@ class Main extends MenuController
       {
             // Remove the current page from menu
             foreach ($this->item->items as $i => $item) {
-                  if($item->isActive()) unset($this->item->items[$i]);
+                  if($item->isActive()) $this->item->items->remove($item);
             }
       }
 }
