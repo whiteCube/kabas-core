@@ -14,4 +14,11 @@ class Container
             $this->partials = $partials;
             $this->menus = $menus;
       }
+
+      public function parse()
+      {
+            foreach ($this as $key => $container) {
+                  $container->parse();
+            }
+      }
 }

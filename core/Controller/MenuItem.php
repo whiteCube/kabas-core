@@ -8,30 +8,18 @@ use \Kabas\Utils\Page;
 
 class MenuItem
 {
-      public $url;
-
-      public $label;
-
-      public $items;
-
-      public $page;
-
-      public $active;
-
-      protected $attributes;
+      protected $item;
 
       public function __construct($item)
       {
-            $this->attributes = $item;
-            $this->url = $this->getTargetUrl();
-            $this->label = $this->getLabel();
-            $this->active = $this->getLocalActive();
-            $this->cleanAttributes();
+            $this->item = $item;
+            $this->item->url = $this->getTargetUrl();
+            $this->item->active = $this->getLocalActive();
       }
 
       public function __get($name)
       {
-            return $this->attributes->$name;
+            return $this->item->fields->$name;
       }
 
       /**
@@ -40,11 +28,8 @@ class MenuItem
        */
       public function hasSub()
       {
-            if(is_array($this->items)) return true;
-            if(isset($this->attributes->items)){
-                  $a = $this->attributes->items;
-                  if(is_array($a) && count($a)) return true;
-            }
+            if(is_null($this->item->items)) return false;
+            if(count($this->item->items)) return true;
             return false;
       }
 
@@ -54,8 +39,7 @@ class MenuItem
        */
       public function getSub()
       {
-            if(is_array($this->items)) return $this->items;
-            if($this->hasSub()) return $this->attributes->items;
+            if($this->hasSub()) return $this->item->items;
             return [];
       }
 
@@ -65,8 +49,7 @@ class MenuItem
        */
       public function isPage()
       {
-            if($this->page) return true;
-            return false;
+            return $this->item->url->hasTarget();
       }
 
       /**
@@ -76,10 +59,10 @@ class MenuItem
        */
       public function isActive($checkSub = true)
       {
-            if($this->active) return true;
-            if($checkSub && $this->items){
-                  foreach ($this->items as $sub) {
-                        if($sub->isActive()) return true;
+            if($this->item->active) return true;
+            if($checkSub && $this->hasSub()){
+                  foreach ($this->getSub() as $item) {
+                        if($item->isActive()) return true;
                   }
             }
             return false;
@@ -91,53 +74,10 @@ class MenuItem
        */
       protected function getTargetUrl()
       {
-            if(!isset($this->attributes->target)) return '#';
-            if($page = $this->getTargetPage()) {
-                  $this->page = $page;
-                  return Url::to($page->id);
+            foreach ($this->item->fields as $field) {
+                  if($field->getType() == 'url') return $field;
             }
-            return $this->attributes->target;
-      }
-
-      /**
-       * Returns target page if exists
-       * @return object
-       */
-      protected function getTargetPage()
-      {
-            return App::content()->pages->get($this->attributes->target);
-      }
-
-      /**
-       * Returns the menu item's label
-       * @return string
-       */
-      protected function getLabel()
-      {
-            if(isset($this->attributes->label) && $this->attributes->label){
-                  return $this->attributes->label;
-            }
-            if($this->isPage()) return $this->page->title;
-            return '';
-      }
-
-      /**
-       * removes target & label information from attributes
-       * @return void
-       */
-      protected function cleanAttributes()
-      {
-            if(isset($this->attributes->target)) unset($this->attributes->target);
-            if(isset($this->attributes->label)) unset($this->attributes->label);
-      }
-
-      /**
-       * removes items array from attributes
-       * @return void
-       */
-      protected function cleanSub()
-      {
-            unset($this->attributes->items);
+            return '#';
       }
 
       /**
@@ -146,7 +86,7 @@ class MenuItem
        */
       protected function getLocalActive()
       {
-            if($this->page) return $this->isPageActive();
+            if($this->isPage()) return $this->isPageActive();
             return $this->isUrlActive();
       }
 
@@ -156,7 +96,7 @@ class MenuItem
        */
       protected function isPageActive()
       {
-            if($this->page->id == Page::id()) return true;
+            if($this->item->url->getTarget()->id == Page::id()) return true;
             return false;
       }
 
@@ -166,7 +106,7 @@ class MenuItem
        */
       protected function isUrlActive()
       {
-            $route = Url::route($this->url);
+            $route = Url::route($this->item->url);
             if($route) return App::router()->getCurrent()->matches($route);
             return false;
       }

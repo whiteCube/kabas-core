@@ -116,6 +116,7 @@ class App extends Container
       public function react()
       {
             $this->router->init();
+            $this->content->parse();
             $this->page = $this->router->getCurrent()->page;
             $this->response->init($this->page);
             $this->session->write();

@@ -1,27 +1,24 @@
 {
       "item": {
             "label": {
-                  "type": "text",
-                  "label": "Link text",
-                  "description": "",
-                  "default": ""
+                  "label": "Link text"
             },
             "icon": {
                   "type": "select",
                   "label": "Link icon",
-                  "description": "",
-                  "default": ""
+                  "options": {
+                        "prev": "Previous",
+                        "next": "Next",
+                        "kabas": "Default"
+                  }
             },
             "target": {
-                  "type": "link",
-                  "label": "Link target",
-                  "description": "",
-                  "default": ""
+                  "type": "url",
+                  "label": "Link target"
             }
       },
       "fields": {
             "title": {
-                  "type": "text",
                   "label": "Title",
                   "default": "Navigation"
             },

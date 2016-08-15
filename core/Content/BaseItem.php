@@ -35,7 +35,8 @@ class BaseItem
             $this->setData($data);
       }
 
-      public function __set($key, $value){
+      public function __set($key, $value)
+      {
             if(isset($this->fields->$key)){
                   if(is_subclass_of($value, Field::class)) $this->fields->$key = $value;
                   else $this->fields->$key->set($value);
@@ -44,6 +45,21 @@ class BaseItem
                   if(!$this->data) $this->data = new \stdClass();
                   $this->data->$key = $value;
             }
+      }
+
+      public function __get($key)
+      {
+            if(isset($this->fields->$key)) return $this->fields->$key;
+            elseif(isset($this->data->$key)) return $this->data->$key;
+            return null;
+      }
+
+      public function __call($name, $args)
+      {
+            if(is_object($this->controller)){
+                  return call_user_func_array([$this->controller, $name], $args);
+            }
+            return false;
       }
 
       public function set($data)
@@ -60,6 +76,13 @@ class BaseItem
             $this->controller = App::getInstance()->make($this->controller, [$this]);
       }
 
+      public function parse()
+      {
+            foreach ($this->fields as $field) {
+                  $field->set($field->getValue());
+            }
+      }
+
       protected function setData($data)
       {
             return null;
@@ -69,21 +92,29 @@ class BaseItem
       {
             $this->loadStructure();
             $fields = null;
-
-            if(is_object($obj)) $data = clone($obj);
-            else $data = new \stdClass();
-            if(isset($this->structure->fields)){
-                  $fields = new \stdClass();
-                  foreach ($this->structure->fields as $key => $field) {
-                        $value = null;
-                        if(isset($data->$key)){
-                              $value = $data->$key;
-                              unset($data->$key);
-                        }
-                        $fields->$key = App::fields()->make($key, $field, $value);
-                  }
-            }
+            $data = $this->getFieldObject($obj);
+            if(isset($this->structure->fields)) $fields = $this->getItemFields($data, $this->structure->fields);
             $this->set($data);
+            return $fields;
+      }
+
+      protected function getFieldObject($o)
+      {
+            if(is_object($o)) return clone($o);
+            return new \stdClass();
+      }
+
+      protected function getItemFields(&$data, $structure)
+      {
+            $fields = new \stdClass();
+            foreach ($structure as $key => $field) {
+                  $value = null;
+                  if(isset($data->$key)){
+                        $value = $data->$key;
+                        unset($data->$key);
+                  }
+                  $fields->$key = App::fields()->make($key, $field, $value);
+            }
             return $fields;
       }
 

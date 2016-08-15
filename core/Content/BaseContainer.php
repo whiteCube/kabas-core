@@ -44,6 +44,17 @@ class BaseContainer
       }
 
       /**
+       * Parses all item's fields
+       * @return void
+       */
+      public function parse()
+      {
+            foreach ($this->items as $item) {
+                  $item->parse();
+            }
+      }
+
+      /**
        * Returns path to content files
        * @return string
        */

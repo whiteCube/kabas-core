@@ -32,7 +32,7 @@ class View extends Response
             $a = [];
             $this->addVarsObject($a, $this->item->fields);
             $this->addVarsObject($a, $this->item->data);
-            if(get_class($this->item) == 'Kabas\Content\Menus\Item'){
+            if(is_a($this->item, \Kabas\Content\Menus\Item::class)) {
                   $a['items'] = $this->item->items;
             }
             return $a;
