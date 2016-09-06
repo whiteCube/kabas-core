@@ -48,9 +48,9 @@ class Commander
             switch($this->command){
                   case 'help': $this->help(); break;
                   case 'make:theme': $this->makeTheme(); break;
-                  case 'make:page': $this->makePage(); break;
-                  case 'make:part': $this->makePart(); break;
-                  case 'make:menu': $this->makeMenu(); break;
+                  case 'make:template': $this->makeThemeContentFile('template', 'contact'); break;
+                  case 'make:partial': $this->makeThemeContentFile('partial', 'sidebar'); break;
+                  case 'make:menu': $this->makeThemeContentFile('menu', 'main'); break;
                   case 'make:model': $this->makeModel(); break;
                   case 'content:page': $this->makePageContent(); break;
                   case 'content:part': $this->makePartContent(); break;
@@ -103,55 +103,19 @@ class Commander
       }
 
       /**
-       * Make the complete structure for a new page.
+       * Generates the files for a new theme content-type.
+       * @param  string $type
+       * @param  string $example
        * @return void
        */
-      public function makePage()
+      public function makeThemeContentFile($type, $example)
       {
-            $page = $this->arguments[0];
-            if(!$page) die("\n\033[31mKabas: Missing argument 1 for make:page\nPlease specify the name of your page (e.g. php kabas make:page contact)\n");
-            $path = THEME_PAGES . DS . $page;
-            echo "Kabas: Making page " . $page;
-            mkdir($path);
-            $this->makeControllerFile($path, $page, 'Pages', '\Kabas\Controller\BaseController', 'BaseController');
-            $this->makeTemplateFile($path, $page);
-            $this->makeConfigFile($path, $page);
-            echo "\nWriting files to: " . $path;
-            echo "\n\033[32mDone!";
-      }
-
-      /**
-       * Make the complete structure for a new part.
-       * @return void
-       */
-      public function makePart()
-      {
-            $part = $this->arguments[0];
-            if(!$part)  die("\n\033[31mKabas: Missing argument 1 for make:part\nPlease specify the name of your part (e.g. php kabas make:part sidebar)\n");
-            $path = THEME_PARTS . DS . $part;
-            echo "Kabas: Making part " . $part;
-            mkdir($path);
-            $this->makeControllerFile($path, $part, 'Parts', '\Kabas\Controller\BaseController', 'BaseController');
-            $this->makeTemplateFile($path, $part);
-            $this->makeConfigFile($path, $part);
-            echo "\nWriting files to: " . $path;
-            echo "\n\033[32mDone!";
-      }
-
-      /**
-       * Make the complete structure for a new menu.
-       * @return void
-       */
-      public function makeMenu()
-      {
-            $menu = $this->arguments[0];
-            if(!$menu) die("\n\033[31mKabas: Missing argument 1 for make:menu\nPlease specify the name of your menu (e.g. php kabas make:menu main)\n");
-            $path = THEME_MENUS . DS . $menu;
-            echo "Kabas: Making menu " . $menu;
-            mkdir($path);
-            $this->makeControllerFile($path, $menu, 'Menus', 'Kabas\Controller\MenuController', 'MenuController');
-            $this->makeTemplateFile($path, $menu);
-            echo "\nWriting files to: " . $path;
+            $name = $this->arguments[0];
+            if(!$name) die("\n\033[31mKabas: Missing argument 1 for " . $this->command . "\nPlease specify the name of your " . $type . " (e.g. php kabas " . $this->command . " " . $example . ")\n");
+            echo "Kabas: Making " . $type . " " . $name;
+            $this->makeControllerFile($name, $type);
+            $this->makeViewFile($name, $type);
+            $this->makeStructureFile($name, $type);
             echo "\n\033[32mDone!";
       }
 
@@ -170,7 +134,7 @@ class Commander
             echo "Kabas: Making model " . $model;
             mkdir($path);
             $this->makeModelFile($model, $driver, $path);
-            $this->makeConfigFile($path, $model);
+            $this->makeStructureFile($path, $model);
             echo "\nWriting files to: " . $path;
             echo "\n\033[32mDone!";
       }
@@ -184,6 +148,7 @@ class Commander
        */
       public function makeModelFile($model, $driver, $path)
       {
+            if(!realpath($path)) mkdir($path);
             $file = $path . DS . $model . '.class.php';
             $fileContent = File::read(TEMPLATES . 'Model.php');
             $fileContent = str_replace('TOREPLACEtheme', $this->theme, $fileContent);
@@ -195,47 +160,50 @@ class Commander
 
       /**
        * Create a new controller file.
-       * @param  string $path
-       * @param  string $template
+       * @param  string $name
        * @param  string $type
-       * @param  string $use
-       * @param  strin $extends
        * @return void
        */
-      public function makeControllerFile($path, $template, $type, $use, $extends)
+      public function makeControllerFile($name, $type)
       {
-            $file = $path . DS . $template . '.class.php';
+            $file = $this->dir(THEME_CONTROLLERS . DS . $type) . DS . ucfirst($name) . '.php';
             $fileContent = File::read(TEMPLATES . 'Controller.php');
-            $fileContent = str_replace('TOREPLACEtheme', $this->theme, $fileContent);
-            $fileContent = str_replace('TOREPLACEtype', $type, $fileContent);
-            $fileContent = str_replace('TOREPLACEuse', $use, $fileContent);
-            $fileContent = str_replace('TOREPLACEextends', $extends, $fileContent);
-            $fileContent = str_replace('TOREPLACEtemplate', Text::toNamespace($template), $fileContent);
+            $fileContent = str_replace('##THEME##', $this->theme, $fileContent);
+            $fileContent = str_replace('##TYPE##', ucfirst($type . 's'), $fileContent);
+            $fileContent = str_replace('##TYPECONTROLLER##', Text::toNamespace($type . 'Controller'), $fileContent);
+            $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
             File::write($fileContent, $file);
       }
 
       /**
-       * Create a new template file.
-       * @param  string $path
-       * @param  string $template
+       * Create a new view file.
+       * @param  string $name
+       * @param  string $type
        * @return void
        */
-      public function makeTemplateFile($path, $template)
+      public function makeViewFile($name, $type)
       {
-            $file = $path . DS . $template . '.php';
+            $file = $this->dir(THEME_VIEWS . DS . $type) . DS . $name . '.php';
             File::write('', $file);
       }
 
       /**
-       * Create a new configuration file.
-       * @param  string $path
-       * @param  string $template
+       * Create a new structure file.
+       * @param  string $name
+       * @param  string $type
        * @return void
        */
-      public function makeConfigFile($path, $template)
+      public function makeStructureFile($name, $type)
       {
-            $file = $path . DS . $template;
-            File::writeJson(["fields" => new \stdClass], $file);
+            $file = $this->dir(THEME_STRUCTURES . DS . $type) . DS . $name;
+            $structure = ["fields" => new \stdClass];
+            if($this->command == 'make:menu'){
+                  $structure = [
+                        "item" => ["label" => ["type" => "text", "label" => "Name"], "target" => ["type" => "url", "label" => "Target page"]],
+                        "fields" => new \stdClass
+                  ];
+            }
+            File::writeJson($structure, $file);
       }
 
       /**
@@ -416,6 +384,11 @@ class Commander
             }
 
             return $field;
+      }
+
+      protected function dir($path){
+            if(!realpath($path)) mkdir($path, 0755, true);
+            return realpath($path);
       }
 
 }

@@ -1,13 +1,17 @@
 <?php
 
-namespace Theme\TOREPLACEtheme\TOREPLACEtype;
+namespace Theme\##THEME##\##TYPE##;
 
-use TOREPLACEuse;
+use Kabas\Controller\##TYPECONTROLLER##;
 
-class TOREPLACEtemplate extends TOREPLACEextends
+class ##NAME## extends ##TYPECONTROLLER##
 {
-    protected function setup()
-    {
+      /**
+       * Handles controller tasks
+       * @return void
+       */
+      protected function setup()
+      {
 
-    }
+      }
 }
