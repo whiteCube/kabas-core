@@ -19,7 +19,9 @@ class Repeater extends Repeatable
             $a = [];
             $class = App::fields()->getClass('group');
             foreach ($value as $i => $item) {
-                  $a[] = App::getInstance()->make($class, [$this->getMultiFieldname($i), $item, $this]);
+                  $field = App::getInstance()->make($class, [$this->getMultiFieldname($i), $item, $this]);
+                  $field->set($field->getValue());
+                  $a[] = $field;
             }
             return $a;
       }

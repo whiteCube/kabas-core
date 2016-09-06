@@ -36,7 +36,9 @@ class FlexibleContent extends Repeatable
             $a = [];
             foreach ($value as $i => $item) {
                   if($option = $this->findOption($item->option)){
-                        $a[] = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
+                        $field = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
+                        $field->set($field->getValue());
+                        $a[] = $field;
                   }
             }
             return $a;
