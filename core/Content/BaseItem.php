@@ -73,6 +73,7 @@ class BaseItem
 
       public function make()
       {
+            if(!is_string($this->controller)) $this->controller = get_class($this->controller);
             $this->controller = App::getInstance()->make($this->controller, [$this]);
       }
 
