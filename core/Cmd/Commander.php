@@ -7,6 +7,11 @@ use Kabas\Utils\Text;
 
 class Commander
 {
+      protected $command;
+      protected $arguments;
+      protected $config;
+      protected $theme;
+
       public function __construct($args)
       {
             $this->command = array_shift($args);
@@ -26,9 +31,9 @@ class Commander
             define('DS', DIRECTORY_SEPARATOR);
             define('TEMPLATES', 'core' . DS . 'Cmd' . DS . 'Templates' . DS);
             define('THEME_PATH', 'themes' . DS . $this->theme . DS);
-            define('THEME_PAGES', THEME_PATH . 'pages');
-            define('THEME_PARTS', THEME_PATH . 'parts');
-            define('THEME_MENUS', THEME_PATH . 'menus');
+            define('THEME_STRUCTURES', THEME_PATH . 'structures');
+            define('THEME_VIEWS', THEME_PATH . 'views');
+            define('THEME_CONTROLLERS', THEME_PATH . 'controllers');
             define('THEME_MODELS', THEME_PATH . 'models');
       }
 
@@ -74,15 +79,23 @@ class Commander
             if(!$theme) die("\n\033[31mKabas: Missing argument 1 for make:theme\nPlease specify the name of your theme (e.g. php kabas make:theme Papavo)\n");
             echo "Kabas: Creating directory structure for your theme...";
             $themePath = 'themes' . DS . $theme;
+            $paths = [];
             $paths[] = $themePath;
-            $paths[] = $themePath . DS . 'pages';
-            $paths[] = $themePath . DS . 'parts';
-            $paths[] = $themePath . DS . 'menus';
-            $paths[] = $themePath . DS . 'assets';
-            $paths[] = $themePath . DS . 'assets' . DS . 'css';
-            $paths[] = $themePath . DS . 'assets' . DS . 'js';
-            $paths[] = $themePath . DS . 'assets' . DS . 'img';
             $paths[] = $themePath . DS . 'models';
+            $paths[] = $themePath . DS . 'controllers';
+            $paths[] = $themePath . DS . 'controllers' . DS . 'menus';
+            $paths[] = $themePath . DS . 'controllers' . DS . 'partials';
+            $paths[] = $themePath . DS . 'controllers' . DS . 'templates';
+            $paths[] = $themePath . DS . 'views';
+            $paths[] = $themePath . DS . 'views' . DS . 'menus';
+            $paths[] = $themePath . DS . 'views' . DS . 'partials';
+            $paths[] = $themePath . DS . 'views' . DS . 'templates';
+            $paths[] = $themePath . DS . 'structures';
+            $paths[] = $themePath . DS . 'structures' . DS . 'menus';
+            $paths[] = $themePath . DS . 'structures' . DS . 'models';
+            $paths[] = $themePath . DS . 'structures' . DS . 'partials';
+            $paths[] = $themePath . DS . 'structures' . DS . 'templates';
+            $paths[] = $themePath . DS . 'public';
             foreach($paths as $path) {
                   mkdir($path);
             }
