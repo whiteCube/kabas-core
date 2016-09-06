@@ -11,6 +11,7 @@ class Commander
       protected $arguments;
       protected $config;
       protected $theme;
+      protected $lang;
 
       public function __construct($args)
       {
@@ -18,15 +19,30 @@ class Commander
             $this->arguments = $args;
             $this->config = (require "config/site.php");
             $this->theme = $this->config['theme'];
+            $this->lang = $this->getAvailableLanguages();
             $this->setConstants();
             $this->executeCommand();
+      }
+
+      /**
+       * Retrieves array of all available language ISO codes
+       * @return array
+       */
+      protected function getAvailableLanguages()
+      {
+            $a = [];
+            foreach ($this->config['lang']['available'] as $key => $value) {
+                  if(is_numeric($key)) $a[] = $value;
+                  else $a[] = $key;
+            }
+            return $a;
       }
 
       /**
        * Set constants to use throughout commands.
        * @return void
        */
-      public function setConstants()
+      protected function setConstants()
       {
             define('DS', DIRECTORY_SEPARATOR);
             define('TEMPLATES', 'core' . DS . 'Cmd' . DS . 'Templates' . DS);
@@ -41,7 +57,7 @@ class Commander
        * Point the command to the right method.
        * @return void
        */
-      public function executeCommand()
+      protected function executeCommand()
       {
             if(!$this->command) return $this->help();
 
@@ -52,9 +68,9 @@ class Commander
                   case 'make:partial': $this->makeThemeContentFile('partial', 'sidebar'); break;
                   case 'make:menu': $this->makeThemeContentFile('menu', 'main'); break;
                   case 'make:model': $this->makeModel(); break;
-                  case 'content:page': $this->makePageContent(); break;
-                  case 'content:part': $this->makePartContent(); break;
-                  case 'content:menu': $this->makeMenuContent(); break;
+                  case 'content:page': $this->makeContent('page','templates'); break;
+                  case 'content:partial': $this->makeContent('partial','partials'); break;
+                  case 'content:menu': $this->makeContent('menu','menus'); break;
                   case 'content:model': $this->makeModelContent(); break;
                   default: echo "\n\033[31mKabas: Command '". $this->command ."' not found!\nUse \"php kabas help\" to view available commands.\n"; break;
             }
@@ -64,7 +80,7 @@ class Commander
        * Display help in the console.
        * @return void
        */
-      public function help()
+      protected function help()
       {
             require  TEMPLATES . 'Help.php';
       }
@@ -73,7 +89,7 @@ class Commander
        * Make the complete folder structure for a new theme.
        * @return void
        */
-      public function makeTheme()
+      protected function makeTheme()
       {
             $theme = $this->arguments[0];
             if(!$theme) die("\n\033[31mKabas: Missing argument 1 for make:theme\nPlease specify the name of your theme (e.g. php kabas make:theme Papavo)\n");
@@ -95,7 +111,7 @@ class Commander
             $paths[] = $themePath . DS . 'structures' . DS . 'models';
             $paths[] = $themePath . DS . 'structures' . DS . 'partials';
             $paths[] = $themePath . DS . 'structures' . DS . 'templates';
-            $paths[] = $themePath . DS . 'public';
+            $paths[] = $themePath . DS . 'protected';
             foreach($paths as $path) {
                   mkdir($path);
             }
@@ -108,7 +124,7 @@ class Commander
        * @param  string $example
        * @return void
        */
-      public function makeThemeContentFile($type, $example)
+      protected function makeThemeContentFile($type, $example)
       {
             $name = $this->arguments[0];
             if(!$name) die("\n\033[31mKabas: Missing argument 1 for " . $this->command . "\nPlease specify the name of your " . $type . " (e.g. php kabas " . $this->command . " " . $example . ")\n");
@@ -123,7 +139,7 @@ class Commander
        * Make the complete structure for a new model.
        * @return void
        */
-      public function makeModel()
+      protected function makeModel()
       {
             $model = $this->arguments[0];
             $driver = $this->arguments[1];
@@ -142,7 +158,7 @@ class Commander
        * @param  string $driver
        * @return void
        */
-      public function makeModelFile($name, $driver)
+      protected function makeModelFile($name, $driver)
       {
             $file = $this->dir(THEME_MODELS) . DS . ucfirst($name) . '.php';
             $fileContent = File::read(TEMPLATES . 'Model.php');
@@ -159,7 +175,7 @@ class Commander
        * @param  string $type
        * @return void
        */
-      public function makeControllerFile($name, $type)
+      protected function makeControllerFile($name, $type)
       {
             $file = $this->dir(THEME_CONTROLLERS . DS . $type . 's') . DS . ucfirst($name) . '.php';
             $fileContent = File::read(TEMPLATES . 'Controller.php');
@@ -176,7 +192,7 @@ class Commander
        * @param  string $type
        * @return void
        */
-      public function makeViewFile($name, $type)
+      protected function makeViewFile($name, $type)
       {
             $file = $this->dir(THEME_VIEWS . DS . $type . 's') . DS . $name . '.php';
             File::write('', $file);
@@ -188,7 +204,7 @@ class Commander
        * @param  string $type
        * @return void
        */
-      public function makeStructureFile($name, $type)
+      protected function makeStructureFile($name, $type)
       {
             $file = $this->dir(THEME_STRUCTURES . DS . $type . 's') . DS . $name;
             $structure = ["fields" => new \stdClass];
@@ -201,32 +217,7 @@ class Commander
             File::writeJson($structure, $file);
       }
 
-      /**
-       * Make a content file.
-       * @param  string $path
-       * @param  string $template
-       * @param  string $type
-       * @param  object $fields
-       * @return void
-       */
-      public function makeContentFile($path, $template, $type, $fields = null)
-      {
-            $file = $path . DS . $template;
-            if(!$fields) $fields = new \stdClass;
-
-            $fileContents = [];
-            if($type === 'pages') $fileContents['route'] = '';
-            $fileContents['id'] = $template;
-            $fileContents['template'] = $template;
-            if($type === 'pages') $fileContents['title'] = '';
-            if($type !== 'menus') $fileContents['data'] = $fields;
-            if($type === 'menus') $fileContents['links'] = new \stdClass;
-            $fileContents['options'] = new \stdClass;
-
-            File::writeJson($fileContents, $file);
-      }
-
-      public function makeObjectFile($path, $model, $fields)
+      protected function makeObjectFile($path, $model, $fields)
       {
             $path = $path . DS . $model;
             $files = scandir($path);
@@ -237,67 +228,28 @@ class Commander
             File::writeJson($fields, $file);
       }
 
+
       /**
-       * Make a content file for a page
+       * Make a content file for a content-type
+       * @param  string $type
+       * @param  string $structure
        * @return void
        */
-      public function makePageContent()
+      protected function makeContent($type, $structure)
       {
-            $page = array_shift($this->arguments);
-            $langs = $this->arguments;
-            $langs = $this->checkLangs($langs);
-            echo 'Kabas: making content for page ' . $page;
-            foreach($langs as $lang) {
-                  $path = 'content' . DS . $lang . DS . 'pages';
-                  $fields = $this->fetchFields('pages', $page);
-                  $this->makeContentFile($path, $page, 'pages', $fields);
-                  echo "\nWriting files to: " . $path;
+            $name = array_shift($this->arguments);
+            echo 'Kabas: making content for ' . $type . ' ' . $name;
+            foreach($this->checkLangs($this->arguments) as $lang) {
+                  $fields = $this->fetchFields($structure, $name);
+                  $this->generateContentFile($name, $type . 's', $lang, $fields);
             }
             echo "\n\033[32mDone!";
       }
 
-      /**
-       * Make a content file for a part.
-       * @return void
-       */
-      public function makePartContent()
-      {
-            $part = array_shift($this->arguments);
-            $langs = $this->arguments;
-            $langs = $this->checkLangs($langs);
-            echo 'Kabas: making content for part ' . $part;
-            foreach($langs as $lang) {
-                  $path = 'content' . DS . $lang . DS . 'parts';
-                  $fields = $this->fetchFields('parts', $part);
-                  $this->makeContentFile($path, $part, 'parts', $fields);
-                  echo "\nWriting files to: " . $path;
-            }
-            echo "\n\033[32mDone!";
-      }
-
-      /**
-       * Make a content file for a menu.
-       * @return void
-       */
-      public function makeMenuContent()
-      {
-            $menu = array_shift($this->arguments);
-            $langs = $this->arguments;
-            $langs = $this->checkLangs($langs);
-            echo 'Kabas: making content for menu ' . $menu;
-            foreach($langs as $lang) {
-                  $path = 'content' . DS . $lang . DS . 'menus';
-                  $this->makeContentFile($path, $menu, 'menus');
-                  echo "\nWriting files to: " . $path;
-            }
-            echo "\n\033[32mDone!";
-      }
-
-      public function makeModelContent()
+      protected function makeModelContent()
       {
             $model = array_shift($this->arguments);
-            $langs = $this->arguments;
-            $langs = $this->checkLangs($langs);
+            $langs = $this->checkLangs($this->arguments);
             echo 'Kabas: making content for model ' . $model;
             foreach($langs as $lang) {
                   $path = 'content' . DS . $lang . DS . 'objects';
@@ -310,17 +262,43 @@ class Commander
       }
 
       /**
+       * Make a content file.
+       * @param  string $name
+       * @param  string $type
+       * @param  string $lang
+       * @param  object $fields
+       * @return void
+       */
+      protected function generateContentFile($name, $type, $lang, $fields = null)
+      {
+            $file = $this->dir('content' . DS . $lang . DS . $type) . DS . $name;
+            if(!$fields) $fields = new \stdClass;
+            $content = [];
+            if($type == 'pages'){
+                  $content['route'] = '';
+                  $content['title'] = '';
+            }
+            $content['id'] = $name;
+            $content['template'] = $name;
+            $content['data'] = $fields;
+            if($type == 'menus'){
+                  $content['items'] = [];
+            }
+            echo "\nWriting file to " . $file;
+            File::writeJson($content, $file);
+      }
+
+      /**
        * Checks that specified langs exist in application.
        * @param  array $langs
        * @return array
        */
-      public function checkLangs($langs)
+      protected function checkLangs($langs)
       {
-            $availableLangs = $this->config['lang']['available'];
-            if(!$langs) return $availableLangs;
+            if(!$langs) return $this->lang;
             else {
                   foreach($langs as $lang) {
-                        if(!in_array($lang, $availableLangs)){
+                        if(!in_array($lang, $this->lang)){
                               die("\n\033[31mKabas: Lang $lang does not currently exist. Please create the appropriate content subfolder.\n");
                         }
                   }
@@ -329,56 +307,74 @@ class Commander
       }
 
       /**
-       * Get the field descriptions of the specified template.
+       * Get the field descriptions of the specified content-type.
        * @param  string $type
-       * @param  string $template
+       * @param  string $name
        * @return array
        */
-      public function fetchFields($type, $template)
+      protected function fetchFields($type, $name)
       {
-            $path = THEME_PATH . DS . $type . DS . $template . DS . $template . '.json';
+            $path = THEME_STRUCTURES . DS . $type . DS . $name . '.json';
             $config = File::loadJson($path);
-            foreach($config->fields as $key => $field){
-                  $fields[$key] = $this->formatFieldContent($field);
+            $fields = [];
+            if(is_object($config) && isset($config->fields)){
+                  foreach($config->fields as $key => $field){
+                        $fields[$key] = $this->formatFieldContent($key, $field);
+                  }
             }
             return $fields;
       }
 
       /**
        * Format the field so it can be filled with content later.
+       * @param  string $key
        * @param  object $field
        * @return mixed
        */
-      public function formatFieldContent($field)
+      protected function formatFieldContent($key, $field)
       {
             switch($field->type){
-                  case 'image':
-                        $field = new \stdClass;
-                        $field->src = '';
-                        $field->alt = '';
-                        break;
-                  case 'url':
-                        $field = new \stdClass;
-                        $field->href = '';
-                        $field->label = '';
-                        $field->title = '';
-                        break;
+                  case 'image': return $this->getImageFieldContent($key, $field); break;
+                  case 'number': return $this->getNumberFieldContent($key, $field); break;
                   case 'checkbox':
                   case 'radio':
-                  case 'select':
-                        $field = [];
-                        $field[0] = new \stdClass;
-                        $field[0]->id = '';
-                        $field[0]->label = '';
-                        $field[0]->selected = false;
-                        break;
-                  case 'number':
-                        $field = 0;
-                        break;
-                  default: $field = '';
+                  case 'select': return $this->getSelectableFieldContent($key, $field); break;
             }
+            if(@$field->default !== null) return $field->default;
+            return '';
+      }
 
-            return $field;
+      protected function getImageFieldContent($key, $field)
+      {
+            $o = new \stdClass();
+            $o->path = '';
+            $o->alt = '';
+            if(isset($field->default)){
+                  if(is_object($field->default) && isset($field->default->path) && isset($field->default->alt)){
+                        $o->path = is_string($field->default->path) ? $field->default->path : 'default-invalid-path';
+                        $o->alt = is_string($field->default->alt) ? $field->default->alt : 'default-invalid-alt';
+                  }
+                  else die("\n\033[31mKabas: default value for image field \"$key\" is invalid.\n");
+            }
+            return $o;
+      }
+
+      protected function getNumberFieldContent($key, $field)
+      {
+            if(@$field->default !== null){
+                  if(is_numeric($field->default)) return $field->default;
+                  else die("\n\033[31mKabas: default value for number field \"$key\" is invalid.\n");
+            }
+            return 0;
+      }
+
+      protected function getSelectableFieldContent($key, $field)
+      {
+            if(@$field->default !== null){
+                  if(is_array($field->default)) return $field->default;
+                  else die("\n\033[31mKabas: default value for " . $field->type . " field \"$key\" is invalid.\n");
+            }
+            return [];
       }
 
       protected function dir($path){
