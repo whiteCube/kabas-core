@@ -19,7 +19,7 @@ class Url extends Item
        */
       public function condition()
       {
-            return filter_var($this->output, FILTER_VALIDATE_URL);
+            return is_string($this->value);
       }
 
       /**
@@ -71,7 +71,10 @@ class Url extends Item
                   $this->target = $page;
                   return UrlUtil::to($page->id);
             }
-            return trim($value, '/');
+            elseif(filter_var($value, FILTER_VALIDATE_URL)){
+                  return trim($value, '/');
+            }
+            return '';
       }
 
       /**
