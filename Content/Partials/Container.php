@@ -25,7 +25,7 @@ class Container extends BaseContainer
             if(!$item) {
                   try {
                         $item = $this->loadItem($part);
-                        $this->items[$part] = $item;
+                        $this->items[$part] = $this->makeItem($item);
                   }
                   catch (NotFoundException $e) {
                         echo $e->getMessage();

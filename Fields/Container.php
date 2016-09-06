@@ -32,7 +32,7 @@ class Container
       public function make($name, $structure, $value = null)
       {
             $type = isset($structure->type) ? $structure->type : 'text';
-            try { 
+            try {
                   $type = $this->getClass($type);
             }
             catch (\Kabas\Exceptions\TypeException $e) {
@@ -80,6 +80,11 @@ class Container
             $type->name = strtolower(basename($file, '.php'));
             $type->class = '\\Kabas\\Fields\\Types\\' . Text::toNamespace($type->name);
             return $type;
+      }
+
+      public function getSupported()
+      {
+            return $this->supported;
       }
 
 }

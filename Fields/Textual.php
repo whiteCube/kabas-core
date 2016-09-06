@@ -85,4 +85,9 @@ class Textual extends Item
             $this->output = $string;
             return $this;
       }
+
+      public function exceeds($length)
+      {
+            return mb_strlen(strip_tags($this->output)) > $length;
+      }
 }
