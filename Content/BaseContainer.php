@@ -34,7 +34,7 @@ class BaseContainer
 
       /**
        * Get item if it exists
-       * @param  string $part
+       * @param  string $id
        * @return object
        */
       public function get($id)

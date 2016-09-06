@@ -8,6 +8,8 @@ class Container
       public $partials;
       public $menus;
 
+      protected static $parsed = false;
+
       public function __construct(Pages\Container $pages, Partials\Container $partials, Menus\Container $menus)
       {
             $this->pages = $pages;
@@ -20,5 +22,16 @@ class Container
             foreach ($this as $key => $container) {
                   $container->parse();
             }
+            self::setParsed(true);
+      }
+
+      public static function isParsed()
+      {
+            return self::$parsed;
+      }
+
+      public static function setParsed($value)
+      {
+            self::$parsed = $value;
       }
 }

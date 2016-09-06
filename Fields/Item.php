@@ -2,6 +2,8 @@
 
 namespace Kabas\Fields;
 
+use Kabas\Content\Container as Content;
+
 class Item
 {
       protected $type;
@@ -29,7 +31,8 @@ class Item
       {
             $this->name = $name;
             $this->implement($structure);
-            $this->value = $value;
+            if(Content::isParsed()) $this->set($value);
+            else $this->value = $value;
       }
 
       public function __toString()
