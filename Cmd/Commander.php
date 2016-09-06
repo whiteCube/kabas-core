@@ -71,7 +71,7 @@ class Commander
                   case 'content:page': $this->makeContent('page','templates'); break;
                   case 'content:partial': $this->makeContent('partial','partials'); break;
                   case 'content:menu': $this->makeContent('menu','menus'); break;
-                  case 'content:model': $this->makeModelContent(); break;
+                  case 'content:object': $this->makeContent('object','models'); break;
                   default: echo "\n\033[31mKabas: Command '". $this->command ."' not found!\nUse \"php kabas help\" to view available commands.\n"; break;
             }
       }
@@ -217,18 +217,6 @@ class Commander
             File::writeJson($structure, $file);
       }
 
-      protected function makeObjectFile($path, $model, $fields)
-      {
-            $path = $path . DS . $model;
-            $files = scandir($path);
-            $lastIndex = count($files) - 1;
-            $lastId = intval(pathinfo($files[$lastIndex], PATHINFO_FILENAME));
-            $id = ++$lastId;
-            $file = $path . DS . $id;
-            File::writeJson($fields, $file);
-      }
-
-
       /**
        * Make a content file for a content-type
        * @param  string $type
@@ -241,22 +229,8 @@ class Commander
             echo 'Kabas: making content for ' . $type . ' ' . $name;
             foreach($this->checkLangs($this->arguments) as $lang) {
                   $fields = $this->fetchFields($structure, $name);
-                  $this->generateContentFile($name, $type . 's', $lang, $fields);
-            }
-            echo "\n\033[32mDone!";
-      }
-
-      protected function makeModelContent()
-      {
-            $model = array_shift($this->arguments);
-            $langs = $this->checkLangs($this->arguments);
-            echo 'Kabas: making content for model ' . $model;
-            foreach($langs as $lang) {
-                  $path = 'content' . DS . $lang . DS . 'objects';
-                  mkdir($path . DS . $model, 0777, true);
-                  $fields = $this->fetchFields('models', $model);
-                  $this->makeObjectFile($path, $model, $fields);
-                  echo "\nWriting files to: " . $path;
+                  if($type == 'object') $this->generateObjectFile($name, $lang, $fields);
+                  else $this->generateContentFile($name, $type . 's', $lang, $fields);
             }
             echo "\n\033[32mDone!";
       }
@@ -286,6 +260,16 @@ class Commander
             }
             echo "\nWriting file to " . $file;
             File::writeJson($content, $file);
+      }
+
+
+      protected function generateObjectFile($model, $lang, $fields)
+      {
+            $path = $this->dir('content' . DS . $lang . DS . 'objects' . DS . $model);
+            $files = scandir($path);
+            $id = intval(pathinfo($files[count($files) - 1], PATHINFO_FILENAME));
+            $file = $path . DS . (++$id);
+            File::writeJson($fields, $file);
       }
 
       /**
@@ -322,7 +306,8 @@ class Commander
                         $fields[$key] = $this->formatFieldContent($key, $field);
                   }
             }
-            return $fields;
+            if(count($fields)) return $fields;
+            return new \stdClass;
       }
 
       /**
