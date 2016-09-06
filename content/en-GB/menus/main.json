@@ -1,0 +1,11 @@
+{
+      "id": "main",
+      "template": "main",
+      "items": [
+            {
+                  "label": "Go to documentation",
+                  "icon": "kabas",
+                  "target": "https://whitecube.gitbooks.io/kabas-documentation/content/"
+            }
+      ]
+}

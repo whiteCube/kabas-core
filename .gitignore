@@ -9,9 +9,6 @@
 # Ignore autoload
 /core/_bootstrap/Bootstrap/autoload-build.php
 
-# Ignore content
-/content/*
-
 # Ignore things
 composer.lock
 .DS_Store

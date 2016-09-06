@@ -1,0 +1,10 @@
+{
+      "route": "/",
+      "id": "homepage",
+      "template": "home",
+      "title": "Welcome to Kabas",
+      "data": {
+            "title": "Hi there!",
+            "text": "If you're reading this, it means your Kabas installation is working properly. Congrats!\r\n\r\nTake a look at the documentation for more information."
+      }
+}
