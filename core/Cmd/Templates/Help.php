@@ -14,13 +14,13 @@ echo "
 
       Available commands:
 
-      \033[32mmake:theme \033[0m\$theme                   # Create directory structure for a theme.
-      \033[32mmake:page \033[0m\$page                     # Create page structure in the active theme.
-      \033[32mmake:part \033[0m\$part                     # Create part structure in the active theme.
-      \033[32mmake:menu \033[0m\$menu                     # Create menu structure in the active theme.
-      \033[32mmake:model \033[0m\$model \$driver           # Create model structure in the active theme, with driver 'eloquent' or 'json'.
-      \033[32mcontent:page \033[0m\$page ...\$langs        # Create content file for your page, langs are optional (defaults to all).
-      \033[32mcontent:part \033[0m\$part ...\$langs        # Create content file for your part, langs are optional (defaults to all).
-      \033[32mcontent:menu \033[0m\$menu ...\$langs        # Create content file for your menu, langs are optional (defaults to all).
-      \033[32mcontent:model \033[0m\$model ...\$langs      # Create content file for your model, langs are optional (defaults to all).
+      make:theme \$name                         # Creates a complete all directories for a theme.
+      make:template \$name                      # Creates a template's structure, controller and view files in the active theme.
+      make:partial \$name                       # Creates a partial's structure, controller and view files in the active theme.
+      make:menu \$name                          # Creates a menu's structure, controller and view files in the active theme.
+      make:model \$name \$driver                # Creates a new model (structure & class) in the active theme, with driver 'eloquent' or 'json'.
+      content:page \$id ...\$langs              # Generates a content page, langs are optional (defaults to all).
+      content:partial \$id ...\$langs           # Generates a content partial, langs are optional (defaults to all).
+      content:menu \$id ...\$langs              # Generates a content menu, langs are optional (defaults to all).
+      content:object \$model ...\$langs         # Generates an object file for the given model, langs are optional (defaults to all), id is automatically generated. This command is only useful if the given model uses the JSON driver.
 ";
