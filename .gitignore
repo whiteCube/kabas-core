@@ -6,6 +6,9 @@
 # Ignore vendor files
 /vendor/*
 
+# Ignore config
+/config/*
+
 # Ignore autoload
 /core/_bootstrap/Bootstrap/autoload-build.php
 
