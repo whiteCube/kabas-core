@@ -19,10 +19,10 @@ class Container
 
       public function parse()
       {
+            self::setParsed(true);
             foreach ($this as $key => $container) {
                   $container->parse();
             }
-            self::setParsed(true);
       }
 
       public static function isParsed()
