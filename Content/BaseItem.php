@@ -78,8 +78,10 @@ class BaseItem
 
       public function parse()
       {
-            foreach ($this->fields as $field) {
-                  $field->set($field->getValue());
+            if($this->fields){
+                  foreach ($this->fields as $field) {
+                        $field->set($field->getValue());
+                  }
             }
       }
 
