@@ -130,31 +130,26 @@ class Commander
             if(!$model) die("\n\033[31mKabas: Missing argument 1 for make:model\nPlease specify the name of your model (e.g. php kabas make:model news eloquent)\n");
             if(!$driver) die("\n\033[31mKabas: Missing argument 2 for make:model\nPlease specify the driver of your model (e.g. php kabas make:model news eloquent)\n");
             if($driver !== 'eloquent' && $driver !== 'json') die("\n\033[31mKabas: Please specify a valid driver to use with your model. ('eloquent' or 'json')\n");
-            $path = THEME_MODELS . DS . $model;
             echo "Kabas: Making model " . $model;
-            mkdir($path);
-            $this->makeModelFile($model, $driver, $path);
-            $this->makeStructureFile($path, $model);
-            echo "\nWriting files to: " . $path;
+            $this->makeModelFile($model, $driver);
+            $this->makeStructureFile($model, 'model');
             echo "\n\033[32mDone!";
       }
 
       /**
        * Create a new model file.
-       * @param  string $model
+       * @param  string $name
        * @param  string $driver
-       * @param  string $path
        * @return void
        */
-      public function makeModelFile($model, $driver, $path)
+      public function makeModelFile($name, $driver)
       {
-            if(!realpath($path)) mkdir($path);
-            $file = $path . DS . $model . '.class.php';
+            $file = $this->dir(THEME_MODELS) . DS . ucfirst($name) . '.php';
             $fileContent = File::read(TEMPLATES . 'Model.php');
-            $fileContent = str_replace('TOREPLACEtheme', $this->theme, $fileContent);
-            $fileContent = str_replace('TOREPLACEdriver', $driver, $fileContent);
-            $fileContent = str_replace('TOREPLACEtable', $model, $fileContent);
-            $fileContent = str_replace('TOREPLACEmodel', Text::toNamespace($model), $fileContent);
+            $fileContent = str_replace('##THEME##', $this->theme, $fileContent);
+            $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
+            $fileContent = str_replace('##DRIVER##', $driver, $fileContent);
+            $fileContent = str_replace('##TABLE##', $name, $fileContent);
             File::write($fileContent, $file);
       }
 
@@ -166,7 +161,7 @@ class Commander
        */
       public function makeControllerFile($name, $type)
       {
-            $file = $this->dir(THEME_CONTROLLERS . DS . $type) . DS . ucfirst($name) . '.php';
+            $file = $this->dir(THEME_CONTROLLERS . DS . $type . 's') . DS . ucfirst($name) . '.php';
             $fileContent = File::read(TEMPLATES . 'Controller.php');
             $fileContent = str_replace('##THEME##', $this->theme, $fileContent);
             $fileContent = str_replace('##TYPE##', ucfirst($type . 's'), $fileContent);
@@ -183,7 +178,7 @@ class Commander
        */
       public function makeViewFile($name, $type)
       {
-            $file = $this->dir(THEME_VIEWS . DS . $type) . DS . $name . '.php';
+            $file = $this->dir(THEME_VIEWS . DS . $type . 's') . DS . $name . '.php';
             File::write('', $file);
       }
 
@@ -195,7 +190,7 @@ class Commander
        */
       public function makeStructureFile($name, $type)
       {
-            $file = $this->dir(THEME_STRUCTURES . DS . $type) . DS . $name;
+            $file = $this->dir(THEME_STRUCTURES . DS . $type . 's') . DS . $name;
             $structure = ["fields" => new \stdClass];
             if($this->command == 'make:menu'){
                   $structure = [

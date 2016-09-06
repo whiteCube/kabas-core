@@ -1,11 +1,11 @@
 <?php
 
-namespace Theme\TOREPLACEtheme\Models;
+namespace Theme\##THEME##\Models;
 
-use Kabas\Model\Model;
+use Kabas\Model\Model as BaseModel;
 
-class TOREPLACEmodel extends Model
+class ##NAME## extends BaseModel
 {
-      protected $driver = 'TOREPLACEdriver';
-      protected static $table = 'TOREPLACEtable';
+      protected $driver = '##DRIVER##';
+      protected static $table = '##TABLE##';
 }
