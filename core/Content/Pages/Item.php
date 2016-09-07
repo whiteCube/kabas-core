@@ -30,12 +30,12 @@ class Item extends BaseItem
 
       protected function getTemplateNamespace()
       {
-            return '\\Theme\\' . App::theme() .'\Pages\\' . parent::getTemplateNamespace();
+            return '\\Theme\\' . App::theme() .'\Templates\\' . parent::getTemplateNamespace();
       }
 
       protected function findControllerClass()
       {
             if($class = parent::findControllerClass()) return $class;
-            return \Kabas\Controller\PageController::class;
+            return \Kabas\Controller\TemplateController::class;
       }
 }

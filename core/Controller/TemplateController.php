@@ -2,7 +2,7 @@
 
 namespace Kabas\Controller;
 
-class PageController extends BaseController
+class TemplateController extends BaseController
 {
       protected $type = 'page';
 
