@@ -30,7 +30,7 @@ class Assets
             if(is_string($src)) self::pushToLocation($location, $src);
             else if(is_array($src)) {
                   foreach ($src as $item) {
-                        self::add($location, $item);
+                        self::add($item, $location);
                   }
             }
       }
