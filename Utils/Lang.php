@@ -53,4 +53,13 @@ class Lang
       {
             return App::router()->lang;
       }
+      
+     /**
+      * Get the current short language code
+      * @return string
+      */
+      static function short()
+      {
+            return substr(self::current(),0,2);
+      }
 }
