@@ -18,7 +18,7 @@ class Aggregate extends Item implements \IteratorAggregate
       protected function implement($structure)
       {
             parent::implement($structure);
-            $this->setOptions(@$structure->options);
+            if(!isset($this->reference)) $this->setOptions(@$structure->options);
       }
 
       /**

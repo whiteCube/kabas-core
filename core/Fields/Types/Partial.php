@@ -9,7 +9,7 @@ class Partial extends Groupable
 {
       protected $type = "partial";
 
-      protected $reference;
+      protected $reference = true;
 
       /**
        * includes referenced partial's view with its data
@@ -26,14 +26,35 @@ class Partial extends Groupable
       }
 
       /**
+       * Sets reference & other field data
+       * @return void
+       */
+      protected function implement($structure)
+      {
+            parent::implement($structure);
+            $this->reference = @$structure->option;
+      }
+
+      /**
+       * Loads partial, defines field's value and updates its output
+       * @param  mixed $value
+       * @return void
+       */
+      public function set($value)
+      {
+            if(is_string($this->reference)) $this->setOptions($this->reference);
+            parent::set($value);
+      }
+
+      /**
        * makes options from user defined list
-       * @param  string $options
+       * @param  string $part
        * @return array
        */
-      protected function makeOptions($options)
+      protected function makeOptions($part)
       {
             $a = [];
-            if($fields = $this->getPartFields($options)){
+            if($fields = $this->getPartFields($part)){
                   foreach($fields as $name => $field){
                         $a[$name] = $field;
                   }
@@ -54,6 +75,7 @@ class Partial extends Groupable
                   if(is_object($part->fields)) return $part->fields;
                   return [];
             }
+            $this->reference = false;
             return false;
       }
 
