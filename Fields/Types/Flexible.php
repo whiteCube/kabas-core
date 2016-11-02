@@ -5,9 +5,9 @@ namespace Kabas\Fields\Types;
 use \Kabas\App;
 use \Kabas\Fields\Repeatable;
 
-class FlexibleContent extends Repeatable
+class Flexible extends Repeatable
 {
-      protected $type = "flexiblecontent";
+      protected $type = "flexible";
 
       /**
        * makes options from user defined list
