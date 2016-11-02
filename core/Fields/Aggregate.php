@@ -4,7 +4,7 @@ namespace Kabas\Fields;
 
 use \Kabas\App;
 
-class Aggregate extends Item implements \IteratorAggregate
+class Aggregate extends Item implements \IteratorAggregate, \Countable 
 {
       public function __toString()
       {
@@ -48,5 +48,13 @@ class Aggregate extends Item implements \IteratorAggregate
       public function getIterator()
       {
             return new \ArrayIterator($this->output);
+      }
+
+      /**
+       * Make item countable
+       * @return int
+       */
+      public function count() {
+            return count($this->output);
       }
 }
