@@ -25,7 +25,7 @@ class Container extends BaseContainer
             try {
                   $item = $this->loadItem($part);
             }
-            catch (NotFoundException $e) {
+            catch (\Kabas\Exceptions\NotFoundException $e) {
                   echo $e->getMessage();
                   die();
             }
@@ -79,7 +79,7 @@ class Container extends BaseContainer
             $view = $this->getView($id);
             if($view) return $this->loadFromView($id, $view);
             // Not found.
-            throw new NotFoundException('partial', $id);
+            throw new \Kabas\Exceptions\NotFoundException($id,'partial');
       }
 
       protected function loadFromContent($file)
@@ -101,7 +101,7 @@ class Container extends BaseContainer
             }
             else{
                   $file->template = $this->getView($id) ? $id : null;
-                  if(!$file->template) throw new NotFoundException('partial', $id);
+                  if(!$file->template) throw new \Kabas\Exceptions\NotFoundException($id,'partial');
             }
             return $file;
       }

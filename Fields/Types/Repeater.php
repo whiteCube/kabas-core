@@ -17,9 +17,11 @@ class Repeater extends Repeatable
       protected function parse($value)
       {
             $a = [];
-            $class = App::fields()->getClass('group');
-            foreach ($value as $i => $item) {
-                  $a[] = App::getInstance()->make($class, [$this->getMultiFieldname($i), $item, $this]);
+            if(is_array($value)){
+                  $class = App::fields()->getClass('group');
+                  foreach ($value as $i => $item) {
+                        $a[] = App::getInstance()->make($class, [$this->getMultiFieldname($i), $item, $this]);
+                  }
             }
             return $a;
       }
