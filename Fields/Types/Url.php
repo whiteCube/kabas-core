@@ -72,8 +72,8 @@ class Url extends Item
                   $this->target = $page;
                   return UrlUtil::to($page->id) . (isset($value[1]) ? '#' . $value[1] : '');
             }
-            elseif(filter_var($value, FILTER_VALIDATE_URL)){
-                  return trim($value, '/');
+            elseif(filter_var($value[0], FILTER_VALIDATE_URL)){
+                  return trim($value[0], '/');
             }
             return '';
       }
