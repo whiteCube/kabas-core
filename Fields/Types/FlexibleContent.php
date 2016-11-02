@@ -34,10 +34,12 @@ class FlexibleContent extends Repeatable
       protected function parse($value)
       {
             $a = [];
-            foreach ($value as $i => $item) {
-                  if($option = $this->findOption($item->option)){
-                        $a[] = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
-                  }
+            if(is_array($value)){
+              foreach ($value as $i => $item) {
+                    if($option = $this->findOption($item->option)){
+                          $a[] = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
+                    }
+              }
             }
             return $a;
       }
