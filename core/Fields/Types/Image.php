@@ -21,6 +21,7 @@ class Image extends Item
 
       public function __call($name, $args)
       {
+            if(!$this->output) return false;
             return call_user_func_array([$this->output, $name], $args);
       }
 
@@ -31,6 +32,7 @@ class Image extends Item
        */
       protected function parse($value)
       {
+            if(!is_object($value)) return false;
             return App::getInstance()->make('\Kabas\Objects\Image\Item', [$value]);
       }
 
