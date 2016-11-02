@@ -67,9 +67,10 @@ class Url extends Item
        */
       protected function parse($value)
       {
-            if($page = $this->findTarget($value)){
+            $value = explode('#', $value);
+            if($page = $this->findTarget($value[0])){
                   $this->target = $page;
-                  return UrlUtil::to($page->id);
+                  return UrlUtil::to($page->id) . (isset($value[1]) ? '#' . $value[1] : '');
             }
             elseif(filter_var($value, FILTER_VALIDATE_URL)){
                   return trim($value, '/');
