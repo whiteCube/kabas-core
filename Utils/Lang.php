@@ -31,6 +31,21 @@ class Lang
       }
 
       /**
+      * Returns array to create a menu
+      * @return object
+      */
+      static function getMenu()
+      {
+            $langs = self::getAvailable();
+
+            foreach ($langs as $code => $o) {
+                  $o->url = Url::lang($o->alias);
+                  $o->isActive = $code == self::current();
+            }
+            return $langs;
+      }
+
+      /**
        * Returns URL alias for given lang code
        * @return string
        */
@@ -53,7 +68,7 @@ class Lang
       {
             return App::router()->lang;
       }
-      
+
      /**
       * Get the current short language code
       * @return string
