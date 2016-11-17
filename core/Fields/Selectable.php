@@ -115,11 +115,12 @@ class Selectable extends Item implements \IteratorAggregate
 
       /**
        * Checks if all values have existing options
-       * @return array
+       * @return boolean
        */
       public function condition()
       {
-            if($this->multiple){
+            if($this->multiple && !is_array($this->value)) return false;
+            if(is_array($this->value)) {
                   foreach ($this->value as $value) {
                         if(!$this->get($value)) return false;
                   }
@@ -127,6 +128,7 @@ class Selectable extends Item implements \IteratorAggregate
             elseif(!$this->get($this->value)) return false;
             return true;
       }
+
 
       /**
        * Sets options & other field data
