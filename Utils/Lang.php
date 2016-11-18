@@ -8,11 +8,11 @@ class Lang
 {
 
       /**
-       * Determines if string is an available lang
-       * Returns lang code string or false
-       * @param $lang
-       * @return string
-       */
+      * Determines if string is an available lang
+      * Returns lang code string or false
+      * @param $lang
+      * @return string
+      */
       static function is($lang)
       {
             foreach(App::config()->settings->site->lang->available as $code => $alias){
@@ -22,18 +22,42 @@ class Lang
       }
 
       /**
-       * Returns default lang code
-       * @return string
-       */
+      * Returns default lang code
+      * @return string
+      */
       static function getDefault()
       {
             return App::config()->settings->site->lang->default;
       }
 
       /**
-       * Returns URL alias for given lang code
-       * @return string
-       */
+      * Returns available langs
+      * @return object
+      */
+      static function getAvailable()
+      {
+            return App::config()->settings->site->lang->available;
+      }
+
+      /**
+      * Returns array to create a menu
+      * @return object
+      */
+      static function getMenu()
+      {
+            $langs = self::getAvailable();
+
+            foreach ($langs as $code => $o) {
+                  $o->url = Url::lang($o->alias);
+                  $o->isActive = $code == self::current();
+            }
+            return $langs;
+      }
+
+      /**
+      * Returns URL alias for given lang code
+      * @return string
+      */
       static function alias($lang)
       {
             $lang = self::is($lang);
@@ -46,15 +70,15 @@ class Lang
       }
 
       /**
-       * Get the current language code
-       * @return string
-       */
+      * Get the current language code
+      * @return string
+      */
       static function current()
       {
             return App::router()->lang;
       }
-      
-     /**
+
+      /**
       * Get the current short language code
       * @return string
       */

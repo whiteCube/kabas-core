@@ -31,7 +31,7 @@ class Url
        */
       static function lang($lang)
       {
-            return self::base() . '/' . $lang . App::router()->route;
+            return self::base() . '/' . $lang . App::router()->getRoute();
       }
 
       /**

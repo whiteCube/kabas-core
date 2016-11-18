@@ -55,6 +55,7 @@ class Assets
        */
       public static function load($page)
       {
+
             preg_match_all(self::getLocationPattern(), $page, $matches);
             foreach($matches[1] as $i => $location) {
                   $page = self::includeLocation($location, self::getLocationAssets($location), $matches[0][$i], $page);
@@ -100,7 +101,11 @@ class Assets
                         return '<link rel="stylesheet" type="text/css" href="' . $asset->src . '" />';
                         break;
                   case 'js':
-                        return '<script type="text/javascript" src="' . $asset->src . '"></script>';
+                        $tag = '<script type="text/javascript"';
+                        foreach ($asset->attr as $attr) {
+                              $tag .= ' ' . $attr;
+                        }
+                        return $tag .= ' src="' . $asset->src . '"></script>';
                         break;
                   default:
                         return '<link rel="icon" href="' . $asset->src . '" />';
@@ -109,13 +114,33 @@ class Assets
       }
 
       /**
-       * returns the asset's extension
-       * @param  string $path
-       * @return string
+       * returns the asset's base information
+       * @param  string $src
+       * @return object
        */
-      protected static function getType($path)
+      protected static function parseAsset($src)
       {
-            return strtolower(pathinfo($path, PATHINFO_EXTENSION));
+            $asset = new \stdClass();
+            $asset->attr = [];
+            $attributes = explode('-', explode(':',$src)[0]);
+            $identifier = array_shift($attributes);
+            switch ($identifier) {
+                  case 'js':
+                  case 'script':
+                        $asset->type = 'js';
+                        $asset->attr = $attributes;
+                        break;
+                  case 'css':
+                  case 'style':
+                        $asset->type = 'css';
+                        break;
+            }
+            if(!isset($asset->type)){
+                  $asset->type = strtolower(pathinfo($src, PATHINFO_EXTENSION));
+                  $asset->path = $src;
+            }
+            else $asset->path = substr($src, (strpos($src, ':') + 1));
+            return $asset;
       }
 
       /**
@@ -162,11 +187,15 @@ class Assets
        */
       protected static function getAsset($src)
       {
-            $asset = new \stdClass();
-            $asset->path = realpath(THEME_PATH . DS . 'public' . DS . $src);
-            if(!$asset->path) return false;
-            $asset->type = self::getType($asset->path);
-            $asset->src = self::src($src);
+            $asset = self::parseAsset($src);
+            if (strpos($asset->path,'http') === 0 || strpos($asset->path,'//') === 0) {
+                  $asset->src = $asset->path;
+            }
+            else{
+                  $asset->path = realpath(THEME_PATH . DS . 'public' . DS . $src);
+                  if(!$asset->path) return false;
+                  $asset->src = self::src($src);
+            }
             $asset->tag = self::getTag($asset);
             return $asset;
       }
