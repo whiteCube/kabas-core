@@ -17,17 +17,6 @@ class Groupable extends Aggregate
       }
 
       /**
-       * Retrieves one of the contained fields
-       * @param  string $name
-       * @return object
-       */
-      public function get($key)
-      {
-            if(isset($this->output[$key])) return $this->output[$key];
-            return null;
-      }
-
-      /**
        * Condition to check if the value is correct for this field type.
        * @return bool
        */
