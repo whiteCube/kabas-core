@@ -6,6 +6,12 @@ use \Kabas\App;
 
 class Groupable extends Aggregate
 {
+      public function __set($name, $value)
+      {
+            if(isset($this->options[$name])) $this->output[$name]->set($value);
+            else $this->output[$name] = $value;
+      }
+
       public function __get($name)
       {
             return $this->get($name);
