@@ -3,6 +3,7 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\Fields\Item;
+use \Kabas\Utils\Url as UrlUtil;
 
 class File extends Item
 {
@@ -40,7 +41,7 @@ class File extends Item
       {
             $this->setReference($value);
             if(!$this->reference) return false;
-            return $this->reference->path;
+            return $this->reference->url;
       }
 
       protected function setReference($value)
@@ -60,6 +61,7 @@ class File extends Item
                         $o->filename = isset($path['filename']) ? $path['filename'] : null;
                         $o->extension = isset($path['extension']) ? $path['extension'] : null;
                         $o->size = filesize($o->path);
+                        $o->url = UrlUtil::fromPath($o->path);
                         return $o;
                   }
             }
