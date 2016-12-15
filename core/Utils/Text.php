@@ -17,6 +17,15 @@ class Text
             $text = str_replace(' ', '', ucwords($text));
             return ucfirst($text);
       }
+      /**
+       * Formats a string without namespace
+       * @param  string $text
+       * @return string
+       */
+      static function removeNamespace($text)
+      {
+            return substr($text, strrpos($text, '\\') + 1);
+      }
 
       /**
        * Formats a text to a url-friendly string

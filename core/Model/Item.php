@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Config\Models;
+namespace Kabas\Model;
 
 class Item
 {
