@@ -4,10 +4,11 @@ namespace Kabas\Config;
 
 use Kabas\App;
 use Kabas\Utils\Text;
+use Kabas\Model\Container as ModelContainer;
 
 class Container
 {
-      public function __construct(Settings\Container $settings, Models\Container $models)
+      public function __construct(Settings\Container $settings, ModelContainer $models)
       {
             $this->loadAppConfig();
             $this->initDriver();

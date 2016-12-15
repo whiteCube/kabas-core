@@ -53,22 +53,13 @@ class Model
 
       /**
        * Get the model directory and filename
-       * @return object
+       * @return string
        */
-      public function getDir()
+      public function getModelStructure($name)
       {
-            $reflection = new \ReflectionClass($this);
-            $dirname = pathinfo($reflection->getFileName())['dirname'];
-            $modelData = new \stdClass();
-            $modelData->path = $dirname;
-            $files = scandir($dirname);
-            foreach($files as $file) {
-                  if(pathinfo($file)['extension'] === 'json') {
-                        $modelData->filename = pathinfo($file)['filename'];
-                        break;
-                  }
-            }
-            return $modelData;
+            $path = THEME_PATH . DS . 'structures' . DS . 'models' . DS;
+            $path .= strtolower($name) . '.json';
+            return realpath($path);
       }
 
       /**
@@ -79,12 +70,13 @@ class Model
       {
             $this->checkDriver();
             $class = Text::toNamespace($this->driver);
-            $modelInfo = new \stdClass();
-            $modelInfo->table = static::$table;
-            $modelInfo->fillable = static::$fillable;
-            $modelInfo->guarded = static::$guarded;
-            $modelInfo->path = $this->getDir();
-            $this->model = App::getInstance()->make('Kabas\Drivers\\' . $class, [[], $modelInfo]);
+            $info = new \stdClass();
+            $info->name = Text::removeNamespace(get_class($this));
+            $info->table = static::$table;
+            $info->fillable = static::$fillable;
+            $info->guarded = static::$guarded;
+            $info->structure = $this->getModelStructure($info->name);
+            $this->model = App::getInstance()->make('Kabas\Drivers\\' . $class, [[], $info]);
       }
 
       /**
