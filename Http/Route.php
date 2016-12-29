@@ -103,4 +103,17 @@ class Route
             return $this->parameters;
       }
 
+      /**
+       * Get this route's parameters in a key => value format
+       * @return array
+       */
+      public function getParametersArray()
+      {
+            $params = [];
+            foreach ($this->parameters as $param) {
+                  $params[$param->variable] = $param->value;
+            }
+            return $params;
+      }
+
 }

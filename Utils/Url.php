@@ -19,9 +19,17 @@ class Url
       {
             $route = App::router()->getRouteByPage($id);
             if (!$route) throw new \Exception('Page does not exist');
-            $params = self::makeParams($params, $route);
-            return self::base() . self::getUrlLangString($lang) . self::fillRouteWithParams($route, $params);
+            return self::generate($route, $params, $lang);
+      }
 
+      /**
+       * Get Url to current page
+       * @return string
+       */
+      static function getCurrent()
+      {
+            $route = App::router()->getCurrent();
+            return self::generate($route, $route->getParametersArray());
       }
 
       /**
@@ -31,7 +39,8 @@ class Url
        */
       static function lang($lang)
       {
-            return self::base() . '/' . $lang . App::router()->getRoute();
+            $route = App::router()->getCurrent();
+            return self::generate($route, $route->getParametersArray(), $lang);
       }
 
       /**
@@ -96,6 +105,18 @@ class Url
             return App::router()->extractRoute($url);
       }
 
+      protected static function generate($route, $params = [], $lang = null)
+      {
+            $params = self::makeParams($params, $route);
+            return self::base() . self::getUrlLangString($lang) . self::fillRouteWithParams($route, $params);
+      }
+
+      protected static function makeParams($params, $route)
+      {
+            if(!is_array($params)) $params = [$route->parameters[0]->variable => $params];
+            return $params;
+      }
+
       protected static function getUrlLangString($lang){
             if($lang = self::getUrlLangAlias($lang)) return '/' . $lang;
             return '';
@@ -121,11 +142,5 @@ class Url
                   }
             }
             return $str;
-      }
-
-      protected static function makeParams($params, $route)
-      {
-            if(!is_array($params)) $params = [$route->parameters[0]->variable => $params];
-            return $params;
       }
 }
