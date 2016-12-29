@@ -12,6 +12,18 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
       }
 
       /**
+       * Formats a raw value in order and makes it usable for said field type
+       * @param mixed $value
+       * @return string
+       */
+      public static function format($value)
+      {
+            if(is_string($value) && ($json = json_decode($value))) return $json;
+            if(is_array($value) || is_object($value)) return $value;
+            return false;
+      }
+
+      /**
        * Sets options & other field data
        * @return array
        */
