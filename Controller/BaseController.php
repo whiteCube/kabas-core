@@ -35,6 +35,7 @@ class BaseController
 
       public function __call($method, $args)
       {
+            if($method == 'setup') return null;
             return false;
       }
 

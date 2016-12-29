@@ -47,24 +47,24 @@ class Route
       {
             if($this->string === '') return '/^\s*$/';
             $regex = trim(strtolower($this->string), '/');
-            $regex = $this->parseParameters($regex);
+            $regex = $this->upgradeParamsToRegex($regex);
             $regex = preg_replace('/([^\\\])\//', '$1\/', $regex);
             $regex = strlen($regex) ? '/^\/' . $regex . '\/?$/' : '/^\/?$/';
             return $regex;
       }
 
-      protected function parseParameters($regex)
+      protected function upgradeParamsToRegex($regex)
       {
             preg_match_all('/\{([a-zA-Z0-9]*)(?:::)?(\/.[^\/]+\/+)?(\?)?\}/', $regex, $a);
             foreach ($a[0] as $i => $param) {
-                  $param = $this->getParameter($param, $a[1][$i], $a[2][$i], $a[3][$i]);
+                  $param = $this->makeParameter($param, $a[1][$i], $a[2][$i], $a[3][$i]);
                   $regex = str_replace($param->string, $param->regex, $regex);
                   $this->parameters[] = $param;
             }
             return $regex;
       }
 
-      protected function getParameter($string, $variable, $regex, $optional)
+      protected function makeParameter($string, $variable, $regex, $optional)
       {
             $o = new \stdClass();
             $o->string = $string;
@@ -87,27 +87,24 @@ class Route
       }
 
       /**
-       * Get the list of parameters for the specified route.
-       * If no route is specified, test current one.
-       * @param  string $route
-       * @return array
+       * Retrieves the parameters for the current route.
+       * @return void
        */
-      public function getParameters($route = null)
+      public function gatherParameters($route = null)
       {
-            if(!$route) $route = App::router()->getRoute();
+            $route = App::router()->getRoute();
             preg_match($this->regex, $route, $matches);
             array_shift($matches);
             foreach ($matches as $i => $value) {
                   $this->parameters[$i]->value = urldecode($value);
             }
-            return $this->parameters;
       }
 
       /**
        * Get this route's parameters in a key => value format
        * @return array
        */
-      public function getParametersArray()
+      public function getParameters()
       {
             $params = [];
             foreach ($this->parameters as $param) {

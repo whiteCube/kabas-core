@@ -19,13 +19,4 @@ class MenuController extends BaseController
             }
             App::response()->send($response);
       }
-
-      /**
-       * Default menu setup.
-       * @return void
-       */
-      protected function setup()
-      {
-            return null;
-      }
 }

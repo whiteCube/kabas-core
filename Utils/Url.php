@@ -29,7 +29,7 @@ class Url
       static function getCurrent()
       {
             $route = App::router()->getCurrent();
-            return self::generate($route, $route->getParametersArray());
+            return self::generate($route, $route->getParameters());
       }
 
       /**
@@ -40,7 +40,7 @@ class Url
       static function lang($lang)
       {
             $route = App::router()->getCurrent();
-            return self::generate($route, $route->getParametersArray(), $lang);
+            return self::generate($route, $route->getParameters(), $lang);
       }
 
       /**

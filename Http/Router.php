@@ -47,7 +47,7 @@ class Router
        * so they don't need to be regex'd again for performance
        * @var array
        */
-      protected $matchesCache = [];
+      protected $cache = [];
 
       public function __construct()
       {
@@ -60,15 +60,16 @@ class Router
       }
 
       /**
-       * Loads defined the routes
-       * @return void
+       * Loads content-defined routes
+       * @return object $this
        */
-      public function init()
+      public function load()
       {
             foreach (App::content()->pages->items as $page) {
                   $this->routes[] = App::getInstance()->make('Kabas\Http\Route', [$page]);
             }
             $this->notFound = App::getInstance()->make('Kabas\Http\RouteNotFound');
+            return $this;
       }
 
       /**
@@ -186,23 +187,33 @@ class Router
        */
       public function routeExists($route = null)
       {
-            if($this->getMatchingRoute($route) !== false) return true;
+            if($this->findMatchingRoute($route) !== false) return true;
             return false;
       }
 
       /**
+       * Defines the current route
+       * @return object $this
+       */
+      public function setCurrent()
+      {
+            $this->current = $this->findMatchingRoute($this->route);
+            $this->current->gatherParameters();
+            return $this;
+      }
+
+      /**
        * Returns route that matches the query
-       * If no query is specified, checks the current one.
+       * @param string $route
        * @return string
        */
-      public function getMatchingRoute($route = null)
+      public function findMatchingRoute($route)
       {
-            if($route === null) $route = $this->route;
-            if(array_key_exists($route, $this->matchesCache)) return $this->matchesCache[$route];
-            $this->matchesCache[$route] = false;
+            if(array_key_exists($route, $this->cache)) return $this->cache[$route];
+            $this->cache[$route] = false;
             foreach($this->routes as $item) {
                   if($item->matches($route)) {
-                        $this->matchesCache[$route] = $item;
+                        $this->cache[$route] = $item;
                         return $item;
                   }
             }
@@ -218,12 +229,11 @@ class Router
       }
 
       /**
-       * Finds or/and returns the currently matching route
+       * Returns the currently matching route
        * @return object
        */
       public function getCurrent()
       {
-            if(is_null($this->current)) $this->current = $this->getMatchingRoute();
             if($this->current === false) return $this->get404();
             return $this->current;
       }
