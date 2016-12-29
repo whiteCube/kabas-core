@@ -12,6 +12,21 @@ class Selectable extends Item implements \IteratorAggregate
       }
 
       /**
+       * Formats a raw value in order and makes it usable for said field type
+       * @param mixed $value
+       * @return string
+       */
+      public static function format($value)
+      {
+            if(is_string($value) && ($json = json_decode($value))) $value = $json;
+            if(is_object($value)) $value = (array) $value;
+            if(is_array($value)) return array_values($value);
+            if(is_bool($value)) return $value ? 'true' : 'false';
+            if(is_string($value = strval($value))) return trim($value);
+            return false;
+      }
+
+      /**
        * Get all options
        * @return array
        */
