@@ -49,6 +49,16 @@ class Item
       }
 
       /**
+       * Formats a raw value in order and makes it usable for said field type
+       * @param string $value
+       * @return string
+       */
+      public static function format($value)
+      {
+            return trim($value);
+      }
+
+      /**
        * Retrieves the current field's type
        * @return string
        */
