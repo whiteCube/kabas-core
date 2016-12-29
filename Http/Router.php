@@ -9,9 +9,9 @@ class Router
 {
       protected $rootURL;
 
-      protected $baseURL;
-
       protected $subdirectory;
+
+      protected $baseURL;
 
       protected $query;
 
@@ -55,8 +55,9 @@ class Router
             $this->rootURL = $this->getRootURL();
             $this->baseURL = $this->getBaseURL();
             $this->query = $this->getQuery($_SERVER['REQUEST_URI']);
-            $this->route = $this->getCleanQuery($this->query)->route;
-            $this->setLang();
+            $query = $this->getCleanQuery($this->query);
+            $this->route = $query->route;
+            $this->setLang($query->lang);
       }
 
       /**
@@ -131,16 +132,17 @@ class Router
        */
       protected function getQuery($uri)
       {
-            $s = trim(substr($uri, strlen($this->subdirectory)),'/');
-            if(!strlen($s)) return '/';
-            return '/' . $s . '/';
+            $uri = explode('?', $uri)[0];
+            $uri = trim(substr($uri, strpos($uri, $this->subdirectory)+strlen($this->subdirectory)),'/');
+            if(!strlen($uri)) return '/';
+            return '/' . $uri . '/';
       }
 
       /**
        * Get the lang-cleared route
        * @return object
        */
-      public function getCleanQuery($uri, $hasSet = true)
+      public function getCleanQuery($uri)
       {
             preg_match('/^\/([^\/]+)?/', $uri, $a);
             $o = new \stdClass();
@@ -149,7 +151,6 @@ class Router
             if(isset($a[1]) && $lang = Lang::is($a[1])){
                   $o->lang = $lang;
                   $o->route = substr($uri, strlen($a[0]));
-                  if($hasSet) $this->lang = $lang;
             }
             else{
                   $o->route = $uri;
@@ -158,14 +159,14 @@ class Router
       }
 
       /**
-       * Sets automatic lang if request didn't
-       * contain language information
+       * Sets current language. If not given, language will be detected
+       * @param string $lang
        * @return string
        */
 
-      protected function setLang()
+      protected function setLang($lang = null)
       {
-            if(!$this->lang) $this->lang = $this->detectLang();
+            $this->lang = $lang ? $lang : $this->detectLang();
       }
 
       /**
@@ -283,7 +284,7 @@ class Router
                   }
                   else $o->query = $a['path'];
                   $o->base .= '/';
-                  $q = $this->getCleanQuery($o->query, false);
+                  $q = $this->getCleanQuery($o->query);
                   $o->route = $q->route;
                   if($q->lang) $o->lang = $q->lang;
             }
