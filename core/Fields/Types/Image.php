@@ -10,6 +10,22 @@ class Image extends Item
       protected $type = "image";
 
       /**
+       * Formats a raw value in order and makes it usable for said field type
+       * @param mixed $value
+       * @return string
+       */
+      public static function format($value)
+      {
+            if(is_string($value)) $value = json_decode($value);
+            if(is_array($value)) $value = (object) $value;
+            if(!is_object($value) || !isset($value->path)) return false;
+            $format = new \stdClass();
+            $format->path = trim($value->path);
+            $format->alt = isset($value->alt) ? trim(strip_tags(strval($value->alt))) : '';
+            return $format;
+      }
+
+      /**
        * Condition to check if the value is correct for this field type.
        * @param  mixed $value
        * @return bool

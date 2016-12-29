@@ -46,7 +46,6 @@ class Eloquent extends IlluminateEloquent
       {
             $field = App::config()->models->getField($key, static::$info->name);
             if(!$field) return $value;
-
             try {
                   $class = App::fields()->getClass($field->type);
             } catch (\Kabas\Exceptions\TypeException $e) {
@@ -56,7 +55,7 @@ class Eloquent extends IlluminateEloquent
                   die();
             };
             
-            return App::getInstance()->make($class, [$key, $value, $field]);
+            return App::getInstance()->make($class, [$key, call_user_func_array([$class,'format'], [$value]), $field]);
       }
 
 
