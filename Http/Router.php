@@ -132,8 +132,11 @@ class Router
        */
       protected function getQuery($uri)
       {
-            $uri = explode('?', $uri)[0];
-            $uri = trim(substr($uri, strpos($uri, $this->subdirectory)+strlen($this->subdirectory)),'/');
+            if($length = strlen($this->subdirectory)) {
+                  $start = strpos($uri, $this->subdirectory);
+                  $uri = substr($uri, $start >= 0 ? $start + $length : 0);
+            }
+            $uri = trim(explode('?', $uri)[0],'/');
             if(!strlen($uri)) return '/';
             return '/' . $uri . '/';
       }
