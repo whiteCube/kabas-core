@@ -20,9 +20,9 @@ return [
       'driver' => 'json',
 
       /**
-       * The driver used by Intervention Image (GD | imagick)
+       * The driver used by Intervention Image (gd | imagick)
        */
-      'imageDriver' => 'GD',
+      'imageDriver' => 'gd',
 
       /**
        * Aliases for classes
