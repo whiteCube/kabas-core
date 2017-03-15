@@ -1,0 +1,31 @@
+{
+    "name": "kabas/core",
+    "authors": [
+        {
+            "name": "WhiteCube",
+            "email": "hello@whitecube.be"
+        },
+        {
+            "name": "Toon Van den Bos",
+            "email": "toon@whitecube.be"
+        },
+        {
+            "name": "Adrien Leloup",
+            "email": "adrien@whitecube.be"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.4",
+        "illuminate/container": "^5.2",
+        "illuminate/database": "^5.2",
+        "intervention/image": "^2.3",
+        "erusev/parsedown-extra": "^0.7.1",
+        "seld/jsonlint": "^1.4",
+        "nyratas/php-console-log": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kabas\\": "src/Kabas/"
+        }
+    }
+}
