@@ -87,10 +87,12 @@ class Partial extends Groupable
       protected function parse($value)
       {
             $a = [];
-            foreach ($this->options as $key => $field) {
-                  $val = isset($value->$key) ? $value->$key : null;
-                  $a[$key] = clone $field;
-                  $a[$key]->set($val);
+            if($this->options) {
+                  foreach ($this->options as $key => $field) {
+                        $val = isset($value->$key) ? $value->$key : null;
+                        $a[$key] = clone $field;
+                        $a[$key]->set($val);
+                  }
             }
             return $a;
       }
