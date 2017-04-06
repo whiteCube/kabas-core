@@ -42,6 +42,7 @@ class Date extends Item
        */
       protected function parse($value)
       {
+            if(!$value) return null;
             return new Carbon($value);
       }
 
