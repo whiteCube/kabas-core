@@ -40,7 +40,7 @@ class Selectable extends Item implements \IteratorAggregate
        * @param  string $value
        * @return Kabas\Fields\Option
        */
-      public function get($value)
+      public function get($value = null)
       {
             foreach ($this->options as &$option) {
                   if($option->matches($value)) return $option;

@@ -76,6 +76,11 @@ class Item
             return $this->name;
       }
 
+      public function get($key = null)
+      {
+            return $this->output;
+      }
+
       /**
        * Retrieves the current field's raw value (as stored)
        * @return mixed

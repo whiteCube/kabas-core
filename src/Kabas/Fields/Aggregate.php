@@ -75,7 +75,7 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
        * @param  string $name
        * @return object
        */
-      public function get($key)
+      public function get($key = null)
       {
             if(isset($this->output[$key])) return $this->output[$key];
             return null;
