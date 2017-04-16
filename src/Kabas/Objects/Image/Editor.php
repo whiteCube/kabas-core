@@ -272,10 +272,7 @@ class Editor
       public function prepareIntervention()
       {
             if(!$this->intervention){
-                  $this->intervention = App::getInstance()->make(
-                        'Intervention\Image\ImageManager',
-                        [['driver' => App::config()->appConfig['imageDriver']]]
-                  );
+                  $this->intervention = new Intervention(['driver' => App::config()->get('app.imageDriver')]);
                   $this->intervention = $this->intervention->make($this->dirname . DS . $this->filename . '.' . $this->extension);
             }
       }

@@ -4,6 +4,7 @@ namespace Kabas\Fields\Types;
 
 use \Kabas\App;
 use \Kabas\Fields\Item;
+use \Kabas\Objects\Image\Item as ImageObject;
 
 class Image extends Item
 {
@@ -49,7 +50,7 @@ class Image extends Item
       protected function parse($value)
       {
             if(!is_object($value)) return false;
-            return App::getInstance()->make('\Kabas\Objects\Image\Item', [$value]);
+            return new ImageObject($value);
       }
 
 }

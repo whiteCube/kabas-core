@@ -2,6 +2,7 @@
 
 namespace Kabas\Objects\Image;
 
+use Kabas\Objects\Image\Editor;
 use Kabas\Utils\Image;
 use Kabas\Utils\Url;
 use Kabas\App;
@@ -115,10 +116,7 @@ class Item
       {
             if(!$this->error) {
                   if(!$this->editor) {
-                        $this->editor = App::getInstance()->make(
-                              'Kabas\Objects\Image\Editor',
-                              [$this->dirname, $this->filename, $this->extension]
-                        );
+                        $this->editor = new Editor($this->dirname, $this->filename, $this->extension);
                   }
                   if($prepareIntervention) $this->editor->prepareIntervention();
             }

@@ -41,7 +41,7 @@ class Container
                   echo $e->getMessage();
                   die();
             }
-            return App::getInstance()->make($type, [$name, $value, $structure]);
+            return new $type($name, $value, $structure);
       }
 
       /**

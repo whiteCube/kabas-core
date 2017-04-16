@@ -69,14 +69,14 @@ class Model
       private function makeModel()
       {
             $this->checkDriver();
-            $class = Text::toNamespace($this->driver);
+            $class = '\\Kabas\\Drivers\\' . Text::toNamespace($this->driver);
             $info = new \stdClass();
             $info->name = Text::removeNamespace(get_class($this));
             $info->table = static::$table;
             $info->fillable = static::$fillable;
             $info->guarded = static::$guarded;
             $info->structure = $this->getModelStructure($info->name);
-            $this->model = App::getInstance()->make('Kabas\Drivers\\' . $class, [[], $info]);
+            $this->model = new $class([], $info);
       }
 
       /**

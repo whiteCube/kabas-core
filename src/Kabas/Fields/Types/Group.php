@@ -38,7 +38,8 @@ class Group extends Groupable
                   if($field->class){
                         $key = $field->name;
                         $val = isset($value->$key) ? $value->$key : null;
-                        $a[$key] = App::getInstance()->make($field->class, [$key, $val, $field->structure]);
+                        $class = $field->class;
+                        $a[$key] = new $class($key, $val, $field->structure);
                   }
             }
             return $a;

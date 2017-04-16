@@ -129,7 +129,7 @@ class Json implements \IteratorAggregate
             };
 
             $class = App::fields()->getClass($type)->class;
-            return App::getInstance()->make($class, [$key, $value]);
+            return new $class($key, $value);
       }
 
       /**

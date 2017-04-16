@@ -3,6 +3,7 @@
 namespace Kabas\Fields;
 
 use \Kabas\App;
+use \Kabas\Fields\Option;
 
 class Selectable extends Item implements \IteratorAggregate
 {
@@ -166,7 +167,7 @@ class Selectable extends Item implements \IteratorAggregate
             $opts = [];
             $formatKeys = is_array($options) ? true : false;
             foreach($options as $key => $value){
-                  $opts[] = App::getInstance()->make('\Kabas\Fields\Option', [$key, $value, $formatKeys]);
+                  $opts[] = new Option($key, $value, $formatKeys);
             }
             return $opts;
       }

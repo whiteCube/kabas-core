@@ -55,7 +55,7 @@ class Eloquent extends IlluminateEloquent
                   die();
             };
             
-            return App::getInstance()->make($class, [$key, call_user_func_array([$class,'format'], [$value]), $field]);
+            return new $class($key, call_user_func_array([$class,'format'], [$value]), $field);
       }
 
 

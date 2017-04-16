@@ -4,6 +4,7 @@ namespace Kabas\Content\Menus;
 
 use \Kabas\App;
 use \Kabas\Content\BaseItem;
+use \Kabas\Content\Menus\Links;
 
 class Item extends BaseItem
 {
@@ -19,7 +20,7 @@ class Item extends BaseItem
 
       protected function setData($data)
       {
-            $this->items = App::getInstance()->make('\\Kabas\\Content\\Menus\\LinksContainer', [@$data->items, @$this->structure->item]);
+            $this->items = new Links($data->items ?? null, $this->structure->item ?? null);
       }
 
       protected function getTemplateNamespace()

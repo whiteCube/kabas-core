@@ -31,7 +31,7 @@ class Gallery extends Repeatable
             $class = App::fields()->getClass('image');
             if (is_array($value)) {
                   foreach ($value as $i => $item) {
-                        $a[] = App::getInstance()->make($class, [$this->name . '_' . $i, $item, $this]);
+                        $a[] = new $class($this->name . '_' . $i, $item, $this);
                   }
             }
             return $a;

@@ -20,7 +20,7 @@ class Repeater extends Repeatable
             if(is_array($value)){
                   $class = App::fields()->getClass('group');
                   foreach ($value as $i => $item) {
-                        $a[] = App::getInstance()->make($class, [$this->getMultiFieldname($i), $item, $this]);
+                        $a[] = new $class($this->getMultiFieldname($i), $item, $this);
                   }
             }
             return $a;

@@ -37,7 +37,8 @@ class Flexible extends Repeatable
             if(is_array($value)){
               foreach ($value as $i => $item) {
                     if($option = $this->findOption($item->option)){
-                          $a[] = App::getInstance()->make($option->class, [$this->getMultiFieldname($i), $item->value, $option->structure]);
+                          $class = $option->class;
+                          $a[] = new $class($this->getMultiFieldname($i), $item->value, $option->structure);
                     }
               }
             }

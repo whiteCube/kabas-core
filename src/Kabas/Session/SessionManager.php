@@ -3,6 +3,7 @@
 namespace Kabas\Session;
 
 use Kabas\App;
+use Kabas\Session\SessionContainer;
 
 class SessionManager
 {
@@ -13,7 +14,7 @@ class SessionManager
       public function __construct()
       {
             $this->hasBooted = session_start();
-            $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$_SESSION[$this->sessionName] ?? null]);
+            $this->container = new SessionContainer($_SESSION[$this->sessionName] ?? null);
       }
 
       /**
