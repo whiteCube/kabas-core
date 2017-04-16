@@ -7,11 +7,11 @@ class SessionContainer
       protected $flash;
       protected $content;
 
-      public function __construct($sessionData)
+      public function __construct($sessionData = null)
       {
-            $a = unserialize($sessionData);
-            $this->flash = new FlashContainer(isset($a[0]) ? $a[0] : false);
-            $this->content = isset($a[1]) ? $a[1] : new \stdClass;
+            if($sessionData) $sessionData = unserialize($sessionData);
+            $this->flash = new FlashContainer($sessionData[0] ?? false);
+            $this->content = $sessionData[0] ?? new \stdClass;
 
       }
 

@@ -13,8 +13,7 @@ class SessionManager
       public function __construct()
       {
             $this->hasBooted = session_start();
-            $sessionData = isset($_SESSION[$this->sessionName]) ? $_SESSION[$this->sessionName] : '';
-            $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$sessionData]);
+            $this->container = App::getInstance()->make('Kabas\Session\SessionContainer', [$_SESSION[$this->sessionName] ?? null]);
       }
 
       /**
