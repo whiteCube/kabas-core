@@ -71,7 +71,7 @@ class Assets
       public static function src($src)
       {
             $s = Url::base();
-            $s .= '/themes/' . App::themes()->getCurrent('name') . '/public/';
+            $s .= '/' . App::themes()->getCurrent('name') . '/';
             $s .= $src;
             return $s;
       }
@@ -192,7 +192,7 @@ class Assets
                   $asset->src = $asset->path;
             }
             else{
-                  $asset->path = realpath(THEME_PATH . DS . 'public' . DS . $src);
+                  $asset->path = realpath(PUBLIC_PATH . DS . App::themes()->getCurrent('name') . DS . $src);
                   if(!$asset->path) return false;
                   $asset->src = self::src($src);
             }
