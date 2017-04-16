@@ -25,7 +25,7 @@ class BaseItem
 
       protected $structure;
 
-      public function __construct($data)
+      public function __construct(\stdClass $data)
       {
             $this->id = isset($data->id) ? $data->id : false;
             $this->template = isset($data->template) ? $data->template : false;
@@ -73,8 +73,8 @@ class BaseItem
 
       public function make()
       {
-            if(!is_string($this->controller)) $this->controller = get_class($this->controller);
-            $this->controller = App::getInstance()->make($this->controller, [$this]);
+            $controller = !is_string($this->controller) ? get_class($this->controller) : $this->controller;
+            $this->controller = new $controller($this);
       }
 
       public function parse()

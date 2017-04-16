@@ -44,7 +44,7 @@ class View
        */
       static function make($view, $data, $type = '')
       {
-            App::getInstance()->make(self::class, [$view, $data, $type]);
+            return new self($view,$data,$type);
       }
 
       /**

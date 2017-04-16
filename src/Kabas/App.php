@@ -2,7 +2,6 @@
 
 namespace Kabas;
 
-use WhiteCube\Bootstrap\FileLoader;
 use \Illuminate\Container\Container;
 
 class App extends Container
@@ -31,10 +30,10 @@ class App extends Container
        */
       protected static $instance;
 
-      public function __construct()
+      public function __construct($public_path)
       {
             self::$instance = $this;
-            $this->setBaseConstants();
+            $this->registerPaths($public_path);
             $this->registerBindings();
       }
 
@@ -45,49 +44,30 @@ class App extends Container
             }
       }
 
-      public function registerBindings()
-      {
-            // $this->singleton('session','Kabas\Session\SessionManager');
-            $this->singleton('config', '\Kabas\Config\Container');
-            $this->setThemePath();
-            $this->singleton('fields', '\Kabas\Fields\Container');
-            $this->singleton('router', '\Kabas\Http\Router');
-            $this->singleton('content', '\Kabas\Content\Container');
-            $this->singleton('request', '\Kabas\Http\Request');
-            $this->singleton('response', '\Kabas\Http\Response');
-      }
-
       /**
        * Start up the application
        * @return void
        */
       public function boot()
       {
-            $this->session = $this->make('Kabas\Session\SessionManager');
             $this->loadAliases();
-            $this->loadTheme();
-            $this->react();
+            $this->themes->loadCurrent();
+            $this->router->load()->setCurrent();
+            $this->content->parse();
+            $this->page = $this->router->getCurrent()->page;
+            $this->response->init($this->page);
+            $this->session->write();
       }
 
       /**
-       * Check appConfig and load the specified aliases
+       * Load config/app's specified aliases
        * @return void
        */
       public function loadAliases()
       {
-            foreach($this->config->appConfig['aliases'] as $alias => $class) {
+            foreach($this->config->get('app.aliases') as $alias => $class) {
                   class_alias($class, $alias);
             }
-      }
-
-      /**
-       * Autoload the theme files
-       * @return void
-       */
-      public function loadTheme()
-      {
-            $loader = new FileLoader(THEME_PATH);
-            $loader->autoload();
       }
 
       /**
@@ -109,20 +89,6 @@ class App extends Container
       }
 
       /**
-       * Once we're all set, take care of the request
-       * and send something back!
-       * @return void
-       */
-      public function react()
-      {
-            $this->router->load()->setCurrent();
-            $this->content->parse();
-            $this->page = $this->router->getCurrent()->page;
-            $this->response->init($this->page);
-            $this->session->write();
-      }
-
-      /**
       * Get the version number of this Kabas website.
       * @return string
       */
@@ -141,26 +107,34 @@ class App extends Container
       }
 
       /**
-       * Get the name of the active theme
-       * @return string
+       * Defines path constants
+       * @return void
        */
-      static function theme()
-      {
-            return self::config()->settings->site->theme;
-      }
-
-      protected function setBaseConstants()
+      protected function registerPaths($public_path)
       {
             define('DS', DIRECTORY_SEPARATOR);
-            define('CORE_PATH', __dir__);
-            define('BASE_PATH', preg_replace('/(\\' . DS . 'core)?/', '', CORE_PATH));
-            define('CONTENT_PATH', BASE_PATH . DS . 'content');
-            define('CONFIG_PATH', BASE_PATH . DS . 'config');
+            define('CORE_PATH', __DIR__);
+            define('PUBLIC_PATH', $public_path);
+            define('ROOT_PATH', realpath(PUBLIC_PATH . DS .'..'));
+            define('CONTENT_PATH', ROOT_PATH . DS . 'content');
+            define('CONFIG_PATH', ROOT_PATH . DS . 'config');
+            define('THEMES_PATH', ROOT_PATH . DS . 'themes');
       }
 
-      protected function setThemePath()
+      /**
+       * Defines app singletons
+       * @return void
+       */
+      protected function registerBindings()
       {
-            define('THEME_PATH', BASE_PATH . DS . 'themes' . DS . self::theme());
+            $this->singleton('session', '\\Kabas\\Session\\SessionManager');
+            $this->singleton('config', '\\Kabas\\Config\\Container');
+            $this->singleton('fields', '\\Kabas\\Fields\\Container');
+            $this->singleton('router', '\\Kabas\\Http\\Router');
+            $this->singleton('content', '\\Kabas\\Content\\Container');
+            $this->singleton('request', '\\Kabas\\Http\\Request');
+            $this->singleton('response', '\\Kabas\\Http\\Response');
+            $this->singleton('themes', '\\Kabas\\Themes\\Container');
       }
 
 }

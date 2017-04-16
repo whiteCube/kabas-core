@@ -19,12 +19,12 @@ class Item extends BaseItem
 
       protected function setData($data)
       {
-            $this->items = App::getInstance()->make('\Kabas\Content\Menus\LinksContainer', [@$data->items, @$this->structure->item]);
+            $this->items = App::getInstance()->make('\\Kabas\\Content\\Menus\\LinksContainer', [@$data->items, @$this->structure->item]);
       }
 
       protected function getTemplateNamespace()
       {
-            return '\\Theme\\' . App::theme() .'\Menus\\' . parent::getTemplateNamespace();
+            return '\\Theme\\' . App::themes()->getCurrent('name') .'\\Menus\\' . parent::getTemplateNamespace();
       }
 
       protected function findControllerClass()

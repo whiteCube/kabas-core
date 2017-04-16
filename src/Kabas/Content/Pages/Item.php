@@ -25,12 +25,12 @@ class Item extends BaseItem
       protected function getMeta($data)
       {
             // TODO : merge default site meta with given meta
-            return isset($data->meta) ? $data->meta : App::config()->settings->site->meta;
+            return $data->meta ?? [];
       }
 
       protected function getTemplateNamespace()
       {
-            return '\\Theme\\' . App::theme() .'\Templates\\' . parent::getTemplateNamespace();
+            return '\\Theme\\' . App::themes()->getCurrent('name') .'\\Templates\\' . parent::getTemplateNamespace();
       }
 
       protected function findControllerClass()

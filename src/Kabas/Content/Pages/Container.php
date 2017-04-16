@@ -14,7 +14,7 @@ class Container extends BaseContainer
 
       protected function makeItem($file)
       {
-            return App::getInstance()->make('\Kabas\Content\Pages\Item', [$file]);
+            return new Item($file);
       }
 
       public function getCurrent()

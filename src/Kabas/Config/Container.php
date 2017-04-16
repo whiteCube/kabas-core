@@ -8,21 +8,20 @@ use Kabas\Model\Container as ModelContainer;
 
 class Container
 {
-      public function __construct(Settings\Container $settings, ModelContainer $models)
+      public function __construct(Settings $settings, ModelContainer $models)
       {
-            $this->loadAppConfig();
-            $this->initDriver();
             $this->settings = $settings;
             $this->models = $models;
+            $this->initDriver();
       }
 
-      /**
-       * Load the app config
-       * @return void
-       */
-      protected function loadAppConfig()
+      public function __call($name, $arguments)
       {
-            $this->appConfig = require __DIR__ . '/AppConfig.php';
+            if(!method_exists($this->settings, $name)) {
+                  $error = 'Error: Method "' . $name . '" does not exist on config tree.';
+                  throw new \Exception($error);
+            }
+            return call_user_func_array([$this->settings, $name], $arguments);
       }
 
       /**
@@ -32,8 +31,8 @@ class Container
        */
       protected function initDriver()
       {
-            $driverName = 'Kabas\Drivers\\';
-            $driverName .= Text::toNamespace($this->appConfig['driver']);
+            $driverName = 'Kabas\\Drivers\\';
+            $driverName .= Text::toNamespace($this->settings->get('app.driver'));
             $driver = App::getInstance()->make($driverName);
             App::setDriver($driver);
       }

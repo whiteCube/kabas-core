@@ -64,7 +64,7 @@ class BaseContainer
       }
 
       /**
-       * Recursively go through the files array to instanciate pages
+       * Recursively go through the files array to instanciate items
        * @param  array $files
        * @return void
        */

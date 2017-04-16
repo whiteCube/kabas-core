@@ -20,7 +20,7 @@ class LinkItem extends BaseItem
             $this->fields = $this->loadFields($data);
             $this->controller = $this->findControllerClass();
             if(isset($data->items) && is_array($data->items)){
-                  $this->items = App::getInstance()->make('\Kabas\Content\Menus\LinksContainer', [$data->items, $this->structure]);
+                  $this->items = App::getInstance()->make('\\Kabas\\Content\\Menus\\LinksContainer', [$data->items, $this->structure]);
             }
       }
 

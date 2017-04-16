@@ -52,14 +52,9 @@ class Container extends BaseContainer
             return realpath($this->path . DS . $file . '.json');
       }
 
-      /**
-       * returns an item the container should store
-       * @param  object $file
-       * @return object
-       */
       protected function makeItem($file)
       {
-            return App::getInstance()->make('\Kabas\Content\Partials\Item', [$file]);
+            return new Item($file);
       }
 
       //    TODO :
@@ -117,7 +112,7 @@ class Container extends BaseContainer
 
       protected function getController($id)
       {
-            $c = '\Theme\\' . App::theme() .'\Partials\\' . Text::toNamespace($id);
+            $c = '\\Theme\\' . App::themes()->getCurrent('name') .'\\Partials\\' . Text::toNamespace($id);
             if(class_exists($c)) return $c;
       }
 

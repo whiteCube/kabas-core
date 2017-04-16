@@ -11,7 +11,7 @@ class Item extends BaseItem
 
       protected function getTemplateNamespace()
       {
-            return '\\Theme\\' . App::theme() .'\Partials\\' . parent::getTemplateNamespace();
+            return '\\Theme\\' . App::themes()->getCurrent('name') .'\\Partials\\' . parent::getTemplateNamespace();
       }
 
       protected function findControllerClass()

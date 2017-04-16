@@ -11,7 +11,7 @@ class LinksContainer extends BaseContainer implements \IteratorAggregate
 
       protected $structure;
 
-      public function __construct($items, $structure)
+      public function __construct($items = [], $structure = null)
       {
             $this->structure = $structure;
             if(is_array($items)) $this->makeItems($items);
@@ -48,7 +48,7 @@ class LinksContainer extends BaseContainer implements \IteratorAggregate
 
       protected function makeItem($item)
       {
-            return App::getInstance()->make('\Kabas\Content\Menus\LinkItem', [$item, count($this->items), $this->structure]);
+            return App::getInstance()->make('\\Kabas\\Content\\Menus\\LinkItem', [$item, count($this->items), $this->structure]);
       }
 
       /**

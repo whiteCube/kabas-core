@@ -67,7 +67,7 @@ class Router
       public function load()
       {
             foreach (App::content()->pages->items as $page) {
-                  $this->routes[] = App::getInstance()->make('Kabas\Http\Route', [$page]);
+                  $this->routes[] = new Route($page);
             }
             $this->notFound = App::getInstance()->make('Kabas\Http\RouteNotFound');
             return $this;

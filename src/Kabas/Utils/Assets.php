@@ -71,7 +71,7 @@ class Assets
       public static function src($src)
       {
             $s = Url::base();
-            $s .= '/themes/' . App::theme() . '/public/';
+            $s .= '/themes/' . App::themes()->getCurrent('name') . '/public/';
             $s .= $src;
             return $s;
       }

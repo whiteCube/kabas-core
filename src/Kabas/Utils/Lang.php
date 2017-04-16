@@ -15,8 +15,8 @@ class Lang
       */
       static function is($lang)
       {
-            foreach(App::config()->settings->site->lang->available as $code => $alias){
-                  if($code == $lang || $alias == $lang) return $code;
+            foreach(static::getAvailable() as $code => $info){
+                  if($code == $lang || $info['slug'] == $lang) return $code;
             }
             return false;
       }
@@ -27,7 +27,7 @@ class Lang
       */
       static function getDefault()
       {
-            return App::config()->settings->site->lang->default;
+            return static::is(App::config()->get('lang.default'));
       }
 
       /**
@@ -36,7 +36,32 @@ class Lang
       */
       static function getAvailable()
       {
-            return App::config()->settings->site->lang->available;
+            return App::config()->get('lang.available');
+      }
+
+      /**
+      * Returns slug for given lang code
+      * @return string
+      */
+      static function slug($lang = null)
+      {
+            if(is_null($lang)) $lang = static::current();
+            if($lang = self::is($lang)){
+                  if(isset(static::getAvailable()[$lang]['slug'])){
+                        return static::getAvailable()[$lang]['slug'];
+                  }
+                  return $lang;
+            }
+            return false;
+      }
+
+      /**
+      * Get the current language code
+      * @return string
+      */
+      static function current()
+      {
+            return App::router()->lang;
       }
 
       /**
@@ -52,38 +77,5 @@ class Lang
                   $o->isActive = $code == self::current();
             }
             return $langs;
-      }
-
-      /**
-      * Returns URL alias for given lang code
-      * @return string
-      */
-      static function alias($lang)
-      {
-            $lang = self::is($lang);
-            if($lang){
-                  foreach(App::config()->settings->site->lang->available as $code => $alias){
-                        if($code == $lang) return $alias;
-                  }
-            }
-            return false;
-      }
-
-      /**
-      * Get the current language code
-      * @return string
-      */
-      static function current()
-      {
-            return App::router()->lang;
-      }
-
-      /**
-      * Get the current short language code
-      * @return string
-      */
-      static function short()
-      {
-            return substr(self::current(),0,2);
       }
 }
