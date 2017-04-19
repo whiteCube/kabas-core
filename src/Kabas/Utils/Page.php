@@ -23,4 +23,13 @@ class Page
       {
             return App::content()->pages->getCurrent()->id;
       }
+
+      /**
+       * Get the name of the rendered template
+       * @return string
+       */
+      static function template()
+      {
+            return App::content()->pages->getCurrent()->template;
+      }
 }
