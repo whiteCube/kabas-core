@@ -128,7 +128,7 @@ class Item
                   $this->error = true;
                   return false;
             }
-            $this->path = realpath($path);
+            $this->path = realpath(ROOT_PATH . DS . trim($path, '\\/'));
             if(!$this->path){
                   $this->error = true;
                   return false;

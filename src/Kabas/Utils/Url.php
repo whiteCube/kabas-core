@@ -68,8 +68,8 @@ class Url
        */
       static function fromPath($path)
       {
-            if(strpos($path, BASE_PATH) !== 0) return false;
-            $path = trim(str_replace(DS, '/', substr($path, strlen(BASE_PATH))), '/');
+            if(strpos($path, PUBLIC_PATH) !== 0) return false;
+            $path = trim(str_replace(DS, '/', substr($path, strlen(PUBLIC_PATH))), '/');
             return self::base() . '/' . $path;
       }
 
