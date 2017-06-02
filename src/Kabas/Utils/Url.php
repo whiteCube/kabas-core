@@ -107,11 +107,18 @@ class Url
             if(!$lang->isDefault || !App::config()->get('lang.hideDefault')){
                   $url[] = $lang->slug;
             }
-            $url[] = self::fillRouteWithParams($route, $params);
+            $url[] = self::fillRouteWithParams($route, $params, $lang);
             return rtrim(implode('/', $url), '/');
       }
 
-      protected static function fillRouteWithParams($route, $params)
+      /**
+       * Returns an absolute URL for the given route
+       * @param  Kabas\Http\Route $route
+       * @param  array $params
+       * @param  Kabas\Config\Language $lang
+       * @return string
+       */
+      protected static function fillRouteWithParams($route, $params, $lang)
       {
             $str = $route->string;
             foreach($route->parameters as $parameter){

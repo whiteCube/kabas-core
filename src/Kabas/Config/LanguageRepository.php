@@ -90,13 +90,14 @@ class LanguageRepository
     }
 
     /**
-    * Returns requested language or default based on mixed argument
+    * Returns requested language or current if given null or default based on mixed argument
     * @param mixed $locale
     * @return \Kabas\Config\Language
     */
-    public function getOrDefault($locale)
+    public function getOrDefault($locale = null)
     {
         if(is_a($locale, Language::class)) return $locale;
+        if(is_null($locale)) return $this->getCurrent();
         if($this->is($locale)) return $this->find($locale);
         return $this->getDefault();
     }
