@@ -35,9 +35,10 @@ class BaseContainer
       /**
        * Get item if it exists
        * @param  string $id
+       * @param  mixed $lang
        * @return object
        */
-      public function get($id)
+      public function get($id, $lang = null)
       {
             if($this->has($id)) return $this->items[$id];
             return false;
@@ -56,11 +57,13 @@ class BaseContainer
 
       /**
        * Returns path to content files
+       * @param null|Kabas\Config\Language $lang
        * @return string
        */
-      protected function getPath()
+      protected function getPath($lang = null)
       {
-            return CONTENT_PATH . DS . Lang::getCurrent()->locale;
+            $lang = Lang::getOrDefault($lang);
+            return CONTENT_PATH . DS . $lang->original;
       }
 
       /**

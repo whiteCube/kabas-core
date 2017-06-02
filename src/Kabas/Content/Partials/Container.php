@@ -37,9 +37,9 @@ class Container extends BaseContainer
        * Returns path to partials directory
        * @return string
        */
-      protected function getPath()
+      protected function getPath($lang = null)
       {
-            return parent::getPath() . DS . 'partials';
+            return parent::getPath($lang) . DS . 'partials';
       }
 
       /**

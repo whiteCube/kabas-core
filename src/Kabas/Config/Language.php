@@ -8,16 +8,18 @@ use WhiteCube\Lingua\Service as Lingua;
 
 class Language
 {
-    public $locale;
+    public $original;
     public $slug;
     public $label;
     public $native;
     public $php;
+    public $locale;
     public $isCurrent = false;
     public $isDefault = false;
 
     public function __construct(string $locale, array $args, $isDefault = false)
     {
+        $this->original = $locale;
         $this->locale = $this->parseLocale($locale);
         if(!$this->locale) return;
         $this->slug = $args['slug'] ?? $this->extractSlug();

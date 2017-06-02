@@ -12,7 +12,7 @@ class RouteNotFound extends Route
             $this->page = '404';
       }
 
-      public function matches($route)
+      public function matches($route, $lang)
       {
             return false;
       }
