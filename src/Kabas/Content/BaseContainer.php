@@ -2,7 +2,7 @@
 
 namespace Kabas\Content;
 
-use \Kabas\App;
+use \Kabas\Utils\Lang;
 use \Kabas\Utils\File;
 
 class BaseContainer
@@ -60,7 +60,7 @@ class BaseContainer
        */
       protected function getPath()
       {
-            return CONTENT_PATH . DS . App::router()->lang;
+            return CONTENT_PATH . DS . Lang::getCurrent()->locale;
       }
 
       /**

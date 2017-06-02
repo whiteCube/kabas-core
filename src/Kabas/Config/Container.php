@@ -12,6 +12,7 @@ class Container
       {
             $this->settings = $settings;
             $this->models = $models;
+            $this->languages = new LanguageRepository($this->settings->pluck('lang.available'));
             $this->initDriver();
       }
 

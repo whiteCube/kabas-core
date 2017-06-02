@@ -18,13 +18,6 @@ class Router
       protected $route;
 
       /**
-       * Lang code of current request
-       * as defined in /config/site
-       * @var string
-       */
-      public $lang;
-
-      /**
        * Current matching route
        * @var object
        */
@@ -57,7 +50,7 @@ class Router
             $this->query = $this->getQuery($_SERVER['REQUEST_URI']);
             $query = $this->getCleanQuery($this->query);
             $this->route = $query->route;
-            $this->setLang($query->lang);
+            Lang::set($query->lang ? $query->lang : $this->detectLang());
       }
 
       /**
@@ -151,7 +144,7 @@ class Router
             $o = new \stdClass();
             $o->lang = null;
             $o->route = null;
-            if(isset($a[1]) && $lang = Lang::is($a[1])){
+            if(isset($a[1]) && $lang = Lang::find($a[1])){
                   $o->lang = $lang;
                   $o->route = substr($uri, strlen($a[0]));
             }
@@ -162,26 +155,13 @@ class Router
       }
 
       /**
-       * Sets current language. If not given, language will be detected
-       * @param string $lang
-       * @return string
-       */
-
-      protected function setLang($lang = null)
-      {
-            $this->lang = $lang ? $lang : $this->detectLang();
-      }
-
-      /**
        * Trys to get the browser's language.
-       * If site doesn't support said lang, returns the default one.
        * @return string
        */
       protected function detectLang()
       {
-            $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE'])[0];
-            if($lang = Lang::is($lang)) return $lang;
-            return Lang::getDefault();
+            $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            if(isset($lang[0])) return $lang[0];
       }
 
       /**

@@ -21,7 +21,8 @@
         "intervention/image": "^2.3",
         "erusev/parsedown-extra": "^0.7.1",
         "seld/jsonlint": "^1.4",
-        "nyratas/php-console-log": "^1.1"
+        "nyratas/php-console-log": "^1.1",
+        "whitecube/lingua": "^1.0"
     },
     "autoload": {
         "psr-4": {

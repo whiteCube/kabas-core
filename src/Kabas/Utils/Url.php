@@ -2,9 +2,9 @@
 
 namespace Kabas\Utils;
 
-use \Kabas\App;
-use \Kabas\Utils\Assets;
-use \Kabas\Utils\Lang;
+use Kabas\App;
+use Kabas\Utils\Lang;
+use Kabas\Http\Route;
 
 class Url
 {
@@ -12,10 +12,10 @@ class Url
        * Get the URI to the desired page
        * @param  string $id
        * @param  array $params (optionnal)
-       * @param  string $lang (optionnal)
+       * @param  mixed $lang (optionnal)
        * @return string
        */
-      static function to($id, $params = [], $lang = null)
+      static function to(string $id, array $params = [], $lang = null)
       {
             $route = App::router()->getRouteByPage($id);
             if (!$route) throw new \Exception('Page does not exist');
@@ -34,7 +34,7 @@ class Url
 
       /**
        * Generate an URL to the current page in another language.
-       * @param  string $lang
+       * @param  mixed $lang
        * @return string
        */
       static function lang($lang)
@@ -74,18 +74,6 @@ class Url
       }
 
       /**
-       * Returns an URL-clean version of the language
-       * @param  string $lang
-       * @return string
-       */
-      static function getUrlLang($lang)
-      {
-            $lang = Lang::is($lang);
-            if($lang && $lang !== Lang::getDefault()) return Lang::alias($lang);
-            return false;
-      }
-
-      /**
        * Returns Kabas-parsed URL
        * @param  string $url
        * @return object
@@ -105,27 +93,22 @@ class Url
             return App::router()->extractRoute($url);
       }
 
-      protected static function generate($route, $params = [], $lang = null)
+      /**
+       * Returns an absolute URL for the given route
+       * @param  Kabas\Http\Route $route
+       * @param  array $params
+       * @param  mixed $lang
+       * @return string
+       */
+      protected static function generate(Route $route, array $params = [], $lang = null)
       {
-            $params = self::makeParams($params, $route);
-            return self::base() . self::getUrlLangString($lang) . self::fillRouteWithParams($route, $params);
-      }
-
-      protected static function makeParams($params, $route)
-      {
-            if(!is_array($params)) $params = [$route->parameters[0]->variable => $params];
-            return $params;
-      }
-
-      protected static function getUrlLangString($lang){
-            if($lang = self::getUrlLangAlias($lang)) return '/' . $lang;
-            return '';
-      }
-
-      protected static function getUrlLangAlias($lang)
-      {
-            if($lang) return self::getUrlLang($lang);
-            return self::getUrlLang(App::router()->lang);
+            //    TODO : do not return the default language's slug when
+            //    config asked to hide it in the URL
+            $lang = Lang::getOrDefault($lang);
+            $url = self::base();
+            $url .= '/' . $lang->slug;
+            $url .= self::fillRouteWithParams($route, $params);
+            return rtrim($url, '/');
       }
 
       protected static function fillRouteWithParams($route, $params)
