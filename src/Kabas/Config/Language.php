@@ -11,6 +11,7 @@ class Language
     public $slug;
     public $label;
     public $native;
+    public $php;
     public $isCurrent = false;
 
     public function __construct(string $locale, array $args)
@@ -20,6 +21,7 @@ class Language
         $this->slug = $args['slug'] ?? $this->extractSlug();
         $this->label = $args['label'] ?? $this->extractLabel();
         $this->native = $args['native'] ?? $this->extractNative();
+        $this->php = $args['php'] ?? $this->locale->toPHP();
     }
 
     /**
@@ -29,7 +31,7 @@ class Language
     public function activate()
     {
         $this->isCurrent = true;
-        setlocale(LC_ALL, $this->locale->toPHP());
+        setlocale(LC_ALL, $this->php);
     }
 
     /**
