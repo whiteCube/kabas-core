@@ -103,12 +103,12 @@ class Url
       protected static function generate(Route $route, array $params = [], $lang = null)
       {
             $lang = Lang::getOrDefault($lang);
-            $url = self::base();
+            $url = [self::base()];
             if(!$lang->isDefault || !App::config()->get('lang.hideDefault')){
-                  $url .= '/' . $lang->slug;
+                  $url[] = $lang->slug;
             }
-            $url .= '/' . self::fillRouteWithParams($route, $params);
-            return rtrim($url, '/');
+            $url[] = self::fillRouteWithParams($route, $params);
+            return rtrim(implode('/', $url), '/');
       }
 
       protected static function fillRouteWithParams($route, $params)
