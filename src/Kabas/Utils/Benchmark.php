@@ -22,16 +22,26 @@ class Benchmark
       }
 
       /**
+       * Displays the elapsed time for a timer.
+       * @param  string $name
+       */
+      static function inspect($name)
+      {
+            if(!array_key_exists($name, self::$benchmarks)) throw new \Exception('No benchmarks named ' . $name . ' currently running');
+            $end = microtime(true);
+            $time = $end - self::$benchmarks[$name];
+            $time = sprintf('%0.7f', $time);
+            return '<pre>🏁 <strong>Benchmark</strong>: "' . $name . '" has been running for ' . $time . ' seconds. </pre>';
+      }
+
+      /**
        * Stops the specified timer and displays the elapsed time.
        * @param  string $name
        */
       static function stop($name)
       {
-            $end = microtime(true);
-            $time = $end - self::$benchmarks[$name];
-            $time = sprintf('%0.7f', $time);
+            $feedback = self::inspect($name);
             unset(self::$benchmarks[$name]);
-
-            echo '<pre>🏁 <strong>Benchmark</strong>: "' . $name . '" took ' . $time . ' seconds. </pre>';
+            return $feedback;
       }
 }
