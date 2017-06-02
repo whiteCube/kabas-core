@@ -102,12 +102,12 @@ class Url
        */
       protected static function generate(Route $route, array $params = [], $lang = null)
       {
-            //    TODO : do not return the default language's slug when
-            //    config asked to hide it in the URL
             $lang = Lang::getOrDefault($lang);
             $url = self::base();
-            $url .= '/' . $lang->slug;
-            $url .= self::fillRouteWithParams($route, $params);
+            if(!$lang->isDefault || !App::config()->get('lang.hideDefault')){
+                  $url .= '/' . $lang->slug;
+            }
+            $url .= '/' . self::fillRouteWithParams($route, $params);
             return rtrim($url, '/');
       }
 
@@ -124,6 +124,6 @@ class Url
                         $str = str_replace($parameter->string, '', $str);
                   }
             }
-            return $str;
+            return trim($str, '/');
       }
 }

@@ -6,10 +6,12 @@ use Kabas\App;
 
 class LanguageRepository
 {
+    protected $default;
     protected $available = [];
 
-    public function __construct(array $available)
+    public function __construct(array $available, string $default)
     {
+        $this->default = $default;
         foreach ($available as $locale => $args) {
             $locale = is_numeric($locale) ? $args : $locale;
             $args = is_array($args) ? $args : [];
@@ -26,7 +28,8 @@ class LanguageRepository
     public function register(string $locale, array $args = [])
     {
         if($this->find($locale)) return false;
-        $language = new Language($locale, $args);
+        $default = ($this->default === $locale);
+        $language = new Language($locale, $args, $default);
         if(!$language->locale) return false;
         $this->available[] = $language;
         return $language;
@@ -69,7 +72,9 @@ class LanguageRepository
     */
     public function getDefault()
     {
-        return $this->find(App::config()->get('lang.default'));
+        foreach ($this->available as $language) {
+            if($language->isDefault) return $language;
+        }
     }
 
     /**

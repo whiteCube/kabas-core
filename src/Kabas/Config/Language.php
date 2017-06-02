@@ -2,6 +2,7 @@
 
 namespace Kabas\Config;
 
+use Kabas\App;
 use Kabas\Utils\Lang;
 use WhiteCube\Lingua\Service as Lingua;
 
@@ -13,8 +14,9 @@ class Language
     public $native;
     public $php;
     public $isCurrent = false;
+    public $isDefault = false;
 
-    public function __construct(string $locale, array $args)
+    public function __construct(string $locale, array $args, $isDefault = false)
     {
         $this->locale = $this->parseLocale($locale);
         if(!$this->locale) return;
@@ -22,6 +24,7 @@ class Language
         $this->label = $args['label'] ?? $this->extractLabel();
         $this->native = $args['native'] ?? $this->extractNative();
         $this->php = $args['php'] ?? $this->locale->toPHP();
+        $this->isDefault = $isDefault;
     }
 
     /**
