@@ -143,6 +143,7 @@ class Commander
      */
     protected function makeModel()
     {
+        //  TODO : this needs to be refactored for new models.
         $model = $this->arguments[0];
         $driver = $this->arguments[1];
         if(!$model) die("\n\033[31mKabas: Missing argument 1 for make:model\nPlease specify the name of your model (e.g. php kabas make:model news eloquent)\n");
@@ -228,13 +229,13 @@ class Commander
     protected function makeContent($type, $structure)
     {
         $name = array_shift($this->arguments);
-        echo 'Kabas: making content for ' . $type . ' ' . $name;
+        echo 'Kabas: making content for ' . $type . ' "' . $name . '"';
         foreach($this->checkLangs($this->arguments) as $lang) {
             $fields = $this->fetchFields($structure, $name);
             if($type == 'object') $this->generateObjectFile($name, $lang, $fields);
             else $this->generateContentFile($name, $type . 's', $lang, $fields);
         }
-        echo "\n\033[32mDone!";
+        echo "\nDone!";
     }
 
     /**
@@ -275,21 +276,18 @@ class Commander
     }
 
     /**
-     * Checks that specified langs exist in application.
-     * @param  array $langs
+     * Checks that specified languages exist in application.
+     * @param  array $languages
      * @return array
      */
-    protected function checkLangs($langs)
+    protected function checkLangs($languages)
     {
-        if(!$langs) return $this->lang;
-        else {
-            foreach($langs as $lang) {
-                if(!in_array($lang, $this->lang)){
-                    die("\n\033[31mKabas: Lang $lang does not currently exist. Please create the appropriate content subfolder.\n");
-                }
-            }
-            return $langs;
+        if(!$languages) return array_map(function($item){ return $item->original;}, $this->languages->getAll());
+        foreach($languages as $locale) {
+            if($this->languages->has($locale)) continue;
+            throw new \Exception('Locale "' . $locale . '" is not defined in the lang.php configuration file.');
         }
+        return $languages;
     }
 
     /**
@@ -320,48 +318,43 @@ class Commander
      */
     protected function formatFieldContent($key, $field)
     {
-        switch($field->type){
+        switch($field->type ?? 'text'){
             case 'image': return $this->getImageFieldContent($key, $field); break;
             case 'number': return $this->getNumberFieldContent($key, $field); break;
             case 'checkbox':
             case 'radio':
             case 'select': return $this->getSelectableFieldContent($key, $field); break;
         }
-        if(@$field->default !== null) return $field->default;
+        if(!is_null($field->default ?? null)) return $field->default;
         return '';
     }
 
     protected function getImageFieldContent($key, $field)
     {
-        $o = new \stdClass();
-        $o->path = '';
-        $o->alt = '';
-        if(isset($field->default)){
-            if(is_object($field->default) && isset($field->default->path) && isset($field->default->alt)){
-                $o->path = is_string($field->default->path) ? $field->default->path : 'default-invalid-path';
-                $o->alt = is_string($field->default->alt) ? $field->default->alt : 'default-invalid-alt';
-            }
-            else die("\n\033[31mKabas: default value for image field \"$key\" is invalid.\n");
+        $image = new \stdClass();
+        $image->path = '';
+        $image->alt = '';
+        if(!isset($field->default)) return $image;
+        if(!is_object($field->default)){
+            throw new \Exception('default value for image field "' . $key . '" is invalid.');
         }
-        return $o;
+        $image->path = is_string($field->default->path ?? null) ? $field->default->path : '';
+        $image->alt = is_string($field->default->alt ?? null) ? $field->default->alt : '';
+        return $image;
     }
 
     protected function getNumberFieldContent($key, $field)
     {
-        if(@$field->default !== null){
-            if(is_numeric($field->default)) return $field->default;
-            else die("\n\033[31mKabas: default value for number field \"$key\" is invalid.\n");
-        }
-        return 0;
+        if(is_null($field->default ?? null)) return 0;
+        if(is_numeric($field->default)) return $field->default;
+        throw new \Exception('default value for number field "' . $key . '" is invalid.');
     }
 
     protected function getSelectableFieldContent($key, $field)
     {
-        if(@$field->default !== null){
-            if(is_array($field->default)) return $field->default;
-            else die("\n\033[31mKabas: default value for " . $field->type . " field \"$key\" is invalid.\n");
-        }
-        return [];
+        if(is_null($field->default ?? null)) return [];
+        if(is_array($field->default)) return $field->default;
+        throw new \Exception('default value for ' . $field->type . ' field "' . $key . '" is invalid.');
     }
 
     protected function dir($path){
