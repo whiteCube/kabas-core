@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ef225711598f068d7314248924db6b3",
+    "content-hash": "97db7c85b1a5dc24750208fb0626c60f",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -766,7 +766,7 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v3.3.0",
+            "version": "v3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
@@ -828,6 +828,70 @@
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
             "time": "2017-05-22T07:42:36+00:00"
+        },
+        {
+            "name": "whitecube/lingua",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/whiteCube/lingua.git",
+                "reference": "57f7b40d13037a887fecba807a18e79482f5990c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/whiteCube/lingua/zipball/57f7b40d13037a887fecba807a18e79482f5990c",
+                "reference": "57f7b40d13037a887fecba807a18e79482f5990c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WhiteCube\\Lingua\\": "src/Lingua/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "WhiteCube",
+                    "email": "hello@whitecube.be",
+                    "homepage": "http://www.whitecube.be",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Toon Van den Bos",
+                    "email": "toon@whitecube.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Adrien Leloup",
+                    "email": "adrien@whitecube.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP-7 language codes converter, from and to the most common formats (ISO, W3C, PHP and human-readable names).",
+            "keywords": [
+                "BCP-47",
+                "codes",
+                "conversion",
+                "iso",
+                "language",
+                "locales",
+                "localization",
+                "translate",
+                "translation"
+            ],
+            "time": "2017-06-01T21:49:09+00:00"
         }
     ],
     "packages-dev": [
@@ -1490,16 +1554,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.2.0",
+            "version": "6.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "23bcb03e5c6a8b8067f6c2b28f6cd84b2df321cc"
+                "reference": "16999a1e9a8a25d68f0ab8cc8ab818b043ad5374"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/23bcb03e5c6a8b8067f6c2b28f6cd84b2df321cc",
-                "reference": "23bcb03e5c6a8b8067f6c2b28f6cd84b2df321cc",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/16999a1e9a8a25d68f0ab8cc8ab818b043ad5374",
+                "reference": "16999a1e9a8a25d68f0ab8cc8ab818b043ad5374",
                 "shasum": ""
             },
             "require": {
@@ -1544,7 +1608,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "6.1.x-dev"
+                    "dev-master": "6.2.x-dev"
                 }
             },
             "autoload": {
@@ -1570,7 +1634,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-02T08:02:48+00:00"
+            "time": "2017-06-02T12:24:37+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
