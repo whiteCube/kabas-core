@@ -66,8 +66,8 @@ class LanguageRepositoryTest extends TestCase
     {
         $available = ['en-GB' => ['slug' => 'en', 'label' => 'English']];
         $default = '';
-        $this->repo = new LanguageRepository($available, $default);
-        $this->assertNull($this->repo->getDefault());
+        $repo = new LanguageRepository($available, $default);
+        $this->assertNull($repo->getDefault());
     }
 
 }
