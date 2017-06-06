@@ -7,6 +7,8 @@ interface ContainerInterface {
     public function set(string $key, $value);
 
     public function get(string $key);
+
+    public function pull(string $key);
     
     public function has(string $key) : bool;
 

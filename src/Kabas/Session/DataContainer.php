@@ -21,6 +21,13 @@ class DataContainer implements ContainerInterface
         return $this->data[$key] ?? null;
     }
 
+    public function pull(string $key)
+    {
+        $value = $this->get($key);
+        $this->forget($key);
+        return $value;
+    }
+
     public function has(string $key) : bool
     {
         return isset($this->data[$key]);

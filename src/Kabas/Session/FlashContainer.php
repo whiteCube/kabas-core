@@ -23,6 +23,13 @@ class FlashContainer implements ContainerInterface
         return $this->old[$key] ?? $this->new[$key] ?? null;
     }
 
+    public function pull(string $key)
+    {
+        $value = $this->get($key);
+        $this->forget($key);
+        return $value;
+    }
+
     public function has(string $key) : bool
     {
         return isset($this->new[$key]) ? true : isset($this->old[$key]);

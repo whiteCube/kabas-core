@@ -37,6 +37,14 @@ class FlashTest extends TestCase
     }
 
     /** @test */
+    public function can_pull_data()
+    {
+        $this->session->flash()->set('foo', 'bar');
+        $this->assertEquals('bar', $this->session->flash()->pull('foo'));
+        $this->assertFalse($this->session->flash()->has('foo'));
+    }
+
+    /** @test */
     public function can_flush_all_data()
     {
         $this->session->flash()->set('test', 'value');

@@ -27,6 +27,14 @@ class SessionTest extends TestCase
     }
 
     /** @test */
+    public function can_pull_data()
+    {
+        $this->session->set('foo', 'bar');
+        $this->assertEquals('bar', $this->session->pull('foo'));
+        $this->assertFalse($this->session->has('foo'));
+    }
+
+    /** @test */
     public function can_return_null_when_key_is_undefined()
     {
         $this->assertNull($this->session->get('test-null'));
