@@ -128,13 +128,13 @@ class Commander
      */
     protected function makeThemeContentFile($type, $example)
     {
-        $name = $this->arguments[0];
-        if(!$name) die("\n\033[31mKabas: Missing argument 1 for " . $this->command . "\nPlease specify the name of your " . $type . " (e.g. php kabas " . $this->command . " " . $example . ")\n");
-        echo "Kabas: Making " . $type . " " . $name;
+        $name = $this->arguments[0] ?? null;
+        if(!$name) throw new \Exception("Missing argument 1 for '" . $this->command . "'. Please specify the name of your " . $type . " (e.g. 'php kabas " . $this->command . " " . $example . "')");
+        echo 'Kabas: Making ' . $type . ' "' . $name . '"';
         $this->makeControllerFile($name, $type);
         $this->makeViewFile($name, $type);
         $this->makeStructureFile($name, $type);
-        echo "\n\033[32mDone!";
+        echo "\nDone!";
     }
 
     /**
@@ -180,8 +180,8 @@ class Commander
     protected function makeControllerFile($name, $type)
     {
         $file = $this->dir(THEME_CONTROLLERS . DS . $type . 's') . DS . ucfirst($name) . '.php';
-        $fileContent = File::read(TEMPLATES . 'Controller.php');
-        $fileContent = str_replace('##THEME##', $this->theme, $fileContent);
+        $fileContent = File::read(TEMPLATES_PATH . DS . 'Controller.php');
+        $fileContent = str_replace('##THEME##', THEME, $fileContent);
         $fileContent = str_replace('##TYPE##', ucfirst($type . 's'), $fileContent);
         $fileContent = str_replace('##TYPECONTROLLER##', Text::toNamespace($type . 'Controller'), $fileContent);
         $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
