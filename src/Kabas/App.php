@@ -10,7 +10,7 @@ class App extends Container
       * The current Kabas version
       * @var string
       */
-      const VERSION = '0.1.4';
+      const VERSION = '0.1.5';
 
       /**
        * Activate debug mode
