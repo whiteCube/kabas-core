@@ -9,83 +9,83 @@ use \Kabas\App;
 
 class View
 {
-      private static $isFirst;
+    private static $isFirst;
 
-      public function __construct($_view, $_data, $_directory)
-      {
-            if(self::isFirstView($_view)) ob_start();
+    public function __construct($_view, $_data, $_directory)
+    {
+        if(self::isFirstView($_view)) ob_start();
 
-            if(count($_data)) extract($_data);
-            include($this->getTemplateFile($_view, $_directory));
+        if(count($_data)) extract($_data);
+        include($this->getTemplateFile($_view, $_directory));
 
-            if(self::isFirstView($_view)) $this->showPage();
-      }
+        if(self::isFirstView($_view)) $this->showPage();
+    }
 
-      /**
-       * Check if view is the root one or not.
-       * @param  string  $view
-       * @return boolean
-       */
-      static function isFirstView($view)
-      {
-            if(!isset(self::$isFirst)) {
-                  self::$isFirst = $view;
-                  return true;
-            }
-            else if(self::$isFirst === $view) return true;
-            return false;
-      }
+    /**
+     * Check if view is the root one or not.
+     * @param  string  $view
+     * @return boolean
+     */
+    static function isFirstView($view)
+    {
+        if(!isset(self::$isFirst)) {
+            self::$isFirst = $view;
+            return true;
+        }
+        else if(self::$isFirst === $view) return true;
+        return false;
+    }
 
-      /**
-       * Includes the template
-       * @param  string $view
-       * @param  object $data
-       * @return void
-       */
-      static function make($view, $data, $type = '')
-      {
-            return new self($view,$data,$type);
-      }
+    /**
+     * Includes the template
+     * @param  string $view
+     * @param  object $data
+     * @return void
+     */
+    static function make($view, $data, $type = '')
+    {
+        return new self($view,$data,$type);
+    }
 
-      /**
-       * Looks for the template file within its direcotry.
-       * @param  string $view
-       * @return string
-       */
-      protected function getTemplateFile($view, $directory)
-      {
-            $directory = THEME_PATH . DS . 'views' . DS . $directory;
-            $view = $this->checkViewExtension($view);
-            return $directory . DS . $view;
-      }
+    /**
+     * Looks for the template file within its direcotry.
+     * @param  string $view
+     * @return string
+     */
+    protected function getTemplateFile($view, $directory)
+    {
+        $directory = THEME_PATH . DS . 'views' . DS . $directory;
+        $view = $this->checkViewExtension($view);
+        return $directory . DS . $view;
+    }
 
-      /**
-       * Checks if view string contains .php extension
-       * and adds it if needed.
-       * @param  string $view
-       * @return string
-       */
-      protected function checkViewExtension($view)
-      {
-            if(strpos($view, '.php') !== false) return $view;
-            return $view . '.php';
-      }
+    /**
+     * Checks if view string contains .php extension
+     * and adds it if needed.
+     * @param  string $view
+     * @return string
+     */
+    protected function checkViewExtension($view)
+    {
+        if(strpos($view, '.php') !== false) return $view;
+        return $view . '.php';
+    }
 
-      protected function showPage()
-      {
-            $page = ob_get_contents();
-            ob_end_clean();
-            $page = Assets::load($page);
-            echo $page;
-      }
+    protected function showPage()
+    {
+        $page = ob_get_contents();
+        ob_end_clean();
+        $page = Assets::load($page);
+        echo $page;
+    }
 
-      /**
-       * Shows the default 404 page.
-       * @return void
-       */
-      static function notFound()
-      {
-            if(ob_get_level()) ob_clean();
-            require '404.php';
-      }
+    /**
+     * Shows the default 404 page.
+     * @return void
+     */
+    static function notFound()
+    {
+        if(ob_get_level()) ob_clean();
+        require '404.php';
+    }
 }

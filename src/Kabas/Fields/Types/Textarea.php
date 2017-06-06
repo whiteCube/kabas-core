@@ -6,10 +6,10 @@ use \Kabas\Fields\Textual;
 
 class Textarea extends Textual
 {
-      protected $type = "textarea";
+    protected $type = "textarea";
 
-      protected function parse($value)
-      {
-            return nl2br($value);
-      }
+    protected function parse($value)
+    {
+        return nl2br($value);
+    }
 }
