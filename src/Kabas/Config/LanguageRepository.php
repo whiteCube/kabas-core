@@ -40,7 +40,7 @@ class LanguageRepository
     * @param string $locale
     * @return boolean
     */
-    public function is($locale)
+    public function has($locale)
     {
         if($this->find($locale)) return true;
         return false;
@@ -98,7 +98,7 @@ class LanguageRepository
     {
         if(is_a($locale, Language::class)) return $locale;
         if(is_null($locale)) return $this->getCurrent();
-        if($this->is($locale)) return $this->find($locale);
+        if($this->has($locale)) return $this->find($locale);
         return $this->getDefault();
     }
 

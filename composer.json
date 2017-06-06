@@ -26,7 +26,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Kabas\\": "src/Kabas/"
+            "Kabas\\": "src/Kabas/",
+            "Tests\\": "tests/"
         }
     },
     "require-dev": {

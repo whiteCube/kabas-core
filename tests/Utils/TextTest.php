@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use Kabas\Utils\Text;
 use PHPUnit\Framework\TestCase;
 

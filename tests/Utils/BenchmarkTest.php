@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use Kabas\Utils\Benchmark;
 use PHPUnit\Framework\TestCase;
 
