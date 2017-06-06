@@ -120,6 +120,7 @@ class Url
      */
     protected static function fillRouteWithParams($route, $params, $lang)
     {
+        if(!isset($route->strings[$lang->original])) return;
         $str = $route->strings[$lang->original];
         foreach($route->parameters as $parameter){
             if($parameter->isRequired && !array_key_exists($parameter->variable, $params)){
