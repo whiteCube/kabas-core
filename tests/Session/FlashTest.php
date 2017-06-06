@@ -87,12 +87,23 @@ class FlashTest extends TestCase
     }
 
     /** @test */
-    public function can_flash_old_key_again()
+    public function can_flash_single_old_key_again()
     {
         HandlerMock::$session['flash'] = ['foo' => 'bar'];
         $this->session = new Manager(new HandlerMock());
         $this->session->flash()->again('foo');
         $this->assertTrue(array_key_exists('foo', $this->session->flash()->extract()));
+    }
+
+    /** @test */
+    public function can_flash_many_old_keys_again()
+    {
+        HandlerMock::$session['flash'] = ['foo' => 'bar', 'test' => 'value', 'old' => 'value'];
+        $this->session = new Manager(new HandlerMock());
+        $this->session->flash()->again(['foo', 'test']);
+        $this->assertTrue(array_key_exists('foo', $this->session->flash()->extract()));
+        $this->assertTrue(array_key_exists('test', $this->session->flash()->extract()));
+        $this->assertFalse(array_key_exists('old', $this->session->flash()->extract()));
     }
 
     /** @test */

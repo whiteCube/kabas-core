@@ -41,10 +41,13 @@ class FlashContainer implements ContainerInterface
         if(isset($this->new[$key])) unset($this->new[$key]);
     }
 
-    public function again(string $key)
+    public function again($keys)
     {
-        if(!isset($this->old[$key])) return;
-        $this->new[$key] = $this->old[$key];
+        if(!is_array($keys)) $keys = [$keys];
+        foreach ($keys as $key) {
+            if(!isset($this->old[$key])) continue;
+            $this->new[$key] = $this->old[$key];
+        }
     }
 
     public function reflash()
