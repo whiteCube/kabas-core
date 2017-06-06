@@ -4,6 +4,7 @@ namespace Kabas\Drivers;
 
 use \Kabas\App;
 use \Kabas\Utils\File;
+use \Kabas\Utils\Lang;
 use \Kabas\Exceptions\ModelNotFoundException;
 use \Kabas\Exceptions\MassAssignmentException;
 
@@ -71,8 +72,7 @@ class Json implements \IteratorAggregate
        */
       public function getContentPath()
       {
-            $lang = App::config()->settings->site->lang->active;
-            return CONTENT_PATH . DS . $lang . DS . 'objects' . DS . self::$modelInfo->table;
+            return CONTENT_PATH . DS . Lang::getCurrent()->locale . DS . 'models' . DS . self::$modelInfo->table;
       }
 
       /**

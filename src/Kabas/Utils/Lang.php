@@ -3,65 +3,18 @@
 namespace Kabas\Utils;
 
 use \Kabas\App;
+use \Kabas\Utils\Url;
 
 class Lang
 {
 
       /**
-      * Determines if string is an available lang
-      * Returns lang code string or false
-      * @param $lang
-      * @return string
+      * Forwards static calls on the LanguageRepository
+      * @return mixed
       */
-      static function is($lang)
+      static function __callStatic($method, $args = [])
       {
-            foreach(static::getAvailable() as $code => $info){
-                  if($code == $lang || $info['slug'] == $lang) return $code;
-            }
-            return false;
-      }
-
-      /**
-      * Returns default lang code
-      * @return string
-      */
-      static function getDefault()
-      {
-            return static::is(App::config()->get('lang.default'));
-      }
-
-      /**
-      * Returns available langs
-      * @return object
-      */
-      static function getAvailable()
-      {
-            return App::config()->get('lang.available');
-      }
-
-      /**
-      * Returns slug for given lang code
-      * @return string
-      */
-      static function slug($lang = null)
-      {
-            if(is_null($lang)) $lang = static::current();
-            if($lang = self::is($lang)){
-                  if(isset(static::getAvailable()[$lang]['slug'])){
-                        return static::getAvailable()[$lang]['slug'];
-                  }
-                  return $lang;
-            }
-            return false;
-      }
-
-      /**
-      * Get the current language code
-      * @return string
-      */
-      static function current()
-      {
-            return App::router()->lang;
+            return call_user_func_array([App::config()->languages, $method], $args);
       }
 
       /**
@@ -70,12 +23,11 @@ class Lang
       */
       static function getMenu()
       {
-            $langs = self::getAvailable();
-
-            foreach ($langs as $code => $o) {
-                  $o->url = Url::lang($o->alias);
-                  $o->isActive = $code == self::current();
+            //    TODO : Should return an instance of a menu object
+            $languages = App::config()->languages->getAll();
+            foreach ($languages as $language) {
+                  $language->url = Url::lang($language->slug);
             }
-            return $langs;
+            return $languages;
       }
 }

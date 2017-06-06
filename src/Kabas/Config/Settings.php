@@ -38,6 +38,29 @@ class Settings
       }
 
       /**
+       * Removes data using the dots notation
+       * @param string $tree
+       * @return void
+       */
+      public function remove($tree)
+      {
+            $path = explode('.', $tree);
+            $this->removeInTree($this->tree, $path);
+      }
+
+      /**
+       * Finds data using the dots notation and removes it from tree afterwards
+       * @param string $tree
+       * @return multiple
+       */
+      public function pluck($tree)
+      {
+            $result = $this->get($tree);
+            $this->remove($tree);
+            return $result;
+      }
+
+      /**
        * Registers all defined config files recursively
        * @return void
        */
@@ -94,6 +117,23 @@ class Settings
             if(!isset($tree[$segment])) return;
             if(!count($path)) return $tree[$segment];
             return $this->findInTree($tree[$segment], $path);
+      }
+
+      /**
+       * Searches structure recursively for given path and removes last segment
+       * @param array $tree
+       * @param array $path
+       * @return void
+       */
+      protected function removeInTree(&$tree, $path)
+      {
+            $segment = array_shift($path);
+            if(!isset($tree[$segment])) return;
+            if(!count($path)) {
+                  unset($tree[$segment]);
+                  return;
+            }
+            return $this->removeInTree($tree[$segment], $path);
       }
 
 }
