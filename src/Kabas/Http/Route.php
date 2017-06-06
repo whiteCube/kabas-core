@@ -74,7 +74,7 @@ class Route
     protected function generateRegex(string $route)
     {
         if($route === '') return '/^\s*$/';
-        $regex = trim(strtolower($route), '/');
+        $regex = trim($route, '/');
         $regex = $this->upgradeParamsToRegex($regex);
         $regex = preg_replace('/([^\\\])\//', '$1\/', $regex);
         $regex = strlen($regex) ? '/^\/' . $regex . '\/?$/' : '/^\/?$/';
