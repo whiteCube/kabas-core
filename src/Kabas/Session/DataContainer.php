@@ -7,7 +7,7 @@ class DataContainer implements ContainerInterface
     private $data = [];
 
     /**
-     * Creates an instance and stores previously fetched dara
+     * Creates an instance and stores previously fetched data
      * @param array $data 
      * @return void
      */
