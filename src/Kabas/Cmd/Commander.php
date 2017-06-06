@@ -209,11 +209,11 @@ class Commander
     protected function makeStructureFile($name, $type)
     {
         $file = $this->dir(THEME_STRUCTURES . DS . $type . 's') . DS . $name;
-        $structure = ["fields" => new \stdClass];
+        $structure = ['fields' => new \stdClass];
         if($this->command == 'make:menu'){
             $structure = [
-                "item" => ["label" => ["type" => "text", "label" => "Name"], "target" => ["type" => "url", "label" => "Target page"]],
-                "fields" => new \stdClass
+                'item' => ['label' => ['type' => 'text', 'label' => 'Name'], 'target' => ['type' => 'url', 'label' => 'Target page']],
+                'fields' => new \stdClass
             ];
         }
         File::writeJson($structure, $file);
