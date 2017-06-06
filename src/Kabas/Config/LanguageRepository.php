@@ -57,7 +57,7 @@ class LanguageRepository
 
     /**
     * Returns current language
-    * @return \Kabas\Config\Language
+    * @return \Kabas\Config\Language|null
     */
     public function getCurrent()
     {
@@ -68,7 +68,7 @@ class LanguageRepository
 
     /**
     * Returns default language as defined in config
-    * @return \Kabas\Config\Language
+    * @return \Kabas\Config\Language|null
     */
     public function getDefault()
     {
