@@ -10,6 +10,10 @@
          bootstrap="./vendor/autoload.php"
 >
 
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml" />
+    </logging>
+
     <filter>
         <whitelist>
             <directory>src/Kabas</directory>
