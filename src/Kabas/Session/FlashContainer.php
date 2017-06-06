@@ -2,57 +2,56 @@
 
 namespace Kabas\Session;
 
-class FlashContainer
+class FlashContainer implements ContainerInterface
 {
-      protected $old;
-      protected $new;
+    private $old = [];
 
-      public function __construct($old)
-      {
-            $this->old = $old ? $old : new \stdClass;
-            $this->new = new \stdClass;
-      }
+    private $new = [];
 
-      public function __get($key)
-      {
-            if(isset($this->old->$key)) return $this->old->$key;
-            else if(isset($this->new->$key)) return $this->new->$key;
-            return false;
-      }
+    public function __construct(array $data)
+    {
+        $this->old = $data;
+    }
 
-      public function __set($key, $value)
-      {
-            $this->new->$key = $value;
-      }
+    public function set(string $key, $value)
+    {
+        $this->new[$key] = $value;
+    }
 
-      public function get()
-      {
-            return $this->new;
-      }
+    public function get(string $key)
+    {
+        return $this->old[$key] ?? $this->new[$key] ?? null;
+    }
 
-      public function reflash()
-      {
-            $this->new = (object) array_merge((array)$this->new, (array) $this->old);
-      }
+    public function has(string $key) : bool
+    {
+        return isset($this->new[$key]) ? true : isset($this->old[$key]);
+    }
 
-      public function keep($keys)
-      {
-            if(!is_array($keys)) $keys = [$keys];
+    public function forget(string $key)
+    {
+        if(isset($this->old[$key])) unset($this->old[$key]);
+        if(isset($this->new[$key])) unset($this->new[$key]);
+    }
 
-            foreach($keys as $key){
-                  if(isset($this->old->$key)) $this->new->$key = $this->old->$key;
-            }
-      }
+    public function again(string $key)
+    {
+        if(!isset($this->old[$key])) return;
+        $this->new[$key] = $this->old[$key];
+    }
 
-      public function has($key)
-      {
-            if(property_exists($this->old, $key)) return property_exists($this->old, $key);
-            else if(property_exists($this->new, $key)) return property_exists($this->new, $key);
-            else return false;
-      }
+    public function reflash()
+    {
+        $this->new = array_merge($this->new, $this->old);
+    }
 
-      public function isEmpty()
-      {
-            return empty((array) $this->old) && empty((array) $this->new);
-      }
+    public function flush()
+    {
+        $this->new = [];
+    }
+
+    public function extract() : array
+    {
+        return $this->new;
+    }
 }

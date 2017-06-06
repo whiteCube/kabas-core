@@ -56,7 +56,7 @@ class App extends Container
             $this->content->parse();
             $this->page = $this->router->getCurrent()->page;
             $this->response->init($this->page);
-            $this->session->write();
+            $this->session->save();
       }
 
       /**
@@ -127,7 +127,7 @@ class App extends Container
        */
       protected function registerBindings()
       {
-            $this->singleton('session', '\\Kabas\\Session\\SessionManager');
+            $this->singleton('session', '\\Kabas\\Session\\Manager');
             $this->singleton('config', '\\Kabas\\Config\\Container');
             $this->singleton('fields', '\\Kabas\\Fields\\Container');
             $this->singleton('router', '\\Kabas\\Http\\Router');
