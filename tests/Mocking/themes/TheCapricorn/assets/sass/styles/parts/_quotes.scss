@@ -1,0 +1,113 @@
+.quotes{
+	width: 100%;
+	max-width: s(820);
+	margin: 0 auto;
+	position: relative;
+	padding: s(138) 0;
+    
+    &__list{
+        position: relative;
+        overflow: hidden;
+    }
+    
+	&--active{
+		padding-bottom: s(154);
+	}
+}
+
+.quotesPagers{
+	display: none;
+	.quotes--active &{
+		display: block
+	}
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: s(95);
+	text-align: center;
+
+	&__item{
+		display: inline-block;
+		vertical-align: middle;
+		&+&{
+			margin-left: s(20);
+		}
+	}
+
+	&__link{
+		width: s(15);
+		height: s(15);
+		display: inline-block;
+		border-radius: 50%;
+		border: 1px solid $cHover;
+		background-color: transparent;
+		transition: 200ms background-color $ease-out-quad; 
+		@extend %textHidden;
+		
+		&--active{
+			background-color: $cHover;
+		}
+	}
+}
+
+.quote{
+    padding: s(0) s(20) s(0) s(20);
+
+	.quotes--active &{
+        @extend %cover;
+        transform: translate3d(0,0,0);
+        
+        &.quote--active{
+            transform: translate3d(0,0,0);
+            z-index: 10;
+        }
+
+        &.quote--right{
+            transform: translate3d(100% ,0,0);
+        }
+
+        &.quote--left{
+            transform: translate3d(-100% ,0,0);
+        }
+
+        &.quote--hidden{
+            @extend %hidden;
+            right: initial;
+            bottom: initial;
+        }
+    }
+
+    .quotes--anim &{
+        transition: 400ms transform $ease-out-quad;
+    }
+
+
+	&__title{
+		@extend %title;
+		@extend %title--center;
+		@extend %title--underline;
+	}
+
+	&__text{
+		@extend %classicText;
+		text-align: center;
+	}
+
+	&__author{
+		margin-top: s(17);
+		display: block;
+		text-transform: uppercase;
+		font-weight: 700;
+		color: $cBlack2;
+	}
+
+	&__authorLink{
+		color: $cBlack2;
+		transition: 200ms color $ease-out-quad;
+		&:hover, &:focus{
+			text-decoration: underline;
+			color: $cHover;
+		}
+	}
+}

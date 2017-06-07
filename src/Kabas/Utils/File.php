@@ -4,28 +4,23 @@ namespace Kabas\Utils;
 
 use Kabas\App;
 use Kabas\Exceptions\JsonException;
+use Kabas\Exceptions\FileNotFoundException;
 
 class File
 {
     /**
+     * TODO: ne plus devoir mettre l'extension .json dans $file
      * Get the contents of a json file
      * @param  string $file
      * @return object the json data
      */
     static function loadJson($file)
     {
-        if(file_exists($file)){
-            try {
-                $string = file_get_contents($file);
-                $json = json_decode($string);
-                if(!$json) throw new JsonException($file, $string);
-            }
-            catch (JsonException $e) {
-                echo $e->getMessage();
-                die();
-            }
-            return $json;
-        }
+        if(!file_exists($file)) throw new FileNotFoundException($file);
+        $string = file_get_contents($file);
+        $json = json_decode($string);
+        if(!$json) throw new JsonException($file, $string);
+        return $json;
     }
 
     /**
@@ -36,7 +31,7 @@ class File
      */
     static function writeJson($data, $path)
     {
-        file_put_contents($path . '.json', json_encode($data, JSON_PRETTY_PRINT));
+        self::write(json_encode($data, JSON_PRETTY_PRINT), $path . '.json');
     }
 
     /**
@@ -118,8 +113,7 @@ class File
     static function isJson($path)
     {
         $path_parts = pathinfo($path);
-        if($path_parts['extension'] === 'json') return true;
-        return false;
+        return $path_parts['extension'] === 'json';
     }
 
 }

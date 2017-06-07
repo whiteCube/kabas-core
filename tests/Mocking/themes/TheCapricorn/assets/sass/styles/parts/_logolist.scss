@@ -1,0 +1,32 @@
+.logoList{
+	background-color: $cBlue;
+	text-align: center;
+	padding: s(100) 0;
+
+	&__logos{
+		@extend .wrapper;
+	}
+}
+
+.logoItem{
+	position: relative;
+	width: 20%;
+	display: inline-block;
+	vertical-align: middle;
+	
+	&__link{
+		@extend %cover;	
+		@extend %textHidden;
+	}
+
+	&__title{
+		@extend %hidden;
+	}
+
+	&__img{
+		display: inline-block;
+		img{
+			display: inline-block;
+		}
+	}
+}

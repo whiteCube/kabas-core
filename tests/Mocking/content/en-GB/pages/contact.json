@@ -1,0 +1,9 @@
+{
+    "route": "/contact/",
+    "id": "contact",
+    "template": "home",
+    "title": "Page de contact",
+    "data": {
+
+    }
+}

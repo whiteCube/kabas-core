@@ -1,0 +1,170 @@
+.team{
+
+
+    padding: s(145) gutter(12) s(100);
+
+    &__title{
+        @extend %titleSmall;
+    }
+
+    &__container{
+        margin-top: s(70);
+        @extend %clearfix;
+    }
+}
+
+.teamItem{
+    width: col(4,12);
+    float: left;
+    padding-top: col(4,12)/375*250;
+    position: relative;
+    
+    &+&{
+        margin-left: gutter(12);
+    }
+
+    &__name{
+        padding-top: s(35);
+        text-align: center;
+        text-transform: uppercase;
+        font-family: $fRegular;
+        font-weight: 700;
+        font-size: s($s6);
+        line-height: s(24,$s6);
+        color: $cHover;
+        letter-spacing: ps_ls(20);
+        margin-bottom: s(10, $s6);
+    }
+
+    &__job{
+        text-align: center;
+        text-transform: uppercase;
+        font-size: s($s3);
+        line-height: s(24,$s3);
+        color: $cBlack;
+        letter-spacing: ps_ls(20);
+        padding-bottom: s(15, $s3);
+        position: relative;
+        margin-bottom: s(20);
+        &:after{
+            content: '';
+            position: absolute;
+            left: 50%;
+            margin-left: s(-15);
+            width: s(30);
+            bottom: 0;
+            height: 1px;
+            background-color: $cHover;
+        }
+    }
+
+    &__mail, &__phone{
+        display: block;
+        text-align: center;
+        letter-spacing: ps_ls(20);
+        line-height: s(24);
+        color: $cBlack;
+        transition: 200ms color $ease-out-quad;
+        &:hover, &:focus{
+            color: #000;
+            text-decoration: underline;
+        }
+    }
+
+    &__phone{
+        margin-top: s(10);
+    }
+
+    &__social{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        padding-top: 100%/375*250;
+        height: 0;
+        opacity: 0;
+        transition: 200ms opacity $ease-out-quad;
+        &:after{
+            content: '';
+            @extend %cover;
+            background-color: rgba($cHover, 0.72);
+        }
+    }
+
+    &__socialCenter{
+        z-index: 1;
+        text-align: center;
+        padding-bottom: s(20);
+        @extend %cover;
+        &:before{
+            content: '';
+            width: 0;
+            height: 100%;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+    }
+
+
+    &__socialItem{
+        width: s(30);
+        height: s(30);
+        text-indent: -9999px;
+        text-align: left;
+        display: inline-block;  
+        position: relative;
+        vertical-align: bottom;
+
+        &:before{
+            @include iconBase();
+            position: absolute;
+            top: 50%;
+            margin-top: -0.5em;
+            left: 0;
+            right: 0;
+            text-align: center;
+            text-indent: 0;
+            color: #FFF;
+        }
+
+        &--facebook:before{
+            @include iconInclude('facebook');
+        }
+
+        &--twitter:before{
+            @include iconInclude('twitter');
+        }
+
+        &--pinterest:before{
+            @include iconInclude('pinterest');
+        }
+
+        &--linkedin:before{
+            @include iconInclude('linkedin');
+        }
+    }
+
+    &__image{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 0;
+        padding-top: 100%/375*250;
+        overflow: hidden;
+        img{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            left: 0;
+            right: 0;
+            height: auto;
+        }
+    }
+
+    &:hover, &:focus{
+        .teamItem__social{
+            opacity: 1;
+        }
+    }
+}

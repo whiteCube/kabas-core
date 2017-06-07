@@ -1,0 +1,30 @@
+{
+    "fields": {
+        "title": {
+            "type": "text",
+            "label": "Titre du bloc d’introduction"
+        },
+        "text": {
+            "type": "wysiwyg",
+            "label": "Le texte d’introduction"
+        },
+        "links": {
+            "type": "repeater",
+            "label": "Liens",
+            "options": {
+                "url": {            
+                    "type": "url",
+                    "label": "Url"
+                },
+                "label": {
+                    "type": "text",
+                    "label": "Intitulé"
+                }
+            }
+        },
+        "image": {
+            "type": "image",
+            "label": "L’image qui apparait dans le bloc d’introduction"
+        }
+    }
+}

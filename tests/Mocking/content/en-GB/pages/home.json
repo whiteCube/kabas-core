@@ -1,0 +1,206 @@
+{
+    "route": "/",
+    "id": "home",
+    "template": "home",
+    "title": "Accueil",
+    "data": {
+        "bannerHome": {
+            "background": {
+                "path": "/public/uploads/bg-home.png",
+                "alt": "Vague bleues azur sur la côte"
+            },
+            "title": "The Capricorn",
+            "subtitle": "Consectetur at lobortis"
+        },
+        "introduction": {
+            "title": "The capricorn experience",
+            "text": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui. Etiam porta sem malesuada magna.",
+            "downloadLabel": "Télécharger",
+            "downloadFile": "./",
+            "moreLink": "http://facebook.com",
+
+            "links": [{
+                "url": "http://facebook.com",
+                "label": "Lire plus"
+            }, {
+                "url": "http://facebook.com",
+                "label": "Télécharger"
+            }],
+            "image": {
+                "path": "/public/uploads/intro_img.png",
+                "alt": "iPhone avec une image de surfer qui surf"
+            }
+        },
+        "skills": {
+            "title": "Mes compétences",
+            "list": [{
+                "icon": "flag",
+                "name": "Cras Pharetra Dolor",
+                "description": "Eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula.",
+                "linkLabel": "Plus d’infos",
+                "link": "http://google.be"
+            }, {
+                "icon": "location",
+                "name": "Dolor Parturient Fringilla",
+                "description": "Donec sed odio dui. Etiam porta sem malesuada magna. mollis euismod.",
+                "linkLabel": "Plus d’infos",
+                "link": "http://google.be"
+            }, {
+                "icon": "itinary",
+                "name": "Mattis Purus Ultricies",
+                "description": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacini.",
+                "linkLabel": "Plus d’infos",
+                "link": "http://google.be"
+            }, {
+                "icon": "person",
+                "name": "Elit Vulputate Aenean",
+                "description": "Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui.",
+                "linkLabel": "Plus d’infos",
+                "link": "http://google.be"
+            }]
+        },
+        "hSlider": {
+
+            "title": "slider",
+            "slides": [
+                {
+                    "subTitle": "Lorem ipsum",
+                    "title": "Magnatellus justo",
+                    "description": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh...",
+                    "link": {
+                        "label": "En savoir plus",
+                        "url": "http://google.be"
+                    },
+                    "image": {
+                        "path": "/public/uploads/hSlide1.png",
+                        "alt": "Fourgonnette de voyage sur la digue"
+                    }
+                },
+                {
+                    "subTitle": "Lorem ipsum",
+                    "title": "Magnatellus justo",
+                    "description": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh...",
+                    "link": {
+                        "label": "En savoir plus",
+                        "url": "http://google.be"
+                    },
+                    "image": {
+                        "path": "/public/uploads/hSlide1.png",
+                        "alt": "Fourgonnette de voyage sur la digue"
+                    }
+                },
+                {
+                    "subTitle": "Lorem ipsum",
+                    "title": "Magnatellus justo",
+                    "description": "Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh...",
+                    "link": {
+                        "label": "En savoir plus",
+                        "url": "http://google.be"
+                    },
+                    "image": {
+                        "path": "/public/uploads/hSlide1.png",
+                        "alt": "Fourgonnette de voyage sur la digue"
+                    }
+                }
+            ]
+        },
+        "gallery": {
+            "title": "Amet Risus MagnaTellus Justo",
+            "description": "Nullam id dolor id nibh ultricies vehicula ut id elit. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui. Etiam porta sem malesuada magna. mollis euismod.",
+            "images": [{
+                "image": {
+                    "path": "/public/uploads/hSlide1.png",
+                    "alt": "Fourgonnette de voyage sur la digue"
+                },
+                "title": "Mattis Purus Ultricies",
+                "description": "Justo Euismod Bibendum"
+            }, {
+                "image": {
+                    "path": "/public/uploads/hSlide2.jpg",
+                    "alt": "Fourgonnette de voyage sur la digue"
+                },
+                "title": "Mattis Purus Ultricies",
+                "description": "Justo Euismod Bibendum"
+            }, {
+                "image": {
+                    "path": "/public/uploads/hSlide3.jpg",
+                    "alt": "Fourgonnette de voyage sur la digue"
+                },
+                "title": "Mattis Purus Ultricies",
+                "description": "Justo Euismod Bibendum"
+            }, {
+                "image": {
+                    "path": "/public/uploads/hSlide4.jpg",
+                    "alt": "Fourgonnette de voyage sur la digue"
+                },
+                "title": "Mattis Purus Ultricies",
+                "description": "Justo Euismod Bibendum"
+            }]
+        },
+
+        "quotes": {
+            "title": "Amet Risus MagnaTellus Justo",
+            "items": [{
+                "title": "Amet Risus MagnaTellus Justo",
+                "text": "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus",
+                "author": {
+                    "name": "Dirk Flagey"
+                }
+            }, {
+                "title": "Amet Risus MagnaTellus Justo",
+                "text": "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus",
+                "author": {
+                    "name": "Dirk Flagey",
+                    "url": "http://www.google.be"
+                }
+            }, {
+                "title": "Amet Risus MagnaTellus Justo",
+                "text": "Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Nullam id dolor id nibh ultricies vehicula ut id elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus",
+                "author": {
+                    "name": "Dirk Flagey",
+                    "url": "http://www.google.be"
+                }
+            }]
+        },
+
+        "partners": {
+            "title": "Nos partenaires",
+            "logos": [{
+                "logo": {
+                    "path": "/public/uploads/vintage.png",
+                    "alt": "Logo de Vintage"
+                },
+                "name": "Vintage",
+                "url": "http://www.vintage.com"
+            }, {
+                "logo": {
+                    "path": "/public/uploads/forged.png",
+                    "alt": "Logo de Forged"
+                },
+                "name": "Forged",
+                "url": "http://www.forged.com"
+            }, {
+                "logo": {
+                    "path": "/public/uploads/hamburger.png",
+                    "alt": "Logo de Hamburger"
+                },
+                "name": "Hamburger",
+                "url": "http://www.hamburger.com"
+            }, {
+                "logo": {
+                    "path": "/public/uploads/mcqueen.png",
+                    "alt": "Logo de Mc Queen"
+                },
+                "name": "Mc Queen",
+                "url": "http://www.mcqueen.com"
+            }, {
+                "logo": {
+                    "path": "/public/uploads/pompadour.png",
+                    "alt": "Logo de Pompadour"
+                },
+                "name": "Pompadour",
+                "url": "http://www.pompadour.com"
+            }]
+        }
+    }
+}

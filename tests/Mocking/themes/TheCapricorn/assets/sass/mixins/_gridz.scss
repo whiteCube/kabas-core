@@ -1,0 +1,79 @@
+// get col width
+$gridz_columWidth: ($gridz_totalWidth - (($gridz_colCount - 1) * $gridz_gutterWidth)) / $gridz_colCount;
+
+//  - fixedGut( $col: number )
+// **********************************************************
+// returns size based on the specified amount of gutter.
+// uses the units you chose in config/global
+// **********************************************************
+
+@function fixedGut($gut){
+      @if $gut == 0 { @return 0 }
+      @return    ($gut * $gridz_gutterWidth);
+}
+
+//  - fixedCol( $col: number )
+// **********************************************************
+// returns size based on the specified amount of columns.
+// uses the units you chose in config/global
+// **********************************************************
+
+@function fixedCol($col){
+    @if $col == 0 { @return 0 }
+    @return ($col * $gridz_columWidth) + (($col - 1) * $gridz_gutterWidth);
+}
+
+//  - colGut( $col: number, $colParent: number, $gutParent: number )
+// **********************************************************
+// returns box size in %
+// **********************************************************
+
+@function colGut($col, $gut, $colParent, $gutParent){
+      @return percentage( (fixedCol($col) + fixedGut($gut)) / (fixedCol($colParent) + fixedGut($gutParent)) );
+}
+
+//  - col( $col: number, $parent: number )
+// **********************************************************
+// returns box size in %
+// **********************************************************
+
+@function col($col,$parent: 0){
+    @if $parent == 0 { $parent: $gridz_colCount }
+    @if $col == 0 { @return 0 }
+    @return percentage(fixedCol($col) / fixedCol($parent));
+}
+
+
+// - gutter( $parent: number )
+// **********************************************************
+// returns gutter size in % depending on number
+// of parent-columns
+// **********************************************************
+
+@function gutter($parent){
+    @if $parent == 0 { @return 0 }
+    @return percentage($gridz_gutterWidth / fixedCol($parent));
+}
+
+
+// - @include respVideoContainer( $col: number, $parent: number )
+// **********************************************************
+// Uses col among other properties to create a
+// video container (iframe) for the amout of columns in
+// a certain amount of parent-columns
+// **********************************************************
+
+@mixin respVideoContainer( $col, $parent){
+    width: col($col, $parent);
+    padding-bottom: ( col($col, $parent) * 0.5625 );
+    height: 0;
+    position: relative;
+    & iframe{
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        top:0;
+        left:0;
+    }
+}
