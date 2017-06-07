@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Kabas\App;
 use Kabas\Utils\File;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\JsonException;
@@ -144,6 +145,11 @@ class FileTest extends TestCase
         $this->assertEquals('bar', $data[0]->foo);
         $this->assertEquals('bar', $data['foo'][0]->foo);
         $this->deleteFakeFiles();
+    }
+
+    public function tearDown()
+    {
+        if(is_dir(__DIR__ . '/test')) $this->deleteFakeFiles();
     }
 
 }
