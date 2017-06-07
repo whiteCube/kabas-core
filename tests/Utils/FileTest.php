@@ -9,7 +9,11 @@ use Kabas\Exceptions\JsonException;
 use Kabas\Exceptions\FileNotFoundException;
 
 class FileTest extends TestCase
-{   
+{
+    public function setUp()
+    {
+        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+    }
 
     public function createFakeFiles()
     {
