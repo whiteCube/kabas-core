@@ -1,8 +1,7 @@
 <div class="hSlider" data-component="hSlider">
-    <h2 class="hidden" role="heading" aria-level="2"><?= $title ?></h2>
     <div class="hSlider__list">
         <?php foreach ($slides as $key => $slide): ?>
-        <section class="hSliderItem" id="<?= 'hSlider-' . $key; ?>" style="background-image: url('<?= $slide->image->fit(1920, 1000,function ($constraint) {$constraint->upsize();})->apply()->src(); ?>');">
+        <section class="hSliderItem" id="<?= 'hSlider-' . $key; ?>">
             
             <div class="wrapper">
                 <div class="hSliderItem__box">
@@ -14,9 +13,6 @@
             </div>
             <?php if (0): //canceld for now?> 
             <figure class="hSliderItem__figure">
-                <img class="hSliderItem__img" 
-                     src="<?= $slide->image->fit(1920, 1000,function ($constraint) {$constraint->upsize();})->apply()->src(); ?>" 
-                     alt="<?= $slide->image->alt() ?>">
             </figure>   
             <?php endif ?>
         </section>

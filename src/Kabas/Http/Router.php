@@ -104,7 +104,7 @@ class Router
 
     protected function getRootURL()
     {
-        $ssl = !empty( $_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
+        $ssl = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
         return 'http' . ($ssl ? 's' : '') . '://' . rtrim($_SERVER['HTTP_HOST'],'/');
     }
 

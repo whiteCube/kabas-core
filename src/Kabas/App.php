@@ -13,12 +13,6 @@ class App extends Container
     const VERSION = '0.1.5';
 
     /**
-     * Activate debug mode
-     * @var boolean
-     */
-    const DEBUG = true;
-
-    /**
      * The driver used to read data
      * @var \Kabas\Drivers
      */
@@ -95,15 +89,6 @@ class App extends Container
     public function version()
     {
         return static::VERSION;
-    }
-
-    /**
-     * Checks if app is in debug mode
-     * @return boolean
-     */
-    static function isDebug()
-    {
-        return static::DEBUG;
     }
 
     /**

@@ -5,7 +5,6 @@
         
             <div class="footer__left">
                 <figure class="footerLogo">
-                    <img class="footerLogo__img" src="<?= $logo->resize(null, 18, function ($constraint) {$constraint->aspectRatio();})->apply()->src(); ?>" srcset="<?= $logo->resize(null, 36, function ($constraint) {$constraint->aspectRatio();})->apply()->src(); ?> 2x" alt="<?= $logo->alt(); ?>">
                     <a class="footerLogo__link" href="">Revenir à la page d’accueil</a>
                 </figure>
                 <dl class="footerInfos">

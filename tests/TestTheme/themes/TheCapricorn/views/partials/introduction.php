@@ -11,7 +11,6 @@
 
 		</div>
 		<figure class="intro__figure">
-			<img src="<?= $image->resize(null, 399, function ($constraint) {$constraint->aspectRatio();})->apply()->src(); ?>" width="265" height="399" alt="" class="intro__figure__img">
 		</figure>
 	</div>
 	

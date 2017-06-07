@@ -24,6 +24,12 @@ return [
        */
       'imageDriver' => 'gd',
 
+      'debug' => true,
+
+      'testing' => true,
+
+      'silent' => false,
+
       /**
        * Aliases for classes
        * @var array

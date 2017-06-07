@@ -9,8 +9,6 @@
                      <a class="logoItem__link" href="<?=$logo->url;?>">Voir le site web de <?=$logo->name;?></a>
             <h3 role="heading" aria-level="3" class="logoItem__title"><?=$logo->name;?></h3>
             <figure class="logoItem__img">
-                <img src="<?=$logo->logo->filter(new Logolist());?>"
-                     alt="<?=$logo->logo->alt();?>">
             </figure>
         </section><!--
         <?php endforeach?>

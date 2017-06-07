@@ -6,6 +6,7 @@ use \Kabas\App;
 use \Kabas\Utils\File;
 use \Kabas\Utils\Text;
 use \Kabas\Fields\Item as Field;
+use Kabas\Exceptions\FileNotFoundException;
 
 class BaseItem
 {
@@ -123,7 +124,12 @@ class BaseItem
 
     protected function loadStructure()
     {
-        if(is_null($this->structure)) $this->structure = File::loadJson($this->getStructureFile());
+        if(!is_null($this->structure)) return;
+        try {
+            $this->structure = File::loadJson($this->getStructureFile());
+        } catch (FileNotFoundException $e) {
+            $this->structure = null;
+        }
     }
 
     protected function getStructureFile()
