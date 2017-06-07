@@ -5,7 +5,6 @@ namespace Tests\Config;
 use Kabas\Config\Settings;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
-use WhiteCube\Lingua\Service as Lingua;
 
 class SettingsTest extends TestCase
 {
