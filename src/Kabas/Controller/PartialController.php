@@ -4,5 +4,5 @@ namespace Kabas\Controller;
 
 class PartialController extends BaseController
 {
-      protected $type = 'partial';
+    protected $type = 'partial';
 }

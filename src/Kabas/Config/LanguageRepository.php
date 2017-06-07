@@ -85,7 +85,9 @@ class LanguageRepository
     public function find($locale)
     {
         foreach ($this->available as $language) {
-            if($language->locale->toW3C() == $locale || $language->slug == $locale) return $language;
+            if($language->original == $locale) return $language;
+            if($language->slug == $locale) return $language;
+            if($language->locale->toW3C() == $locale) return $language;
         }
     }
 

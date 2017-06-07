@@ -7,33 +7,33 @@ use \Kabas\Fields\Repeatable;
 
 class Gallery extends Repeatable
 {
-      protected $type = "gallery";
+    protected $type = "gallery";
 
-      protected $multiple = true;
+    protected $multiple = true;
 
-      /**
-       * Returns options (not needed on this type)
-       * @return array
-       */
-      protected function makeOptions($options)
-      {
-            return $options;
-      }
+    /**
+     * Returns options (not needed on this type)
+     * @return array
+     */
+    protected function makeOptions($options)
+    {
+        return $options;
+    }
 
-      /**
-       * Makes an array of images
-       * @param  array $value
-       * @return array
-       */
-      protected function parse($value)
-      {
-            $a = [];
-            $class = App::fields()->getClass('image');
-            if (is_array($value)) {
-                  foreach ($value as $i => $item) {
-                        $a[] = new $class($this->name . '_' . $i, $item, $this);
-                  }
+    /**
+     * Makes an array of images
+     * @param  array $value
+     * @return array
+     */
+    protected function parse($value)
+    {
+        $a = [];
+        $class = App::fields()->getClass('image');
+        if (is_array($value)) {
+            foreach ($value as $i => $item) {
+                $a[] = new $class($this->name . '_' . $i, $item, $this);
             }
-            return $a;
-      }
+        }
+        return $a;
+    }
 }

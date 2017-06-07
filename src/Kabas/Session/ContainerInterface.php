@@ -4,12 +4,12 @@ namespace Kabas\Session;
 
 interface ContainerInterface {
 
-	/**
-	 * Sets a key/value pairing into the session
-	 * @param string $key 
-	 * @param mixed $value 
-	 * @return void
-	 */
+    /**
+     * Sets a key/value pairing into the session
+     * @param string $key 
+     * @param mixed $value 
+     * @return void
+     */
     public function set(string $key, $value);
 
     /**
