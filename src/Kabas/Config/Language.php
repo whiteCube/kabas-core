@@ -105,6 +105,7 @@ class Language
     * Finds first filled string for given formats
     * @param array $formats
     * @return string
+    * @codeCoverageIgnore
     */
     protected function tryFormats(array $formats)
     {

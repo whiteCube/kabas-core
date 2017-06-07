@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1496769077">
-  <project timestamp="1496769077">
+<coverage generated="1496826366">
+  <project timestamp="1496826366">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -398,42 +398,37 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Config/Language.php">
         <class name="Language" namespace="Kabas\Config">
-          <metrics complexity="11" methods="7" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="26" coveredstatements="19" elements="33" coveredelements="22"/>
+          <metrics complexity="11" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="28" coveredelements="28"/>
         </class>
-        <line num="20" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="8"/>
-        <line num="22" type="stmt" count="8"/>
-        <line num="23" type="stmt" count="8"/>
-        <line num="24" type="stmt" count="8"/>
-        <line num="25" type="stmt" count="8"/>
-        <line num="26" type="stmt" count="8"/>
-        <line num="27" type="stmt" count="8"/>
-        <line num="28" type="stmt" count="8"/>
-        <line num="29" type="stmt" count="8"/>
-        <line num="30" type="stmt" count="8"/>
-        <line num="36" type="method" name="activate" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="38" type="stmt" count="1"/>
-        <line num="39" type="stmt" count="1"/>
-        <line num="40" type="stmt" count="1"/>
-        <line num="47" type="method" name="parseLocale" visibility="protected" complexity="2" crap="2.50" count="8"/>
-        <line num="50" type="stmt" count="8"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
-        <line num="54" type="stmt" count="8"/>
-        <line num="61" type="method" name="extractSlug" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="63" type="stmt" count="0"/>
-        <line num="64" type="stmt" count="0"/>
-        <line num="76" type="method" name="extractLabel" visibility="protected" complexity="1" crap="2" count="0"/>
-        <line num="78" type="stmt" count="0"/>
-        <line num="79" type="stmt" count="0"/>
-        <line num="92" type="method" name="extractNative" visibility="protected" complexity="1" crap="1" count="8"/>
-        <line num="94" type="stmt" count="8"/>
-        <line num="95" type="stmt" count="8"/>
-        <line num="109" type="method" name="tryFormats" visibility="protected" complexity="3" crap="3.14" count="8"/>
-        <line num="111" type="stmt" count="8"/>
-        <line num="112" type="stmt" count="8"/>
-        <line num="113" type="stmt" count="8"/>
-        <line num="115" type="stmt" count="0"/>
-        <metrics loc="116" ncloc="90" classes="1" methods="7" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="26" coveredstatements="19" elements="33" coveredelements="22"/>
+        <line num="20" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="13"/>
+        <line num="22" type="stmt" count="13"/>
+        <line num="23" type="stmt" count="13"/>
+        <line num="24" type="stmt" count="13"/>
+        <line num="25" type="stmt" count="13"/>
+        <line num="26" type="stmt" count="13"/>
+        <line num="27" type="stmt" count="13"/>
+        <line num="28" type="stmt" count="13"/>
+        <line num="29" type="stmt" count="13"/>
+        <line num="30" type="stmt" count="13"/>
+        <line num="36" type="method" name="activate" visibility="public" complexity="1" crap="1" count="2"/>
+        <line num="38" type="stmt" count="2"/>
+        <line num="39" type="stmt" count="2"/>
+        <line num="40" type="stmt" count="2"/>
+        <line num="47" type="method" name="parseLocale" visibility="protected" complexity="2" crap="2" count="13"/>
+        <line num="50" type="stmt" count="13"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
+        <line num="54" type="stmt" count="13"/>
+        <line num="61" type="method" name="extractSlug" visibility="protected" complexity="1" crap="1" count="1"/>
+        <line num="63" type="stmt" count="1"/>
+        <line num="64" type="stmt" count="1"/>
+        <line num="76" type="method" name="extractLabel" visibility="protected" complexity="1" crap="1" count="1"/>
+        <line num="78" type="stmt" count="1"/>
+        <line num="79" type="stmt" count="1"/>
+        <line num="92" type="method" name="extractNative" visibility="protected" complexity="1" crap="1" count="13"/>
+        <line num="94" type="stmt" count="13"/>
+        <line num="95" type="stmt" count="13"/>
+        <metrics loc="117" ncloc="90" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="28" coveredelements="28"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Config/LanguageRepository.php">
         <class name="LanguageRepository" namespace="Kabas\Config">
@@ -4554,6 +4549,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="43" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="93" loc="7677" ncloc="5798" classes="84" methods="606" coveredmethods="40" conditionals="0" coveredconditionals="0" statements="3357" coveredstatements="121" elements="3963" coveredelements="161"/>
+    <metrics files="93" loc="7678" ncloc="5798" classes="84" methods="605" coveredmethods="43" conditionals="0" coveredconditionals="0" statements="3353" coveredstatements="124" elements="3958" coveredelements="167"/>
   </project>
 </coverage>
