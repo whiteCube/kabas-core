@@ -1,8 +1,0 @@
-{
-    "fields": {
-        "logo": {
-            "type": "image",
-            "label": "Logo qui apparait dans le header à gauche"
-        }
-    }
-}
