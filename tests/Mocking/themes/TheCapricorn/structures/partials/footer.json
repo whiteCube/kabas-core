@@ -1,0 +1,68 @@
+{
+    "fields": {
+        "title": {
+            "type": "text",
+            "label": "Titre",
+            "description": "Ce titre est utilisé pour le référencement. Il ne sera pas affiché."
+        },
+
+        "logo": {
+            "type": "image",
+            "label": "Logo"
+        },
+        "info": {
+           "type": "group",
+            "label": "Informations",
+            "options": {
+                "phone": {
+                    "label": "Téléphone"
+                },
+                "mail": {
+                    "label": "Email",
+                    "type": "email"
+                },
+                "address": {
+                    "label": "Adresse",
+                    "type": "group",
+                    "options": {
+                        "streetNumber": {
+                            "label": "Rue + N°"
+                        },
+                        "postalCode": {
+                            "label": "Code postal"
+                        },
+                        "city": {
+                            "label": "Ville"
+                        }
+                    }
+                }
+            }
+        },
+        "contact": {
+            "type": "group",
+            "label": "Contact",
+            "options": {
+                "title": {
+                    "label": "Titre"
+                },
+                "text": {
+                    "label": "Texte",
+                    "type": "textarea"
+                },
+                "link": {
+                    "type": "group",
+                    "label": "lien",
+                    "options": {
+                        "url": {
+                            "label": "Url",
+                            "type": "textarea"
+                        },
+                        "label": {
+                            "label": "Intitulé"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

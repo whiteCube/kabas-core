@@ -1,0 +1,73 @@
+.footer {
+    background-color: $cFooter;
+    padding: s(72) 0 s(50) 0;
+    @extend %clearfix;
+    &__left {
+        float: left;
+        width: col(3, 12);
+        text-align: right;
+    }
+}
+
+.footerLogo {
+    position: relative;
+    margin-bottom: s(30);
+    &__link {
+        text-align: left;
+        @extend %textHidden;
+        @extend %cover;
+        @extend %ctbg;
+    }
+}
+
+.footerInfos {
+    &__item {
+        color: $cBlue;
+        margin-top: s(20, $s3);
+        font-size: s($s3);
+        position: relative;
+        line-height: s(30, $s3);
+        &--address {
+            text-transform: uppercase;
+        }
+    }
+    &__link {
+        color: $cBlue;
+        display: block;
+        .footerInfos__item--address & {
+            text-align: left;
+            @extend %cover;
+            @extend %ctbg;
+            @extend %textHidden;
+        }
+    }
+}
+
+.footerContact {
+    float: right;
+    width: col(3, 12);
+    margin-right: colGut(1,1,12,0);
+
+    &__title{
+        color: $cBlue;
+        font-family: $fRegular;
+        font-size: s($s3);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: ps_ls(100);
+        margin-bottom: s(22, $s3);
+    }
+
+    &__text{
+        font-family: $fRegular;
+        font-size: s($s2);
+        line-height: s(20, $s2);
+        letter-spacing: ps_ls(100);
+        color: $cWhite;
+        margin-bottom: s(27, $s2);
+    }
+    &__link{
+        @extend %button;
+        @extend %button--transparent;
+    }
+}

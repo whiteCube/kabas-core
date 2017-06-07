@@ -1,0 +1,42 @@
+{
+    "fields": {
+        "slides": {
+            "type": "repeater",
+            "label": "Les images à faire défiler",
+            "options": {
+                "subTitle": {
+                    "type": "text",
+                    "label": "Sous titre",
+                    "description": "Le sous-titre (apparait au dessus du titre principal en gras)"
+                },
+                "title": {
+                    "type": "text",
+                    "label": "Titre principal"
+                },
+                "description": {
+                    "type": "textarea",
+                    "label": "Description"
+                },
+                "link": {
+                    "type": "group",
+                    "label": "Lien",
+                    "options": {
+                        "label": {
+                            "type": "text",
+                            "label": "Intitulé"
+                        },
+                        "url": {
+                            "type": "url",
+                            "label": "Url"
+                        }
+                    }
+                },
+                "image": {
+                    "type": "image",
+                    "label": "Votre image",
+                    "description": "Choisissez une image"
+                }
+            }
+        }
+    }
+}

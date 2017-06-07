@@ -1,0 +1,19 @@
+{
+    "fields": {
+        "banner": {
+            "type": "partial",
+            "option": "banner",
+            "label": "Bannière"
+        },
+        "video": {
+            "type": "partial",
+            "option": "video",
+            "label": "Vidéo"
+        },
+        "team": {
+            "type": "partial",
+            "option": "team",
+            "label": "L’équipe"
+        }
+    }
+}

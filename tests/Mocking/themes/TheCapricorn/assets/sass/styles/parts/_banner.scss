@@ -1,0 +1,30 @@
+.banner {
+    height: s(260);
+    background-size: cover;
+    background-position: center center;
+    padding: 0 s(20);
+    @extend %ibCenter;
+
+    &__center {
+        display: inline-block;
+        vertical-align: middle;
+        vertical-align: middle;
+        width: 100%;
+        text-align: center;
+
+        text-transform: uppercase;
+        letter-spacing: ps_ls(20);
+        color: $cWhite;
+    }
+
+    &__title {
+        font-size: s($sz11);
+        font-weight: 800;
+    }
+
+    &__small {
+        margin-top: s(26, $s7);
+        font-size: s($s7);
+        font-weight: 500;
+    }
+}

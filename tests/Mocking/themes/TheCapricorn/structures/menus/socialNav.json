@@ -1,0 +1,24 @@
+{
+    "item": {
+        "label": {
+            "label": "Intitulé du lien"
+        },
+        "target": {
+            "type": "url",
+            "label": "Url du lien"
+        },
+        "icon": {
+            "type": "select",
+            "label": "Type",
+            "options": {
+                "facebook" : "Facebook",
+                "google"   : "Google Plus",
+                "twitter"  : "Twitter",
+                "linkedin" : "LinkedIn"
+            }
+        },
+        "title": {
+            "label": "Attribut title"
+        }
+    }
+}

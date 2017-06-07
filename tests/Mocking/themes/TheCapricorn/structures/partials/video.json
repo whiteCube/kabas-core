@@ -1,0 +1,14 @@
+{
+    "fields": {
+        "title": {
+            "label": "Titre"
+        },
+        "videoId": {
+            "label": "Id de la video"
+        },
+        "overlay":{
+            "type": "image",
+            "label": "Image d’aperçu de la video"
+        }
+    }
+}

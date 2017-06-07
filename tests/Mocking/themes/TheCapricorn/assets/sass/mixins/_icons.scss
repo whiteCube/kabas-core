@@ -1,0 +1,47 @@
+// - @include iconBase()
+// **********************************************************
+// Sets all base rules in order to use icons on this element
+// Does not include the icon itself
+// Can be useful if you want to optimise your code.
+// **********************************************************
+
+@mixin iconBase() {
+      font-family: $iconFont;
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+}
+
+
+// - @include iconInclude( $icon: icon-name )
+// **********************************************************
+// Includes the icon's content value.
+// $icon is the first param of the icon you want to use
+// as defined in config/icons.
+// **********************************************************
+
+@mixin iconInclude($icon) {
+      @each $s in $icons {
+            @if nth($s, 1) == $icon {
+                  content: nth($s, 2);
+            }
+      }
+}
+
+
+// - @include icon( $icon: icon-name )
+// **********************************************************
+// Includes an icon and its base.
+// $icon is the first param of the icon you want to use
+// as defined in config/icons.
+// **********************************************************
+
+@mixin icon($icon) {
+      @include iconBase();
+      @include iconInclude($icon);  
+}

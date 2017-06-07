@@ -1,0 +1,9 @@
+{
+    "route": "/page-d-exemple/",
+    "id": "example",
+    "template": "home",
+    "title": "Page d’exemple",
+    "data": {
+
+    }
+}

@@ -1,0 +1,32 @@
+{
+	"fields": {
+		"title": {
+			"type": "text",
+			"label": "Titre"
+		},
+		"description": {
+			"type": "wysiwyg",
+			"label": "Description"
+		},
+		"images": {
+			"type": "repeater",
+			"label": "Images",
+			"options": {
+				"image" : {
+					"type": "image",
+					"label": "Image"
+				},
+				"title" : {
+					"type": "text",
+					"label": "Titre"
+				},
+				"description": {
+					"type": "text",
+					"label": "Déscription"
+				}
+			}
+		}
+	}
+}
+
+

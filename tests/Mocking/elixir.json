@@ -1,0 +1,27 @@
+{
+    "assetsPath": "themes/TheCapricorn/assets",
+    "publicPath": "public/TheCapricorn",
+
+    "images": {
+        "folder": "img",
+        "outputFolder": "img"
+    },
+
+    "css": {
+        "autoprefix": {
+            "browsers": ["> 0%"]
+        }
+    },
+
+    "sass": {
+        "file": "front.scss",
+        "folder": "",
+        "outputFolder": ""
+    },
+    "js": {
+        "file": "front.js"
+    },
+    "browserSync": {
+        "proxy": "the-capricorn.dev"
+    }
+}

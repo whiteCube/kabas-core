@@ -1,0 +1,26 @@
+%button {
+    display: inline-block;
+    font-size: s($s1);
+    color: $cWhite;
+    font-weight: 700;
+    padding: s(20, $s1) s(43, $s1);
+    text-transform: uppercase;
+    letter-spacing: ps_ls(100);
+    border: 1px solid $cHover;
+    border-radius: s(100, $s1);
+    background: $cHover;
+    transition: .3s ease all;
+    transition-property: background, color;
+    &:hover,
+    &:focus {
+        background: $cWhite;
+        color: $cBlack;
+        border-color: $cBlack;
+        transition: .3s ease all;
+        transition-property: background, color;
+    }
+}
+
+%button--transparent {
+    background: transparent;
+}
