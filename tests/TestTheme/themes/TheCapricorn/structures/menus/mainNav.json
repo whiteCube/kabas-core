@@ -1,11 +1,11 @@
 {
       "item": {
             "label": {
-                  "label": "Intitulé du lien"
+                  "label": "Label"
             },
             "target": {
                   "type": "url",
-                  "label": "Url du lien"
+                  "label": "Url"
             }
       }
 }

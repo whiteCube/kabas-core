@@ -1,8 +1,8 @@
 {
-    "route": "/page-d-exemple/",
+    "route": "/foo/bar",
     "id": "example",
-    "template": "home",
-    "title": "Page d’exemple",
+    "template": "example",
+    "title": "Example page",
     "data": {
 
     }
