@@ -2,6 +2,12 @@
 
 namespace Kabas\Model;
 
+/**
+* DISCLAIMER : this class should not be used anymore !
+* Models are now loading themselves statically.
+* TODO : delete this file.
+*/
+
 use \Kabas\Utils\File;
 use Kabas\App;
 

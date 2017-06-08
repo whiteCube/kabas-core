@@ -74,4 +74,11 @@ class JsonModelTest extends TestCase
             protected $structure = 'no-file.json';
         };
     }
+
+    /** @test */
+    public function can_load_fields_from_structure_file()
+    {
+        $model = new TestJsonModel();
+        $this->assertObjectHasAttribute('test', $model->getFields());
+    }
 }

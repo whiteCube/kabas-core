@@ -4,6 +4,7 @@ namespace Kabas\Model;
 
 use Kabas\App;
 use Kabas\Utils\Text;
+use Kabas\Utils\File;
 
 class Model
 {
@@ -38,6 +39,12 @@ class Model
     protected $guarded = [];
 
     /**
+    * The current model's defined fields
+    * @var object
+    */
+    static protected $fields;
+
+    /**
     * The current model's driver instance
     * @var object
     */
@@ -48,7 +55,7 @@ class Model
         $this->object = $this->object ?? $this->generateObjectName();
         $this->repository = $this->repository ?? $this->generateRepositoryName();
         $this->structure = $this->generateStructurePath($this->structure);
-        $this->driver = $this->makeDriverInstance();
+        $this->driver = $this->getDriverInstance();
     }
 
     public function __set($name, $value)
@@ -65,6 +72,16 @@ class Model
     {
         $instance = new static();
         return call_user_func_array([$instance->driver, $name], $arguments);
+    }
+
+    /**
+     * Parses the model's structure file and stores values in cache
+     * @return void
+     */
+    public function load()
+    {
+        $structure = File::loadJson($this->structure);
+        static::$fields = $structure->fields ?? false;
     }
 
     /**
@@ -92,6 +109,16 @@ class Model
     public function getStructurePath() : string
     {
         return $this->structure;
+    }
+
+    /**
+     * Returns the current model's fields container
+     * @return object|false
+     */
+    public function getFields()
+    {
+        if(is_null(static::$fields)) $this->load();
+        return static::$fields;
     }
 
     /**

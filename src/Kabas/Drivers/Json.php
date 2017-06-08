@@ -2,6 +2,8 @@
 
 namespace Kabas\Drivers;
 
+use Kabas\Model\ModelInterface;
+
 use \Kabas\App;
 use \Kabas\Utils\File;
 use \Kabas\Utils\Lang;
@@ -10,8 +12,8 @@ use \Kabas\Exceptions\MassAssignmentException;
 
 class Json implements \IteratorAggregate
 {
-    protected static $instance;
-    protected static $modelInfo;
+    protected $model;
+
     protected $attributes = [];
     protected $hasStacked;
     protected $limit;
@@ -21,23 +23,9 @@ class Json implements \IteratorAggregate
     protected $original;
     protected $columns;
 
-    public function __construct($modelInfo = null)
+    public function __construct(ModelInterface $model)
     {
-        self::$instance = $this;
-        $this->hasStacked = false;
-        $this->attributes['original'] = new \stdClass;
-        if(isset($modelInfo)) {
-            $this->fillable = $modelInfo->fillable;
-            $this->guarded = $modelInfo->guarded;
-            self::$modelInfo = $modelInfo;
-            App::config()->models->loadModel($modelInfo);
-        }
-    }
-
-    public static function __callStatic($method, $parameters)
-    {
-        $instance = self::getInstance();
-        if(method_exists($instance, $method)) call_user_func_array([$instance, $method], $parameters);
+        $this->model = $model;
     }
 
     public function __set($name, $value)
@@ -54,16 +42,6 @@ class Json implements \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator($this->stackedItems);
-    }
-
-    /**
-     * Get instance of this driver in static calls
-     * @return \Kabas\Drivers\Json
-     */
-    static function getInstance()
-    {
-        if(!isset(self::$instance)) return new static;
-        return self::$instance;
     }
 
     /**

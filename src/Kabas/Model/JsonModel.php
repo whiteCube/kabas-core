@@ -6,9 +6,8 @@ use Kabas\Drivers\Json;
 
 class JsonModel extends Model implements ModelInterface
 {
-    public function makeDriverInstance()
+    public function getDriverInstance()
     {
-        $info = new \stdClass();
-        return new Json($info);
+        return new Json($this);
     }
 }

@@ -13,7 +13,7 @@ class Container
         $this->settings = $settings;
         $this->models = $models;
         $this->languages = new LanguageRepository($this->settings->pluck('lang.available'), $this->settings->get('lang.default'));
-        $this->initDriver();
+        $this->setDriver();
     }
 
     public function __call($name, $arguments)
@@ -26,15 +26,13 @@ class Container
     }
 
     /**
-     * Initialise the data driver based on
-     * what's specified in the app config
+     * Defines the main content data driver
      * @return void
      */
-    protected function initDriver()
+    protected function setDriver()
     {
-        $driverName = 'Kabas\\Drivers\\';
-        $driverName .= Text::toNamespace($this->settings->get('app.driver'));
-        $driver = App::getInstance()->make($driverName);
+        $driver = 'Kabas\\Drivers\\';
+        $driver .= Text::toNamespace($this->settings->get('app.driver'));
         App::setDriver($driver);
     }
 }
