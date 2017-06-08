@@ -26,10 +26,19 @@ class Response
      * @param  array $headers
      * @return $this
      */
-    public function headers($headers)
+    public function headers(array $headers)
     {
-        $this->headers += $headers;
+        $this->headers = array_merge($this->headers, $headers);
         return $this;
+    }
+
+    /**
+     * Returns the currently defined headers
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 
     /**

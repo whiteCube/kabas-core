@@ -76,6 +76,15 @@ class Router
     }
 
     /**
+     * Returns all routes
+     * @return array
+     */
+    public function getRoutes()
+    {
+        return $this->routes;
+    }
+
+    /**
      * Get the current route query
      * @return void
      */
@@ -155,7 +164,7 @@ class Router
     }
 
     /**
-     * Trys to get the browser's language.
+     * Tries to get the browser's language.
      * @return string
      */
     protected function detectLang()

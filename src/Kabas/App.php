@@ -31,6 +31,9 @@ class App extends Container
         $this->registerBindings();
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public static function __callStatic($name, $arguments)
     {
         if(!method_exists(self::$instance, $name)) {

@@ -7,7 +7,7 @@ use Kabas\Http\Response;
 
 class Redirect extends Response implements ResponseInterface
 {
-    public function __construct($pageID, $params = [], $lang = null)
+    public function __construct(string $pageID, array $params = [], $lang = null)
     {
         $this->target = $pageID;
         $this->params = $params;
@@ -22,6 +22,5 @@ class Redirect extends Response implements ResponseInterface
     {
         $this->setHeaders();
         header('Location: ' . Url::to($this->target, $this->params, $this->lang));
-        die();
     }
 }
