@@ -7,93 +7,120 @@ use Kabas\Utils\Text;
 
 class Model
 {
-    protected $driver;
-    protected $fields;
-    protected $model;
-    protected static $table;
-    protected static $fillable;
-    protected static $guarded;
-    protected static $instance;
+    /**
+    * The current model's singular name
+    * @var string
+    */
+    protected $object;
+
+    /**
+    * The current model's table or directory name
+    * @var string
+    */
+    protected $repository;
+
+    /**
+    * The current model's structure file
+    * @var string
+    */
+    protected $structure;
+
+    /**
+    * The current model's fillable fields
+    * @var string
+    */
+    protected $fillable = [];
+
+    /**
+    * The current model's guarded fields
+    * @var string
+    */
+    protected $guarded = [];
+
+    /**
+    * The current model's driver instance
+    * @var object
+    */
+    private $driver;
 
     public function __construct()
     {
-        self::$instance = $this;
-        $this->makeModel();
+        $this->object = $this->object ?? $this->generateObjectName();
+        $this->repository = $this->repository ?? $this->generateRepositoryName();
+        $this->structure = $this->generateStructurePath($this->structure);
+        $this->driver = $this->makeDriverInstance();
     }
 
     public function __set($name, $value)
     {
-        $instance = self::getInstance();
-        $instance->model->$name = $value;
+        $this->driver->$name = $value;
     }
 
-    public function __call($name, $args)
+    public function __call($name, $arguments = [])
     {
-        $instance = self::getInstance();
-        $resp = call_user_func_array([$instance->model, $name], $args);
-        return $resp;
+        return call_user_func_array([$this->driver, $name], $arguments);
     }
 
-    public static function __callStatic($name, $args)
+    public static function __callStatic($name, $arguments = [])
     {
-        $instance = new static;
-        $resp = call_user_func_array([$instance->model, $name], $args);
-        return $resp;
+        $instance = new static();
+        return call_user_func_array([$instance->driver, $name], $arguments);
     }
 
     /**
-     * Get instance of this Model class.
-     * @return $this
-     */
-    static function getInstance()
-    {
-        if(!isset(self::$instance)) self::$instance = new static;
-        return self::$instance;
-    }
-
-    /**
-     * Get the model directory and filename
+     * Returns the current model's object name
      * @return string
      */
-    public function getModelStructure($name)
+    public function getObjectName() : string
     {
-        $path = THEME_PATH . DS . 'structures' . DS . 'models' . DS;
-        $path .= strtolower($name) . '.json';
-        return realpath($path);
+        return $this->object;
     }
 
     /**
-     * Create an instance of the proper driver.
-     * @return void
+     * Returns the current model's repository name
+     * @return string
      */
-    private function makeModel()
+    public function getRepository() : string
     {
-        $this->checkDriver();
-        $class = '\\Kabas\\Drivers\\' . Text::toNamespace($this->driver);
-        $info = new \stdClass();
-        $info->name = Text::removeNamespace(get_class($this));
-        $info->table = static::$table;
-        $info->fillable = static::$fillable;
-        $info->guarded = static::$guarded;
-        $info->structure = $this->getModelStructure($info->name);
-        $this->model = new $class([], $info);
+        return $this->repository;
     }
 
     /**
-     * Check if custom driver has been defined for the model
-     * and use the default one if not.
-     * @return void
+     * Returns the current model's full path to its JSON structure file
+     * @return string
      */
-    private function checkDriver()
+    public function getStructurePath() : string
     {
-        if(!isset($this->driver)) $this->setDefaultDriver();
+        return $this->structure;
     }
 
     /**
-     * Sets the driver to the default one.
+     * Guesses the model's object name based on class name
+     * @return string
      */
-    private function setDefaultDriver()
+    protected function generateObjectName()
     {
-        $this->driver = App::config()->appConfig['driver'];
+        return lcfirst(Text::removeNamespace(get_class($this)));
+    }
+
+    /**
+     * Guesses the model's repository name based on class name
+     * @return string
+     */
+    protected function generateRepositoryName()
+    {
+        return $this->object . 's';
+    }
+
+    /**
+     * Gets the full path to the model's structure JSON file
+     * @return string
+     */
+    protected function generateStructurePath($file = null)
+    {
+        if(is_null($file)) $file = $this->object . '.json';
+        $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . $file);
+        if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($file);
+        return $path;
     }
 }

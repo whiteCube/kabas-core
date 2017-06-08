@@ -21,7 +21,7 @@ class Json implements \IteratorAggregate
     protected $original;
     protected $columns;
 
-    public function __construct($uselesss = null, $modelInfo = null)
+    public function __construct($modelInfo = null)
     {
         self::$instance = $this;
         $this->hasStacked = false;
