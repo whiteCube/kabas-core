@@ -15,12 +15,7 @@ class AppTest extends TestCase
 
     public function setUp()
     {
-    	$this->app = $this->createApplication();
-    	$_SERVER['SCRIPT_NAME'] = PUBLIC_PATH . '/index.php';
-    	$_SERVER['HTTP_HOST'] = 'www.foo.com';
-    	$_SERVER['REQUEST_URI'] = '/foo/bar';
-    	$_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4 ';
-    	// $this->app->boot();
+    	$this->createApplication();
     }
 
     /** @test */
@@ -33,6 +28,18 @@ class AppTest extends TestCase
     public function can_return_its_own_instance()
     {
         $this->assertInstanceOf(App::class, App::getInstance());
+    }
+
+    /** @test */
+    public function can_render_a_page()
+    {
+    	$this->visit('/foo/bar')->see('An incredible test page');
+    }
+
+    /** @test */
+    public function can_return_a_four_o_four()
+    {
+        $this->visit('/doesnotexist')->see('404');
     }
 
 }

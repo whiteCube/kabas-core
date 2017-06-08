@@ -76,7 +76,6 @@ class View
         $page = ob_get_contents();
         ob_end_clean();
         $page = Assets::load($page);
-        if(App::config()->get('app.testing') && App::config()->get('app.silent')) return;
         echo $page;
     }
 
