@@ -29,6 +29,16 @@ class JsonResponseTest extends TestCase
     }
 
     /** @test */
+    public function can_set_response_code()
+    {
+        $this->expectOutputRegex('/^\{[^}]+}/');
+        $resp = new Json(['foo' => 'bar']);
+        $resp->code(200);
+        $resp->run();
+        $this->assertEquals(200, http_response_code());
+    }
+
+    /** @test */
     public function can_output_pretty_printed_json()
     {
         $this->expectOutputRegex('/^\{\n[^}]+\n}/');

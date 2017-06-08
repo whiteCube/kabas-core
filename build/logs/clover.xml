@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1496932705">
-  <project timestamp="1496932705">
+<coverage generated="1496933107">
+  <project timestamp="1496933107">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -2607,30 +2607,30 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Response.php">
         <class name="Response" namespace="Kabas\Http">
-          <metrics complexity="10" methods="6" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="13" elements="21" coveredelements="18"/>
+          <metrics complexity="10" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="21" coveredelements="21"/>
         </class>
         <line num="17" type="method" name="init" visibility="public" complexity="2" crap="2" count="4"/>
         <line num="19" type="stmt" count="4"/>
         <line num="20" type="stmt" count="4"/>
         <line num="21" type="stmt" count="3"/>
         <line num="22" type="stmt" count="3"/>
-        <line num="29" type="method" name="headers" visibility="public" complexity="1" crap="1" count="3"/>
-        <line num="31" type="stmt" count="3"/>
-        <line num="32" type="stmt" count="3"/>
+        <line num="29" type="method" name="headers" visibility="public" complexity="1" crap="1" count="4"/>
+        <line num="31" type="stmt" count="4"/>
+        <line num="32" type="stmt" count="4"/>
         <line num="39" type="method" name="getHeaders" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="41" type="stmt" count="1"/>
-        <line num="49" type="method" name="code" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="51" type="stmt" count="0"/>
-        <line num="52" type="stmt" count="0"/>
+        <line num="49" type="method" name="code" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="51" type="stmt" count="1"/>
+        <line num="52" type="stmt" count="1"/>
         <line num="60" type="method" name="send" visibility="public" complexity="2" crap="2" count="4"/>
         <line num="62" type="stmt" count="4"/>
         <line num="63" type="stmt" count="1"/>
-        <line num="70" type="method" name="setHeaders" visibility="protected" complexity="3" crap="3" count="5"/>
-        <line num="72" type="stmt" count="5"/>
-        <line num="73" type="stmt" count="5"/>
-        <line num="74" type="stmt" count="2"/>
-        <line num="76" type="stmt" count="5"/>
-        <metrics loc="77" ncloc="50" classes="1" methods="6" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="13" elements="21" coveredelements="18"/>
+        <line num="70" type="method" name="setHeaders" visibility="protected" complexity="3" crap="3" count="6"/>
+        <line num="72" type="stmt" count="6"/>
+        <line num="73" type="stmt" count="6"/>
+        <line num="74" type="stmt" count="3"/>
+        <line num="76" type="stmt" count="6"/>
+        <metrics loc="77" ncloc="50" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="21" coveredelements="21"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Route.php">
         <class name="Route" namespace="Kabas\Http">
@@ -2814,22 +2814,22 @@
         <class name="Json" namespace="Kabas\Http\Responses">
           <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="16" coveredelements="16"/>
         </class>
-        <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="3"/>
-        <line num="13" type="stmt" count="3"/>
-        <line num="14" type="stmt" count="3"/>
-        <line num="15" type="stmt" count="3"/>
+        <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="4"/>
+        <line num="13" type="stmt" count="4"/>
+        <line num="14" type="stmt" count="4"/>
+        <line num="15" type="stmt" count="4"/>
         <line num="22" type="method" name="pretty" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="24" type="stmt" count="1"/>
         <line num="25" type="stmt" count="1"/>
-        <line num="32" type="method" name="encodeData" visibility="protected" complexity="2" crap="2" count="2"/>
-        <line num="34" type="stmt" count="2"/>
-        <line num="35" type="stmt" count="1"/>
-        <line num="36" type="stmt" count="2"/>
-        <line num="42" type="method" name="run" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="44" type="stmt" count="2"/>
-        <line num="45" type="stmt" count="2"/>
-        <line num="46" type="stmt" count="2"/>
-        <line num="47" type="stmt" count="2"/>
+        <line num="32" type="method" name="encodeData" visibility="protected" complexity="2" crap="2" count="3"/>
+        <line num="34" type="stmt" count="3"/>
+        <line num="35" type="stmt" count="2"/>
+        <line num="36" type="stmt" count="3"/>
+        <line num="42" type="method" name="run" visibility="public" complexity="1" crap="1" count="3"/>
+        <line num="44" type="stmt" count="3"/>
+        <line num="45" type="stmt" count="3"/>
+        <line num="46" type="stmt" count="3"/>
+        <line num="47" type="stmt" count="3"/>
         <metrics loc="48" ncloc="35" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="16" coveredelements="16"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Responses/Redirect.php">
@@ -3812,6 +3812,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="95" loc="7689" ncloc="5806" classes="85" methods="605" coveredmethods="218" conditionals="0" coveredconditionals="0" statements="2607" coveredstatements="783" elements="3212" coveredelements="1001"/>
+    <metrics files="95" loc="7689" ncloc="5806" classes="85" methods="605" coveredmethods="219" conditionals="0" coveredconditionals="0" statements="2607" coveredstatements="785" elements="3212" coveredelements="1004"/>
   </project>
 </coverage>
