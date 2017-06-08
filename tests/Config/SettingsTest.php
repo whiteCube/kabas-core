@@ -8,15 +8,15 @@ use PHPUnit\Framework\TestCase;
 
 class SettingsTest extends TestCase
 {
-	use CreatesApplication;
+    use CreatesApplication;
 
-	protected $preserveGlobalState = false;
+    protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
-    	$this->app = $this->createApplication();
-    	$this->settings = $settings = new Settings;
+        $this->app = $this->createApplication();
+        $this->settings = $settings = new Settings;
     }
 
     /** @test */

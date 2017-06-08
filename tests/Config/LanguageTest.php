@@ -9,12 +9,12 @@ use PHPUnit\Framework\TestCase;
 class LanguageTest extends TestCase
 {
 
-	public function createLanguage()
-	{
-		$arguments = ['slug' => 'en', 'label' => 'English'];
-      	$locale = 'en-GB';
-		$this->lang = new Language($locale, $arguments);
-	}
+    public function createLanguage()
+    {
+        $arguments = ['slug' => 'en', 'label' => 'English'];
+        $locale = 'en-GB';
+        $this->lang = new Language($locale, $arguments);
+    }
 
     /** @test */
     public function can_be_instanciated_from_a_locale()

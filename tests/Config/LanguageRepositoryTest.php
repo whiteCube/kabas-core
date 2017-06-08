@@ -8,17 +8,17 @@ use PHPUnit\Framework\TestCase;
 class LanguageRepositoryTest extends TestCase
 {
 
-	public function setUp()
-	{
-		$available = ['en-GB' => ['slug' => 'en', 'label' => 'English']];
-      	$default = 'en-GB';
-		$this->repo = new LanguageRepository($available, $default);
-	}
+    public function setUp()
+    {
+        $available = ['en-GB' => ['slug' => 'en', 'label' => 'English']];
+        $default = 'en-GB';
+        $this->repo = new LanguageRepository($available, $default);
+    }
 
     /** @test */
     public function can_create_a_repository()
     {
-    	$this->assertInstanceOf(LanguageRepository::class, $this->repo);
+        $this->assertInstanceOf(LanguageRepository::class, $this->repo);
     }
 
     /** @test */

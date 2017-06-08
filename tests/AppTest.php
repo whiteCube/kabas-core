@@ -8,14 +8,14 @@ use PHPUnit\Framework\TestCase;
 
 class AppTest extends TestCase
 {
-	use CreatesApplication;
+    use CreatesApplication;
 
-	protected $preserveGlobalState = false;
+    protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
-    	$this->createApplication();
+        $this->createApplication();
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class AppTest extends TestCase
     /** @test */
     public function can_render_a_page()
     {
-    	$this->visit('/foo/bar')->see('An incredible test page');
+        $this->visit('/foo/bar')->see('An incredible test page');
     }
 
     /** @test */

@@ -9,16 +9,16 @@ use PHPUnit\Framework\TestCase;
 
 class SessionTest extends TestCase
 {
-	use CreatesApplication;
+    use CreatesApplication;
 
-	protected $preserveGlobalState = false;
+    protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
     /** @test */
     public function can_forward_method_calls_to_application_session_manager()
     {
-    	$this->createApplication();
-    	Session::set('test', 'value');
+        $this->createApplication();
+        Session::set('test', 'value');
         $this->assertEquals('value', Session::get('test'));
     }
 
