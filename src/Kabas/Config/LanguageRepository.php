@@ -99,8 +99,8 @@ class LanguageRepository
     public function getOrDefault($locale = null)
     {
         if(is_a($locale, Language::class)) return $locale;
-        if(is_null($locale)) return $this->getCurrent();
-        if($this->has($locale)) return $this->find($locale);
+        if(is_null($locale) && ($locale = $this->getCurrent())) return $locale;
+        elseif($this->has($locale)) return $this->find($locale);
         return $this->getDefault();
     }
 

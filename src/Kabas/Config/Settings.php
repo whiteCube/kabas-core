@@ -82,8 +82,8 @@ class Settings
      */
     protected function registerConfigurationConstants()
     {
-        define('THEME', $this->get('site.theme'));
-        define('THEME_PATH', THEMES_PATH . DS . THEME);
+        if(!defined('THEME')) define('THEME', $this->get('site.theme'));
+        if(!defined('THEME_PATH')) define('THEME_PATH', THEMES_PATH . DS . THEME);
     }
 
     /**
