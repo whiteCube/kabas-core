@@ -39,6 +39,6 @@ class RequestTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'PATCH';
         $req = new Request;
-        $this->assertEquals('PATCH', $req->method);
+        $this->assertEquals('PATCH', $req->method());
     }
 }
