@@ -15,8 +15,8 @@ class SettingsTest extends TestCase
 
     public function setUp()
     {
-        $this->app = $this->createApplication();
-        $this->settings = $settings = new Settings;
+        $this->createApplication();
+        $this->settings = new Settings;
     }
 
     /** @test */
