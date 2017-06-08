@@ -3,29 +3,51 @@
 namespace Kabas\Drivers;
 
 use Kabas\Model\ModelInterface;
+use Kabas\Config\Language;
 
 use \Kabas\App;
 use \Kabas\Utils\File;
-use \Kabas\Utils\Lang;
 use \Kabas\Exceptions\ModelNotFoundException;
 use \Kabas\Exceptions\MassAssignmentException;
 
 class Json implements \IteratorAggregate
 {
+    /**
+    * Reference to the model that needs to be handled
+    * @var object
+    */
     protected $model;
+
+    /**
+    * Default locale to look for
+    * @var string
+    */
+    protected $locale;
+
+    /**
+    * Fields to return at the end of the query
+    * @var array
+    */
+    protected $columns;
+
+    /**
+    * Query results container
+    * @var array
+    */
+    protected $stacked = [];
+
 
     protected $attributes = [];
     protected $hasStacked;
     protected $limit;
-    protected $stackedItems = [];
     protected $fillable = [];
     protected $guarded = [];
     protected $original;
-    protected $columns;
 
-    public function __construct(ModelInterface $model)
+    public function __construct(ModelInterface $model, Language $language)
     {
         $this->model = $model;
+        $this->locale = $language->original;
     }
 
     public function __set($name, $value)
@@ -41,16 +63,18 @@ class Json implements \IteratorAggregate
 
     public function getIterator()
     {
-        return new \ArrayIterator($this->stackedItems);
+        return new \ArrayIterator($this->stacked);
     }
 
     /**
-     * Get the path to the proper content folder for the model.
+     * Get the path to a given locale's content folder in filesystem
+     * @param string $locale
      * @return string
      */
-    public function getContentPath()
+    public function getContentPath($locale = null)
     {
-        return CONTENT_PATH . DS . Lang::getCurrent()->locale . DS . 'models' . DS . self::$modelInfo->table;
+        if(!$locale) $locale = $this->locale;
+        return CONTENT_PATH . DS . $locale . DS . $this->model->getRepository();
     }
 
     /**
@@ -136,25 +160,25 @@ class Json implements \IteratorAggregate
      */
     protected function getStackedItems()
     {
-        if(($this->hasStacked)) return $this->stackedItems;
+        if(($this->hasStacked)) return $this->stacked;
         $this->hasStacked = true;
         return File::loadJsonFromDir($this->getContentPath());
     }
 
     /**
      * Get all entries
-     * @return array
+     * @return this|null
      */
     public function all($columns = null)
     {
         if($columns) $this->columns = $columns;
-        $path = $this->getContentPath();
-        $items = File::loadJsonFromDir($path);
+        $items = File::loadJsonFromDir($this->getContentPath());
         foreach($items as $key => $item) {
-            $items[$key] = $this->instanciateFields($item, $this->columns);
+            //  TODO : this should make filled instances of $this->model.
+            $item = $this->instanciateFields($item, $this->columns);
         }
-        $this->stackedItems = $items;
-        if(count($this->stackedItems) === 0) return null;
+        $this->stacked = $items;
+        if(!count($this->stacked)) return null;
         return $this;
     }
 
@@ -192,7 +216,7 @@ class Json implements \IteratorAggregate
             $path = $this->getContentPath() . DS . $id . '.json';
             $item = File::loadJson($path);
             if($item){
-                $this->stackedItems[$id] = $this->instanciateFields($item, $this->columns);
+                $this->stacked[$id] = $this->instanciateFields($item, $this->columns);
             }
         }
         return $this;
@@ -220,7 +244,7 @@ class Json implements \IteratorAggregate
             case 2: $result = $this->applyWhere($column, '=', $arg1, $items); break;
             default: $result = $this->applyWhere($column, $arg1, $arg2, $items);
         }
-        $this->stackedItems = $result;
+        $this->stacked = $result;
         return $this;
     }
 
@@ -244,7 +268,7 @@ class Json implements \IteratorAggregate
             case 2: $result = $this->applyWhere($column, '=', $arg1, $items); break;
             default: $result = $this->applyWhere($column, $arg1, $arg2, $items);
         }
-        $this->stackedItems = array_merge($this->stackedItems, $result);
+        $this->stacked = array_merge($this->stacked, $result);
         return $this;
     }
 
@@ -310,7 +334,7 @@ class Json implements \IteratorAggregate
             if($direction === 'desc') return $a->$column < $b->$column;
         });
 
-        $this->stackedItems = $items;
+        $this->stacked = $items;
 
         return $this;
 
@@ -325,14 +349,14 @@ class Json implements \IteratorAggregate
     {
         if($columns) $this->columns = $columns;
         $stackedItems = $this->applyLimit();
-        $this->stackedItems = [];
+        $this->stacked = [];
         if(count($stackedItems) === 0) return null;
         if(count($stackedItems) === 1) {
             $this->attributes = (array) $this->instanciateFields($stackedItems[0], $this->columns);
             return $this;
         }
         foreach($stackedItems as $item) {
-            $this->stackedItems[] = $this->instanciateFields($item, $this->columns);
+            $this->stacked[] = $this->instanciateFields($item, $this->columns);
         }
         return $this;
     }
@@ -357,7 +381,7 @@ class Json implements \IteratorAggregate
             $results = $this->where('id', $id);
             return count($results) > 0;
         }
-        return isset($this->stackedItems[0]->id) || isset($this->attributes['id']);
+        return isset($this->stacked[0]->id) || isset($this->attributes['id']);
     }
 
     /**
@@ -432,7 +456,7 @@ class Json implements \IteratorAggregate
     {
         if(!is_array($ids)) $ids = [$id];
         $this->find($ids);
-        if(!empty($this->stackedItems)) {
+        if(!empty($this->stacked)) {
             $this->hasStacked = true;
             $this->delete();
         }
@@ -501,7 +525,7 @@ class Json implements \IteratorAggregate
     {
         $items = $this->getStackedItems();
         if($items){
-            $this->stackedItems = [];
+            $this->stacked = [];
             $this->attributes = (array) $this->instanciateFields($items[0], $columns);
             return $this;
         }

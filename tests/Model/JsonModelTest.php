@@ -2,14 +2,24 @@
 
 namespace Tests\Model;
 
+use Tests\CreatesApplication;
 use Kabas\Model\JsonModel;
 use PHPUnit\Framework\TestCase;
 
-define('DS', DIRECTORY_SEPARATOR);
 define('THEME_PATH', __DIR__);
 
 class JsonModelTest extends TestCase
 {
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
+
+    public function setUp()
+    {
+        $this->createApplication();
+    }
+
     /** @test */
     public function can_be_properly_instanciated()
     {
@@ -80,5 +90,13 @@ class JsonModelTest extends TestCase
     {
         $model = new TestJsonModel();
         $this->assertObjectHasAttribute('test', $model->getFields());
+    }
+
+    /** @test */
+    public function can_forward_static_call_to_driver_and_find_storage_path_for_default_locale()
+    {
+        $expected = CONTENT_PATH . DS . 'en-GB' . DS . 'testJsonModels';
+        $returned = TestJsonModel::getContentPath();
+        $this->assertEquals($expected, $returned);
     }
 }
