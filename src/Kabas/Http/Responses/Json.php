@@ -4,7 +4,7 @@ namespace Kabas\Http\Responses;
 
 use Kabas\Http\Response;
 
-class Json extends Response
+class Json extends Response implements ResponseInterface
 {
     protected $pretty = false;
 

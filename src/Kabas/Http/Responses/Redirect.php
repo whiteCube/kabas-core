@@ -5,7 +5,7 @@ namespace Kabas\Http\Responses;
 use Kabas\Utils\Url;
 use Kabas\Http\Response;
 
-class Redirect extends Response
+class Redirect extends Response implements ResponseInterface
 {
     public function __construct($pageID, $params = [], $lang = null)
     {

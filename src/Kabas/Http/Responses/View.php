@@ -5,7 +5,7 @@ namespace Kabas\Http\Responses;
 use Kabas\View\View as ViewEngine;
 use Kabas\Http\Response;
 
-class View extends Response
+class View extends Response implements ResponseInterface
 {
     public function __construct($view, $item)
     {

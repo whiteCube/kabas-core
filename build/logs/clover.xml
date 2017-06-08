@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1496912907">
-  <project timestamp="1496912907">
+<coverage generated="1496913024">
+  <project timestamp="1496913024">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -2893,6 +2893,9 @@
         <metrics loc="51" ncloc="43" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
       </file>
     </package>
+    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Responses/ResponseInterface.php">
+      <metrics loc="6" ncloc="6" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
     <package name="Kabas\Model">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/Container.php">
         <class name="Container" namespace="Kabas\Model">
@@ -3827,6 +3830,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="94" loc="7672" ncloc="5796" classes="85" methods="605" coveredmethods="202" conditionals="0" coveredconditionals="0" statements="2625" coveredstatements="751" elements="3230" coveredelements="953"/>
+    <metrics files="95" loc="7678" ncloc="5802" classes="85" methods="605" coveredmethods="202" conditionals="0" coveredconditionals="0" statements="2625" coveredstatements="751" elements="3230" coveredelements="953"/>
   </project>
 </coverage>
