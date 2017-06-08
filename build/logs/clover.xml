@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1496933107">
-  <project timestamp="1496933107">
+<coverage generated="1496933447">
+  <project timestamp="1496933447">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -2693,16 +2693,16 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/RouteNotFound.php">
         <class name="RouteNotFound" namespace="Kabas\Http">
-          <metrics complexity="2" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="4" elements="7" coveredelements="5"/>
+          <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
         </class>
-        <line num="8" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="4"/>
-        <line num="10" type="stmt" count="4"/>
-        <line num="11" type="stmt" count="4"/>
-        <line num="12" type="stmt" count="4"/>
-        <line num="13" type="stmt" count="4"/>
-        <line num="15" type="method" name="matches" visibility="public" complexity="1" crap="2" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <metrics loc="20" ncloc="20" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="4" elements="7" coveredelements="5"/>
+        <line num="8" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="6"/>
+        <line num="10" type="stmt" count="6"/>
+        <line num="11" type="stmt" count="6"/>
+        <line num="12" type="stmt" count="6"/>
+        <line num="13" type="stmt" count="6"/>
+        <line num="15" type="method" name="matches" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="17" type="stmt" count="1"/>
+        <metrics loc="20" ncloc="20" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Router.php">
         <class name="Router" namespace="Kabas\Http">
@@ -3812,6 +3812,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="95" loc="7689" ncloc="5806" classes="85" methods="605" coveredmethods="219" conditionals="0" coveredconditionals="0" statements="2607" coveredstatements="785" elements="3212" coveredelements="1004"/>
+    <metrics files="95" loc="7689" ncloc="5806" classes="85" methods="605" coveredmethods="220" conditionals="0" coveredconditionals="0" statements="2607" coveredstatements="786" elements="3212" coveredelements="1006"/>
   </project>
 </coverage>
