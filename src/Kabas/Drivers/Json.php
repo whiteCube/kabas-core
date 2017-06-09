@@ -78,11 +78,11 @@ class Json
 
     /**
      * Get all entries for current model
+     * Columns argument is ignored
      * @return array|null
      */
     public function all($columns = null)
     {
-        if($columns) $this->columns = $columns;
         $this->stackItems(File::loadJsonFromDir($this->getContentPath()));
         if(!count($this->stacked)) return null;
         return $this->stacked;
