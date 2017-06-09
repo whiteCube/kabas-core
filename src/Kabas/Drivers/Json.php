@@ -50,14 +50,17 @@ class Json
     /**
      * Adds model instances for the given raw objects to the current stack
      * @param array $items
-     * @return void
+     * @return array
      */
     protected function stackItems(array $items)
     {
         $model = get_class($this->model);
+        $models = [];
         foreach($items as $item) {
-            $this->stacked[] = new $model($this->getAttributesArrayFromRawData($item->data ?? null));
+            $models[] = new $model($this->getAttributesArrayFromRawData($item->data ?? null));
         }
+        $this->stacked = array_merge($this->stacked, $models);
+        return $models;
     }
 
     /**
@@ -89,43 +92,37 @@ class Json
     }
 
     /**
-     * Find entries by id
+     * Find entries by filename (id)
+     * Columns argument is ignored
      * @param  mixed $key
      * @param  array $columns
      * @return object
      */
     public function find($key, $columns = null)
     {
-        if($columns) $this->columns = $columns;
-        if(is_array($key)) {
-            $this->findMany($key, $this->columns);
-        } else {
-            $path = $this->getContentPath() . DS . $key . '.json';
-            $item = File::loadJson($path);
-            if(empty($item)) return null;
-            $item = $this->getColumns($item, $this->columns);
-            $this->attributes = (array) $this->instanciateFields($item, $this->columns);
+        if(is_array($key)) return $this->findMany($key, $columns);
+        try {
+            $file = File::loadJson($this->getContentPath() . DS . $key . '.json');
+        } catch (\Kabas\Exceptions\FileNotFoundException $e) {
+            return null;
         }
-        return $this;
+        return $this->stackItems([$file]);
     }
 
     /**
-     * Find multiple entries.
-     * @param  array $ids
+     * Find multiple entries by filenames (ids)
+     * Columns argument is ignored
+     * @param  array $keys
      * @param  array $columns
-     * @return $this
+     * @return array|null
      */
-    public function findMany($ids, $columns = null)
+    public function findMany(array $keys, $columns = null)
     {
-        if($columns) $this->columns = $columns;
-        foreach($ids as $id) {
-            $path = $this->getContentPath() . DS . $id . '.json';
-            $item = File::loadJson($path);
-            if($item){
-                $this->stacked[$id] = $this->instanciateFields($item, $this->columns);
-            }
+        foreach($keys as $key) {
+            $this->find($key, $columns);
         }
-        return $this;
+        if(!count($this->stacked)) return null;
+        return $this->stacked;
     }
 
     /**
