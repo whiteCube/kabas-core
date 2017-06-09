@@ -27,6 +27,18 @@ class Model
     protected $structure;
 
     /**
+    * The current instance's raw values
+    * @var array
+    */
+    protected $original = [];
+
+    /**
+    * The current instance's field values
+    * @var array
+    */
+    protected $attributes = [];
+
+    /**
     * The current model's fillable fields
     * @var string
     */
@@ -50,17 +62,23 @@ class Model
     */
     private $driver;
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
         $this->object = $this->object ?? $this->generateObjectName();
         $this->repository = $this->repository ?? $this->generateRepositoryName();
         $this->structure = $this->generateStructurePath($this->structure);
         $this->driver = $this->getDriverInstance();
+        $this->inject($attributes);
     }
 
     public function __set($name, $value)
     {
-        $this->driver->$name = $value;
+        $this->attributes[$name]->set($value);
+    }
+
+    public function __get($name)
+    {
+        return $this->attributes[$name];
     }
 
     public function __call($name, $arguments = [])
@@ -149,5 +167,38 @@ class Model
         $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . $file);
         if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($file);
         return $path;
+    }
+
+    /**
+     * Fills attribute fields and original values
+     * @param array $attributes
+     * @return void
+     */
+    protected function inject(array $attributes)
+    {
+        foreach ($this->getFields() as $key => $field) {
+            $this->original[$key] = $attributes[$key] ?? null;
+            $this->attributes[$key] = $this->instanciateField($key, $this->original[$key], $field);
+        }
+    }
+
+    /**
+     * Makes the required field instance
+     * @param string $name
+     * @param mixed $value
+     * @param object $structure
+     * @return Kabas\Fields\[type]
+     */
+    protected function instanciateField($name, $value, \stdClass $structure)
+    {
+        try {
+            $field = App::fields()->getClass($structure->type ?? 'text');
+        } catch (\Kabas\Exceptions\TypeException $e) {
+            $e->setFieldName($name, $this->getObjectName());
+            $e->showAvailableTypes();
+            echo $e->getMessage();
+            return;
+        }
+        return new $field($name, $value, $structure);
     }
 }

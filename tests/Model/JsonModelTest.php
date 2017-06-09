@@ -89,7 +89,7 @@ class JsonModelTest extends TestCase
     public function can_load_fields_from_structure_file()
     {
         $model = new TestJsonModel();
-        $this->assertObjectHasAttribute('test', $model->getFields());
+        $this->assertObjectHasAttribute('foo', $model->getFields());
     }
 
     /** @test */
@@ -98,5 +98,12 @@ class JsonModelTest extends TestCase
         $expected = CONTENT_PATH . DS . 'en-GB' . DS . 'testJsonModels';
         $returned = TestJsonModel::getContentPath();
         $this->assertEquals($expected, $returned);
+    }
+
+    /** @test */
+    public function can_inject_and_instanciate_fields()
+    {
+        $model = new TestJsonModel(['foo' => 'bar']);
+        $this->assertInstanceOf(\Kabas\Fields\Types\Textarea::class, $model->foo);
     }
 }

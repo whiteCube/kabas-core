@@ -1,6 +1,6 @@
 {
     "fields": {
-        "test": {
+        "foo": {
             "type": "textarea",
             "label": "Test field"
         }
