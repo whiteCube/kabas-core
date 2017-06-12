@@ -28,7 +28,7 @@ class Route
 
     /**
      * Target page's identifier
-     * @var object
+     * @var string
      */
     public $page;
 
