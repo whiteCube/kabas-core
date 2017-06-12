@@ -42,13 +42,13 @@ class Router
      */
     protected $cache = [];
 
-    public function __construct()
+    public function __construct(UrlWorker $urlWorker)
     {
-        $this->subdirectory = $this->getSubdirectory();
+        $this->urlWorker = $urlWorker;
         $this->rootURL = $this->getRootURL();
         $this->baseURL = $this->getBaseURL();
-        $this->query = $this->getQuery($_SERVER['REQUEST_URI']);
-        $query = $this->getCleanQuery($this->query);
+        $this->query = $this->urlWorker->getQuery($_SERVER['REQUEST_URI']);
+        $query = $this->urlWorker->getCleanQuery($this->query);
         $this->route = $query->route;
         Lang::set($query->lang ? $query->lang : $this->detectLang());
     }
@@ -95,18 +95,6 @@ class Router
     }
 
     /**
-     * Retrieves the subdirectory the CMS may be in.
-     * @return string
-     */
-
-    protected function getSubdirectory()
-    {
-        preg_match('/(.+)?index.php$/', $_SERVER['SCRIPT_NAME'], $a);
-        if(strlen($a[1]) > 1) return (substr($a[1], 0, 1) == '/' ? '' : '/') . rtrim($a[1], '/');
-        return '';
-    }
-
-    /**
      * Retrieves the domain's root URL
      * @return string
      */
@@ -128,49 +116,13 @@ class Router
     }
 
     /**
-     * Retrieves the path from URI
-     * @param  string $uri
-     * @return string
-     */
-    protected function getQuery($uri)
-    {
-        if($length = strlen($this->subdirectory)) {
-            $start = strpos($uri, $this->subdirectory);
-            $uri = substr($uri, $start >= 0 ? $start + $length : 0);
-        }
-        $uri = trim(explode('?', $uri)[0],'/');
-        if(!strlen($uri)) return '/';
-        return '/' . $uri . '/';
-    }
-
-    /**
-     * Get the lang-cleared route
-     * @return object
-     */
-    public function getCleanQuery($uri)
-    {
-        preg_match('/^\/([^\/]+)?/', $uri, $a);
-        $o = new \stdClass();
-        $o->lang = null;
-        $o->route = null;
-        if(isset($a[1]) && $lang = Lang::find($a[1])){
-            $o->lang = $lang;
-            $o->route = substr($uri, strlen($a[0]));
-        }
-        else{
-            $o->route = $uri;
-        }
-        return $o;
-    }
-
-    /**
      * Tries to get the browser's language.
      * @return string
      */
     protected function detectLang()
     {
         $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-        if(isset($lang[0])) return $lang[0];
+        return $lang[0];
     }
 
     /**
@@ -248,40 +200,9 @@ class Router
      */
     public function extractRoute($url)
     {
-        $url = $this->parseUrl($url);
+        $url = $this->urlWorker->parseUrl($url);
         if($url->base == $this->baseURL) return $url->route;
         return false;
-    }
-
-    /**
-     * Returns useful information about given URL
-     * @param  string $url
-     * @return object
-     */
-    public function parseUrl($url)
-    {
-        $a = parse_url($url);
-        $o = new \stdClass();
-        $o->root = isset($a['scheme']) ? $a['scheme'] . '://' : '';
-        $o->root .= isset($a['host']) ? $a['host'] : '';
-        $o->root .= isset($a['port']) ? ':' . $a['port'] : '';
-        $o->base = false;
-        $o->query = false;
-        $o->lang = false;
-        $o->route = false;
-        if(isset($a['path'])){
-            $o->base = $o->root;
-            if(strlen($this->subdirectory) && strpos($a['path'], $this->subdirectory) === 0){
-                $o->base .= $this->subdirectory;
-                $o->query = $this->getQuery($a['path']);
-            }
-            else $o->query = $a['path'];
-            $o->base .= '/';
-            $q = $this->getCleanQuery($o->query);
-            $o->route = $q->route;
-            if($q->lang) $o->lang = $q->lang;
-        }
-        return $o;
     }
 
 }

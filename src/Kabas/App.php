@@ -2,6 +2,8 @@
 
 namespace Kabas;
 
+use Kabas\Http\Router;
+use Kabas\Http\UrlWorker;
 use \Illuminate\Container\Container;
 
 class App extends Container
@@ -118,7 +120,9 @@ class App extends Container
         $this->singleton('session', '\\Kabas\\Session\\Manager');
         $this->singleton('config', '\\Kabas\\Config\\Container');
         $this->singleton('fields', '\\Kabas\\Fields\\Container');
-        $this->singleton('router', '\\Kabas\\Http\\Router');
+        $this->singleton('router', function($app) {
+            return new Router(new UrlWorker);
+        });
         $this->singleton('content', '\\Kabas\\Content\\Container');
         $this->singleton('request', '\\Kabas\\Http\\Request');
         $this->singleton('response', '\\Kabas\\Http\\Response');
