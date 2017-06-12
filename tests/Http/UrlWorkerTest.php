@@ -28,7 +28,6 @@ class UrlWorkerTest extends TestCase
     /** @test */
     public function can_return_information_about_given_url()
     {
-        $_SERVER['SCRIPT_NAME'] = '/index.php';
         $worker = new UrlWorker;
         $result = $worker->parseUrl('http://www.foo.com/en/foo/bar');
         $this->assertEquals('/foo/bar', $result->route);
@@ -43,5 +42,13 @@ class UrlWorkerTest extends TestCase
         $result = $worker->parseUrl('http://www.foo.com/sub/en/foo/bar');
         $this->assertEquals('/foo/bar', $result->route);
         $this->assertEquals('en', $result->lang->slug);
+    }
+
+    /** @test */
+    public function returns_false_if_unsupported_lang_in_url()
+    {
+        $worker = new UrlWorker;
+        $result = $worker->parseUrl('http://www.foo.com/de/foo/bar');
+        $this->assertFalse($result->lang);   
     }
 }

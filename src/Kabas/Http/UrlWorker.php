@@ -18,8 +18,8 @@ class UrlWorker {
      */
     protected function setSubdirectory()
     {
-        preg_match('/(.+)?index.php$/', $_SERVER['SCRIPT_NAME'], $a);
-        if(strlen($a[1]) > 1) return (substr($a[1], 0, 1) == '/' ? '' : '/') . rtrim($a[1], '/');
+        preg_match('/(.+)?index.php$/', $_SERVER['SCRIPT_NAME'], $matches);
+        if(strlen($matches[1]) > 1) return (substr($matches[1], 0, 1) == '/' ? '' : '/') . rtrim($matches[1], '/');
         return '';
     }
 
@@ -30,27 +30,20 @@ class UrlWorker {
      */
     public function parseUrl($url)
     {
-        $a = parse_url($url);
-        $o = new \stdClass();
-        $o->root = isset($a['scheme']) ? $a['scheme'] . '://' : '';
-        $o->root .= isset($a['host']) ? $a['host'] : '';
-        $o->root .= isset($a['port']) ? ':' . $a['port'] : '';
-        $o->base = false;
-        $o->query = false;
-        $o->lang = false;
-        $o->route = false;
-        if(!isset($a['path'])) return $o;
-        $o->base = $o->root;
-        if(strlen($this->subdirectory) && strpos($a['path'], $this->subdirectory) === 0){
-            $o->base .= $this->subdirectory;
-            $o->query = $this->getQuery($a['path']);
+        $data = parse_url($url);
+        $parsed = $this->buildParsedUrlObject($data);
+        if(!isset($data['path'])) return $parsed;
+        $parsed->base = $parsed->root;
+        if($this->containsSubdirectory($data['path'])){
+            $parsed->base .= $this->subdirectory;
+            $parsed->query = $this->getQuery($data['path']);
         }
-        else $o->query = $a['path'];
-        $o->base .= '/';
-        $q = $this->getCleanQuery($o->query);
-        $o->route = $q->route;
-        if($q->lang) $o->lang = $q->lang;
-        return $o;
+        else $parsed->query = $data['path'];
+        $parsed->base .= '/';
+        $query = $this->getCleanQuery($parsed->query);
+        $parsed->route = $query->route;
+        if($query->lang) $parsed->lang = $query->lang;
+        return $parsed;
     }
 
 
@@ -77,18 +70,46 @@ class UrlWorker {
      */
     public function getCleanQuery($uri)
     {
-        preg_match('/^\/([^\/]+)?/', $uri, $a);
-        $o = new \stdClass();
-        $o->lang = null;
-        $o->route = null;
-        if(isset($a[1]) && $lang = Lang::find($a[1])){
-            $o->lang = $lang;
-            $o->route = substr($uri, strlen($a[0]));
+        preg_match('/^\/([^\/]+)?/', $uri, $matches);
+        $data = new \stdClass();
+        $data->lang = null;
+        $data->route = null;
+        if(isset($matches[1]) && $lang = Lang::find($matches[1])) {
+            $data->lang = $lang;
+            $data->route = substr($uri, strlen($matches[0]));
         }
-        else{
-            $o->route = $uri;
+        else {
+            $data->route = $uri;
         }
-        return $o;
+        return $data;
+    }
+
+    /**
+     * Check if path contains subdirectory
+     * @param string $path 
+     * @return bool
+     */
+    protected function containsSubdirectory($path)
+    {
+        return strlen($this->subdirectory) && strpos($path, $this->subdirectory) === 0;
+    }
+
+    /**
+     * Build an URL object with some data
+     * @param array $data 
+     * @return object
+     */
+    protected function buildParsedUrlObject($data)
+    {
+        $parsed = new \stdClass();
+        $parsed->root = isset($data['scheme']) ? $data['scheme'] . '://' : '';
+        $parsed->root .= isset($data['host']) ? $data['host'] : '';
+        $parsed->root .= isset($data['port']) ? ':' . $data['port'] : '';
+        $parsed->base = false;
+        $parsed->query = false;
+        $parsed->lang = false;
+        $parsed->route = false;
+        return $parsed;
     }
 
 }
