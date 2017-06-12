@@ -143,7 +143,7 @@ class Router
     public function setCurrent()
     {
         $this->current = $this->findMatchingRoute($this->route);
-        if($this->current) $this->current->gatherParameters();
+        if($this->current) $this->current->gatherParameters($this->route, Lang::getCurrent()->original);
         return $this;
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1497277923">
-  <project timestamp="1497277923">
+<coverage generated="1497280598">
+  <project timestamp="1497280598">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -2578,62 +2578,61 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Route.php">
         <class name="Route" namespace="Kabas\Http">
-          <metrics complexity="20" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="44" coveredstatements="42" elements="53" coveredelements="49"/>
+          <metrics complexity="20" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="43" coveredstatements="43" elements="52" coveredelements="52"/>
         </class>
-        <line num="35" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="9"/>
-        <line num="37" type="stmt" count="9"/>
-        <line num="38" type="stmt" count="9"/>
-        <line num="39" type="stmt" count="9"/>
-        <line num="40" type="stmt" count="9"/>
-        <line num="47" type="method" name="makeStringsArray" visibility="protected" complexity="2" crap="2" count="9"/>
-        <line num="49" type="stmt" count="9"/>
-        <line num="50" type="stmt" count="9"/>
-        <line num="51" type="stmt" count="9"/>
-        <line num="53" type="stmt" count="9"/>
-        <line num="60" type="method" name="makeRegexenArray" visibility="protected" complexity="2" crap="2" count="9"/>
-        <line num="62" type="stmt" count="9"/>
-        <line num="63" type="stmt" count="9"/>
-        <line num="64" type="stmt" count="9"/>
-        <line num="66" type="stmt" count="9"/>
-        <line num="74" type="method" name="generateRegex" visibility="protected" complexity="3" crap="3" count="9"/>
-        <line num="76" type="stmt" count="9"/>
-        <line num="77" type="stmt" count="9"/>
-        <line num="78" type="stmt" count="9"/>
-        <line num="79" type="stmt" count="9"/>
-        <line num="80" type="stmt" count="9"/>
-        <line num="81" type="stmt" count="9"/>
-        <line num="84" type="method" name="upgradeParamsToRegex" visibility="protected" complexity="2" crap="2" count="9"/>
-        <line num="86" type="stmt" count="9"/>
-        <line num="87" type="stmt" count="9"/>
-        <line num="88" type="stmt" count="2"/>
-        <line num="89" type="stmt" count="2"/>
-        <line num="90" type="stmt" count="2"/>
-        <line num="92" type="stmt" count="9"/>
-        <line num="95" type="method" name="makeParameter" visibility="protected" complexity="4" crap="4" count="2"/>
-        <line num="97" type="stmt" count="2"/>
-        <line num="98" type="stmt" count="2"/>
-        <line num="99" type="stmt" count="2"/>
-        <line num="100" type="stmt" count="2"/>
-        <line num="101" type="stmt" count="2"/>
-        <line num="102" type="stmt" count="2"/>
-        <line num="103" type="stmt" count="2"/>
-        <line num="104" type="stmt" count="2"/>
+        <line num="35" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="10"/>
+        <line num="37" type="stmt" count="10"/>
+        <line num="38" type="stmt" count="10"/>
+        <line num="39" type="stmt" count="10"/>
+        <line num="40" type="stmt" count="10"/>
+        <line num="47" type="method" name="makeStringsArray" visibility="protected" complexity="2" crap="2" count="10"/>
+        <line num="49" type="stmt" count="10"/>
+        <line num="50" type="stmt" count="10"/>
+        <line num="51" type="stmt" count="10"/>
+        <line num="53" type="stmt" count="10"/>
+        <line num="60" type="method" name="makeRegexenArray" visibility="protected" complexity="2" crap="2" count="10"/>
+        <line num="62" type="stmt" count="10"/>
+        <line num="63" type="stmt" count="10"/>
+        <line num="64" type="stmt" count="10"/>
+        <line num="66" type="stmt" count="10"/>
+        <line num="74" type="method" name="generateRegex" visibility="protected" complexity="3" crap="3" count="10"/>
+        <line num="76" type="stmt" count="10"/>
+        <line num="77" type="stmt" count="10"/>
+        <line num="78" type="stmt" count="10"/>
+        <line num="79" type="stmt" count="10"/>
+        <line num="80" type="stmt" count="10"/>
+        <line num="81" type="stmt" count="10"/>
+        <line num="84" type="method" name="upgradeParamsToRegex" visibility="protected" complexity="2" crap="2" count="10"/>
+        <line num="86" type="stmt" count="10"/>
+        <line num="87" type="stmt" count="10"/>
+        <line num="88" type="stmt" count="3"/>
+        <line num="89" type="stmt" count="3"/>
+        <line num="90" type="stmt" count="3"/>
+        <line num="92" type="stmt" count="10"/>
+        <line num="95" type="method" name="makeParameter" visibility="protected" complexity="4" crap="4" count="3"/>
+        <line num="97" type="stmt" count="3"/>
+        <line num="98" type="stmt" count="3"/>
+        <line num="99" type="stmt" count="3"/>
+        <line num="100" type="stmt" count="3"/>
+        <line num="101" type="stmt" count="3"/>
+        <line num="102" type="stmt" count="3"/>
+        <line num="103" type="stmt" count="3"/>
+        <line num="104" type="stmt" count="3"/>
         <line num="113" type="method" name="matches" visibility="public" complexity="2" crap="2" count="6"/>
         <line num="115" type="stmt" count="6"/>
         <line num="116" type="stmt" count="6"/>
-        <line num="123" type="method" name="gatherParameters" visibility="public" complexity="2" crap="2.02" count="3"/>
-        <line num="125" type="stmt" count="3"/>
-        <line num="126" type="stmt" count="3"/>
-        <line num="127" type="stmt" count="3"/>
-        <line num="128" type="stmt" count="3"/>
-        <line num="129" type="stmt" count="0"/>
-        <line num="131" type="stmt" count="3"/>
-        <line num="137" type="method" name="getParameters" visibility="public" complexity="2" crap="2.06" count="3"/>
-        <line num="139" type="stmt" count="3"/>
-        <line num="140" type="stmt" count="3"/>
-        <line num="141" type="stmt" count="0"/>
-        <line num="143" type="stmt" count="3"/>
-        <metrics loc="146" ncloc="101" classes="1" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="44" coveredstatements="42" elements="53" coveredelements="49"/>
+        <line num="123" type="method" name="gatherParameters" visibility="public" complexity="2" crap="2" count="4"/>
+        <line num="125" type="stmt" count="4"/>
+        <line num="126" type="stmt" count="4"/>
+        <line num="127" type="stmt" count="4"/>
+        <line num="128" type="stmt" count="1"/>
+        <line num="130" type="stmt" count="4"/>
+        <line num="136" type="method" name="getParameters" visibility="public" complexity="2" crap="2" count="4"/>
+        <line num="138" type="stmt" count="4"/>
+        <line num="139" type="stmt" count="4"/>
+        <line num="140" type="stmt" count="1"/>
+        <line num="142" type="stmt" count="4"/>
+        <metrics loc="145" ncloc="100" classes="1" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="43" coveredstatements="43" elements="52" coveredelements="52"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/RouteNotFound.php">
         <class name="RouteNotFound" namespace="Kabas\Http">
@@ -2650,7 +2649,7 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Router.php">
         <class name="Router" namespace="Kabas\Http">
-          <metrics complexity="28" methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="42" elements="57" coveredelements="57"/>
+          <metrics complexity="28" methods="15" coveredmethods="14" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="41" elements="57" coveredelements="55"/>
         </class>
         <line num="45" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="9"/>
         <line num="47" type="stmt" count="9"/>
@@ -2666,8 +2665,8 @@
         <line num="63" type="stmt" count="7"/>
         <line num="65" type="stmt" count="7"/>
         <line num="66" type="stmt" count="7"/>
-        <line num="73" type="method" name="getRoute" visibility="public" complexity="1" crap="1" count="3"/>
-        <line num="75" type="stmt" count="3"/>
+        <line num="73" type="method" name="getRoute" visibility="public" complexity="1" crap="2" count="0"/>
+        <line num="75" type="stmt" count="0"/>
         <line num="82" type="method" name="getRoutes" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="84" type="stmt" count="1"/>
         <line num="92" type="method" name="getBase" visibility="public" complexity="1" crap="1" count="4"/>
@@ -2709,7 +2708,7 @@
         <line num="203" type="stmt" count="3"/>
         <line num="204" type="stmt" count="3"/>
         <line num="205" type="stmt" count="3"/>
-        <metrics loc="208" ncloc="136" classes="1" methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="42" elements="57" coveredelements="57"/>
+        <metrics loc="208" ncloc="136" classes="1" methods="15" coveredmethods="14" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="41" elements="57" coveredelements="55"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/UrlWorker.php">
         <class name="UrlWorker" namespace="Kabas\Http">
@@ -3791,6 +3790,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="99" loc="7795" ncloc="5838" classes="88" methods="610" coveredmethods="254" conditionals="0" coveredconditionals="0" statements="2560" coveredstatements="868" elements="3170" coveredelements="1122"/>
+    <metrics files="99" loc="7794" ncloc="5837" classes="88" methods="610" coveredmethods="255" conditionals="0" coveredconditionals="0" statements="2559" coveredstatements="868" elements="3169" coveredelements="1123"/>
   </project>
 </coverage>
