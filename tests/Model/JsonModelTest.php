@@ -6,7 +6,7 @@ use Tests\CreatesApplication;
 use Kabas\Model\JsonModel;
 use PHPUnit\Framework\TestCase;
 
-define('THEME_PATH', __DIR__);
+if(!defined('THEME_PATH')) define('THEME_PATH', __DIR__);
 
 class JsonModelTest extends TestCase
 {
