@@ -39,18 +39,17 @@ class UrlWorker {
         $o->query = false;
         $o->lang = false;
         $o->route = false;
-        if(isset($a['path'])){
-            $o->base = $o->root;
-            if(strlen($this->subdirectory) && strpos($a['path'], $this->subdirectory) === 0){
-                $o->base .= $this->subdirectory;
-                $o->query = $this->getQuery($a['path']);
-            }
-            else $o->query = $a['path'];
-            $o->base .= '/';
-            $q = $this->getCleanQuery($o->query);
-            $o->route = $q->route;
-            if($q->lang) $o->lang = $q->lang;
+        if(!isset($a['path'])) return $o;
+        $o->base = $o->root;
+        if(strlen($this->subdirectory) && strpos($a['path'], $this->subdirectory) === 0){
+            $o->base .= $this->subdirectory;
+            $o->query = $this->getQuery($a['path']);
         }
+        else $o->query = $a['path'];
+        $o->base .= '/';
+        $q = $this->getCleanQuery($o->query);
+        $o->route = $q->route;
+        if($q->lang) $o->lang = $q->lang;
         return $o;
     }
 
@@ -68,7 +67,7 @@ class UrlWorker {
         }
         $uri = trim(explode('?', $uri)[0],'/');
         if(!strlen($uri)) return '/';
-        return '/' . $uri . '/';
+        return '/' . $uri;
     }
 
     
