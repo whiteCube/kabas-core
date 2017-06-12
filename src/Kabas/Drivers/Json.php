@@ -10,7 +10,7 @@ use \Kabas\Utils\File;
 use \Kabas\Exceptions\ModelNotFoundException;
 use \Kabas\Exceptions\MassAssignmentException;
 
-class Json implements \IteratorAggregate
+class Json
 {
     /**
     * Reference to the model that needs to be handled
@@ -25,45 +25,15 @@ class Json implements \IteratorAggregate
     protected $locale;
 
     /**
-    * Fields to return at the end of the query
-    * @var array
-    */
-    protected $columns;
-
-    /**
     * Query results container
     * @var array
     */
     protected $stacked = [];
 
-
-    protected $attributes = [];
-    protected $hasStacked;
-    protected $limit;
-    protected $fillable = [];
-    protected $guarded = [];
-    protected $original;
-
     public function __construct(ModelInterface $model, Language $language)
     {
         $this->model = $model;
         $this->locale = $language->original;
-    }
-
-    public function __set($name, $value)
-    {
-        $this->attributes['original']->$name = $value;
-        $this->attributes[$name] = $value;
-    }
-
-    public function __get($name)
-    {
-        return $this->attributes[$name];
-    }
-
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->stacked);
     }
 
     /**
@@ -78,148 +48,81 @@ class Json implements \IteratorAggregate
     }
 
     /**
-     * Call instanciateField on each field of the item.
-     * @param  object $item
-     * @param  array $columns
-     * @return object
-     */
-    protected function instanciateFields($item, $columns)
-    {
-        if(is_null($item)) return;
-        $item = $this->getColumns($item, $columns);
-        $newItem = new \stdClass;
-        $newItem->original = new \stdClass;
-        foreach($item as $key => $value) {
-            $newItem->original->$key = $value;
-            if(!$this->isInstanciatedField($value)) {
-                $newItem->$key = $this->instanciateField($key, $value);
-            }
-        }
-        return $newItem;
-    }
-
-    /**
-     * Check if field has already been instanciated.
-     * @param  mixed  $field
-     * @return boolean
-     */
-    public function isInstanciatedField($field)
-    {
-        if(is_object($field) && strpos(get_class($field), 'Kabas\Fields') !== false) return true;
-        return false;
-    }
-
-    /**
-     * Get an instance of the proper FieldType
-     * @param  string $key
-     * @param  mixed $value
-     * @return \Kabas\Config\Fields\[type]
-     */
-    protected function instanciateField($key, $value)
-    {
-        $modelName = static::$modelInfo->path->filename;
-        if(!App::config()->models->fieldExists($key, $modelName)) return $value;
-
-        try {
-            $type = App::config()->models->items[$modelName]->$key->type;
-            App::fields()->exists($type);
-        } catch (\Kabas\Exceptions\TypeException $e) {
-            $e->setFieldName($key, $modelName);
-            $e->showAvailableTypes();
-            echo $e->getMessage();
-            die();
-        };
-
-        $class = App::fields()->getClass($type)->class;
-        return new $class($key, $value);
-    }
-
-    /**
-     * Only return the specified columns.
-     * @param  object $item
-     * @param  array $columns
-     * @return object
-     */
-    public function getColumns($item, $columns)
-    {
-        if(!isset($columns)) return $item;
-        $newItem = new \stdClass();
-        if(is_string($columns)) $columns = [$columns];
-        foreach($columns as $column){
-            foreach($item as $key => $value) {
-                if($key === $column) $newItem->$key = $value;
-            }
-        }
-        return $newItem;
-    }
-
-    /**
-     * Get the current stack of items if it exists,
-     * if not create one by getting all items.
+     * Adds model instances for the given raw objects to the current stack
+     * @param array $items
      * @return array
      */
-    protected function getStackedItems()
+    protected function stackItems(array $items)
     {
-        if(($this->hasStacked)) return $this->stacked;
-        $this->hasStacked = true;
-        return File::loadJsonFromDir($this->getContentPath());
+        $model = get_class($this->model);
+        $models = [];
+        foreach($items as $item) {
+            $models[] = new $model($this->getAttributesArrayFromRawData($item->data ?? null));
+        }
+        $this->stacked = array_merge($this->stacked, $models);
+        return $models;
     }
 
     /**
-     * Get all entries
-     * @return this|null
+     * Returns a clean array containing key/values from given raw object
+     * @param object $data
+     * @return void
+     */
+    protected function getAttributesArrayFromRawData($data)
+    {
+        $model = [];
+        if(!$data) return $model;
+        foreach ($this->model->getFields() as $key => $value) {
+            if(!isset($data->$key)) continue;
+            $model[$key] = $data->$key;
+        }
+        return $model;
+    }
+
+    /**
+     * Get all entries for current model
+     * Columns argument is ignored
+     * @return array|null
      */
     public function all($columns = null)
     {
-        if($columns) $this->columns = $columns;
-        $items = File::loadJsonFromDir($this->getContentPath());
-        foreach($items as $key => $item) {
-            //  TODO : this should make filled instances of $this->model.
-            $item = $this->instanciateFields($item, $this->columns);
-        }
-        $this->stacked = $items;
+        $this->stackItems(File::loadJsonFromDir($this->getContentPath()));
         if(!count($this->stacked)) return null;
-        return $this;
+        return $this->stacked;
     }
 
     /**
-     * Find entries by id
+     * Find entries by filename (id)
+     * Columns argument is ignored
      * @param  mixed $key
      * @param  array $columns
      * @return object
      */
     public function find($key, $columns = null)
     {
-        if($columns) $this->columns = $columns;
-        if(is_array($key)) {
-            $this->findMany($key, $this->columns);
-        } else {
-            $path = $this->getContentPath() . DS . $key . '.json';
-            $item = File::loadJson($path);
-            if(empty($item)) return null;
-            $item = $this->getColumns($item, $this->columns);
-            $this->attributes = (array) $this->instanciateFields($item, $this->columns);
+        if(is_array($key)) return $this->findMany($key, $columns);
+        try {
+            $file = File::loadJson($this->getContentPath() . DS . $key . '.json');
+        } catch (\Kabas\Exceptions\FileNotFoundException $e) {
+            return null;
         }
-        return $this;
+        return $this->stackItems([$file]);
     }
 
     /**
-     * Find multiple entries.
-     * @param  array $ids
+     * Find multiple entries by filenames (ids)
+     * Columns argument is ignored
+     * @param  array $keys
      * @param  array $columns
-     * @return $this
+     * @return array|null
      */
-    public function findMany($ids, $columns = null)
+    public function findMany(array $keys, $columns = null)
     {
-        if($columns) $this->columns = $columns;
-        foreach($ids as $id) {
-            $path = $this->getContentPath() . DS . $id . '.json';
-            $item = File::loadJson($path);
-            if($item){
-                $this->stacked[$id] = $this->instanciateFields($item, $this->columns);
-            }
+        foreach($keys as $key) {
+            $this->find($key, $columns);
         }
-        return $this;
+        if(!count($this->stacked)) return null;
+        return $this->stacked;
     }
 
     /**
