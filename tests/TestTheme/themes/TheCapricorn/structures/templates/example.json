@@ -1,4 +1,19 @@
 {
 	"fields": {
+        "todo": {
+            "label": "To do",
+            "type": "repeater",
+            "options": [
+                {
+                    "title" : {
+                        "label": "Title",
+                        "type": "text",
+                        "validation" : {
+                            "required" : true
+                        }
+                    }
+                }
+            ]
+        }
 	}
 }

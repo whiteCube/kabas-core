@@ -4,6 +4,16 @@
     "template": "example",
     "title": "Example page",
     "data": {
-
+        "list": [
+            {
+                "title": "Thing to do 1"
+            },
+            {
+                "title": "Thing to do 2"
+            },
+            {
+                "title": "Thing to do 3"
+            }
+        ]
     }
 }
