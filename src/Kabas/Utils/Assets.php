@@ -24,13 +24,13 @@ class Assets
      * @param  string $location
      * @return void
      */
-    public static function add($src, $location)
+    public static function add($src, $location, $type = null)
     {
         if(!isset(self::$required[$location])) self::$required[$location] = [];
-        if(is_string($src)) self::pushToLocation($location, $src);
+        if(is_string($src)) self::pushToLocation($location, $src, $type);
         else if(is_array($src)) {
             foreach ($src as $item) {
-                self::add($item, $location);
+                self::add($item, $location, $type);
             }
         }
     }
@@ -82,9 +82,10 @@ class Assets
      * @param  string $src
      * @return void
      */
-    protected static function pushToLocation($location, $src)
+    protected static function pushToLocation($location, $src, $type)
     {
         if(!in_array($src, self::$required[$location])){
+            if(!is_null($type)) $src .= '*' . $type;
             self::$required[$location][] = $src;
         }
     }
@@ -138,13 +139,15 @@ class Assets
 
     protected static function getType($src)
     {
+        $pos = strpos($src, '*');
+        if($pos) return substr($src, $pos + 1);
         $type = strtolower(pathinfo($src, PATHINFO_EXTENSION));
         return explode('|', $type)[0];
     }
 
     protected static function getPath($src)
     {
-        return explode('|', $src)[0];
+        return explode('*', explode('|', $src)[0])[0];
     }
 
     /**

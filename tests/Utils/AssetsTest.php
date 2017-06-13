@@ -76,4 +76,13 @@ class AssetsTest extends TestCase
         $this->assertContains('http://www.foo.com/TheCapricorn/index.js', $loaded);
     }
 
+    /** @test */
+    public function can_add_an_asset_and_be_explicit_about_its_type()
+    {
+        $buffer = '<meta name="kabas-assets-location" value="foo">';
+        Assets::add('index.js', 'foo', 'css');
+        $loaded = Assets::load($buffer);
+        $this->assertContains('<link rel="stylesheet" type="text/css" href="http://www.foo.com/TheCapricorn/index.js" />', $loaded);
+    }
+
 }
