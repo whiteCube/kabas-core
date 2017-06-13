@@ -105,7 +105,7 @@ class App extends Container
         define('DS', DIRECTORY_SEPARATOR);
         define('CORE_PATH', __DIR__);
         define('PUBLIC_PATH', $public_path);
-        define('ROOT_PATH', realpath(PUBLIC_PATH . DS .'..'));
+        define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
         define('CONTENT_PATH', ROOT_PATH . DS . 'content');
         define('CONFIG_PATH', ROOT_PATH . DS . 'config');
         define('THEMES_PATH', ROOT_PATH . DS . 'themes');
