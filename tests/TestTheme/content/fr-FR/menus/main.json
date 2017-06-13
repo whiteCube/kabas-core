@@ -1,0 +1,23 @@
+{
+    "id": "main",
+    "template": "mainNav",
+    "data": {},
+    "items": [        
+        {
+            "label": "Accueil",
+            "target": "home"
+        },
+        {
+            "label": "À propos",
+            "target": "about"
+        },
+        {
+            "label": "Page exemple",
+            "target": "example"
+        },
+        {
+            "label": "Contact",
+            "target": "contact"
+        }
+    ]
+}

@@ -5,6 +5,9 @@ namespace Kabas;
 use Kabas\Http\Router;
 use Kabas\Http\UrlWorker;
 use \Illuminate\Container\Container;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Translation\FileLoader;
+use Illuminate\Translation\Translator;
 
 class App extends Container
 {
@@ -25,6 +28,8 @@ class App extends Container
      * @var Kabas
      */
     protected static $instance;
+
+    protected static $translator;
 
     public function __construct($public_path)
     {
@@ -54,6 +59,7 @@ class App extends Container
         $this->router->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->page;
+        $this->loadTranslations();
         $this->response->init($this->page);
         $this->session->save();
     }
@@ -67,6 +73,14 @@ class App extends Container
         foreach($this->config->get('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
+    }
+
+    public function loadTranslations()
+    {
+        $locale = $this->config->languages->getCurrent()->original;
+        $path = ROOT_PATH . '/locale';
+        $translationLoader = new FileLoader(new Filesystem, $path);
+        $this->translator = new Translator($translationLoader, $locale);
     }
 
     /**

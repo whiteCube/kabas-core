@@ -30,4 +30,9 @@ class Lang
         }
         return $languages;
     }
+
+    static function trans($key)
+    {
+        return App::translator()->get($key);
+    }
 }
