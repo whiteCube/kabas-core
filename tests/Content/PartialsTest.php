@@ -23,6 +23,12 @@ class PartialsTest extends TestCase
     }
 
     /** @test */
+    public function can_be_instantiated_properly()
+    {
+        $this->assertInstanceOf(Container::class, $this->container);
+    }
+
+    /** @test */
     public function can_load_a_partial_from_a_json_file()
     {
         $this->assertInstanceOf(Item::class, $this->container->load('header'));
