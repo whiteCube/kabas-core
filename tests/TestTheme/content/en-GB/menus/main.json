@@ -14,11 +14,18 @@
         },
         {
             "label": "Example page",
-            "target": "example"
+            "target": "example",
+            "items": [
+                {
+                    "label": "Subitem",
+                    "target": "subpage"
+                }
+            ]
         },
         {
             "label": "Contact",
-            "target": "contact"
+            "target": "contact",
+            "items": []
         }
     ]
 }

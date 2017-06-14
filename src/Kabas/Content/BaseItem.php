@@ -60,10 +60,8 @@ class BaseItem
 
     public function __call($name, $args)
     {
-        if(is_object($this->controller)){
-            return call_user_func_array([$this->controller, $name], $args);
-        }
-        return false;
+        if(!is_object($this->controller)) return false;
+        return call_user_func_array([$this->controller, $name], $args);
     }
 
     public function set($data)
