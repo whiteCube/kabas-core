@@ -1,6 +1,7 @@
 {
     "id": "main",
     "template": "mainNav",
+    "tìtle": "Navigation principale",
     "data": {},
     "items": [        
         {

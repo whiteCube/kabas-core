@@ -12,6 +12,8 @@ class BaseItem
 {
     public $id;
 
+    public $title;
+
     public $template;
 
     public $options;
@@ -29,6 +31,7 @@ class BaseItem
     public function __construct(\stdClass $data)
     {
         $this->id = isset($data->id) ? $data->id : false;
+        $this->title = isset($data->title) ? $data->title : 'Untitled';
         $this->template = isset($data->template) ? $data->template : false;
         $this->fields = $this->loadFields(@$data->data);
         $this->options = isset($data->options) ? $data->options : new \stdClass();

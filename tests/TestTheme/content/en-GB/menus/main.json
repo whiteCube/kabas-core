@@ -1,18 +1,19 @@
 {
     "id": "main",
     "template": "mainNav",
+    "title": "Main navigation",
     "data": {},
     "items": [        
         {
-            "label": "Accueil",
+            "label": "Homepage",
             "target": "home"
         },
         {
-            "label": "À propos",
+            "label": "About us",
             "target": "about"
         },
         {
-            "label": "Page exemple",
+            "label": "Example page",
             "target": "example"
         },
         {

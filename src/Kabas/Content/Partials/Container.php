@@ -22,13 +22,7 @@ class Container extends BaseContainer
     public function load($part)
     {
         if($item = $this->get($part)) return $item;
-        try {
-            $item = $this->loadItem($part);
-        }
-        catch (\Kabas\Exceptions\NotFoundException $e) {
-            echo $e->getMessage();
-            die();
-        }
+        $item = $this->loadItem($part);
         $this->items[$part] = $this->makeItem($item);
         return $this->items[$part];
     }
@@ -90,14 +84,8 @@ class Container extends BaseContainer
         $file->id = $id;
         $file->controller = $controller;
         $ref = new \ReflectionClass($file->controller);
-        if($ref->getStaticPropertyValue('template')){
-            $file->template = $ref->getStaticPropertyValue('template');
-            return $file;
-        }
-        else{
-            $file->template = $this->getView($id) ? $id : null;
-            if(!$file->template) throw new \Kabas\Exceptions\NotFoundException($id,'partial');
-        }
+        if(!$ref->getStaticPropertyValue('template')) throw new \Kabas\Exceptions\NotFoundException($id,'partial');
+        $file->template = $ref->getStaticPropertyValue('template');
         return $file;
     }
 
@@ -112,13 +100,13 @@ class Container extends BaseContainer
 
     protected function getController($id)
     {
-        $c = '\\Theme\\' . App::themes()->getCurrent('name') .'\\Partials\\' . Text::toNamespace($id);
-        if(class_exists($c)) return $c;
+        $controller = '\\Theme\\' . App::themes()->getCurrent('name') .'\\Partials\\' . Text::toNamespace($id);
+        if(class_exists($controller)) return $controller;
     }
 
     protected function getView($id)
     {
-        $f = THEME_PATH . DS . 'views' . DS . 'partials' . DS . $id . '.php';
-        return realpath($f);
+        $file = THEME_PATH . DS . 'views' . DS . 'partials' . DS . $id . '.php';
+        return realpath($file);
     }
 }
