@@ -12,6 +12,9 @@ class MenuItem
 
     public function __construct($item)
     {
+        echo '<pre>';
+        var_dump($item);
+        echo '</pre>';
         $this->item = $item;
         $this->item->url = $this->getTargetUrl();
         $this->item->active = $this->getLocalActive();
