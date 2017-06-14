@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Config;
+namespace Tests\Content;
 
 use Kabas\App;
 use Tests\CreatesApplication;
@@ -60,6 +60,28 @@ class PartialsTest extends TestCase
     {
         $this->expectException(NotFoundException::class);
         $this->container->load('foobarbaz');
+    }
+
+    /** @test */
+    public function can_get_a_piece_of_data()
+    {
+        $partial = $this->container->load('header');
+        $this->assertContains('png', $partial->logo->path);
+    }
+
+    /** @test */
+    public function returns_null_when_trying_to_get_undefined_data()
+    {
+        $partial = $this->container->load('header');
+        $this->assertNull($partial->foo);
+    }
+
+    /** @test */
+    public function can_set_the_value_of_a_field_within_a_partial()
+    {
+        $partial = $this->container->load('header');
+        $partial->title = 'override';
+        $this->assertEquals('override', $partial->title);
     }
 
 }
