@@ -3,8 +3,9 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
-use Kabas\Utils\Lang;
 use Kabas\Http\Route;
+use Kabas\Utils\Lang;
+use Kabas\Exceptions\NotFoundException;
 
 class Url
 {
@@ -18,7 +19,7 @@ class Url
     static function to(string $id, array $params = [], $lang = null)
     {
         $route = App::router()->getRouteByPage($id);
-        if (!$route) throw new \Exception('Page does not exist');
+        if (!$route) throw new NotFoundException($id);
         return self::generate($route, $params, $lang);
     }
 
@@ -80,7 +81,7 @@ class Url
      */
     static function parse($url)
     {
-        return App::router()->parseUrl($url);
+        return App::router()->urlWorker->parseUrl($url);
     }
 
     /**

@@ -27,7 +27,7 @@ class RouterTest extends TestCase
     {
         $this->createApplication();
         $this->app->router->load();
-        $this->assertCount(2, $this->app->router->getRoutes());
+        $this->assertCount(3, $this->app->router->getRoutes());
     }
 
     /** @test */
