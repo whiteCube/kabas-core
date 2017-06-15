@@ -2,7 +2,6 @@
 
 namespace Tests;
 
-use Kabas\App;
 use Kabas\Utils\Menu;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;

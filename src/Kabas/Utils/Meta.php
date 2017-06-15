@@ -14,7 +14,7 @@ class Meta
     static function set($key, $value)
     {
         $page = App::content()->pages->getCurrent();
-        $page->meta->$key = $value;
+        $page->meta[$key] = $value;
     }
 
     /**
@@ -25,7 +25,7 @@ class Meta
     static function get($key)
     {
         $page = App::content()->pages->getCurrent();
-        if(isset($page->meta->$key)) return $page->meta->$key;
+        if(isset($page->meta[$key])) return $page->meta[$key];
         return null;
     }
 
@@ -36,8 +36,8 @@ class Meta
     static function all()
     {
         $page = App::content()->pages->getCurrent();
-        if(isset($page->meta)) return (array) $page->meta;
-        return null;
+        if(!isset($page->meta)) return;
+        return $page->meta;
     }
 
     /**
