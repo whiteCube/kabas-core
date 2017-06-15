@@ -10,7 +10,7 @@
         },
         {
             "label": "About us",
-            "target": "about"
+            "target": "test"
         },
         {
             "label": "Example page",
@@ -26,6 +26,16 @@
             "label": "Contact",
             "target": "contact",
             "items": []
+        },
+        {
+            "label": "Foo",
+            "target": "foo",
+            "items": [
+                {
+                    "label": "About",
+                    "target": "about"
+                }
+            ]
         }
     ]
 }

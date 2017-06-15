@@ -10,7 +10,7 @@
         },
         {
             "label": "À propos",
-            "target": "about"
+            "target": "test"
         },
         {
             "label": "Page exemple",
@@ -24,7 +24,18 @@
         },
         {
             "label": "Contact",
-            "target": "contact"
+            "target": "contact",
+            "items": []
+        },
+        {
+            "label": "Foo",
+            "target": "foo",
+            "items": [
+                {
+                    "label": "About",
+                    "target": "about"
+                }
+            ]
         }
     ]
 }
