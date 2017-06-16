@@ -32,15 +32,7 @@ class Container
     public function make($name, $structure, $value = null)
     {
         $type = isset($structure->type) ? $structure->type : 'text';
-        try {
-            $type = $this->getClass($type);
-        }
-        catch (\Kabas\Exceptions\TypeException $e) {
-            $e->setFieldName($key, $this->id);
-            $e->showAvailableTypes();
-            echo $e->getMessage();
-            die();
-        }
+        $type = $this->getClass($type);
         return new $type($name, $value, $structure);
     }
 

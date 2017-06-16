@@ -11,7 +11,6 @@ class TypeException extends Exception
     {
         $title = 'TypeException';
         $type = $title;
-        $hint = $this->showAvailableTypes();
 
         if(ob_get_level()) ob_clean();
 
@@ -33,17 +32,4 @@ class TypeException extends Exception
         $this->message = $this->message . '<pre><strong>field "' . $fieldName . '" in template "' . $viewID . '"</strong></pre>';
     }
 
-    /**
-     * Show the currently supported field types.
-     * @return void
-     */
-    public function showAvailableTypes()
-    {
-        $hint = 'Available field types: <ul>';
-        foreach(App::fields()->getSupported() as $typeName => $type) {
-            $hint .= '<li><code>' . $typeName . '</code></li>';
-        }
-        $hint .= "</ul>";
-        return $hint;
-    }
 }

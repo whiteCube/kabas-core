@@ -153,8 +153,8 @@ class Selectable extends Item implements \IteratorAggregate
     protected function implement($structure)
     {
         parent::implement($structure);
-        $this->setMultiple(@$structure->multiple);
-        $this->setOptions(@$structure->options);
+        $this->setMultiple($structure->multiple);
+        $this->setOptions($structure->options);
     }
 
     /**
