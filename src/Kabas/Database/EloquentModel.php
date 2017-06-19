@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Model;
+namespace Kabas\Database;
 
 use Kabas\Drivers\Eloquent;
 

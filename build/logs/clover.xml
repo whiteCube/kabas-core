@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1497277923">
-  <project timestamp="1497277923">
+<coverage generated="1497279120">
+  <project timestamp="1497279120">
     <package name="Kabas">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/App.php">
         <class name="App" namespace="Kabas">
           <metrics complexity="12" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="32" elements="41" coveredelements="41"/>
         </class>
@@ -56,7 +56,7 @@
       </file>
     </package>
     <package name="Kabas\Cmd">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Cmd/Commander.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Cmd/Commander.php">
         <class name="Commander" namespace="Kabas\Cmd">
           <metrics complexity="70" methods="22" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="207" coveredstatements="0" elements="229" coveredelements="0"/>
         </class>
@@ -298,9 +298,9 @@
         <metrics loc="365" ncloc="277" classes="1" methods="22" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="213" coveredstatements="0" elements="235" coveredelements="0"/>
       </file>
     </package>
-    <package name="Theme\##THEME##\##TYPE##;&#10;">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Cmd/Templates/Controller.php">
-        <class name="" namespace="Theme\##THEME##\##TYPE##;&#10;">
+    <package name="Theme\##THEME##\##TYPE##;&#13;&#10;">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Cmd/Templates/Controller.php">
+        <class name="" namespace="Theme\##THEME##\##TYPE##;&#13;&#10;">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
         </class>
         <line num="13" type="method" name="setup" visibility="protected" complexity="1" crap="2" count="0"/>
@@ -309,7 +309,7 @@
         <metrics loc="17" ncloc="7" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
       </file>
     </package>
-    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Cmd/Templates/Help.php">
+    <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Cmd/Templates/Help.php">
       <line num="2" type="stmt" count="0"/>
       <line num="4" type="stmt" count="0"/>
       <line num="5" type="stmt" count="0"/>
@@ -330,16 +330,16 @@
       <line num="24" type="stmt" count="0"/>
       <metrics loc="24" ncloc="24" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="18" coveredelements="0"/>
     </file>
-    <package name="Theme\##THEME##\Models;&#10;">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Cmd/Templates/Model.php">
-        <class name="" namespace="Theme\##THEME##\Models;&#10;">
+    <package name="Theme\##THEME##\Models;&#13;&#10;">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Cmd/Templates/Model.php">
+        <class name="" namespace="Theme\##THEME##\Models;&#13;&#10;">
           <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
         <metrics loc="11" ncloc="7" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
     </package>
     <package name="Kabas\Config">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Config/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Config/Container.php">
         <class name="Container" namespace="Kabas\Config">
           <metrics complexity="4" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="16" coveredelements="16"/>
         </class>
@@ -361,7 +361,7 @@
         <line num="37" type="stmt" count="28"/>
         <metrics loc="38" ncloc="34" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="16" coveredelements="16"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Config/Language.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Config/Language.php">
         <class name="Language" namespace="Kabas\Config">
           <metrics complexity="11" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="28" coveredelements="28"/>
         </class>
@@ -395,7 +395,7 @@
         <line num="95" type="stmt" count="40"/>
         <metrics loc="117" ncloc="90" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="28" coveredelements="28"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Config/LanguageRepository.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Config/LanguageRepository.php">
         <class name="LanguageRepository" namespace="Kabas\Config">
           <metrics complexity="29" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="35" elements="44" coveredelements="44"/>
         </class>
@@ -445,7 +445,7 @@
         <line num="118" type="stmt" count="10"/>
         <metrics loc="120" ncloc="83" classes="1" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="35" coveredstatements="35" elements="44" coveredelements="44"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Config/Settings.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Config/Settings.php">
         <class name="Settings" namespace="Kabas\Config">
           <metrics complexity="22" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="40" elements="50" coveredelements="50"/>
         </class>
@@ -503,7 +503,7 @@
       </file>
     </package>
     <package name="Kabas\Content">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/BaseContainer.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/BaseContainer.php">
         <class name="BaseContainer" namespace="Kabas\Content">
           <metrics complexity="12" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="16" elements="24" coveredelements="22"/>
         </class>
@@ -533,7 +533,7 @@
         <line num="90" type="stmt" count="0"/>
         <metrics loc="92" ncloc="56" classes="1" methods="7" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="16" elements="24" coveredelements="22"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/BaseItem.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/BaseItem.php">
         <class name="BaseItem" namespace="Kabas\Content">
           <metrics complexity="37" methods="15" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="51" elements="75" coveredelements="61"/>
         </class>
@@ -614,7 +614,7 @@
         <line num="152" type="stmt" count="7"/>
         <metrics loc="154" ncloc="154" classes="1" methods="15" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="60" coveredstatements="51" elements="75" coveredelements="61"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Container.php">
         <class name="Container" namespace="Kabas\Content">
           <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="15" coveredelements="15"/>
         </class>
@@ -637,7 +637,7 @@
       </file>
     </package>
     <package name="Kabas\Content\Menus">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Menus/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Menus/Container.php">
         <class name="Container" namespace="Kabas\Content\Menus">
           <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="4" coveredelements="4"/>
         </class>
@@ -647,7 +647,7 @@
         <line num="17" type="stmt" count="7"/>
         <metrics loc="19" ncloc="19" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="4" coveredelements="4"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Menus/Item.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Menus/Item.php">
         <class name="Item" namespace="Kabas\Content\Menus">
           <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="12" coveredelements="12"/>
         </class>
@@ -665,7 +665,7 @@
         <line num="34" type="stmt" count="7"/>
         <metrics loc="36" ncloc="36" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="12" coveredelements="12"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Menus/Link.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Menus/Link.php">
         <class name="Link" namespace="Kabas\Content\Menus">
           <metrics complexity="9" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="16" elements="21" coveredelements="19"/>
         </class>
@@ -692,7 +692,7 @@
         <line num="46" type="stmt" count="7"/>
         <metrics loc="48" ncloc="48" classes="1" methods="4" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="16" elements="21" coveredelements="19"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Menus/LinkItem.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Menus/LinkItem.php">
         <class name="LinkItem" namespace="Kabas\Content\Menus">
           <metrics complexity="9" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="28" coveredelements="0"/>
         </class>
@@ -726,7 +726,7 @@
         <line num="46" type="stmt" count="0"/>
         <metrics loc="47" ncloc="47" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="28" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Menus/Links.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Menus/Links.php">
         <class name="Links" namespace="Kabas\Content\Menus">
           <metrics complexity="14" methods="7" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="13" elements="26" coveredelements="18"/>
         </class>
@@ -758,7 +758,7 @@
         <line num="61" type="stmt" count="0"/>
         <metrics loc="63" ncloc="59" classes="1" methods="7" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="13" elements="26" coveredelements="18"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Menus/LinksContainer.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Menus/LinksContainer.php">
         <class name="LinksContainer" namespace="Kabas\Content\Menus">
           <metrics complexity="14" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="0" elements="38" coveredelements="0"/>
         </class>
@@ -804,7 +804,7 @@
       </file>
     </package>
     <package name="Kabas\Content\Pages">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Pages/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Pages/Container.php">
         <class name="Container" namespace="Kabas\Content\Pages">
           <metrics complexity="14" methods="8" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="22" elements="31" coveredelements="29"/>
         </class>
@@ -841,7 +841,7 @@
         <line num="71" type="stmt" count="7"/>
         <metrics loc="72" ncloc="68" classes="1" methods="8" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="22" elements="31" coveredelements="29"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Pages/Item.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Pages/Item.php">
         <class name="Item" namespace="Kabas\Content\Pages">
           <metrics complexity="7" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="12" coveredelements="12"/>
         </class>
@@ -861,7 +861,7 @@
       </file>
     </package>
     <package name="Kabas\Content\Partials">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Partials/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Partials/Container.php">
         <class name="Container" namespace="Kabas\Content\Partials">
           <metrics complexity="20" methods="11" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="17" elements="53" coveredelements="23"/>
         </class>
@@ -920,7 +920,7 @@
         <line num="122" type="stmt" count="0"/>
         <metrics loc="124" ncloc="94" classes="1" methods="11" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="17" elements="53" coveredelements="23"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Partials/Item.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Content/Partials/Item.php">
         <class name="Item" namespace="Kabas\Content\Partials">
           <metrics complexity="3" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
         </class>
@@ -933,7 +933,7 @@
       </file>
     </package>
     <package name="Kabas\Controller">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Controller/BaseController.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Controller/BaseController.php">
         <class name="BaseController" namespace="Kabas\Controller">
           <metrics complexity="11" methods="8" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="13" elements="26" coveredelements="17"/>
         </class>
@@ -965,7 +965,7 @@
         <line num="65" type="stmt" count="3"/>
         <metrics loc="68" ncloc="64" classes="1" methods="8" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="13" elements="26" coveredelements="17"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Controller/MenuController.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Controller/MenuController.php">
         <class name="MenuController" namespace="Kabas\Controller">
           <metrics complexity="2" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="8" coveredelements="8"/>
         </class>
@@ -979,7 +979,7 @@
         <line num="21" type="stmt" count="3"/>
         <metrics loc="22" ncloc="22" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="8" coveredelements="8"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Controller/MenuItem.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Controller/MenuItem.php">
         <class name="MenuItem" namespace="Kabas\Controller">
           <metrics complexity="24" methods="11" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="16" elements="39" coveredelements="22"/>
         </class>
@@ -1024,13 +1024,13 @@
         <line num="116" type="stmt" count="3"/>
         <metrics loc="118" ncloc="85" classes="1" methods="11" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="16" elements="39" coveredelements="22"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Controller/PartialController.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Controller/PartialController.php">
         <class name="PartialController" namespace="Kabas\Controller">
           <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
         <metrics loc="8" ncloc="8" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Controller/TemplateController.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Controller/TemplateController.php">
         <class name="TemplateController" namespace="Kabas\Controller">
           <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
@@ -1038,7 +1038,7 @@
       </file>
     </package>
     <package name="Kabas\Drivers">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Drivers/Eloquent.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Drivers/Eloquent.php">
         <class name="Eloquent" namespace="Kabas\Drivers">
           <metrics complexity="37" methods="20" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="131" coveredstatements="0" elements="151" coveredelements="0"/>
         </class>
@@ -1196,7 +1196,7 @@
         <line num="209" type="stmt" count="0"/>
         <metrics loc="211" ncloc="193" classes="1" methods="20" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="132" coveredstatements="0" elements="152" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Drivers/Json.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Drivers/Json.php">
         <class name="Json" namespace="Kabas\Drivers">
           <metrics complexity="112" methods="47" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="188" coveredstatements="29" elements="235" coveredelements="36"/>
         </class>
@@ -1440,13 +1440,13 @@
         <metrics loc="660" ncloc="429" classes="1" methods="47" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="190" coveredstatements="29" elements="237" coveredelements="36"/>
       </file>
     </package>
-    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/ErrorTemplate.php">
+    <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/ErrorTemplate.php">
       <line num="1" type="stmt" count="2"/>
       <line num="23" type="stmt" count="2"/>
       <metrics loc="24" ncloc="24" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="2" coveredelements="2"/>
     </file>
     <package name="Kabas\Exceptions">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/FileNotFoundException.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/FileNotFoundException.php">
         <class name="FileNotFoundException" namespace="Kabas\Exceptions">
           <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="4" coveredelements="4"/>
         </class>
@@ -1456,7 +1456,7 @@
         <line num="13" type="stmt" count="5"/>
         <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="4" coveredelements="4"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/JsonException.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/JsonException.php">
         <class name="JsonException" namespace="Kabas\Exceptions">
           <metrics complexity="2" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="13" coveredelements="13"/>
         </class>
@@ -1475,7 +1475,7 @@
         <line num="27" type="stmt" count="2"/>
         <metrics loc="28" ncloc="28" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="13" coveredelements="13"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/MassAssignmentException.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/MassAssignmentException.php">
         <class name="MassAssignmentException" namespace="Kabas\Exceptions">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
         </class>
@@ -1486,7 +1486,7 @@
         <line num="13" type="stmt" count="0"/>
         <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/ModelNotFoundException.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/ModelNotFoundException.php">
         <class name="ModelNotFoundException" namespace="Kabas\Exceptions">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
         </class>
@@ -1497,7 +1497,7 @@
         <line num="13" type="stmt" count="0"/>
         <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/NotFoundException.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/NotFoundException.php">
         <class name="NotFoundException" namespace="Kabas\Exceptions">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
         </class>
@@ -1508,7 +1508,7 @@
         <line num="13" type="stmt" count="0"/>
         <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Exceptions/TypeException.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Exceptions/TypeException.php">
         <class name="TypeException" namespace="Kabas\Exceptions">
           <metrics complexity="5" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="0" elements="24" coveredelements="0"/>
         </class>
@@ -1540,7 +1540,7 @@
       </file>
     </package>
     <package name="Kabas\Fields">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Aggregate.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Aggregate.php">
         <class name="Aggregate" namespace="Kabas\Fields">
           <metrics complexity="16" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="36" coveredelements="0"/>
         </class>
@@ -1582,7 +1582,7 @@
         <line num="82" type="stmt" count="0"/>
         <metrics loc="83" ncloc="52" classes="1" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="0" elements="36" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Container.php">
         <class name="Container" namespace="Kabas\Fields">
           <metrics complexity="12" methods="6" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="15" elements="29" coveredelements="18"/>
         </class>
@@ -1617,7 +1617,7 @@
         <line num="87" type="stmt" count="0"/>
         <metrics loc="90" ncloc="64" classes="1" methods="6" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="15" elements="29" coveredelements="18"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Groupable.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Groupable.php">
         <class name="Groupable" namespace="Kabas\Fields">
           <metrics complexity="5" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
         </class>
@@ -1640,7 +1640,7 @@
         <line num="32" type="stmt" count="0"/>
         <metrics loc="33" ncloc="29" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="17" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Item.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Item.php">
         <class name="Item" namespace="Kabas\Fields">
           <metrics complexity="37" methods="21" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="46" coveredstatements="27" elements="67" coveredelements="35"/>
         </class>
@@ -1713,7 +1713,7 @@
         <line num="237" type="stmt" count="4"/>
         <metrics loc="239" ncloc="153" classes="1" methods="21" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="46" coveredstatements="27" elements="67" coveredelements="35"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Option.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Option.php">
         <class name="Option" namespace="Kabas\Fields">
           <metrics complexity="10" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="31" coveredelements="0"/>
         </class>
@@ -1750,7 +1750,7 @@
         <line num="73" type="stmt" count="0"/>
         <metrics loc="75" ncloc="53" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="0" elements="31" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Repeatable.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Repeatable.php">
         <class name="Repeatable" namespace="Kabas\Fields">
           <metrics complexity="6" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
         </class>
@@ -1770,7 +1770,7 @@
         <line num="40" type="stmt" count="0"/>
         <metrics loc="41" ncloc="27" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="0" elements="14" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Selectable.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Selectable.php">
         <class name="Selectable" namespace="Kabas\Fields">
           <metrics complexity="44" methods="17" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="0" elements="115" coveredelements="0"/>
         </class>
@@ -1891,7 +1891,7 @@
         <line num="203" type="stmt" count="0"/>
         <metrics loc="204" ncloc="142" classes="1" methods="17" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="98" coveredstatements="0" elements="115" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Textual.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Textual.php">
         <class name="Textual" namespace="Kabas\Fields">
           <metrics complexity="12" methods="8" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="1" elements="31" coveredelements="2"/>
         </class>
@@ -1930,7 +1930,7 @@
       </file>
     </package>
     <package name="Kabas\Fields\Types">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Checkbox.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Checkbox.php">
         <class name="Checkbox" namespace="Kabas\Fields\Types">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
         </class>
@@ -1940,7 +1940,7 @@
         <line num="21" type="stmt" count="0"/>
         <metrics loc="22" ncloc="17" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Color.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Color.php">
         <class name="Color" namespace="Kabas\Fields\Types">
           <metrics complexity="30" methods="13" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="90" coveredstatements="0" elements="103" coveredelements="0"/>
         </class>
@@ -2049,7 +2049,7 @@
         <line num="186" type="stmt" count="0"/>
         <metrics loc="188" ncloc="131" classes="1" methods="13" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="90" coveredstatements="0" elements="103" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Date.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Date.php">
         <class name="Date" namespace="Kabas\Fields\Types">
           <metrics complexity="6" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="22" coveredelements="0"/>
         </class>
@@ -2077,7 +2077,7 @@
         <line num="47" type="stmt" count="0"/>
         <metrics loc="49" ncloc="39" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="22" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Email.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Email.php">
         <class name="Email" namespace="Kabas\Fields\Types">
           <metrics complexity="2" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
         </class>
@@ -2088,7 +2088,7 @@
         <line num="20" type="stmt" count="0"/>
         <metrics loc="21" ncloc="16" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/File.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/File.php">
         <class name="File" namespace="Kabas\Fields\Types">
           <metrics complexity="16" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="42" coveredelements="0"/>
         </class>
@@ -2136,7 +2136,7 @@
         <line num="69" type="stmt" count="0"/>
         <metrics loc="71" ncloc="62" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="42" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Flexible.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Flexible.php">
         <class name="Flexible" namespace="Kabas\Fields\Types">
           <metrics complexity="10" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="32" coveredelements="0"/>
         </class>
@@ -2174,7 +2174,7 @@
         <line num="54" type="stmt" count="0"/>
         <metrics loc="56" ncloc="47" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="32" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Gallery.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Gallery.php">
         <class name="Gallery" namespace="Kabas\Fields\Types">
           <metrics complexity="4" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="15" coveredelements="0"/>
         </class>
@@ -2195,7 +2195,7 @@
         <line num="38" type="stmt" count="0"/>
         <metrics loc="39" ncloc="30" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="15" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Group.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Group.php">
         <class name="Group" namespace="Kabas\Fields\Types">
           <metrics complexity="7" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="25" coveredelements="0"/>
         </class>
@@ -2226,7 +2226,7 @@
         <line num="46" type="stmt" count="0"/>
         <metrics loc="47" ncloc="38" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="0" elements="25" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Image.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Image.php">
         <class name="Image" namespace="Kabas\Fields\Types">
           <metrics complexity="11" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="24" coveredelements="0"/>
         </class>
@@ -2256,7 +2256,7 @@
         <line num="54" type="stmt" count="0"/>
         <metrics loc="56" ncloc="41" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="0" elements="24" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Number.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Number.php">
         <class name="Number" namespace="Kabas\Fields\Types">
           <metrics complexity="25" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="0" elements="73" coveredelements="0"/>
         </class>
@@ -2335,7 +2335,7 @@
         <line num="136" type="stmt" count="0"/>
         <metrics loc="138" ncloc="95" classes="1" methods="11" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="0" elements="73" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Partial.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Partial.php">
         <class name="Partial" namespace="Kabas\Fields\Types">
           <metrics complexity="15" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="45" coveredstatements="0" elements="51" coveredelements="0"/>
         </class>
@@ -2392,7 +2392,7 @@
         <line num="98" type="stmt" count="0"/>
         <metrics loc="99" ncloc="70" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="45" coveredstatements="0" elements="51" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Radio.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Radio.php">
         <class name="Radio" namespace="Kabas\Fields\Types">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
         </class>
@@ -2402,7 +2402,7 @@
         <line num="21" type="stmt" count="0"/>
         <metrics loc="23" ncloc="18" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Repeater.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Repeater.php">
         <class name="Repeater" namespace="Kabas\Fields\Types">
           <metrics complexity="3" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="11" coveredelements="0"/>
         </class>
@@ -2419,19 +2419,19 @@
         <line num="27" type="stmt" count="0"/>
         <metrics loc="29" ncloc="24" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="11" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Select.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Select.php">
         <class name="Select" namespace="Kabas\Fields\Types">
           <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
         <metrics loc="10" ncloc="10" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Text.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Text.php">
         <class name="Text" namespace="Kabas\Fields\Types">
           <metrics complexity="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
         </class>
         <metrics loc="10" ncloc="10" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Textarea.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Textarea.php">
         <class name="Textarea" namespace="Kabas\Fields\Types">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
         </class>
@@ -2439,7 +2439,7 @@
         <line num="13" type="stmt" count="0"/>
         <metrics loc="15" ncloc="15" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Url.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Url.php">
         <class name="Url" namespace="Kabas\Fields\Types">
           <metrics complexity="13" methods="7" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="10" elements="22" coveredelements="14"/>
         </class>
@@ -2467,7 +2467,7 @@
         <line num="88" type="stmt" count="4"/>
         <metrics loc="91" ncloc="60" classes="1" methods="7" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="10" elements="22" coveredelements="14"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Wysiwyg.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Fields/Types/Wysiwyg.php">
         <class name="Wysiwyg" namespace="Kabas\Fields\Types">
           <metrics complexity="14" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="46" coveredstatements="0" elements="54" coveredelements="0"/>
         </class>
@@ -2529,7 +2529,7 @@
       </file>
     </package>
     <package name="Kabas\Http">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Request.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Request.php">
         <class name="Request" namespace="Kabas\Http">
           <metrics complexity="5" methods="5" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="14" coveredelements="14"/>
         </class>
@@ -2549,7 +2549,7 @@
         <line num="54" type="stmt" count="4"/>
         <metrics loc="55" ncloc="35" classes="1" methods="5" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="9" coveredstatements="9" elements="14" coveredelements="14"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Response.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Response.php">
         <class name="Response" namespace="Kabas\Http">
           <metrics complexity="10" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="21" coveredelements="21"/>
         </class>
@@ -2576,7 +2576,7 @@
         <line num="76" type="stmt" count="6"/>
         <metrics loc="77" ncloc="50" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="21" coveredelements="21"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Route.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Route.php">
         <class name="Route" namespace="Kabas\Http">
           <metrics complexity="20" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="44" coveredstatements="42" elements="53" coveredelements="49"/>
         </class>
@@ -2635,7 +2635,7 @@
         <line num="143" type="stmt" count="3"/>
         <metrics loc="146" ncloc="101" classes="1" methods="9" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="44" coveredstatements="42" elements="53" coveredelements="49"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/RouteNotFound.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/RouteNotFound.php">
         <class name="RouteNotFound" namespace="Kabas\Http">
           <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
         </class>
@@ -2648,7 +2648,7 @@
         <line num="17" type="stmt" count="1"/>
         <metrics loc="20" ncloc="20" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="7" coveredelements="7"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Router.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Router.php">
         <class name="Router" namespace="Kabas\Http">
           <metrics complexity="28" methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="42" elements="57" coveredelements="57"/>
         </class>
@@ -2711,7 +2711,7 @@
         <line num="205" type="stmt" count="3"/>
         <metrics loc="208" ncloc="136" classes="1" methods="15" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="42" elements="57" coveredelements="57"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/UrlWorker.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/UrlWorker.php">
         <class name="UrlWorker" namespace="Kabas\Http">
           <metrics complexity="21" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="43" coveredstatements="43" elements="50" coveredelements="50"/>
         </class>
@@ -2769,7 +2769,7 @@
       </file>
     </package>
     <package name="Kabas\Http\Responses">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Responses/Json.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Responses/Json.php">
         <class name="Json" namespace="Kabas\Http\Responses">
           <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="16" coveredelements="16"/>
         </class>
@@ -2791,7 +2791,7 @@
         <line num="47" type="stmt" count="3"/>
         <metrics loc="48" ncloc="35" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="12" elements="16" coveredelements="16"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Responses/Redirect.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Responses/Redirect.php">
         <class name="Redirect" namespace="Kabas\Http\Responses">
           <metrics complexity="2" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="9" coveredelements="9"/>
         </class>
@@ -2806,7 +2806,7 @@
         <line num="25" type="stmt" count="1"/>
         <metrics loc="26" ncloc="22" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="7" elements="9" coveredelements="9"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Responses/View.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Responses/View.php">
         <class name="View" namespace="Kabas\Http\Responses">
           <metrics complexity="9" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
         </class>
@@ -2834,11 +2834,11 @@
         <metrics loc="51" ncloc="43" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
       </file>
     </package>
-    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Http/Responses/ResponseInterface.php">
+    <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Http/Responses/ResponseInterface.php">
       <metrics loc="6" ncloc="6" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <package name="Kabas\Model">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Model/Container.php">
         <class name="Container" namespace="Kabas\Model">
           <metrics complexity="6" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="11" coveredelements="0"/>
         </class>
@@ -2855,7 +2855,7 @@
         <line num="42" type="stmt" count="0"/>
         <metrics loc="45" ncloc="30" classes="1" methods="3" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="11" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/EloquentModel.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Model/EloquentModel.php">
         <class name="EloquentModel" namespace="Kabas\Model">
           <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
         </class>
@@ -2865,7 +2865,7 @@
         <line num="12" type="stmt" count="0"/>
         <metrics loc="13" ncloc="13" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/Item.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Model/Item.php">
         <class name="Item" namespace="Kabas\Model">
           <metrics complexity="5" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="7" coveredelements="0"/>
         </class>
@@ -2878,7 +2878,7 @@
         <line num="13" type="stmt" count="0"/>
         <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="0" elements="7" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/JsonModel.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Model/JsonModel.php">
         <class name="JsonModel" namespace="Kabas\Model">
           <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
         </class>
@@ -2886,7 +2886,7 @@
         <line num="12" type="stmt" count="15"/>
         <metrics loc="14" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/Model.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Model/Model.php">
         <class name="Model" namespace="Kabas\Model">
           <metrics complexity="20" methods="15" coveredmethods="12" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="29" elements="52" coveredelements="41"/>
         </class>
@@ -2945,11 +2945,11 @@
         <metrics loc="204" ncloc="124" classes="1" methods="15" coveredmethods="12" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="29" elements="52" coveredelements="41"/>
       </file>
     </package>
-    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Model/ModelInterface.php">
+    <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Model/ModelInterface.php">
       <metrics loc="16" ncloc="16" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <package name="Kabas\Objects\Image">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Objects/Image/Editor.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Objects/Image/Editor.php">
         <class name="Editor" namespace="Kabas\Objects\Image">
           <metrics complexity="53" methods="46" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="166" coveredstatements="0" elements="212" coveredelements="0"/>
         </class>
@@ -3167,7 +3167,7 @@
         <line num="278" type="stmt" count="0"/>
         <metrics loc="279" ncloc="279" classes="1" methods="46" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="166" coveredstatements="0" elements="212" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Objects/Image/Item.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Objects/Image/Item.php">
         <class name="Item" namespace="Kabas\Objects\Image">
           <metrics complexity="35" methods="19" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="97" coveredstatements="0" elements="116" coveredelements="0"/>
         </class>
@@ -3290,11 +3290,11 @@
         <metrics loc="156" ncloc="156" classes="1" methods="19" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="97" coveredstatements="0" elements="116" coveredelements="0"/>
       </file>
     </package>
-    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Session/ContainerInterface.php">
+    <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Session/ContainerInterface.php">
       <metrics loc="55" ncloc="21" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <package name="Kabas\Session">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Session/DataContainer.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Session/DataContainer.php">
         <class name="DataContainer" namespace="Kabas\Session">
           <metrics complexity="9" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="22" coveredelements="22"/>
         </class>
@@ -3322,7 +3322,7 @@
         <line num="87" type="stmt" count="6"/>
         <metrics loc="89" ncloc="50" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="14" elements="22" coveredelements="22"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Session/FlashContainer.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Session/FlashContainer.php">
         <class name="FlashContainer" namespace="Kabas\Session">
           <metrics complexity="16" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="32" coveredelements="32"/>
         </class>
@@ -3360,7 +3360,7 @@
         <line num="123" type="stmt" count="10"/>
         <metrics loc="125" ncloc="67" classes="1" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="22" coveredstatements="22" elements="32" coveredelements="32"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Session/Handler.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Session/Handler.php">
         <class name="Handler" namespace="Kabas\Session">
           <metrics complexity="5" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="9" coveredelements="9"/>
         </class>
@@ -3375,7 +3375,7 @@
         <line num="41" type="stmt" count="4"/>
         <metrics loc="42" ncloc="24" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="9" coveredelements="9"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Session/Manager.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Session/Manager.php">
         <class name="Manager" namespace="Kabas\Session">
           <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="15" coveredelements="15"/>
         </class>
@@ -3398,7 +3398,7 @@
       </file>
     </package>
     <package name="Kabas\Themes">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Themes/Container.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Themes/Container.php">
         <class name="Container" namespace="Kabas\Themes">
           <metrics complexity="21" methods="7" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="26" elements="35" coveredelements="31"/>
         </class>
@@ -3441,7 +3441,7 @@
       </file>
     </package>
     <package name="Kabas\Utils">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Assets.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Assets.php">
         <class name="Assets" namespace="Kabas\Utils">
           <metrics complexity="35" methods="13" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="70" coveredstatements="6" elements="83" coveredelements="7"/>
         </class>
@@ -3530,7 +3530,7 @@
         <line num="229" type="stmt" count="0"/>
         <metrics loc="231" ncloc="151" classes="1" methods="13" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="70" coveredstatements="6" elements="83" coveredelements="7"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Benchmark.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Benchmark.php">
         <class name="Benchmark" namespace="Kabas\Utils">
           <metrics complexity="4" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
         </class>
@@ -3550,7 +3550,7 @@
         <line num="45" type="stmt" count="1"/>
         <metrics loc="47" ncloc="30" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/File.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/File.php">
         <class name="File" namespace="Kabas\Utils">
           <metrics complexity="20" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="31" elements="39" coveredelements="39"/>
         </class>
@@ -3595,7 +3595,7 @@
         <line num="116" type="stmt" count="12"/>
         <metrics loc="119" ncloc="81" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="31" coveredstatements="31" elements="39" coveredelements="39"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Lang.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Lang.php">
         <class name="Lang" namespace="Kabas\Utils">
           <metrics complexity="3" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="1" elements="7" coveredelements="2"/>
         </class>
@@ -3608,7 +3608,7 @@
         <line num="31" type="stmt" count="0"/>
         <metrics loc="33" ncloc="23" classes="1" methods="2" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="1" elements="7" coveredelements="2"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Menu.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Menu.php">
         <class name="Menu" namespace="Kabas\Utils">
           <metrics complexity="4" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="10" coveredelements="10"/>
         </class>
@@ -3624,7 +3624,7 @@
         <line num="28" type="stmt" count="3"/>
         <metrics loc="29" ncloc="23" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="10" coveredelements="10"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Meta.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Meta.php">
         <class name="Meta" namespace="Kabas\Utils">
           <metrics complexity="7" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="16" coveredelements="0"/>
         </class>
@@ -3646,7 +3646,7 @@
         <line num="52" type="stmt" count="0"/>
         <metrics loc="53" ncloc="35" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="16" coveredelements="0"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Page.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Page.php">
         <class name="Page" namespace="Kabas\Utils">
           <metrics complexity="3" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="1" elements="6" coveredelements="2"/>
         </class>
@@ -3658,7 +3658,7 @@
         <line num="33" type="stmt" count="0"/>
         <metrics loc="35" ncloc="23" classes="1" methods="3" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="1" elements="6" coveredelements="2"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Part.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Part.php">
         <class name="Part" namespace="Kabas\Utils">
           <metrics complexity="4" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="10" coveredelements="10"/>
         </class>
@@ -3674,7 +3674,7 @@
         <line num="28" type="stmt" count="3"/>
         <metrics loc="29" ncloc="23" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="8" elements="10" coveredelements="10"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Session.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Session.php">
         <class name="Session" namespace="Kabas\Utils">
           <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
         </class>
@@ -3682,7 +3682,7 @@
         <line num="11" type="stmt" count="1"/>
         <metrics loc="13" ncloc="13" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Text.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Text.php">
         <class name="Text" namespace="Kabas\Utils">
           <metrics complexity="3" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
         </class>
@@ -3702,7 +3702,7 @@
         <line num="41" type="stmt" count="1"/>
         <metrics loc="43" ncloc="28" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
       </file>
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Url.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/Utils/Url.php">
         <class name="Url" namespace="Kabas\Utils">
           <metrics complexity="19" methods="10" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="15" elements="39" coveredelements="19"/>
         </class>
@@ -3748,12 +3748,12 @@
         <metrics loc="136" ncloc="83" classes="1" methods="10" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="15" elements="39" coveredelements="19"/>
       </file>
     </package>
-    <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/View/404.php">
+    <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/View/404.php">
       <line num="1" type="stmt" count="1"/>
       <metrics loc="28" ncloc="28" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="1" coveredelements="1"/>
     </file>
     <package name="Kabas\View">
-      <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/View/View.php">
+      <file name="D:\whitecube\whiteCube\kabas\core\src\Kabas/View/View.php">
         <class name="View" namespace="Kabas\View">
           <metrics complexity="14" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
         </class>
