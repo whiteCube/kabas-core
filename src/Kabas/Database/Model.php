@@ -2,14 +2,14 @@
 
 namespace Kabas\Database;
 
-use Kabas\App;
 use Kabas\Utils\Text;
-use Kabas\Utils\File;
 
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 abstract class Model extends EloquentModel
 {
+    use Concerns\HasFields;
+
     /**
     * The current model's singular name
     * @var string
@@ -29,12 +29,6 @@ abstract class Model extends EloquentModel
     static protected $structure;
 
     /**
-    * The current model's defined fields
-    * @var object
-    */
-    static protected $fields;
-
-    /**
      * The "booting" method of the model.
      * @return void
      */
@@ -45,56 +39,6 @@ abstract class Model extends EloquentModel
         $instance->constructRepositoryName();
         $instance->constructStructureFileName();
         parent::boot();
-    }
-
-    public function __set($name, $value)
-    {
-        $this->attributes[$name]->set($value);
-    }
-
-    public function __get($name)
-    {
-        return $this->attributes[$name];
-    }
-
-    /**
-     * Returns a new Query based on current model and given method
-     * @return Kabas\Drivers\Json\Query
-     */
-    public function __call($name, $arguments = [])
-    {
-        return $this->getDriver()->makeModelQuery($this, $name, $arguments);
-    }
-
-    /**
-     * Returns a new empty Query based on given method
-     * @return Kabas\Drivers\Json\Query
-     */
-    public static function __callStatic($name, $arguments = [])
-    {
-        return static::getDriver()->makeNewQuery($name, $arguments);
-    }
-
-    /**
-     * Returns the driver for the current model from a static context
-     * @return Kabas\Drivers\DriverInterface
-     */
-    public static function getDriver()
-    {
-        if(is_null(static::$driver)) {
-            static::$driver = (new static())->getDriverInstance();
-        }
-        return static::$driver;
-    }
-
-    /**
-     * Parses the model's structure file and stores values in cache
-     * @return void
-     */
-    public function load()
-    {
-        $structure = File::loadJson($this->structure);
-        static::$fields = $structure->fields ?? false;
     }
 
     /**
@@ -124,16 +68,6 @@ abstract class Model extends EloquentModel
         $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . static::$structure);
         if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($path);
         return $path;
-    }
-
-    /**
-     * Returns the current model's fields container
-     * @return object|false
-     */
-    public function getFields()
-    {
-        if(is_null(static::$fields)) $this->load();
-        return static::$fields;
     }
 
     /**
@@ -190,23 +124,27 @@ abstract class Model extends EloquentModel
     {
         static::$structure = static::$structure ?? $this->generateStructureFile();
     }
+    
+    /**
+     * Create a new model instance that is existing.
+     * @param  array  $attributes
+     * @param  string|null  $connection
+     * @return static
+     */
+    public function newFromBuilder($attributes = [], $connection = null)
+    {
+        $model = parent::newFromBuilder($attributes, $connection);
+        $model->makeFieldsFromRawAttribbutes((array) $attributes);
+        return $model;
+    }
 
     /**
-     * Makes the required field instance
-     * @param string $name
-     * @param mixed $value
-     * @param object $structure
-     * @return Kabas\Fields\[type]
+     * Dynamically retrieve attributes on the model.
+     * @param  string  $key
+     * @return mixed
      */
-    protected function instanciateField($name, $value, \stdClass $structure)
+    public function __get($key)
     {
-        try {
-            $field = App::fields()->getClass($structure->type ?? 'text');
-        } catch (\Kabas\Exceptions\TypeException $e) {
-            $e->setFieldName($name, $this->getObjectName());
-            echo $e->getMessage();
-            return;
-        }
-        return new $field($name, $value, $structure);
+        return $this->getField($key) ?? $this->getAttribute($key);
     }
 }

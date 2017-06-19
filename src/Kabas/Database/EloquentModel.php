@@ -6,8 +6,11 @@ use Kabas\Drivers\Eloquent;
 
 class EloquentModel extends Model implements ModelInterface
 {
-    public function getDriverInstance()
+    protected $connection = 'eloquent';
+
+    public function __construct($attributes = [])
     {
-        return new Eloquent([]);
+        $this->table = static::$repository;
+        parent::__construct($attributes);
     }
 }

@@ -4,6 +4,7 @@ namespace Kabas\Config;
 
 use Kabas\App;
 use Kabas\Utils\Text;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Container
 {
@@ -11,6 +12,7 @@ class Container
     {
         $this->settings = $settings;
         $this->languages = new LanguageRepository($this->settings->pluck('lang.available'), $this->settings->get('lang.default'));
+        $this->setDatabase($this->settings->pluck('database'));
         $this->setDriver();
     }
 
@@ -21,6 +23,19 @@ class Container
             throw new \Exception($error);
         }
         return call_user_func_array([$this->settings, $name], $arguments);
+    }
+
+    /**
+     * Defines the default eloquent connection
+     * @param array $defaultConnection
+     * @return void
+     */
+    protected function setDatabase(array $defaultConnection)
+    {
+        $capsule = new Capsule;
+        $capsule->addConnection($defaultConnection, 'eloquent');
+        $capsule->addConnection(['driver' => 'json'], 'filesystem');
+        $capsule->bootEloquent();
     }
 
     /**
