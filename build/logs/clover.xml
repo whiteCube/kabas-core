@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1497886139">
-  <project timestamp="1497886139">
+<coverage generated="1497886373">
+  <project timestamp="1497886373">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -723,8 +723,8 @@
         <line num="23" type="stmt" count="0"/>
         <line num="24" type="stmt" count="0"/>
         <line num="26" type="stmt" count="0"/>
-        <line num="28" type="method" name="isParsed" visibility="public" complexity="1" crap="1" count="44"/>
-        <line num="30" type="stmt" count="44"/>
+        <line num="28" type="method" name="isParsed" visibility="public" complexity="1" crap="1" count="46"/>
+        <line num="30" type="stmt" count="46"/>
         <line num="33" type="method" name="setParsed" visibility="public" complexity="1" crap="2" count="0"/>
         <line num="35" type="stmt" count="0"/>
         <line num="36" type="stmt" count="0"/>
@@ -1264,12 +1264,12 @@
         <class name="Item" namespace="Kabas\Fields">
           <metrics complexity="33" methods="18" coveredmethods="18" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="38" elements="56" coveredelements="56"/>
         </class>
-        <line num="29" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="44"/>
-        <line num="31" type="stmt" count="44"/>
-        <line num="32" type="stmt" count="44"/>
-        <line num="33" type="stmt" count="44"/>
-        <line num="34" type="stmt" count="44"/>
-        <line num="35" type="stmt" count="44"/>
+        <line num="29" type="method" name="__construct" visibility="public" complexity="2" crap="2" count="46"/>
+        <line num="31" type="stmt" count="46"/>
+        <line num="32" type="stmt" count="46"/>
+        <line num="33" type="stmt" count="46"/>
+        <line num="34" type="stmt" count="46"/>
+        <line num="35" type="stmt" count="46"/>
         <line num="37" type="method" name="__toString" visibility="public" complexity="1" crap="1" count="6"/>
         <line num="39" type="stmt" count="6"/>
         <line num="47" type="method" name="format" visibility="public" complexity="1" crap="1" count="1"/>
@@ -1290,36 +1290,36 @@
         <line num="108" type="stmt" count="1"/>
         <line num="115" type="method" name="isMultiple" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="117" type="stmt" count="1"/>
-        <line num="125" type="method" name="set" visibility="public" complexity="8" crap="8" count="41"/>
-        <line num="127" type="stmt" count="41"/>
-        <line num="128" type="stmt" count="41"/>
-        <line num="129" type="stmt" count="41"/>
-        <line num="130" type="stmt" count="41"/>
-        <line num="132" type="stmt" count="41"/>
-        <line num="133" type="stmt" count="41"/>
-        <line num="135" type="stmt" count="41"/>
+        <line num="125" type="method" name="set" visibility="public" complexity="8" crap="8" count="43"/>
+        <line num="127" type="stmt" count="43"/>
+        <line num="128" type="stmt" count="43"/>
+        <line num="129" type="stmt" count="43"/>
+        <line num="130" type="stmt" count="43"/>
+        <line num="132" type="stmt" count="43"/>
+        <line num="133" type="stmt" count="43"/>
+        <line num="135" type="stmt" count="43"/>
         <line num="142" type="method" name="setMultiple" visibility="public" complexity="2" crap="2" count="3"/>
         <line num="144" type="stmt" count="3"/>
         <line num="145" type="stmt" count="3"/>
-        <line num="152" type="method" name="setOption" visibility="public" complexity="2" crap="2" count="44"/>
-        <line num="154" type="stmt" count="44"/>
-        <line num="155" type="stmt" count="44"/>
-        <line num="177" type="method" name="check" visibility="public" complexity="2" crap="2" count="41"/>
-        <line num="179" type="stmt" count="41"/>
-        <line num="180" type="stmt" count="3"/>
-        <line num="181" type="stmt" count="3"/>
-        <line num="183" type="stmt" count="41"/>
-        <line num="191" type="method" name="validate" visibility="public" complexity="2" crap="2" count="41"/>
-        <line num="193" type="stmt" count="41"/>
-        <line num="194" type="stmt" count="41"/>
-        <line num="202" type="method" name="implement" visibility="protected" complexity="3" crap="3" count="44"/>
-        <line num="204" type="stmt" count="44"/>
-        <line num="205" type="stmt" count="44"/>
-        <line num="206" type="stmt" count="44"/>
-        <line num="207" type="stmt" count="44"/>
-        <line num="208" type="stmt" count="44"/>
-        <line num="215" type="method" name="parse" visibility="protected" complexity="1" crap="1" count="22"/>
-        <line num="217" type="stmt" count="22"/>
+        <line num="152" type="method" name="setOption" visibility="public" complexity="2" crap="2" count="46"/>
+        <line num="154" type="stmt" count="46"/>
+        <line num="155" type="stmt" count="46"/>
+        <line num="177" type="method" name="check" visibility="public" complexity="2" crap="2" count="43"/>
+        <line num="179" type="stmt" count="43"/>
+        <line num="180" type="stmt" count="4"/>
+        <line num="181" type="stmt" count="4"/>
+        <line num="183" type="stmt" count="43"/>
+        <line num="191" type="method" name="validate" visibility="public" complexity="2" crap="2" count="43"/>
+        <line num="193" type="stmt" count="43"/>
+        <line num="194" type="stmt" count="43"/>
+        <line num="202" type="method" name="implement" visibility="protected" complexity="3" crap="3" count="46"/>
+        <line num="204" type="stmt" count="46"/>
+        <line num="205" type="stmt" count="46"/>
+        <line num="206" type="stmt" count="46"/>
+        <line num="207" type="stmt" count="46"/>
+        <line num="208" type="stmt" count="46"/>
+        <line num="215" type="method" name="parse" visibility="protected" complexity="1" crap="1" count="24"/>
+        <line num="217" type="stmt" count="24"/>
         <metrics loc="219" ncloc="136" classes="1" methods="18" coveredmethods="18" conditionals="0" coveredconditionals="0" statements="38" coveredstatements="38" elements="56" coveredelements="56"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Option.php">
@@ -1449,8 +1449,8 @@
         <class name="Textual" namespace="Kabas\Fields">
           <metrics complexity="12" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="31" coveredelements="31"/>
         </class>
-        <line num="7" type="method" name="condition" visibility="public" complexity="1" crap="1" count="22"/>
-        <line num="9" type="stmt" count="22"/>
+        <line num="7" type="method" name="condition" visibility="public" complexity="1" crap="1" count="24"/>
+        <line num="9" type="stmt" count="24"/>
         <line num="16" type="method" name="uppercase" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="18" type="stmt" count="1"/>
         <line num="19" type="stmt" count="1"/>
@@ -1589,14 +1589,12 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/Email.php">
         <class name="Email" namespace="Kabas\Fields\Types">
-          <metrics complexity="2" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
+          <metrics complexity="2" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
         </class>
-        <line num="16" type="method" name="condition" visibility="public" complexity="2" crap="6" count="0"/>
-        <line num="17" type="stmt" count="0"/>
-        <line num="18" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <metrics loc="21" ncloc="16" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="5" coveredelements="0"/>
+        <line num="16" type="method" name="condition" visibility="public" complexity="2" crap="2" count="2"/>
+        <line num="18" type="stmt" count="2"/>
+        <line num="19" type="stmt" count="2"/>
+        <metrics loc="21" ncloc="16" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Types/File.php">
         <class name="File" namespace="Kabas\Fields\Types">
@@ -3541,6 +3539,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="36" coveredstatements="0" elements="43" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="79" loc="6290" ncloc="4703" classes="72" methods="504" coveredmethods="76" conditionals="0" coveredconditionals="0" statements="2537" coveredstatements="217" elements="3041" coveredelements="293"/>
+    <metrics files="79" loc="6290" ncloc="4703" classes="72" methods="504" coveredmethods="77" conditionals="0" coveredconditionals="0" statements="2535" coveredstatements="219" elements="3039" coveredelements="296"/>
   </project>
 </coverage>
