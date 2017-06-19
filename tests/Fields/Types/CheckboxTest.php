@@ -2,17 +2,14 @@
 
 namespace Tests\Fields\Types;
 
-use Kabas\Fields\Types\Checkbox;
-use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
-use Kabas\Exceptions\TypeException;
+use Kabas\Fields\Types\Checkbox;
 
 class CheckboxTest extends TestCase
 {
 
     public function setUp()
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
         $data = new \stdClass;
         $data->label = 'Checkbox';
         $data->type = 'checkbox';

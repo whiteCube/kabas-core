@@ -24,7 +24,7 @@ class File extends Item
     public function __get($key)
     {
         if(isset($this->reference->$key)) return $this->reference->$key;
-        return $this;
+        return false;
     }
 
     public function __call($method, $params)

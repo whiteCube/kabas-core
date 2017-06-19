@@ -18,8 +18,7 @@ class Color extends Item
      */
     public function condition()
     {
-        if(is_object($this->reference)) return true;
-        return false;
+        return is_object($this->reference);
     }
 
     /**
@@ -31,11 +30,8 @@ class Color extends Item
     {
         $this->setReference($value);
         if(!$this->reference) return null;
-        switch ($this->mode) {
-            case 'hex': return $this->getHex(); break;
-            case 'rgb': return $this->getRgb(); break;
-        }
-        return false;
+        if($this->mode == 'hex') return $this->getHex();
+        return $this->getRgb();
     }
 
     /**
@@ -112,6 +108,7 @@ class Color extends Item
     protected function getReference($value)
     {
         if(is_string($value)){
+            if(strlen($value) == 6 || strlen($value) == 3) return $this->parseHexString('#' . $value);
             if(strpos($value, '#') === 0) return $this->parseHexString($value);
             if(strpos($value, 'rgb') === 0) return $this->parseRgbString($value);
         }
@@ -137,7 +134,6 @@ class Color extends Item
             $o->green = hexdec(substr($string,2,2));
             $o->blue = hexdec(substr($string,4,2));
         }
-        else return false;
         return $o;
     }
 

@@ -26,6 +26,7 @@ class Date extends Item
 
     public function __set($key, $value)
     {
+        if(!isset($this->output)) $this->output = new \stdClass;
         $this->output->$key = $value;
         return $this->output;
     }
