@@ -1,54 +1,32 @@
 <?php
 
-namespace Kabas\Model;
+namespace Kabas\Database;
 
 use Kabas\App;
 use Kabas\Utils\Text;
 use Kabas\Utils\File;
 
-class Model
+use Illuminate\Database\Eloquent\Model as EloquentModel;
+
+abstract class Model extends EloquentModel
 {
     /**
     * The current model's singular name
     * @var string
     */
-    protected $object;
+    static protected $object;
 
     /**
     * The current model's table or directory name
     * @var string
     */
-    protected $repository;
+    static protected $repository;
 
     /**
     * The current model's structure file
     * @var string
     */
-    protected $structure;
-
-    /**
-    * The current instance's raw values
-    * @var array
-    */
-    protected $original = [];
-
-    /**
-    * The current instance's field values
-    * @var array
-    */
-    protected $attributes = [];
-
-    /**
-    * The current model's fillable fields
-    * @var string
-    */
-    protected $fillable = [];
-
-    /**
-    * The current model's guarded fields
-    * @var string
-    */
-    protected $guarded = [];
+    static protected $structure;
 
     /**
     * The current model's defined fields
@@ -57,18 +35,16 @@ class Model
     static protected $fields;
 
     /**
-    * The current model's driver instance
-    * @var object
-    */
-    private $driver;
-
-    public function __construct(array $attributes = [])
+     * The "booting" method of the model.
+     * @return void
+     */
+    protected static function boot()
     {
-        $this->object = $this->object ?? $this->generateObjectName();
-        $this->repository = $this->repository ?? $this->generateRepositoryName();
-        $this->structure = $this->generateStructurePath($this->structure);
-        $this->driver = $this->getDriverInstance();
-        $this->inject($attributes);
+        $instance = new static();
+        $instance->constructObjectName();
+        $instance->constructRepositoryName();
+        $instance->constructStructureFileName();
+        parent::boot();
     }
 
     public function __set($name, $value)
@@ -81,15 +57,34 @@ class Model
         return $this->attributes[$name];
     }
 
+    /**
+     * Returns a new Query based on current model and given method
+     * @return Kabas\Drivers\Json\Query
+     */
     public function __call($name, $arguments = [])
     {
-        return call_user_func_array([$this->driver, $name], $arguments);
+        return $this->getDriver()->makeModelQuery($this, $name, $arguments);
     }
 
+    /**
+     * Returns a new empty Query based on given method
+     * @return Kabas\Drivers\Json\Query
+     */
     public static function __callStatic($name, $arguments = [])
     {
-        $instance = new static();
-        return call_user_func_array([$instance->driver, $name], $arguments);
+        return static::getDriver()->makeNewQuery($name, $arguments);
+    }
+
+    /**
+     * Returns the driver for the current model from a static context
+     * @return Kabas\Drivers\DriverInterface
+     */
+    public static function getDriver()
+    {
+        if(is_null(static::$driver)) {
+            static::$driver = (new static())->getDriverInstance();
+        }
+        return static::$driver;
     }
 
     /**
@@ -108,7 +103,7 @@ class Model
      */
     public function getObjectName() : string
     {
-        return $this->object;
+        return static::$object;
     }
 
     /**
@@ -117,7 +112,7 @@ class Model
      */
     public function getRepository() : string
     {
-        return $this->repository;
+        return static::$repository;
     }
 
     /**
@@ -126,7 +121,9 @@ class Model
      */
     public function getStructurePath() : string
     {
-        return $this->structure;
+        $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . static::$structure);
+        if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($path);
+        return $path;
     }
 
     /**
@@ -149,37 +146,49 @@ class Model
     }
 
     /**
+     * Initializes the object name
+     * @return void
+     */
+    protected function constructObjectName()
+    {
+        if(strlen(static::$object)) return;
+        static::$object = $this->generateObjectName();
+    }
+
+    /**
      * Guesses the model's repository name based on class name
      * @return string
      */
     protected function generateRepositoryName()
     {
-        return $this->object . 's';
+        return static::$object . 's';
     }
 
     /**
-     * Gets the full path to the model's structure JSON file
-     * @return string
-     */
-    protected function generateStructurePath($file = null)
-    {
-        if(is_null($file)) $file = $this->object . '.json';
-        $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . $file);
-        if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($file);
-        return $path;
-    }
-
-    /**
-     * Fills attribute fields and original values
-     * @param array $attributes
+     * Initializes the repository and attribute on this model
      * @return void
      */
-    protected function inject(array $attributes)
+    protected function constructRepositoryName()
     {
-        foreach ($this->getFields() as $key => $field) {
-            $this->original[$key] = $attributes[$key] ?? null;
-            $this->attributes[$key] = $this->instanciateField($key, $this->original[$key], $field);
-        }
+        static::$repository = static::$repository ?? $this->table ?? $this->generateRepositoryName();
+    }
+
+    /**
+     * Gets the model's structure JSON filename
+     * @return string
+     */
+    protected function generateStructureFile()
+    {
+        return static::$object . '.json';
+    }
+
+    /**
+     * Initializes the structure attributes on this model
+     * @return void
+     */
+    protected function constructStructureFileName()
+    {
+        static::$structure = static::$structure ?? $this->generateStructureFile();
     }
 
     /**

@@ -1,6 +1,12 @@
 <?php
 
-namespace Kabas\Drivers;
+namespace Kabas\Database;
+
+
+/**
+ * DISCLAIMER : this class is to be deleted since it will
+ * be replaced by the new Kabas\Drivers\Json\Driver.
+ */
 
 use Kabas\Model\ModelInterface;
 use Kabas\Config\Language;
@@ -28,7 +34,15 @@ class Json
     * Query results container
     * @var array
     */
-    protected $stacked = [];
+    protected $results = [];
+
+    /**
+    * All loaded items (only available during same request)
+    * @var array|null
+    */
+    protected $cache;
+
+
 
     public function __construct(ModelInterface $model, Language $language)
     {
@@ -48,18 +62,52 @@ class Json
     }
 
     /**
-     * Adds model instances for the given raw objects to the current stack
+     * Returns all raw items for current model
+     * @return array
+     */
+    protected function loadItems()
+    {
+        if(is_null($this->cache)) $this->cache = File::loadJsonFromDir($this->getContentPath());
+        return $this->cache;
+    }
+
+    /**
+     * Returns single item from given identifier for current model
+     * @param string $key
+     * @return object|null
+     */
+    protected function loadItem($key)
+    {
+        try {
+            $file = File::loadJson($this->getContentPath() . DS . $key . '.json');
+        } catch (\Kabas\Exceptions\FileNotFoundException $e) {
+            return null;
+        }
+        return $file;
+    }
+
+    /**
+     * Returns all current stacked models (which should be all items if stack does not exist)
+     * @return array
+     */
+    protected function getQueryStack()
+    {
+        if(is_null($this->stacked)) $this->stacked = $this->loadItems();
+        return $this->stacked;
+    }
+
+    /**
+     * Transforms given array of raw items into model instances
      * @param array $items
      * @return array
      */
-    protected function stackItems(array $items)
+    protected function getModelsFromItems($items)
     {
         $model = get_class($this->model);
         $models = [];
         foreach($items as $item) {
             $models[] = new $model($this->getAttributesArrayFromRawData($item->data ?? null));
         }
-        $this->stacked = array_merge($this->stacked, $models);
         return $models;
     }
 
@@ -80,15 +128,29 @@ class Json
     }
 
     /**
+     * Returns the current stack as instanciated models
+     * Columns argument is ignored
+     * @param  array $columns
+     * @return array|null
+     */
+    public function get($columns = null)
+    {
+        // TODO : apply limit
+        $models = $this->getModelsFromItems($this->stacked);
+        $this->stacked = $this->cache = null;
+        if(count($models)) return $models;
+        return null;
+    }
+
+    /**
      * Get all entries for current model
      * Columns argument is ignored
      * @return array|null
      */
     public function all($columns = null)
     {
-        $this->stackItems(File::loadJsonFromDir($this->getContentPath()));
-        if(!count($this->stacked)) return null;
-        return $this->stacked;
+        $this->stacked = $this->loadItems();
+        return $this->get();
     }
 
     /**
@@ -96,17 +158,13 @@ class Json
      * Columns argument is ignored
      * @param  mixed $key
      * @param  array $columns
-     * @return object
+     * @return model
      */
     public function find($key, $columns = null)
     {
         if(is_array($key)) return $this->findMany($key, $columns);
-        try {
-            $file = File::loadJson($this->getContentPath() . DS . $key . '.json');
-        } catch (\Kabas\Exceptions\FileNotFoundException $e) {
-            return null;
-        }
-        return $this->stackItems([$file]);
+        if(!($file = $this->loadItem($key))) return null;
+        return array_shift($this->$this->getModelsFromItems([$file]));
     }
 
     /**
@@ -118,63 +176,84 @@ class Json
      */
     public function findMany(array $keys, $columns = null)
     {
+        $models = [];
         foreach($keys as $key) {
-            $this->find($key, $columns);
+            $model = $this->find($key, $columns);
+            if($model) $models[] = $model;
         }
-        if(!count($this->stacked)) return null;
-        return $this->stacked;
+        if(!count($models)) return null;
+        return $models;
     }
 
     /**
      * Specify a condition for the items to retrieve.
      * @param  string $column
-     * @param  string $arg1
-     * @param  mixed $arg2
+     * @param  string $operator/$value
+     * @param  mixed $value
      * @param  bool $boolean
-     * @return $this
+     * @return this
      */
-    public function where($column, $arg1 = null, $arg2 = null, $boolean = null)
+    public function where($column, $operator, $value = null, $boolean = null)
     {
+        if(is_array($column)) return $this->whereMany($column);
+        if(is_null($value)){
+            $value = $operator;
+            $operator = '=';
+        }
+        $this->stacked = $this->applyWhere($column, $operator, $value, $this->getQueryStack());
+        return $this;
+    }
 
-        if(is_array($column)) {
-            foreach($column as $key => $value){
-                $this->where($key, $value);
-            }
-            return $this;
+    /**
+     * Specify multiple conditions with the same operator at once.
+     * @param array $conditions
+     * @return this
+     */
+    public function whereMany(array $conditions, $operator = '=')
+    {
+        foreach ($conditions as $column => $value) {
+            $this->where($column, $operator, $value);
         }
-        $items = $this->getStackedItems();
-        switch(func_num_args()) {
-            case 2: $result = $this->applyWhere($column, '=', $arg1, $items); break;
-            default: $result = $this->applyWhere($column, $arg1, $arg2, $items);
-        }
-        $this->stacked = $result;
         return $this;
     }
 
     /**
      * Add an "or where" clause to the query.
      * @param  string $column
-     * @param  string $arg1
-     * @param  mixed $arg2
-     * @return $this
+     * @param  string $operator/$value
+     * @param  mixed $value
+     * @return this
      */
-    public function orWhere($column, $arg1 = null, $arg2 = null)
+    public function orWhere($column, $operator, $value = null)
     {
-        if(is_array($column)) {
-            foreach($column as $key => $value){
-                $this->where($key, $value);
-            }
-            return $this;
+        if(is_array($column)) return $this->orWhereMany($column);
+        if(is_null($value)){
+            $value = $operator;
+            $operator = '=';
         }
-        $items = File::loadJsonFromDir($this->getContentPath());
-        switch(func_num_args()) {
-            case 2: $result = $this->applyWhere($column, '=', $arg1, $items); break;
-            default: $result = $this->applyWhere($column, $arg1, $arg2, $items);
-        }
-        $this->stacked = array_merge($this->stacked, $result);
+        $alternateItems = $this->applyWhere($column, $operator, $value, $this->loadItems());
+        $this->stacked = array_merge($this->stacked, $alternateItems);
         return $this;
     }
 
+    /**
+     * Add multiple "or where" conditions with the same operator at once.
+     * @param array $conditions
+     * @return this
+     */
+    public function orWhereMany(array $conditions, $operator = '=')
+    {
+        foreach ($conditions as $column => $value) {
+            $this->orWhere($column, $operator, $value);
+        }
+        return $this;
+    }
+
+    /**
+     * Filters given items for given condition
+     * @param array $conditions
+     * @return this
+     */
     protected function applyWhere($column, $operator, $value, $items)
     {
         $result = [];
@@ -241,27 +320,6 @@ class Json
 
         return $this;
 
-    }
-
-    /**
-     * Get the fields by instanciating each stacked item.
-     * @param  array $columns
-     * @return array
-     */
-    public function get($columns = null)
-    {
-        if($columns) $this->columns = $columns;
-        $stackedItems = $this->applyLimit();
-        $this->stacked = [];
-        if(count($stackedItems) === 0) return null;
-        if(count($stackedItems) === 1) {
-            $this->attributes = (array) $this->instanciateFields($stackedItems[0], $this->columns);
-            return $this;
-        }
-        foreach($stackedItems as $item) {
-            $this->stacked[] = $this->instanciateFields($item, $this->columns);
-        }
-        return $this;
     }
 
     /**
