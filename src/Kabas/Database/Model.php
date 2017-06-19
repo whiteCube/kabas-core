@@ -204,7 +204,6 @@ abstract class Model extends EloquentModel
             $field = App::fields()->getClass($structure->type ?? 'text');
         } catch (\Kabas\Exceptions\TypeException $e) {
             $e->setFieldName($name, $this->getObjectName());
-            $e->showAvailableTypes();
             echo $e->getMessage();
             return;
         }

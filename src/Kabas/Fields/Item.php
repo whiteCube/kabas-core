@@ -22,7 +22,6 @@ class Item
 
     protected $options;
 
-    protected $option;
 
     protected $multiple = false;
 
@@ -38,14 +37,6 @@ class Item
     public function __toString()
     {
         return (string) $this->output;
-    }
-
-    public function __call($name, $arguments)
-    {
-        if(!method_exists($this, $name)) {
-            $error = 'Error: Method "' . $name . '" does not exist for field type "' . $this->type .'".';
-            throw new \Exception($error);
-        }
     }
 
     /**
@@ -118,15 +109,6 @@ class Item
     }
 
     /**
-     * Retrieves the current field's option name (inside flexiblecontent)
-     * @return string
-     */
-    public function getOption()
-    {
-        return $this->option;
-    }
-
-    /**
      * Retrieves the current field's multiple-values state
      * @return boolean
      */
@@ -148,10 +130,7 @@ class Item
         $this->output = $this->parse($value);
 
         if(!is_null($this->name) && !is_null($this->value)) {
-            try { $this->check(); }
-            catch (\Kabas\Exceptions\TypeException $e) {
-                echo $e->getMessage();
-            }
+            $this->check();
         }
     }
 
@@ -179,6 +158,7 @@ class Item
      * Generates the right form tag for this field
      * @param  array $attributes
      * @return string
+     * @codeCoverageIgnore // This has yet to be implemented
      */
     public function input($attributes = [])
     {

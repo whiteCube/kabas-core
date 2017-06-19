@@ -15,6 +15,7 @@ class MenuItem
         $this->item = $item;
         $this->item->url = $this->getTargetUrl();
         $this->item->active = $this->getLocalActive();
+        if($this->hasSub()) $this->getSub()->make();
     }
 
     public function __get($key)
@@ -33,9 +34,8 @@ class MenuItem
      */
     public function hasSub()
     {
-        if(is_null($this->items)) return false;
-        if(count($this->items)) return true;
-        return false;
+        if(is_null($this->items) || !count($this->items)) return false;
+        return true;
     }
 
     /**
@@ -54,6 +54,7 @@ class MenuItem
      */
     public function isPage()
     {
+        if(is_string($this->url)) return false;
         return $this->url->hasTarget();
     }
 

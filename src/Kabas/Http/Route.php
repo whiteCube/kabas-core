@@ -120,10 +120,9 @@ class Route
      * Retrieves the parameters for the current route.
      * @return void
      */
-    public function gatherParameters($route = null)
+    public function gatherParameters($route, $lang)
     {
-        $route = App::router()->getRoute();
-        preg_match($this->regexen[Lang::getCurrent()->original], $route, $matches);
+        preg_match($this->regexen[$lang], $route, $matches);
         array_shift($matches);
         foreach ($matches as $i => $value) {
             $this->parameters[$i]->value = urldecode($value);

@@ -50,7 +50,6 @@ class Eloquent extends IlluminateEloquent
             $class = App::fields()->getClass($field->type);
         } catch (\Kabas\Exceptions\TypeException $e) {
             $e->setFieldName($key, static::$info->name);
-            $e->showAvailableTypes();
             echo $e->getMessage();
             die();
         };

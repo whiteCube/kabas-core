@@ -9,6 +9,8 @@ class Flexible extends Repeatable
 {
     protected $type = "flexible";
 
+    protected $option;
+
     /**
      * makes options from user defined list
      * @return array
@@ -51,6 +53,15 @@ class Flexible extends Repeatable
             if($option->structure->option === $key) return $option;
         }
         return false;
+    }
+
+    /**
+     * Retrieves the current field's option name
+     * @return string
+     */
+    public function getOption()
+    {
+        return $this->option;
     }
 
 }

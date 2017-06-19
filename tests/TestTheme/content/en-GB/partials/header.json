@@ -1,5 +1,6 @@
 {
 	"id": "header",
+    "tìtle": "Header",
 	"template": "header",
 	"data": {
 		"logo": {

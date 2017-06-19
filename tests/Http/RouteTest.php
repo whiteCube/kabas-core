@@ -52,5 +52,13 @@ class RouteTest extends TestCase
         $this->assertTrue($multilangRoute->matches('/test', $lang));
     }
 
+    /** @test */
+    public function can_return_parameters_for_the_current_route()
+    {  
+        $route = $this->generateRoute(['en-GB' => '/foo/{bar}']);
+        $route->gatherParameters('/foo/hello', 'en-GB');
+        $parameters = $route->getParameters();
+        $this->assertEquals('hello', $parameters['bar']);
+    }
 
 }

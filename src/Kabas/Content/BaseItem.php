@@ -12,6 +12,8 @@ class BaseItem
 {
     public $id;
 
+    public $_title;
+
     public $template;
 
     public $options;
@@ -29,6 +31,7 @@ class BaseItem
     public function __construct(\stdClass $data)
     {
         $this->id = isset($data->id) ? $data->id : false;
+        $this->_title = isset($data->title) ? $data->title : 'Untitled';
         $this->template = isset($data->template) ? $data->template : false;
         $this->fields = $this->loadFields(@$data->data);
         $this->options = isset($data->options) ? $data->options : new \stdClass();
@@ -57,10 +60,8 @@ class BaseItem
 
     public function __call($name, $args)
     {
-        if(is_object($this->controller)){
-            return call_user_func_array([$this->controller, $name], $args);
-        }
-        return false;
+        if(!is_object($this->controller)) return false;
+        return call_user_func_array([$this->controller, $name], $args);
     }
 
     public function set($data)

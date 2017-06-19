@@ -1,0 +1,9 @@
+{
+    "route": "/params/{param}",
+    "id": "params",
+    "template": "params",
+    "title": "Page with params",
+    "data": {
+
+    }
+}

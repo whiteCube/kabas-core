@@ -79,14 +79,5 @@ class BaseContainer
             else $this->items[$file->id] = $this->makeItem($file);
         }
     }
-
-    /**
-     * returns an item the container should store
-     * @param  object $file
-     * @return object
-     */
-    protected function makeItem($file)
-    {
-        return $file;
-    }
+    
 }

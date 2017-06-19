@@ -1,0 +1,22 @@
+{
+    "id": "test",
+    "template": "testNav",
+    "title": "Test navigation",
+    "data": {},
+    "items": [        
+        {
+            "label": "Homepage"
+        },
+        {
+            "label": "About us"
+        },
+        {
+            "label": "Example page",
+            "items": [
+                {
+                    "label": "Subitem"
+                }
+            ]
+        }
+    ]
+}

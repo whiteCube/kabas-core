@@ -1,23 +1,41 @@
 {
     "id": "main",
     "template": "mainNav",
+    "title": "Main navigation",
     "data": {},
     "items": [        
         {
-            "label": "Accueil",
+            "label": "Homepage",
             "target": "home"
         },
         {
-            "label": "À propos",
-            "target": "about"
+            "label": "About us",
+            "target": "test"
         },
         {
-            "label": "Page exemple",
-            "target": "example"
+            "label": "Example page",
+            "target": "example",
+            "items": [
+                {
+                    "label": "Subitem",
+                    "target": "subpage"
+                }
+            ]
         },
         {
             "label": "Contact",
-            "target": "contact"
+            "target": "contact",
+            "items": []
+        },
+        {
+            "label": "Foo",
+            "target": "foo",
+            "items": [
+                {
+                    "label": "About",
+                    "target": "about"
+                }
+            ]
         }
     ]
 }

@@ -1,0 +1,1 @@
+<h2>A foo partial</h2>

@@ -30,4 +30,14 @@ class Lang
         }
         return $languages;
     }
+
+    /**
+     * Fetch a translation
+     * @param string $key 
+     * @return string
+     */
+    static function trans($key)
+    {
+        return App::translator()->get($key);
+    }
 }

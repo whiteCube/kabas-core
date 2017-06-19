@@ -24,13 +24,13 @@ class Assets
      * @param  string $location
      * @return void
      */
-    public static function add($src, $location)
+    public static function add($src, $location, $type = null)
     {
         if(!isset(self::$required[$location])) self::$required[$location] = [];
-        if(is_string($src)) self::pushToLocation($location, $src);
+        if(is_string($src)) self::pushToLocation($location, $src, $type);
         else if(is_array($src)) {
             foreach ($src as $item) {
-                self::add($item, $location);
+                self::add($item, $location, $type);
             }
         }
     }
@@ -82,9 +82,10 @@ class Assets
      * @param  string $src
      * @return void
      */
-    protected static function pushToLocation($location, $src)
+    protected static function pushToLocation($location, $src, $type)
     {
         if(!in_array($src, self::$required[$location])){
+            if(!is_null($type)) $src .= '*' . $type;
             self::$required[$location][] = $src;
         }
     }
@@ -121,26 +122,32 @@ class Assets
     protected static function parseAsset($src)
     {
         $asset = new \stdClass();
-        $asset->attr = [];
-        $attributes = explode('-', explode(':',$src)[0]);
-        $identifier = array_shift($attributes);
-        switch ($identifier) {
-            case 'js':
-            case 'script':
-                $asset->type = 'js';
-                $asset->attr = $attributes;
-                break;
-            case 'css':
-            case 'style':
-                $asset->type = 'css';
-                break;
-        }
-        if(!isset($asset->type)){
-            $asset->type = strtolower(pathinfo($src, PATHINFO_EXTENSION));
-            $asset->path = $src;
-        }
-        else $asset->path = substr($src, (strpos($src, ':') + 1));
+        $asset->attr = self::getAttributes($src);
+        $asset->type = self::getType($src);  
+        $asset->path = self::getPath($src);
         return $asset;
+    }
+
+    protected static function getAttributes($src)
+    {
+        $start = strpos($src, '|');
+        $attributes = substr($src, $start);
+        $exploded = explode('|', $attributes);
+        unset($exploded[0]);
+        return $exploded;
+    }
+
+    protected static function getType($src)
+    {
+        $pos = strpos($src, '*');
+        if($pos) return substr($src, $pos + 1);
+        $type = strtolower(pathinfo($src, PATHINFO_EXTENSION));
+        return explode('|', $type)[0];
+    }
+
+    protected static function getPath($src)
+    {
+        return explode('*', explode('|', $src)[0])[0];
     }
 
     /**
@@ -192,9 +199,9 @@ class Assets
             $asset->src = $asset->path;
         }
         else{
-            $asset->path = realpath(PUBLIC_PATH . DS . App::themes()->getCurrent('name') . DS . $src);
+            $asset->path = realpath(PUBLIC_PATH . DS . App::themes()->getCurrent('name') . DS . $asset->path);
             if(!$asset->path) return false;
-            $asset->src = self::src($src);
+            $asset->src = self::src(self::getPath($src));
         }
         $asset->tag = self::getTag($asset);
         return $asset;
@@ -222,10 +229,10 @@ class Assets
      */
     protected static function getTagsString($assets)
     {
-        $s = '';
+        $tags = '';
         foreach ($assets as $asset) {
-            $s .= $asset->tag . PHP_EOL;
+            $tags .= $asset->tag . PHP_EOL;
         }
-        return $s;
+        return $tags;
     }
 }

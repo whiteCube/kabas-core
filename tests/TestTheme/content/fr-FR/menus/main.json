@@ -1,0 +1,41 @@
+{
+    "id": "main",
+    "template": "mainNav",
+    "tìtle": "Navigation principale",
+    "data": {},
+    "items": [        
+        {
+            "label": "Accueil",
+            "target": "home"
+        },
+        {
+            "label": "À propos",
+            "target": "test"
+        },
+        {
+            "label": "Page exemple",
+            "target": "example",
+            "items": [
+                {
+                    "label": "Subitem",
+                    "target": "subpage"
+                }
+            ]
+        },
+        {
+            "label": "Contact",
+            "target": "contact",
+            "items": []
+        },
+        {
+            "label": "Foo",
+            "target": "foo",
+            "items": [
+                {
+                    "label": "About",
+                    "target": "about"
+                }
+            ]
+        }
+    ]
+}

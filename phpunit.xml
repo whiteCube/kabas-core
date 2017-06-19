@@ -5,7 +5,7 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
-         processIsolation="false"
+         processIsolation="true"
          stopOnFailure="false"
          bootstrap="./tests/bootstrap.php"
 >
@@ -16,13 +16,65 @@
 
     <filter>
         <whitelist>
-            <directory>src/Kabas</directory>
+            <file>src/Kabas/Cmd/Commander.php</file>
+            <directory>src/Kabas/Config</directory>
+            <directory>src/Kabas/Content</directory>
+            <directory>src/Kabas/Controller</directory>
+            <directory>src/Kabas/Drivers</directory>
+            <directory>src/Kabas/Fields</directory>
+            <directory>src/Kabas/Http</directory>
+            <directory>src/Kabas/Model</directory>
+            <directory>src/Kabas/Objects</directory>
+            <directory>src/Kabas/Session</directory>
+            <directory>src/Kabas/Themes</directory>
+            <directory>src/Kabas/Utils</directory>
+            <directory>src/Kabas/View</directory>
+            <file>src/Kabas/App.php</file>
         </whitelist>
     </filter>
 
     <testsuites>
-        <testsuite name="Kabas Test Suite">
+        <testsuite name="Kabas Complete Test Suite">
             <directory>tests</directory>
+        </testsuite>
+        <testsuite name="Cmd">
+            <directory>tests/Cmd</directory>
+        </testsuite>
+        <testsuite name="Config">
+            <directory>tests/Config</directory>
+        </testsuite>
+        <testsuite name="Content">
+            <directory>tests/Content</directory>
+        </testsuite>
+        <testsuite name="Controller">
+            <directory>tests/Controller</directory>
+        </testsuite>
+        <testsuite name="Drivers">
+            <directory>tests/Drivers</directory>
+        </testsuite>
+        <testsuite name="Fields">
+            <directory>tests/Fields</directory>
+        </testsuite>
+        <testsuite name="Http">
+            <directory>tests/Http</directory>
+        </testsuite>
+        <testsuite name="Model">
+            <directory>tests/Model</directory>
+        </testsuite>
+        <testsuite name="Objects">
+            <directory>tests/Objects</directory>
+        </testsuite>
+        <testsuite name="Session">
+            <directory>tests/Session</directory>
+        </testsuite>
+        <testsuite name="Themes">
+            <directory>tests/Themes</directory>
+        </testsuite>
+        <testsuite name="Utils">
+            <directory>tests/Utils</directory>
+        </testsuite>
+        <testsuite name="View">
+            <directory>tests/View</directory>
         </testsuite>
     </testsuites>
 </phpunit>

@@ -5,6 +5,9 @@ namespace Kabas;
 use Kabas\Http\Router;
 use Kabas\Http\UrlWorker;
 use \Illuminate\Container\Container;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Translation\FileLoader;
+use Illuminate\Translation\Translator;
 
 class App extends Container
 {
@@ -25,6 +28,8 @@ class App extends Container
      * @var Kabas
      */
     protected static $instance;
+
+    protected static $translator;
 
     public function __construct($public_path)
     {
@@ -54,6 +59,7 @@ class App extends Container
         $this->router->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->page;
+        $this->loadTranslations();
         $this->response->init($this->page);
         $this->session->save();
     }
@@ -67,6 +73,14 @@ class App extends Container
         foreach($this->config->get('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
+    }
+
+    public function loadTranslations()
+    {
+        $locale = $this->config->languages->getCurrent()->original;
+        $path = THEME_PATH . '/lang';
+        $translationLoader = new FileLoader(new Filesystem, $path);
+        $this->translator = new Translator($translationLoader, $locale);
     }
 
     /**
@@ -102,13 +116,13 @@ class App extends Container
      */
     protected function registerPaths($public_path)
     {
-        define('DS', DIRECTORY_SEPARATOR);
-        define('CORE_PATH', __DIR__);
-        define('PUBLIC_PATH', $public_path);
-        define('ROOT_PATH', realpath(PUBLIC_PATH . DS .'..'));
-        define('CONTENT_PATH', ROOT_PATH . DS . 'content');
-        define('CONFIG_PATH', ROOT_PATH . DS . 'config');
-        define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        if(!defined('CORE_PATH')) define('CORE_PATH', __DIR__);
+        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', $public_path);
+        if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
+        if(!defined('CONTENT_PATH')) define('CONTENT_PATH', ROOT_PATH . DS . 'content');
+        if(!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . DS . 'config');
+        if(!defined('THEMES_PATH')) define('THEMES_PATH', ROOT_PATH . DS . 'themes');
     }
 
     /**

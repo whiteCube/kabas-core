@@ -34,7 +34,7 @@ class Links extends BaseContainer implements \IteratorAggregate
     public function remove($item)
     {
         $id = $item;
-        if(is_a($item, \Kabas\Content\Menus\LinkItem::class)) $id = $item->id;
+        if(is_a($item, \Kabas\Content\Menus\Link::class)) $id = $item->id;
         foreach ($this->items as $key => $link) {
             if($link->id === $id) unset($this->items[$key]);
         }

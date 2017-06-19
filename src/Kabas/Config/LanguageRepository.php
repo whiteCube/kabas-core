@@ -80,7 +80,7 @@ class LanguageRepository
     /**
     * Returns a language based on given locale or slug
     * @param string $locale
-    * @return \Kabas\Config\Language
+    * @return \Kabas\Config\Language|null
     */
     public function find($locale)
     {

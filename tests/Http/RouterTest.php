@@ -27,7 +27,7 @@ class RouterTest extends TestCase
     {
         $this->createApplication();
         $this->app->router->load();
-        $this->assertCount(2, $this->app->router->getRoutes());
+        $this->assertCount(3, $this->app->router->getRoutes());
     }
 
     /** @test */
@@ -52,6 +52,14 @@ class RouterTest extends TestCase
     {
         $this->createApplication();
         $this->assertFalse($this->app->router->getRouteByPage('test'));
+    }
+
+    /** @test */
+    public function can_return_the_current_route()
+    {
+        $this->createApplication();
+        $this->visit('/foo/bar');
+        $this->assertEquals('/foo/bar', $this->app->router->getRoute());
     }
 
 
