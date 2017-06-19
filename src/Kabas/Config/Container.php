@@ -4,14 +4,12 @@ namespace Kabas\Config;
 
 use Kabas\App;
 use Kabas\Utils\Text;
-use Kabas\Model\Container as ModelContainer;
 
 class Container
 {
-    public function __construct(Settings $settings, ModelContainer $models)
+    public function __construct(Settings $settings)
     {
         $this->settings = $settings;
-        $this->models = $models;
         $this->languages = new LanguageRepository($this->settings->pluck('lang.available'), $this->settings->get('lang.default'));
         $this->setDriver();
     }
