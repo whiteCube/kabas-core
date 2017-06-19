@@ -23,8 +23,7 @@ class Selectable extends Item implements \IteratorAggregate
         if(is_object($value)) $value = (array) $value;
         if(is_array($value)) return array_values($value);
         if(is_bool($value)) return $value ? 'true' : 'false';
-        if(is_string($value = strval($value))) return trim($value);
-        return false;
+        return trim(strval($value));
     }
 
     /**
@@ -170,6 +169,7 @@ class Selectable extends Item implements \IteratorAggregate
             $opts[] = new Option($key, $value, $formatKeys);
         }
         return $opts;
+        
     }
 
     /**
