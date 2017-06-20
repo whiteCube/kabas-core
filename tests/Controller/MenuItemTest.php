@@ -18,10 +18,10 @@ class MenuItemTest extends TestCase
     {
         $this->createApplication();
         $this->visit('/about');
-        ob_start();
-        $this->menu = App::content()->menus->get('main');
-        $this->controller = new MenuItem($this->menu->items->items[0]);
-        ob_get_clean();
+        $this->catch(function(){
+            $this->menu = App::content()->menus->get('main');
+            $this->controller = new MenuItem($this->menu->items->items[0]);
+        });
     }
 
     /** @test */
