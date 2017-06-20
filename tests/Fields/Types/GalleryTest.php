@@ -24,7 +24,7 @@ class GalleryTest extends TestCase
     }
 
     /** @test */
-    public function a_can_be_instantiated_properly()
+    public function can_be_instantiated_properly()
     {
         $this->assertInstanceOf(Gallery::class, $this->gallery);
     }
