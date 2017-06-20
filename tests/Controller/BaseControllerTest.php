@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use \Kabas\Http\Responses\View;
 use Kabas\Http\Responses\Redirect;
 use Kabas\Controller\BaseController;
+use Kabas\Utils\Benchmark;
 
 class BaseControllerTest extends TestCase
 {
@@ -22,9 +23,9 @@ class BaseControllerTest extends TestCase
     {
         $this->createApplication();
         $this->visit('/foo/bar');
-        ob_start();
-        $this->controller = new BaseController(App::content()->pages->get('about'));
-        ob_get_clean();
+        $this->catch(function(){
+            $this->controller = new BaseController(App::content()->pages->get('about'));
+        });
     }
 
     /** @test */
