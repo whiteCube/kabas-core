@@ -13,6 +13,18 @@ class RedirectResponseTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
+    protected function prepareApplication()
+    {
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class,
+            'router' => \Kabas\Http\Router::class,
+            'content' => \Kabas\Content\Container::class,
+            'themes' => \Kabas\Themes\Container::class
+        ]);
+        $this->app->router->load();
+    }
+
     /** @test */
     public function can_be_properly_instanciated()
     {
@@ -23,8 +35,7 @@ class RedirectResponseTest extends TestCase
     /** @test */
     public function can_redirect_to_intended_page()
     {
-        $this->createApplication();
-        $this->visit('/foo/bar');
+        $this->prepareApplication();
         $resp = new Redirect('about');
         $resp->run();
         $this->assertContains('Location: http://www.foo.com/en/about', xdebug_get_headers());

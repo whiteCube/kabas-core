@@ -4,16 +4,10 @@ namespace Tests\Http;
 
 use Kabas\Http\Route;
 use Kabas\Http\UrlWorker;
-use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
 class RouteTest extends TestCase
 {
-    use CreatesApplication;
-
-    protected $preserveGlobalState = false;
-    protected $runTestInSeparateProcess = true;
-
     public function generateRoute($data)
     {
         $aggregate = [];

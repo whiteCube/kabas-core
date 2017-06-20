@@ -13,15 +13,6 @@ trait HandlesOutput {
         return ob_get_clean();
     }
 
-    public function visit($route)
-    {
-        $_SERVER['REQUEST_URI'] = $route;
-        $this->result = $this->catch(function(){
-            $this->app->handle();
-        });
-        return $this;
-    }
-
     public function see($string)
     {
         return $this->assertContains($string, $this->result);
