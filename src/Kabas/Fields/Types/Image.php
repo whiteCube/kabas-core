@@ -8,7 +8,6 @@ use \Kabas\Objects\Image\Item as ImageObject;
 
 class Image extends Item
 {
-    protected $type = "image";
 
     /**
      * Formats a raw value in order and makes it usable for said field type

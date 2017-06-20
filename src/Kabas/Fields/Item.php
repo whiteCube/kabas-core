@@ -2,6 +2,7 @@
 
 namespace Kabas\Fields;
 
+use Kabas\Utils\Text;
 use Kabas\Content\Container as Content;
 
 class Item
@@ -55,7 +56,7 @@ class Item
      */
     public function getType()
     {
-        return $this->type;
+        return Text::removeNamespace(get_called_class());
     }
 
     /**

@@ -7,7 +7,6 @@ use \Kabas\Utils\Url as UrlUtil;
 
 class File extends Item
 {
-    protected $type = "file";
 
     protected $reference;
 

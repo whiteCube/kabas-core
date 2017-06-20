@@ -8,7 +8,6 @@ use \Kabas\Utils\Url as UrlUtil;
 
 class Url extends Item
 {
-    protected $type = "url";
 
     protected $target;
 

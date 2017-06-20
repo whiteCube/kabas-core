@@ -81,7 +81,7 @@ class MenuItem
     protected function getTargetUrl()
     {
         foreach ($this->fields as $field) {
-            if($field->getType() == 'url') return $field;
+            if($field->getType() == 'Url') return $field;
         }
         return '#';
     }

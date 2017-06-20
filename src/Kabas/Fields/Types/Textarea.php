@@ -6,7 +6,6 @@ use \Kabas\Fields\Textual;
 
 class Textarea extends Textual
 {
-    protected $type = "textarea";
 
     protected function parse($value)
     {

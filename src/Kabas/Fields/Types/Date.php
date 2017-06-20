@@ -7,7 +7,6 @@ use \Kabas\Fields\Item;
 
 class Date extends Item
 {
-    protected $type = "date";
 
     /**
      * Condition to check if the value is correct for this field type.

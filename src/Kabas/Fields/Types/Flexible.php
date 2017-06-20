@@ -7,7 +7,6 @@ use \Kabas\Fields\Repeatable;
 
 class Flexible extends Repeatable
 {
-    protected $type = "flexible";
 
     /**
     * makes options from user defined list

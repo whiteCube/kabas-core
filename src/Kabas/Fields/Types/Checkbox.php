@@ -6,7 +6,6 @@ use \Kabas\Fields\Selectable;
 
 class Checkbox extends Selectable
 {
-    protected $type = "checkbox";
 
     protected $multiple = true;
 
