@@ -48,7 +48,7 @@ trait HasFields
      * Parses the model's structure file and stores values in cache
      * @return void
      */
-    protected function loadFields()
+    protected function loadRawFields()
     {
         $structure = File::loadJson($this->getStructurePath());
         static::$rawFields = $structure->fields ?? false;
@@ -58,41 +58,34 @@ trait HasFields
      * Returns the current model's fields container
      * @return object|false
      */
-    public function getFields()
+    public function getRawFields()
     {
-        if(is_null(static::$rawFields)) $this->loadFields();
+        if(is_null(static::$rawFields)) $this->loadRawFields();
         return static::$rawFields;
     }
     
     /**
      * Create all field instances for this model and fill with given attribute values
      * @param  array  $attributes
-     * @param  string|null  $connection
-     * @return static
+     * @return void
      */
     protected function makeFieldsFromRawAttribbutes($attributes)
     {
-        foreach ($this->getFields() as $name => $structure) {
-            $this->fields[$name] = $this->createField($name, $attributes[$name] ?? null, $structure);
+        foreach ($this->getRawFields() as $name => $structure) {
+            $this->fields[$name] = App::fields()->make($name, $structure, $attributes[$name] ?? null);
         }
     }
-
+    
     /**
-     * Makes the required field instance
-     * @param string $name
-     * @param mixed $value
-     * @param object $structure
-     * @return Kabas\Fields\[type]
+     * Sets new values in existing field instances for this model
+     * @param  array  $attributes
+     * @return void
      */
-    public function createField($name, $value, \stdClass $structure)
+    protected function updateFieldsFromRawAttributes($attributes)
     {
-        try {
-            $field = App::fields()->getClass($structure->type ?? 'text');
-        } catch (\Kabas\Exceptions\TypeException $e) {
-            $e->setFieldName($name, $this->getObjectName());
-            echo $e->getMessage();
-            return;
+        foreach ($this->fields as $name => $field) {
+            if(!isset($attributes[$name])) continue;
+            $field->set($attributes[$name]);
         }
-        return new $field($name, $value, $structure);
     }
 }

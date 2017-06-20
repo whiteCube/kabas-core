@@ -34,10 +34,9 @@ abstract class Model extends EloquentModel
      */
     protected static function boot()
     {
-        $instance = new static();
-        $instance->constructObjectName();
-        $instance->constructRepositoryName();
-        $instance->constructStructureFileName();
+        static::constructObjectName();
+        static::constructRepositoryName();
+        static::constructStructureFileName();
         parent::boot();
     }
 
@@ -71,71 +70,31 @@ abstract class Model extends EloquentModel
     }
 
     /**
-     * Guesses the model's object name based on class name
-     * @return string
-     */
-    protected function generateObjectName()
-    {
-        return lcfirst(Text::removeNamespace(get_class($this)));
-    }
-
-    /**
      * Initializes the object name
      * @return void
      */
-    protected function constructObjectName()
+    protected static function constructObjectName()
     {
         if(strlen(static::$object)) return;
-        static::$object = $this->generateObjectName();
-    }
-
-    /**
-     * Guesses the model's repository name based on class name
-     * @return string
-     */
-    protected function generateRepositoryName()
-    {
-        return static::$object . 's';
+        static::$object = lcfirst(Text::removeNamespace(static::class));
     }
 
     /**
      * Initializes the repository and attribute on this model
      * @return void
      */
-    protected function constructRepositoryName()
+    protected static function constructRepositoryName()
     {
-        static::$repository = static::$repository ?? $this->table ?? $this->generateRepositoryName();
-    }
-
-    /**
-     * Gets the model's structure JSON filename
-     * @return string
-     */
-    protected function generateStructureFile()
-    {
-        return static::$object . '.json';
+        static::$repository = static::$repository ?? static::$object . 's';
     }
 
     /**
      * Initializes the structure attributes on this model
      * @return void
      */
-    protected function constructStructureFileName()
+    protected static function constructStructureFileName()
     {
-        static::$structure = static::$structure ?? $this->generateStructureFile();
-    }
-    
-    /**
-     * Create a new model instance that is existing.
-     * @param  array  $attributes
-     * @param  string|null  $connection
-     * @return static
-     */
-    public function newFromBuilder($attributes = [], $connection = null)
-    {
-        $model = parent::newFromBuilder($attributes, $connection);
-        $model->makeFieldsFromRawAttribbutes((array) $attributes);
-        return $model;
+        static::$structure = static::$structure ?? static::$object . '.json';
     }
 
     /**

@@ -31,7 +31,9 @@ class Container
      */
     public function make($name, $structure, $value = null)
     {
-        $type = isset($structure->type) ? $structure->type : 'text';
+        // If the developper did not provide a field type, we'll
+        // assume it is a regular text field.
+        $type = $structure->type ?? 'text';
         $type = $this->getClass($type);
         return new $type($name, $value, $structure);
     }
