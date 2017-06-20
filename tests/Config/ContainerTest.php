@@ -16,7 +16,9 @@ class ContainerTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
     }
 
     /** @test */

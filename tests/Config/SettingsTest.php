@@ -3,19 +3,15 @@
 namespace Tests\Config;
 
 use Kabas\Config\Settings;
-use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
 class SettingsTest extends TestCase
 {
-    use CreatesApplication;
-
-    protected $preserveGlobalState = false;
-    protected $runTestInSeparateProcess = true;
-
     public function setUp()
     {
-        $this->createApplication();
+        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        if(!defined('CONFIG_PATH')) define('CONFIG_PATH', realpath(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'config'));
+        if(!defined('THEMES_PATH')) define('THEMES_PATH', realpath(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'themes'));
         $this->settings = new Settings;
     }
 
