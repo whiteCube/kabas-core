@@ -1,13 +1,15 @@
 <?php 
 
-namespace Tests\Fields\Types;
+namespace Tests\Fields;
 
+use Kabas\Fields\Option;
 use Tests\CreatesApplication;
+use Kabas\Fields\Types\Select;
 use PHPUnit\Framework\TestCase;
+use Kabas\Fields\Types\Checkbox;
 use Kabas\Fields\Types\Flexible;
-use Kabas\Exceptions\TypeException;
 
-class FlexibleTest extends TestCase
+class RepeatableTest extends TestCase
 {
     use CreatesApplication;
 
@@ -40,14 +42,29 @@ class FlexibleTest extends TestCase
         $val2->option = 'background';
         $val2->value = '#fefefe';
 
-        $this->flexible = new Flexible('Flexible', null, $data);
-        $this->flexible->set([$val1, $val2]);
+        $this->repeatable = new Flexible('Flexible', null, $data);
+        $this->repeatable->set([$val1, $val2]);
     }
 
     /** @test */
-    public function can_be_instantiated_properly()
+    public function can_format_a_value_to_be_used_with_repeatable_fields()
     {
-        $this->assertInstanceOf(Flexible::class, $this->flexible);
+        $this->assertFalse($this->repeatable->format('test'));
+        $this->assertSame([], $this->repeatable->format(''));
+        $val1 = new \stdClass;
+        $val1->option = 0;
+        $val1->value = 'My foo title';
+        $val1->class = 'Title';
+        $val2 = new \stdClass;
+        $val2->option = 'background';
+        $val2->value = '#fefefe';
+        $this->assertCount(2, $this->repeatable->format([$val1, $val2]));
+    }
+
+    /** @test */
+    public function can_determine_if_value_is_an_array()
+    {
+        $this->assertTrue($this->repeatable->condition());
     }
 
 }

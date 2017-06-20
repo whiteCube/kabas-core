@@ -226,10 +226,10 @@ class Item
      */
     protected function implement($structure)
     {
-        $this->default = @$structure->default;
+        $this->default = $structure->default;
         $this->label = isset($structure->label) ? trim($structure->label) : ucfirst($this->type);
         $this->description = isset($structure->description) ? $structure->description : null;
-        $this->setOption(@$structure->option);
+        $this->setOption($structure->option);
     }
 
     /**
