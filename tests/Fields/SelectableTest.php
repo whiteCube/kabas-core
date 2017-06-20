@@ -16,7 +16,6 @@ class SelectableTest extends TestCase
         $data = new \stdClass;
         $data->label = 'Checkbox';
         $data->type = 'checkbox';
-        $data->multiple = true;
         $data->options = ['foo' => 'foo', 'bar' => 'bar'];
         $this->selectable = new Checkbox('Checkbox', null, $data);
         $this->selectable->set('foo');
