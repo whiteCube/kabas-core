@@ -36,7 +36,7 @@ class FileTest extends TestCase
     /** @test */
     public function can_return_information_about_the_file()
     {
-        $this->assertSame('/Users/whitecube/Sites/Kabas/core/tests/TestTheme/public', $this->file->dirname);
+        $this->assertContains('core/tests/TestTheme/public', $this->file->dirname);
         $this->assertSame('index.php', $this->file->basename);
         $this->assertSame('index', $this->file->filename);
         $this->assertSame('php', $this->file->extension);
