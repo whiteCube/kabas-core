@@ -2,6 +2,7 @@
 
 namespace Kabas\Fields;
 
+use Kabas\Utils\Text;
 use Kabas\Content\Container as Content;
 
 class Item
@@ -22,13 +23,15 @@ class Item
 
     protected $options;
 
+    protected static $baseStructure;
 
     protected $multiple = false;
 
 
-    public function __construct($name = null, $value = null, $structure = null)
+    public function __construct($name = null, $value = null, $user_structure = null)
     {
         $this->name = $name;
+        $structure = $this->getOrBuildStructure($user_structure);
         $this->implement($structure);
         if(Content::isParsed()) $this->set($value);
         else $this->value = $value;
@@ -37,6 +40,28 @@ class Item
     public function __toString()
     {
         return (string) $this->output;
+    }
+
+    public function getOrBuildStructure($user_structure)
+    {
+        if(self::$baseStructure) $structure = self::$baseStructure;
+        $structure = new \stdClass;
+        $structure->label = '';
+        $structure->type = '';
+        $structure->option = null;
+        $structure->default = null;
+        $structure->description = '';
+        $structure->multiple = false;
+        $structure->options = [];
+        self::$baseStructure = $structure;
+
+        if(!is_null($user_structure)) {
+            foreach($user_structure as $key => $value) {
+                $structure->$key = $value;
+            }
+        }
+
+        return $structure;
     }
 
     /**
@@ -55,7 +80,7 @@ class Item
      */
     public function getType()
     {
-        return $this->type;
+        return Text::removeNamespace(get_called_class());
     }
 
     /**
@@ -177,6 +202,7 @@ class Item
     public function check($value = null)
     {
         if(!$this->validate($value)) {
+           var_dump($value);
             $error = 'Field "' . $this->name . '" of type "' . $this->type . '" has an incorrect value.';
             throw new \Kabas\Exceptions\TypeException($error);
         }
@@ -201,10 +227,10 @@ class Item
      */
     protected function implement($structure)
     {
-        $this->default = @$structure->default;
+        $this->default = $structure->default;
         $this->label = isset($structure->label) ? trim($structure->label) : ucfirst($this->type);
         $this->description = isset($structure->description) ? $structure->description : null;
-        $this->setOption(@$structure->option);
+        $this->setOption($structure->option);
     }
 
     /**

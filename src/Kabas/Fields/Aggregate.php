@@ -59,6 +59,7 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
+        if(is_null($this->output)) $this->output = [];
         return new \ArrayIterator($this->output);
     }
 

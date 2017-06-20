@@ -27,7 +27,7 @@ class CheckboxTest extends TestCase
     /** @test */
     public function returns_the_proper_type()
     {
-        $this->assertSame('checkbox', $this->checkbox->getType());
+        $this->assertSame('Checkbox', $this->checkbox->getType());
     }
 
 

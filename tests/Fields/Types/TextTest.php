@@ -28,7 +28,7 @@ class TextTest extends TestCase
     /** @test */
     public function returns_the_proper_type()
     {
-        $this->assertSame('text', $this->textfield->getType());
+        $this->assertSame('Text', $this->textfield->getType());
     }
 
     /** @test */

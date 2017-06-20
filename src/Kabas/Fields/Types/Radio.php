@@ -6,7 +6,6 @@ use \Kabas\Fields\Selectable;
 
 class Radio extends Selectable
 {
-    protected $type = "radio";
 
     protected $multiple = false;
 

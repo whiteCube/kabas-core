@@ -38,7 +38,7 @@ class ItemTest extends TestCase
     /** @test */
     public function can_return_the_current_field_type()
     {
-        $this->assertSame('text', $this->item->getType());
+        $this->assertSame('Text', $this->item->getType());
     }
 
     /** @test */
