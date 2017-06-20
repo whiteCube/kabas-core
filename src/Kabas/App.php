@@ -33,7 +33,6 @@ class App extends Container
     {
         self::$instance = $this;
         $this->registerPaths($public_path);
-        $this->registerBindings();
     }
 
     /**
@@ -47,10 +46,21 @@ class App extends Container
     }
 
     /**
+     * Initiates the required singletons 
+     * in order to get the app rolling.
+     * @return void
+     */
+    public function boot(array $singletons = null)
+    {
+        if(is_null($singletons)) $singletons = static::getBootingSingletons();
+        $this->registerBindings($singletons);
+    }
+
+    /**
      * Start up the application
      * @return void
      */
-    public function boot()
+    public function handle()
     {
         $this->loadAliases();
         $this->themes->loadCurrent();
@@ -60,6 +70,25 @@ class App extends Container
         $this->loadTranslations();
         $this->response->init($this->page);
         $this->session->save();
+    }
+    
+    /**
+     * Returns the classes to boot as singletons
+     * on a regular setup.
+     * @return array
+     */
+    protected static function getBootingSingletons()
+    {
+        return [
+            'session' => \Kabas\Session\Manager::class,
+            'config' => \Kabas\Config\Container::class,
+            'fields' => \Kabas\Fields\Container::class,
+            'router' => \Kabas\Http\Router::class,
+            'content' => \Kabas\Content\Container::class,
+            'request' => \Kabas\Http\Request::class,
+            'response' => \Kabas\Http\Response::class,
+            'themes' => \Kabas\Themes\Container::class
+        ];
     }
 
     /**
@@ -124,19 +153,15 @@ class App extends Container
     }
 
     /**
-     * Defines app singletons
+     * Defines given app singletons
+     * @param array $singletons
      * @return void
      */
-    protected function registerBindings()
+    protected function registerBindings(array $singletons)
     {
-        $this->singleton('session', '\\Kabas\\Session\\Manager');
-        $this->singleton('config', '\\Kabas\\Config\\Container');
-        $this->singleton('fields', '\\Kabas\\Fields\\Container');
-        $this->singleton('router', '\\Kabas\\Http\\Router');
-        $this->singleton('content', '\\Kabas\\Content\\Container');
-        $this->singleton('request', '\\Kabas\\Http\\Request');
-        $this->singleton('response', '\\Kabas\\Http\\Response');
-        $this->singleton('themes', '\\Kabas\\Themes\\Container');
+        foreach ($singletons as $name => $class) {
+            $this->singleton($name, $class);
+        }
     }
 
 }
