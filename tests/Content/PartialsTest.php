@@ -18,7 +18,15 @@ class PartialsTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
+        $this->createApplication([
+            'session' => \Kabas\Session\Manager::class,
+            'config' => \Kabas\Config\Container::class,
+            'fields' => \Kabas\Fields\Container::class,
+            'router' => \Kabas\Http\Router::class,
+            'content' => \Kabas\Content\Container::class,
+            'response' => \Kabas\Http\Response::class,
+            'themes' => \Kabas\Themes\Container::class
+        ]);
         $this->container = new Container;
     }
 
