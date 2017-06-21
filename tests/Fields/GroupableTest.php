@@ -2,12 +2,13 @@
 
 namespace Tests\Fields\Types;
 
+use Kabas\Fields\Groupable;
 use Kabas\Fields\Types\Text;
 use Kabas\Fields\Types\Group;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
-class GroupTest extends TestCase
+class GroupableTest extends TestCase
 {
     use CreatesApplication;
 
@@ -31,13 +32,14 @@ class GroupTest extends TestCase
     /** @test */
     public function can_be_instantiated_properly()
     {
-        $this->assertInstanceOf(Group::class, $this->group);
+        $this->assertInstanceOf(Groupable::class, $this->group);
     }
 
     /** @test */
-    public function can_contain_fields()
+    public function can_get_subfields()
     {
         $this->assertInstanceOf(Text::class, $this->group->title);
+        $this->assertInstanceOf(Text::class, $this->group->title());
     }
 
 }

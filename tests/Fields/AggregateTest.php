@@ -2,12 +2,13 @@
 
 namespace Tests\Fields\Types;
 
+use Kabas\Fields\Aggregate;
 use Kabas\Fields\Types\Text;
 use Kabas\Fields\Types\Group;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
-class GroupTest extends TestCase
+class AggregateTest extends TestCase
 {
     use CreatesApplication;
 
@@ -24,20 +25,27 @@ class GroupTest extends TestCase
         $field1->label = 'Title';
         $field1->type = 'text';
         $data->options = (object) ['title' => $field1];
-        $this->group = new Group('Group', null, $data);
-        $this->group->set((object) ['title' => 'My foo title']);
+        $this->aggregate = new Group('Group', null, $data);
+        $this->aggregate->set((object) ['title' => 'My foo title']);
     }
 
     /** @test */
     public function can_be_instantiated_properly()
     {
-        $this->assertInstanceOf(Group::class, $this->group);
+        $this->assertInstanceOf(Aggregate::class, $this->aggregate);
     }
 
     /** @test */
-    public function can_contain_fields()
+    public function can_be_echoed()
     {
-        $this->assertInstanceOf(Text::class, $this->group->title);
+        $this->expectOutputString('#multiple-fields');
+        echo $this->aggregate;
+    }
+
+    /** @test */
+    public function returns_null_when_getting_value_that_does_not_exist()
+    {
+        $this->assertNull($this->aggregate->get('foo'));
     }
 
 }

@@ -30,7 +30,7 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
     protected function implement($structure)
     {
         parent::implement($structure);
-        if(!isset($this->reference)) $this->setOptions(@$structure->options);
+        if(!isset($this->reference)) $this->setOptions($structure->options);
     }
 
     /**

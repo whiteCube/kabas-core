@@ -1,0 +1,1 @@
+<h2>A partial without a structure</h2>

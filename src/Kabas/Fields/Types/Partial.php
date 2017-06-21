@@ -31,7 +31,7 @@ class Partial extends Groupable
     protected function implement($structure)
     {
         parent::implement($structure);
-        $this->reference = @$structure->option;
+        $this->reference = $structure->option;
     }
 
     /**
@@ -69,13 +69,9 @@ class Partial extends Groupable
     protected function getPartFields($part)
     {
         $part = App::content()->partials->load($part);
-        if($part){
-            $this->reference = $part;
-            if(is_object($part->fields)) return $part->fields;
-            return [];
-        }
-        $this->reference = false;
-        return false;
+        $this->reference = $part;
+        if(is_object($part->fields)) return $part->fields;
+        return [];
     }
 
     /**
