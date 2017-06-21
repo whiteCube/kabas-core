@@ -1,12 +1,12 @@
 <?php 
 
-namespace Tests\Fields\Types;
+namespace Tests\Fields;
 
+use Kabas\Fields\Option;
 use Kabas\Fields\Types\Select;
 use PHPUnit\Framework\TestCase;
-use Kabas\Exceptions\TypeException;
 
-class SelectTest extends TestCase
+class OptionTest extends TestCase
 {
 
     public function setUp()
@@ -23,7 +23,14 @@ class SelectTest extends TestCase
     /** @test */
     public function can_be_instantiated_properly()
     {
-        $this->assertInstanceOf(Select::class, $this->select);
+        $this->assertInstanceOf(Option::class, $this->select->get('foo'));
+    }
+
+    /** @test */
+    public function can_be_echoed()
+    {
+        $this->expectOutputString('foo');
+        echo $this->select->get('foo');
     }
 
 }
