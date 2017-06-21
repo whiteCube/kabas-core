@@ -16,8 +16,8 @@ class PartTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
-        $this->visit('/foo/bar');
+        $this->createMinimalContentApplicationForRoute('/foo/bar');
+        $this->app->loadAliases();
     }
 
     /** @test */

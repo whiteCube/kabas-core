@@ -17,7 +17,9 @@ class SessionTest extends TestCase
     /** @test */
     public function can_forward_method_calls_to_application_session_manager()
     {
-        $this->createApplication();
+        $this->createApplication([
+            'session' => \Kabas\Session\Manager::class,
+        ]);
         Session::set('test', 'value');
         $this->assertEquals('value', Session::get('test'));
     }
