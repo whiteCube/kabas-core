@@ -108,14 +108,14 @@ abstract class Model extends EloquentModel
     }
 
     /**
-     * Dynamically set attributes on the model.
+     * Set a given attribute on the model.
      * @param  string  $key
      * @param  mixed  $value
-     * @return void
+     * @return $this
      */
-    public function __set($key, $value)
+    public function setAttribute($key, $value)
     {
-        parent::__set($key, $value);
-        $this->setField($key, $value);
+        return parent::setAttribute($key, $value)
+                ->setField($key, $this->getAttributeValue($key));
     }
 }

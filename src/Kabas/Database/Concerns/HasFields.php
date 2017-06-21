@@ -27,7 +27,7 @@ trait HasFields
      */
     public function setField($key, $value)
     {
-        //  TODO : apply set mutator
+        if(!isset($this->fields[$key])) return $this;
         $this->fields[$key]->set($value);
         return $this;
     }
