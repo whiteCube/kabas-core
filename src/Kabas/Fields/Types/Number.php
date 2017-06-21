@@ -106,16 +106,14 @@ class Number extends Item
             case 'parseint':
             case 'intval':
                 return intval($this->output);
-                break;
             case 'f':
             case 'float':
             case 'tofloat':
             case 'parsefloat':
             case 'floatval':
                 return floatval($this->output);
-                break;
+            default: return false;
         }
-        return false;
     }
 
     /**
