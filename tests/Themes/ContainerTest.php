@@ -11,21 +11,26 @@ class ContainerTest extends TestCase
 {
     use CreatesApplication;
 
+    public $themeName;
+    public $container;
+
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
-        $this->createApplication();
-        $this->visit('/foo/bar');
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $this->themeName = $this->app->config->get('site.theme');
         $this->container = new Container;
     }
 
     /** @test */
     public function can_set_and_get_current_theme()
     {
-        $this->container->setCurrent('TheCapricorn');
-        $this->assertSame('TheCapricorn', $this->container->getCurrent()['name']);
+        $this->container->setCurrent($this->themeName);
+        $this->assertSame($this->themeName, $this->container->getCurrent()['name']);
     }
 
     /** @test */

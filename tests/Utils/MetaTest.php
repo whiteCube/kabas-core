@@ -16,8 +16,7 @@ class MetaTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
-        $this->visit('/foo/bar');
+        $this->createMinimalContentApplicationForRoute('/foo/bar');
     }
 
     /** @test */

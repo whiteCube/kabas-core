@@ -20,6 +20,21 @@ trait CreatesApplication {
         $this->app->boot($singletonsToBoot);
     }
 
+    public function createMinimalContentApplicationForRoute($route)
+    {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class,
+            'fields' => \Kabas\Fields\Container::class,
+            'content' => \Kabas\Content\Container::class,
+            'router' => \Kabas\Http\Router::class,
+            'response' => \Kabas\Http\Response::class,
+            'themes' => \Kabas\Themes\Container::class
+        ]);
+        $this->setPageRoute($route);
+        $this->app->config->get('site.theme'); // a random config call is required in order to make the config instance
+        $this->app->router->load()->setCurrent();
+    }
+
     public function alterGlobalServer()
     {
         $_SERVER['SCRIPT_NAME'] = '/index.php';

@@ -10,16 +10,21 @@ class ViewTest extends TestCase
 {
     use CreatesApplication;
 
+    public $view;
+    public $result;
+
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
-        $this->createApplication();
-        $this->visit('/foo/bar');
-        ob_start();
-        $this->view = new View('params', [], 'templates');
-        $this->result = ob_get_clean();
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class,
+        ]);
+        $this->app->config->get('site.theme');
+        $this->result = $this->catch(function(){
+            $this->view = new View('params', [], 'templates');
+        });
     }
 
     /** @test */
@@ -31,9 +36,9 @@ class ViewTest extends TestCase
     /** @test */
     public function can_make_an_instance_of_itself()
     {
-        ob_start();
-        $result = View::make('params', [], 'templates');
-        ob_get_clean();
+        $result = $this->catch(function(){
+            return View::make('params', [], 'templates');
+        }, true);
         $this->assertInstanceOf(View::class, $result);
     }
 

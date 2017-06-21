@@ -6,11 +6,12 @@ trait HandlesOutput {
 
     public $result;
 
-    public function catch(\Closure $test)
+    public function catch(\Closure $test, $preferClosureOutput = false)
     {
         ob_start();
-        $test->call($this);
-        return ob_get_clean();
+        $result = $test->call($this);
+        $output = ob_get_clean();
+        return $preferClosureOutput ? $result : $output;
     }
 
     public function see($string)

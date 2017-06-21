@@ -56,17 +56,13 @@ class FileTest extends TestCase
     public function throws_exception_if_loading_an_invalid_json_file()
     {
         $this->createFakeInvalidFiles();
-
         $exception = null;
-
         try {
             File::loadJsonFromDir(__DIR__ . '/test');
         } catch(JsonException $e) {
             $exception = $e;   
         }
-
         $this->assertInstanceOf(JsonException::class, $exception);
-        
         $this->deleteFakeFiles();
     }
 
@@ -127,17 +123,13 @@ class FileTest extends TestCase
     public function throws_exception_if_loading_invalid_json_from_directory()
     {
         $this->createFakeInvalidFiles();
-
         $exception = null;
-
         try {
             $data = File::loadJsonFromDir(__DIR__ . '/test');
         } catch(JsonException $e) {
             $exception = $e;   
         }
-
         $this->assertInstanceOf(JsonException::class, $exception);
-
         $this->deleteFakeFiles();
     }
 
