@@ -9,10 +9,9 @@ use Kabas\Exceptions\FileNotFoundException;
 class File
 {
     /**
-     * TODO: ne plus devoir mettre l'extension .json dans $file
      * Get the contents of a json file
      * @param  string $file
-     * @return object the json data
+     * @return object
      */
     static function loadJson($file)
     {
@@ -21,6 +20,21 @@ class File
         $json = json_decode($string);
         if(!$json) throw new JsonException($file, $string);
         return $json;
+    }
+
+    /**
+     * Get the contents of a json file without throwing exceptions
+     * @param  string $file
+     * @return object|null
+     */
+    static function loadJsonIfValid($file)
+    {
+        try {
+            $content = self::loadJson($file);
+        } catch (\Exception $e) {
+            return;
+        }
+        return $content;
     }
 
     /**
@@ -83,24 +97,42 @@ class File
     }
 
     /**
-     * Read all files in directory and load their content if they're json
+     * Returns an associative array containing
+     * content from all valid JSON files for given directory
      * @param  string $path
+     * @param  boolean $recursive
      * @return array
      */
-    static function loadJsonFromDir($path)
+    static function loadJsonFromDir($path, $recursive = false)
     {
         $items = [];
-        if($path = realpath($path)){
-            foreach(scandir($path) as $item) {
-                if($item !== '.' && $item !== '..') {
-                    if(is_dir($path . DS . $item)) {
-                        $items[$item] = self::loadJsonFromDir($path . DS . $item);
-                    }
-                    elseif(self::isJson($item)){
-                        $items[] = self::loadJson($path . DS . $item);
-                    }
-                }
+        foreach (static::scanJsonFromDir($path, $recursive) as $file => $name) {
+            if($content = static::loadJsonIfValid($file)) $items[$file] = $content;
+        }
+        return $items;
+    }
+
+    /**
+     * Returns an associative array containing
+     * all JSON files for given directory.
+     * @param  string $path
+     * @param  boolean $recursive
+     * @return array
+     */
+    static function scanJsonFromDir($path, $recursive = false)
+    {
+        $items = [];
+        if(!($path = realpath($path))) return $items;
+        foreach (scandir($path) as $item) {
+            if(in_array($item, ['.', '..'])) continue;
+            $item = $path . DS . $item;
+            if(is_dir($item)) {
+                if($recursive) $items = array_merge($items, static::scanJsonFromDir($item, true));
+                continue;
             }
+            $info = pathinfo($item, PATHINFO_EXTENSION|PATHINFO_FILENAME);
+            if($info['extension'] != 'json') continue;
+            $items[$item] = $info['filename'];
         }
         return $items;
     }

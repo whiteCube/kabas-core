@@ -33,8 +33,7 @@ class Container
     protected function setDatabase(array $defaultConnection)
     {
         $capsule = new Capsule;
-        $capsule->addConnection($defaultConnection, 'eloquent');
-        $capsule->addConnection(['driver' => 'json'], 'filesystem');
+        $capsule->addConnection($defaultConnection);
         $capsule->bootEloquent();
     }
 

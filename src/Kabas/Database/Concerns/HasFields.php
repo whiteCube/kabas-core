@@ -40,7 +40,6 @@ trait HasFields
     public function getField($key)
     {
         if(!isset($this->fields[$key])) return;
-        //  TODO : apply get mutator
         return $this->fields[$key];
     }
 

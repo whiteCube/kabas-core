@@ -98,13 +98,27 @@ abstract class Model extends EloquentModel
     }
 
     /**
-     * Dynamically retrieve attributes on the model.
-     * @param  string  $key
-     * @return mixed
+     * Fill the model with an array of attributes.
+     * @param  array  $attributes
+     * @return $this
      */
-    public function __get($key)
+    public function fill(array $attributes)
     {
-        return $this->getField($key) ?? $this->getAttribute($key);
+        parent::fill($attributes)->makeFieldsFromRawAttributes($attributes);
+        return $this;
+    }
+    
+    /**
+     * Create a new model instance that is existing.
+     * @param  array  $attributes
+     * @param  string|null  $connection
+     * @return static
+     */
+    public function newFromBuilder($attributes = [], $connection = null)
+    {
+        $model = parent::newFromBuilder($attributes, $connection);
+        $model->updateFieldsFromRawAttributes((array) $attributes);
+        return $model;
     }
 
     /**
@@ -117,5 +131,24 @@ abstract class Model extends EloquentModel
     {
         return parent::setAttribute($key, $value)
                 ->setField($key, $this->getAttributeValue($key));
+    }
+
+    /**
+     * Alias of getRepository
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->getRepository();
+    }
+
+    /**
+     * Dynamically retrieve attributes on the model.
+     * @param  string  $key
+     * @return mixed
+     */
+    public function __get($key)
+    {
+        return $this->getField($key) ?? $this->getAttribute($key);
     }
 }
