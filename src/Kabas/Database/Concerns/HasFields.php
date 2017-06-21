@@ -69,7 +69,7 @@ trait HasFields
      * @param  array  $attributes
      * @return void
      */
-    protected function makeFieldsFromRawAttribbutes($attributes)
+    protected function makeFieldsFromRawAttributes($attributes)
     {
         foreach ($this->getRawFields() as $name => $structure) {
             $this->fields[$name] = App::fields()->make($name, $structure, $attributes[$name] ?? null);

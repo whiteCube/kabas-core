@@ -33,8 +33,7 @@ class Container
     {
         // If the developper did not provide a field type, we'll
         // assume it is a regular text field.
-        $type = $structure->type ?? 'text';
-        $type = $this->getClass($type);
+        $type = $this->getClass($structure->type ?? 'text');
         return new $type($name, $value, $structure);
     }
 
