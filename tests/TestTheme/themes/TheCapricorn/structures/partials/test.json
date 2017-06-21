@@ -1,0 +1,8 @@
+{
+    "fields": {
+        "title": {
+            "type": "text",
+            "label": "Title of the page"
+        }
+    }
+}

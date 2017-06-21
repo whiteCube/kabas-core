@@ -16,7 +16,6 @@ class GroupTest extends TestCase
 
     public function setUp()
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
         $this->createApplication();
         $data = new \stdClass;
         $data->label = 'Group';
