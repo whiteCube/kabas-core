@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Model;
+namespace Tests\Database;
 
 use Kabas\Database\EloquentModel as KabasEloquentModel;
 

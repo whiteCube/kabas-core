@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\Model;
+namespace Tests\Database;
 
 use PHPUnit\Framework\TestCase;
 use Tests\CreatesApplication;
@@ -32,5 +32,23 @@ class EloquentModelTest extends TestCase
         $this->assertEquals('bar', $model->foo->get());
     }
 
+    /** @test */
+    public function can_update_eloquent_model()
+    {
+        $model = new EloquentModel(['foo' => 'bar']);
+        $model->foo = "test";
+        $this->assertInstanceOf(Textarea::class, $model->foo);
+        $this->assertEquals('test', $model->foo->get());
+    }
 
+    /** @test */
+    public function can_create_model_from_builder_query()
+    {
+        $reference = new EloquentModel();
+        $queryResultAttributes = new \stdClass();
+        $queryResultAttributes->foo = "bar";
+        $model = $reference->newFromBuilder($queryResultAttributes, 'eloquent');
+        $this->assertInstanceOf(Textarea::class, $model->foo);
+        $this->assertEquals('bar', $model->foo->get());
+    }
 }
