@@ -1,0 +1,31 @@
+{
+    "fields": {
+        "text": {
+            "label": "Text",
+            "type": "text",
+            "default": "A default text value"
+        },
+        "image": {
+            "label": "Image",
+            "type": "image",
+            "default": {
+                "path": "img/test.png",
+                "alt": "A default alt"
+            }
+        },
+        "number": {
+            "label": "Number",
+            "type": "number",
+            "default": 5
+        },
+        "select": {
+            "label": "Select",
+            "type": "select",
+            "default": ["foo"]
+        },
+        "nodefault": {
+            "label": "No default",
+            "type": "text"
+        }
+    }
+}
