@@ -25,7 +25,7 @@ class EloquentModel extends Model implements ModelInterface
      */
     public function fill(array $attributes)
     {
-        parent::fill($attributes)->makeFieldsFromRawAttribbutes($attributes);
+        parent::fill($attributes)->makeFieldsFromRawAttributes($attributes);
         return $this;
     }
     

@@ -20,10 +20,9 @@
             <directory>src/Kabas/Config</directory>
             <directory>src/Kabas/Content</directory>
             <directory>src/Kabas/Controller</directory>
-            <directory>src/Kabas/Drivers</directory>
+            <directory>src/Kabas/Database</directory>
             <directory>src/Kabas/Fields</directory>
             <directory>src/Kabas/Http</directory>
-            <directory>src/Kabas/Model</directory>
             <directory>src/Kabas/Objects</directory>
             <directory>src/Kabas/Session</directory>
             <directory>src/Kabas/Themes</directory>
@@ -49,17 +48,14 @@
         <testsuite name="Controller">
             <directory>tests/Controller</directory>
         </testsuite>
-        <testsuite name="Drivers">
-            <directory>tests/Drivers</directory>
+        <testsuite name="Database">
+            <directory>tests/Database</directory>
         </testsuite>
         <testsuite name="Fields">
             <directory>tests/Fields</directory>
         </testsuite>
         <testsuite name="Http">
             <directory>tests/Http</directory>
-        </testsuite>
-        <testsuite name="Model">
-            <directory>tests/Model</directory>
         </testsuite>
         <testsuite name="Objects">
             <directory>tests/Objects</directory>

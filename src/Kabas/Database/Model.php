@@ -106,4 +106,16 @@ abstract class Model extends EloquentModel
     {
         return $this->getField($key) ?? $this->getAttribute($key);
     }
+
+    /**
+     * Dynamically set attributes on the model.
+     * @param  string  $key
+     * @param  mixed  $value
+     * @return void
+     */
+    public function __set($key, $value)
+    {
+        parent::__set($key, $value);
+        $this->setField($key, $value);
+    }
 }
