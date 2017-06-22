@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1498136912">
-  <project timestamp="1498136912">
+<coverage generated="1498145168">
+  <project timestamp="1498145168">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -1240,40 +1240,30 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Fields/Textual.php">
         <class name="Textual" namespace="Kabas\Fields">
-          <metrics complexity="12" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="31" coveredelements="31"/>
+          <metrics complexity="8" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="21" coveredelements="21"/>
         </class>
-        <line num="7" type="method" name="condition" visibility="public" complexity="1" crap="1" count="59"/>
-        <line num="9" type="stmt" count="59"/>
-        <line num="16" type="method" name="uppercase" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="18" type="stmt" count="1"/>
-        <line num="19" type="stmt" count="1"/>
-        <line num="26" type="method" name="lowercase" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="28" type="stmt" count="1"/>
-        <line num="29" type="stmt" count="1"/>
-        <line num="36" type="method" name="escape" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="38" type="stmt" count="1"/>
-        <line num="39" type="stmt" count="1"/>
-        <line num="46" type="method" name="contains" visibility="public" complexity="2" crap="2" count="1"/>
-        <line num="48" type="stmt" count="1"/>
-        <line num="49" type="stmt" count="1"/>
-        <line num="59" type="method" name="cut" visibility="public" complexity="3" crap="3" count="1"/>
-        <line num="61" type="stmt" count="1"/>
+        <line num="9" type="method" name="condition" visibility="public" complexity="1" crap="1" count="59"/>
+        <line num="11" type="stmt" count="59"/>
+        <line num="18" type="method" name="uppercase" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="20" type="stmt" count="1"/>
+        <line num="21" type="stmt" count="1"/>
+        <line num="28" type="method" name="lowercase" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="30" type="stmt" count="1"/>
+        <line num="31" type="stmt" count="1"/>
+        <line num="38" type="method" name="escape" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="40" type="stmt" count="1"/>
+        <line num="41" type="stmt" count="1"/>
+        <line num="48" type="method" name="contains" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="50" type="stmt" count="1"/>
+        <line num="60" type="method" name="cut" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="62" type="stmt" count="1"/>
         <line num="63" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="66" type="stmt" count="1"/>
-        <line num="67" type="stmt" count="1"/>
-        <line num="77" type="method" name="shorten" visibility="public" complexity="2" crap="2" count="1"/>
-        <line num="79" type="stmt" count="1"/>
-        <line num="80" type="stmt" count="1"/>
-        <line num="81" type="stmt" count="1"/>
-        <line num="82" type="stmt" count="1"/>
-        <line num="83" type="stmt" count="1"/>
-        <line num="85" type="stmt" count="1"/>
+        <line num="73" type="method" name="shorten" visibility="public" complexity="1" crap="1" count="1"/>
+        <line num="75" type="stmt" count="1"/>
+        <line num="76" type="stmt" count="1"/>
+        <line num="84" type="method" name="exceeds" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="86" type="stmt" count="1"/>
-        <line num="89" type="method" name="exceeds" visibility="public" complexity="1" crap="1" count="1"/>
-        <line num="91" type="stmt" count="1"/>
-        <metrics loc="93" ncloc="63" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="23" coveredstatements="23" elements="31" coveredelements="31"/>
+        <metrics loc="88" ncloc="53" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="13" elements="21" coveredelements="21"/>
       </file>
     </package>
     <package name="Kabas\Fields\Types">
@@ -2654,7 +2644,7 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Text.php">
         <class name="Text" namespace="Kabas\Utils">
-          <metrics complexity="3" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
+          <metrics complexity="14" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="28" elements="38" coveredelements="38"/>
         </class>
         <line num="12" type="method" name="toNamespace" complexity="1" crap="1" count="151"/>
         <line num="14" type="stmt" count="151"/>
@@ -2670,7 +2660,31 @@
         <line num="39" type="stmt" count="1"/>
         <line num="40" type="stmt" count="1"/>
         <line num="41" type="stmt" count="1"/>
-        <metrics loc="43" ncloc="28" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="11" coveredstatements="11" elements="14" coveredelements="14"/>
+        <line num="49" type="method" name="uppercase" complexity="1" crap="1" count="2"/>
+        <line num="51" type="stmt" count="2"/>
+        <line num="59" type="method" name="lowercase" complexity="1" crap="1" count="2"/>
+        <line num="61" type="stmt" count="2"/>
+        <line num="69" type="method" name="escape" complexity="1" crap="1" count="2"/>
+        <line num="71" type="stmt" count="2"/>
+        <line num="81" type="method" name="contains" complexity="2" crap="2" count="2"/>
+        <line num="83" type="stmt" count="2"/>
+        <line num="84" type="stmt" count="2"/>
+        <line num="95" type="method" name="cut" complexity="3" crap="3" count="2"/>
+        <line num="97" type="stmt" count="2"/>
+        <line num="98" type="stmt" count="2"/>
+        <line num="99" type="stmt" count="2"/>
+        <line num="100" type="stmt" count="2"/>
+        <line num="102" type="stmt" count="2"/>
+        <line num="113" type="method" name="shorten" complexity="2" crap="2" count="2"/>
+        <line num="115" type="stmt" count="2"/>
+        <line num="116" type="stmt" count="2"/>
+        <line num="117" type="stmt" count="2"/>
+        <line num="118" type="stmt" count="2"/>
+        <line num="119" type="stmt" count="2"/>
+        <line num="121" type="stmt" count="2"/>
+        <line num="130" type="method" name="exceeds" complexity="1" crap="1" count="2"/>
+        <line num="132" type="stmt" count="2"/>
+        <metrics loc="134" ncloc="75" classes="1" methods="10" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="28" coveredstatements="28" elements="38" coveredelements="38"/>
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Utils/Url.php">
         <class name="Url" namespace="Kabas\Utils">
@@ -2761,6 +2775,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="84" loc="6609" ncloc="4875" classes="75" methods="520" coveredmethods="520" conditionals="0" coveredconditionals="0" statements="1710" coveredstatements="1710" elements="2230" coveredelements="2230"/>
+    <metrics files="84" loc="6695" ncloc="4912" classes="75" methods="527" coveredmethods="527" conditionals="0" coveredconditionals="0" statements="1717" coveredstatements="1717" elements="2244" coveredelements="2244"/>
   </project>
 </coverage>

@@ -2,6 +2,8 @@
 
 namespace Kabas\Fields;
 
+use Kabas\Utils\Text;
+
 class Textual extends Item
 {
     public function condition()
@@ -15,7 +17,7 @@ class Textual extends Item
      */
     public function uppercase()
     {
-        $this->output = strtoupper($this->output);
+        $this->output = Text::uppercase($this->output);
         return $this;
     }
 
@@ -25,7 +27,7 @@ class Textual extends Item
      */
     public function lowercase()
     {
-        $this->output = strtolower($this->output);
+        $this->output = Text::lowercase($this->output);
         return $this;
     }
 
@@ -35,7 +37,7 @@ class Textual extends Item
      */
     public function escape()
     {
-        $this->output = htmlentities($this->output);
+        $this->output = Text::escape($this->output);
         return $this;
     }
 
@@ -45,8 +47,7 @@ class Textual extends Item
      */
     public function contains($string, $caseSensitive = true)
     {
-        if($caseSensitive) return (strpos($this->output, $string) !== false);
-        return (stripos($this->output, $string) !== false);
+        return Text::contains($this->output, $string, $caseSensitive);
     }
 
     /**
@@ -56,14 +57,9 @@ class Textual extends Item
      * @param  string $append
      * @return $this
      */
-    public function cut($length = 100, $append = "&nbsp;&hellip;")
+    public function cut($length = 100, $append = '&nbsp;&hellip;')
     {
-        $string = strip_tags($this->output);
-        if(mb_strlen($string) > $length){
-            $string = mb_substr($string, 0, $length);
-            $string .= is_string($append) ? $append : '';
-        }
-        $this->output = $string;
+        $this->output = Text::cut($this->output, $length, $append);
         return $this;
     }
 
@@ -74,20 +70,19 @@ class Textual extends Item
      * @param  string $append
      * @return $this
      */
-    public function shorten($length = 100, $append = "&nbsp;&hellip;")
+    public function shorten($length = 100, $append = '&nbsp;&hellip;')
     {
-        $string = strip_tags($this->output);
-        if (mb_strlen($string) > $length) {
-            $string = wordwrap($string, $length, '\break');
-            $string = explode('\break', $string, 2);
-            $string = trim($string[0]) . $append;
-        }
-        $this->output = $string;
+        $this->output = Text::shorten($this->output, $length, $append);
         return $this;
     }
 
+    /**
+     * Checks if string is longer than given length
+     * @param int $length 
+     * @return bool
+     */
     public function exceeds($length)
     {
-        return mb_strlen(strip_tags($this->output)) > $length;
+        return Text::exceeds($this->output, $length);
     }
 }

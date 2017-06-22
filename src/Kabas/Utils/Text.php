@@ -40,4 +40,95 @@ class Text
         $text = preg_replace("/[\/_| -]+/", '-', $text);
         return $text;
     }
+
+    /**
+     * Changes a string to uppercase characters
+     * @param string $text
+     * @return string
+     */
+    static function uppercase($text)
+    {
+        return strtoupper($text);
+    }
+
+    /**
+     * Changes a string to lowercase characters
+     * @param string $text 
+     * @return string
+     */
+    static function lowercase($text)
+    {
+        return strtolower($text);
+    }
+
+    /**
+     * Escapes html entities
+     * @param string $text 
+     * @return string
+     */
+    static function escape($text)
+    {
+        return htmlentities($text);
+    }
+
+    /**
+     * Checks if output contains given substring
+     * @param string $haystack 
+     * @param string $needle 
+     * @param bool $caseSensitive 
+     * @return bool
+     */
+    static function contains($haystack, $needle, $caseSensitive = true)
+    {
+        if($caseSensitive) return (strpos($haystack, $needle) !== false);
+        return (stripos($haystack, $needle) !== false);
+    }
+
+    /**
+     * Cuts a string after a specified amount of characters.
+     * Appends triple dots.
+     * @param string $text
+     * @param int $length
+     * @param string $append
+     * @return string
+     */  
+    static function cut($text, $length = 100, $append = '&nbsp;&hellip;')
+    {
+        $string = strip_tags($text);
+        if(mb_strlen($string) > $length){
+            $string = mb_substr($string, 0, $length);
+            $string .= is_string($append) ? $append : '';
+        }
+        return $string;
+    }
+
+    /**
+     * Cuts a string after a specified amount of characters,
+     * without cutting inside a word. Appends triple dots.
+     * @param  string $text
+     * @param  int $length
+     * @param  string $append
+     * @return string
+     */
+    static function shorten($text, $length = 100, $append = '&nbsp;&hellip;')
+    {
+        $string = strip_tags($text);
+        if (mb_strlen($string) > $length) {
+            $string = wordwrap($string, $length, '\break');
+            $string = explode('\break', $string, 2);
+            $string = trim($string[0]) . $append;
+        }
+        return $string;
+    }
+
+    /**
+     * Checks if string is longer than given length
+     * @param string $text 
+     * @param int $length 
+     * @return bool
+     */
+    static function exceeds($text, $length)
+    {
+        return mb_strlen(strip_tags($text)) > $length;
+    }
 }
