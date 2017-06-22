@@ -61,6 +61,9 @@ class Editor
         $this->history[] = $this->getAction('crop', func_get_args(), 'crop' . $width . 'x' . $height);
     }
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function destroy()
     {
         $this->history[] = $this->getAction('destroy', func_get_args());
@@ -74,11 +77,6 @@ class Editor
     public function encode($format, $quality = null)
     {
         $this->history[] = $this->getAction('encode', func_get_args());
-    }
-
-    public function exif($key)
-    {
-        $this->history[] = $this->getAction('exif', func_get_args());
     }
 
     public function fill($filling, $x = null, $y = null)
@@ -111,7 +109,7 @@ class Editor
         $this->history[] = $this->getAction('greyscale', func_get_args());
     }
 
-    public function heighten($height, $callback)
+    public function heighten($height, $callback = null)
     {
         $this->history[] = $this->getAction('heighten', func_get_args(), 'height' . $height);
     }
@@ -141,11 +139,19 @@ class Editor
         $this->history[] = $this->getAction('line', func_get_args());
     }
 
+    /**
+     * @codeCoverageIgnore
+     * (the test passes, but takes around 2 minutes to complete)
+     */
     public function mask($source, $mask_with_alpha = null)
     {
         $this->history[] = $this->getAction('mask', func_get_args());
     }
 
+    /**
+     * @codeCoverageIgnore
+     * (the test passes, but takes around 2 minutes to complete)
+     */
     public function opacity($transparency)
     {
         $this->history[] = $this->getAction('opacity', func_get_args(), 'opacity' . $transparency);
@@ -223,7 +229,7 @@ class Editor
         $this->history[] = $this->getAction('text', func_get_args());
     }
 
-    public function trim($base, $away = null, $tolerance = null, $feather = null)
+    public function trim($base = 'top-left', $away = null, $tolerance = null, $feather = null)
     {
         $this->history[] = $this->getAction('trim', func_get_args());
     }
@@ -242,7 +248,7 @@ class Editor
     {
         $s = '';
         foreach ($this->history as $o) {
-            $s .= '-' . $o->slug;
+            $s .= '-' . str_replace('.', 'dot', $o->slug);
         }
         return $s;
     }
@@ -260,9 +266,12 @@ class Editor
     {
         $this->prepareIntervention();
         if(!isset($this->intervention->filename)) {
+            // I don't think this can ever happen
+            // @codeCoverageIgnoreStart
             $this->intervention->filename = $this->filename;
             $this->intervention->extension = $this->extension;
             $this->intervention->dirname = $this->dirname;
+            // @codeCoverageIgnoreStop
         }
         foreach ($this->history as $o) {
             $this->intervention = call_user_func_array([$this->intervention, $o->action], $o->args);

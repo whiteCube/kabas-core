@@ -63,6 +63,12 @@ class Item
         return $this->editor->intervention->iptc($key);
     }
 
+    public function exif($key = null)
+    {
+        $this->makeEditor();
+        return $this->editor->intervention->exif($key);
+    }
+
     public function mime()
     {
         $this->makeEditor();

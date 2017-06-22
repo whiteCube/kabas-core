@@ -76,6 +76,15 @@ class ItemTest extends TestCase
     }
 
     /** @test */
+    public function can_return_exif_data()
+    {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $this->assertSame('WhiteCube', $this->item->exif('Artist'));
+    }
+
+    /** @test */
     public function can_return_mime_type()
     {
         $this->createApplication([
