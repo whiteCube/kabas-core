@@ -30,16 +30,6 @@ return [
       'debug' => true,
 
       /**
-      * If the application is running in a test suite
-      */     
-      'testing' => true,
-
-      /**
-       * Deactivate outputting (useful for testing)
-       */
-      'silent' => false,
-
-      /**
        * Aliases for classes
        * @var array
        */

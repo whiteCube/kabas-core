@@ -16,7 +16,8 @@ class RepeaterTest extends TestCase
     public function setUp()
     {
         $this->createApplication([
-            'fields' => \Kabas\Fields\Container::class
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
         ]);
         $data = new \stdClass;
         $data->label = 'Repeater';

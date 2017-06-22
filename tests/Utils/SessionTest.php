@@ -19,6 +19,7 @@ class SessionTest extends TestCase
     {
         $this->createApplication([
             'session' => \Kabas\Session\Manager::class,
+            'config' => \Kabas\Config\Container::class
         ]);
         Session::set('test', 'value');
         $this->assertEquals('value', Session::get('test'));

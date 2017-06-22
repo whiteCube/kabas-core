@@ -54,6 +54,7 @@ class App extends Container
     {
         if(is_null($singletons)) $singletons = static::getBootingSingletons();
         $this->registerBindings($singletons);
+        $this->setErrorMode();
     }
 
     /**
@@ -100,6 +101,11 @@ class App extends Container
         foreach($this->config->get('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
+    }
+
+    protected function setErrorMode()
+    {
+        if(!$this->config->get('app.debug')) error_reporting(0);
     }
 
     public function loadTranslations()
