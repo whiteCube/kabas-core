@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1498217188">
-  <project timestamp="1498217188">
+<coverage generated="1498217704">
+  <project timestamp="1498217704">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -687,7 +687,7 @@
       </file>
       <file name="/Users/whitecube/Sites/Kabas/core/src/Kabas/Content/Pages/Item.php">
         <class name="Item" namespace="Kabas\Content\Pages">
-          <metrics complexity="11" methods="6" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="14" elements="21" coveredelements="19"/>
+          <metrics complexity="11" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="21" coveredelements="21"/>
         </class>
         <line num="20" type="method" name="setData" visibility="protected" complexity="3" crap="3" count="55"/>
         <line num="22" type="stmt" count="55"/>
@@ -701,16 +701,16 @@
         <line num="34" type="method" name="getDefaultMeta" visibility="protected" complexity="2" crap="2" count="55"/>
         <line num="36" type="stmt" count="55"/>
         <line num="37" type="stmt" count="55"/>
-        <line num="40" type="method" name="mergeMetaWithDefault" visibility="protected" complexity="2" crap="2.15" count="55"/>
+        <line num="40" type="method" name="mergeMetaWithDefault" visibility="protected" complexity="2" crap="2" count="55"/>
         <line num="42" type="stmt" count="55"/>
-        <line num="44" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="55"/>
         <line num="46" type="stmt" count="55"/>
         <line num="49" type="method" name="getTemplateNamespace" visibility="protected" complexity="1" crap="1" count="55"/>
         <line num="51" type="stmt" count="55"/>
         <line num="54" type="method" name="findControllerClass" visibility="protected" complexity="2" crap="2" count="55"/>
         <line num="56" type="stmt" count="55"/>
         <line num="57" type="stmt" count="55"/>
-        <metrics loc="59" ncloc="59" classes="1" methods="6" coveredmethods="5" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="14" elements="21" coveredelements="19"/>
+        <metrics loc="59" ncloc="59" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="21" coveredelements="21"/>
       </file>
     </package>
     <package name="Kabas\Content\Partials">
@@ -2788,6 +2788,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="84" loc="6719" ncloc="4938" classes="75" methods="530" coveredmethods="529" conditionals="0" coveredconditionals="0" statements="1727" coveredstatements="1726" elements="2257" coveredelements="2255"/>
+    <metrics files="84" loc="6719" ncloc="4938" classes="75" methods="530" coveredmethods="530" conditionals="0" coveredconditionals="0" statements="1727" coveredstatements="1727" elements="2257" coveredelements="2257"/>
   </project>
 </coverage>
