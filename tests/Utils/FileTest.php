@@ -4,12 +4,18 @@ namespace Tests;
 
 use Kabas\App;
 use Kabas\Utils\File;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\JsonException;
 use Kabas\Exceptions\FileNotFoundException;
 
 class FileTest extends TestCase
 {
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
+    
     public function setUp()
     {
         if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
@@ -55,6 +61,9 @@ class FileTest extends TestCase
     /** @test */
     public function throws_exception_if_loading_an_invalid_json_file()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->createFakeInvalidFiles();
         $exception = null;
         try {
@@ -122,6 +131,9 @@ class FileTest extends TestCase
     /** @test */
     public function throws_exception_if_loading_invalid_json_from_directory()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->createFakeInvalidFiles();
         $exception = null;
         try {
@@ -136,10 +148,13 @@ class FileTest extends TestCase
     /** @test */
     public function can_read_json_data_from_a_directory()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->createFakeFiles();
-        $data = File::loadJsonFromDir(__DIR__ . '/test');
-        $this->assertEquals('bar', $data[0]->foo);
-        $this->assertEquals('bar', $data['foo'][0]->foo);
+        $data = File::loadJsonFromDir(__DIR__ . DS . 'test');
+        $this->assertEquals('bar', $data[__DIR__ . DS . 'test' . DS . 'dummy1.json']->foo);
+        $this->assertEquals('bar', $data[__DIR__ . DS . 'test' . DS . 'dummy2.json']->foo);
         $this->deleteFakeFiles();
     }
 

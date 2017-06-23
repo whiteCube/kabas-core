@@ -107,7 +107,11 @@ class File
     {
         $items = [];
         foreach (static::scanJsonFromDir($path, $recursive) as $file => $name) {
-            if($content = static::loadJsonIfValid($file)) $items[$file] = $content;
+            if(App::config()->get('app.debug')) {
+                $items[$file] = File::loadJson($file);
+            } else {
+                if($content = static::loadJsonIfValid($file)) $items[$file] = $content;
+            }
         }
         return $items;
     }
@@ -130,7 +134,7 @@ class File
                 if($recursive) $items = array_merge($items, static::scanJsonFromDir($item, true));
                 continue;
             }
-            $info = pathinfo($item, PATHINFO_EXTENSION|PATHINFO_FILENAME);
+            $info = pathinfo($item);
             if($info['extension'] != 'json') continue;
             $items[$item] = $info['filename'];
         }

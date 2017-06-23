@@ -2,7 +2,7 @@
 
 namespace Tests\Database;
 
-use Kabas\Database\EloquentModel as KabasEloquentModel;
+use Kabas\Database\Eloquent\Model as KabasEloquentModel;
 
 class EloquentModel extends KabasEloquentModel
 {
