@@ -17,7 +17,8 @@ class EloquentModelTest extends TestCase
     public function setUp()
     {
         $this->createApplication([
-            'fields' => \Kabas\Fields\Container::class
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
         ]);
         Content::setParsed(true);
         if(!defined('THEME_PATH')) define('THEME_PATH', __DIR__);

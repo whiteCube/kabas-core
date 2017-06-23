@@ -27,6 +27,12 @@ class MetaTest extends TestCase
     }
 
     /** @test */
+    public function can_fetch_a_default_meta_item()
+    {
+        $this->assertSame('A test default description', Meta::get('description'));
+    }
+
+    /** @test */
     public function returns_null_when_getting_undefined_meta_item()
     {
         $this->assertNull(Meta::get('bar'));
@@ -37,7 +43,8 @@ class MetaTest extends TestCase
     {
         Meta::set('foo', 'bar');
         Meta::set('bar', 'baz');
-        $this->assertCount(2, Meta::all());
+        $this->assertCount(3, Meta::all());
+        $this->assertSame('A test default description', Meta::all()['description']);
         $this->assertSame('bar', Meta::all()['foo']);
         $this->assertSame('baz', Meta::all()['bar']);
     }

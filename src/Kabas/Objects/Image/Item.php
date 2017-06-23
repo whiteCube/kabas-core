@@ -18,15 +18,13 @@ class Item
     protected $renamed;
     protected $editor;
 
-
     public function __construct($content)
     {
         if(is_array($content)) $content = (object) $content;
-        if(!is_object($content)) $this->error = true;
-        else{
-            $this->setFile(@$content->path);
-            $this->setAlt(@$content->alt);
-        }
+        if(!is_object($content)) return $this->error = true;
+        $content = $this->mergeWithBase($content);
+        $this->setFile($content->path);
+        $this->setAlt($content->alt);
     }
 
     public function __toString()
@@ -63,6 +61,12 @@ class Item
     {
         $this->makeEditor();
         return $this->editor->intervention->iptc($key);
+    }
+
+    public function exif($key = null)
+    {
+        $this->makeEditor();
+        return $this->editor->intervention->exif($key);
     }
 
     public function mime()
@@ -112,6 +116,17 @@ class Item
         return $this->filename . '.' . $this->extension;
     }
 
+    protected function mergeWithBase($content)
+    {
+        $base = new \stdClass;
+        $base->path = false;
+        $base->alt = false;
+        foreach($content as $key => $value) {
+            $base->$key = $value;
+        }
+        return $base;
+    }
+
     protected function makeEditor($prepareIntervention = true)
     {
         if(!$this->error) {
@@ -150,7 +165,6 @@ class Item
     protected function getAlt($string = null)
     {
         if(is_string($string)) return $string;
-        if($this->filename) return $this->filename;
-        return '';
+        return $this->filename;
     }
 }

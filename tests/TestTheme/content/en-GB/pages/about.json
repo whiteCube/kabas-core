@@ -5,5 +5,8 @@
     "title": "About page",
     "data": {
 
+    },
+    "meta": {
+        "description": "About us"
     }
 }

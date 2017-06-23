@@ -26,4 +26,49 @@ class TextTest extends TestCase
         $this->assertEquals('some-random-slug', Text::toSlug('Some random slug.'));
     }
 
+    /** @test */
+    public function can_uppercase()
+    {
+        $this->assertSame('MY FOO TITLE', Text::uppercase('My foo title'));
+    }
+
+    /** @test */
+    public function can_be_lowercased()
+    {
+        $this->assertSame('my foo title', Text::lowercase('My foo title'));
+    }
+
+    /** @test */
+    public function can_escape_html_entities()
+    {
+        $this->assertSame('&lt;foo&gt;', Text::escape('<foo>'));;
+    }
+
+    /** @test */
+    public function can_check_if_value_contains_a_string()
+    {
+        $this->assertFalse(Text::contains('Foo', 'My foo title'));
+        $this->assertTrue(Text::contains('Foo', 'My foo title', false));
+        $this->assertFalse(Text::contains('bar', 'My foo title'));
+    }
+
+    /** @test */
+    public function can_cut_value_and_append_triple_dots()
+    {
+        $this->assertSame('My foo tit&nbsp;&hellip;', Text::cut('My foo title', 10));
+    }
+
+    /** @test */
+    public function can_cut_value_and_append_triple_dots_without_cutting_into_a_word()
+    {
+        $this->assertSame('My foo&nbsp;&hellip;', Text::shorten('My foo title', 10));
+    }
+
+    /** @test */
+    public function can_check_if_value_is_longer_than_given_length()
+    {
+        $this->assertTrue(Text::exceeds('My foo title', 5));
+        $this->assertFalse(Text::exceeds('My foo title', 100));
+    }
+
 }

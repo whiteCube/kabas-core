@@ -31,11 +31,11 @@ class AssetsTest extends TestCase
         $buffer = '<meta name="kabas-assets-location" value="foo">';
         Assets::add('index.js', 'foo');
         Assets::add('foo.css', 'foo');
-        Assets::add('foo.png', 'foo');
+        Assets::add('foo.jpg', 'foo');
         $loaded = Assets::load($buffer);
         $this->assertContains('<script type="text/javascript" src="http://www.foo.com/' . $this->themeName . '/index.js"></script>', $loaded);
         $this->assertContains('<link rel="stylesheet" type="text/css" href="http://www.foo.com/' . $this->themeName . '/foo.css" />', $loaded);
-        $this->assertContains('<link rel="icon" href="http://www.foo.com/' . $this->themeName . '/foo.png" />', $loaded);
+        $this->assertContains('<link rel="icon" href="http://www.foo.com/' . $this->themeName . '/foo.jpg" />', $loaded);
     }
 
     /** @test */

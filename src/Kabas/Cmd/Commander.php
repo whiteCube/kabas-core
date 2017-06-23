@@ -23,12 +23,7 @@ class Commander
         $this->settings = new Settings();
         $this->languages = new LanguageRepository($this->settings->pluck('lang.available'), $this->settings->get('lang.default'));
         $this->setThemeConstants();
-
-        try {
-            $this->executeCommand();
-        } catch (\Exception $e) {
-            echo 'Kabas Exception: ' . $e->getMessage() . "\n";
-        }
+        $this->executeCommand();
     }
 
     /**
@@ -38,11 +33,11 @@ class Commander
      */
     protected function setConstants($projectDir)
     {
-        define('DS', DIRECTORY_SEPARATOR);
-        define('ROOT_PATH', realpath($projectDir));
-        define('TEMPLATES_PATH', __DIR__ . DS . 'Templates' . DS);
-        define('CONFIG_PATH', ROOT_PATH . DS . 'config');
-        define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath($projectDir));
+        if(!defined('TEMPLATES_PATH')) define('TEMPLATES_PATH', __DIR__ . DS . 'Templates' . DS);
+        if(!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . DS . 'config');
+        if(!defined('THEMES_PATH')) define('THEMES_PATH', ROOT_PATH . DS . 'themes');
     }
 
     /**
@@ -51,10 +46,10 @@ class Commander
      */
     protected function setThemeConstants()
     {
-        define('THEME_STRUCTURES', THEME_PATH . DS . 'structures');
-        define('THEME_VIEWS', THEME_PATH . DS . 'views');
-        define('THEME_CONTROLLERS', THEME_PATH . DS . 'controllers');
-        define('THEME_MODELS', THEME_PATH . DS . 'models');
+        if(!defined('THEME_STRUCTURES')) define('THEME_STRUCTURES', THEME_PATH . DS . 'structures');
+        if(!defined('THEME_VIEWS')) define('THEME_VIEWS', THEME_PATH . DS . 'views');
+        if(!defined('THEME_CONTROLLERS')) define('THEME_CONTROLLERS', THEME_PATH . DS . 'controllers');
+        if(!defined('THEME_MODELS')) define('THEME_MODELS', THEME_PATH . DS . 'models');
     }
 
     /**
@@ -101,6 +96,7 @@ class Commander
         $paths = [];
         $paths[] = $themePath;
         $paths[] = $themePath . DS . 'models';
+        $paths[] = $themePath . DS . 'lang';
         $paths[] = $themePath . DS . 'controllers';
         $paths[] = $themePath . DS . 'controllers' . DS . 'menus';
         $paths[] = $themePath . DS . 'controllers' . DS . 'partials';
@@ -164,7 +160,7 @@ class Commander
     protected function makeModelFile($name, $driver)
     {
         $file = $this->dir(THEME_MODELS) . DS . ucfirst($name) . '.php';
-        $fileContent = File::read(TEMPLATES . 'Model.php');
+        $fileContent = File::read(TEMPLATES_PATH . 'Model.php');
         $fileContent = str_replace('##THEME##', $this->theme, $fileContent);
         $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
         $fileContent = str_replace('##DRIVER##', $driver, $fileContent);
@@ -285,7 +281,7 @@ class Commander
         if(!$languages) return array_map(function($item){ return $item->original;}, $this->languages->getAll());
         foreach($languages as $locale) {
             if($this->languages->has($locale)) continue;
-            throw new \Exception('Locale "' . $locale . '" is not defined in the lang.php configuration file.');
+            throw new \Exception('Locale "' . $locale . '" is not defined in the lang.php configuration file.'); // @codeCoverageIgnore
         }
         return $languages;
     }
@@ -306,8 +302,7 @@ class Commander
                 $fields[$key] = $this->formatFieldContent($key, $field);
             }
         }
-        if(count($fields)) return $fields;
-        return new \stdClass;
+        return $fields;
     }
 
     /**
@@ -336,7 +331,7 @@ class Commander
         $image->alt = '';
         if(!isset($field->default)) return $image;
         if(!is_object($field->default)){
-            throw new \Exception('default value for image field "' . $key . '" is invalid.');
+            throw new \Exception('default value for image field "' . $key . '" is invalid.'); // @codeCoverageIgnore
         }
         $image->path = is_string($field->default->path ?? null) ? $field->default->path : '';
         $image->alt = is_string($field->default->alt ?? null) ? $field->default->alt : '';
@@ -347,14 +342,14 @@ class Commander
     {
         if(is_null($field->default ?? null)) return 0;
         if(is_numeric($field->default)) return $field->default;
-        throw new \Exception('default value for number field "' . $key . '" is invalid.');
+        throw new \Exception('default value for number field "' . $key . '" is invalid.'); // @codeCoverageIgnore
     }
 
     protected function getSelectableFieldContent($key, $field)
     {
         if(is_null($field->default ?? null)) return [];
         if(is_array($field->default)) return $field->default;
-        throw new \Exception('default value for ' . $field->type . ' field "' . $key . '" is invalid.');
+        throw new \Exception('default value for ' . $field->type . ' field "' . $key . '" is invalid.'); // @codeCoverageIgnore
     }
 
     protected function dir($path){
