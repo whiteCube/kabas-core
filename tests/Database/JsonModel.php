@@ -2,9 +2,9 @@
 
 namespace Tests\Database;
 
-use Kabas\Database\Eloquent\Model;
+use Kabas\Database\Json\Model;
 
-class EloquentModel extends Model
+class JsonModel extends Model
 {
     protected $fillable = ['foo'];
 }

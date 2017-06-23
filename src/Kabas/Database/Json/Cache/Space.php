@@ -4,10 +4,10 @@ namespace Kabas\Database\Json\Cache;
 
 use Kabas\Utils\Lang;
 
-class Namespace
+class Space
 {
     /**
-    * Namespace identifier
+    * Space identifier
     * @var string
     */
     protected $name;
@@ -16,7 +16,7 @@ class Namespace
     * Underlying object classname
     * @var string
     */
-    protected $class;
+    protected $classname;
 
     /**
     * Indicates if the items should be
@@ -32,7 +32,7 @@ class Namespace
     protected $container = [];
 
     /**
-     * Create a new namespace instance
+     * Create a new Space instance
      * @param string $name
      * @param string $classname
      * @param bool   $translatable
@@ -74,7 +74,7 @@ class Namespace
      * @return \Kabas\Database\Json\Cache\Item
      */
     public function find($key, $locale = null) {
-        $repository = $this->getItemsForLocale($locale) ?? [];
+        $repository = $this->getItemsForLocale($locale);
         if(!isset($repository[$key])) return;
         return $repository[$key];
     }
@@ -97,8 +97,17 @@ class Namespace
      * @return \Kabas\Database\Json\Cache\Item
      */
     protected function registerNewEmptyItem($key, $locale = null) {
-        $repository = $this->getOrCreateLocaleRepository($locale);
-        return $repository[$key] = $this->getNewEmptyItem()->setKey($key);
+        $item = $this->getNewEmptyItem()->setKey($key);
+        if(!$this->translatable) {
+            $this->container[$key] = $item;
+            return $item;
+        }
+        $locale = $this->getLocaleIdentifier($locale);
+        if(!isset($this->container[$locale])) {
+            $this->container[$locale] = [];
+        }
+        $this->container[$locale][$key] = $item; 
+        return $item;
     }
 
     /**
@@ -116,12 +125,12 @@ class Namespace
     /**
      * Retrieves locale repository
      * @param string $locale
-     * @return array|null
+     * @return array
      */
     protected function getItemsForLocale($locale = null) {
         if(!$this->translatable) return $this->container;
         $locale = $this->getLocaleIdentifier($locale);
-        if(!isset($this->container[$locale])) return;
+        if(!isset($this->container[$locale])) return [];
         return $this->container[$locale];
     }
 

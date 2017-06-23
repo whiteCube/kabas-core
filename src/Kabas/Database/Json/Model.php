@@ -10,16 +10,6 @@ use Kabas\Database\Json\Query;
 abstract class Model extends BaseModel implements ModelInterface
 {
     /**
-     * Create a new JSON query builder for the model.
-     * @param  \Illuminate\Database\Query\Builder  $query
-     * @return \Kabas\Database\Json\Builder|static
-     */
-    public function newEloquentBuilder($query)
-    {
-        return new Builder($query);
-    }
-
-    /**
      * Get the repository qualified key name (=alias for the filename).
      * @return string
      */
@@ -28,6 +18,16 @@ abstract class Model extends BaseModel implements ModelInterface
         return $this->getKeyName();
     }
 
+    /**
+     * Create a new JSON query builder for the model.
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @return \Kabas\Database\Json\Builder|static
+     */
+    public function newEloquentBuilder($query)
+    {
+        return new Builder($query);
+    }
+    
     /**
      * Get a new JSON query builder instance for the connection.
      * @return \Kabas\Database\Json\Query

@@ -7,26 +7,10 @@ use Kabas\Database\ModelInterface;
 class Container
 {
     /**
-    * All loaded models
+    * All loaded ModelInterfaces
     * @var array
     */
-    protected $container = [];
-
-    /**
-    * The actual cache instance
-    * @var \Kabas\Database\Json\Cache
-    */
-    protected static $instance;
-
-    /**
-     * Returns the cache's existing instance
-     * @return \Kabas\Database\Json\Cache\Container
-     */
-    public static function getInstance()
-    {
-        if(is_null(static::$instance)) static::$instance = new static;
-        return static::$instance;
-    }
+    protected $spaces = [];
 
     /**
      * Adds or updates a cached item for given model and locale
@@ -38,7 +22,7 @@ class Container
      */
     public function inject($key, $data, ModelInterface $model, $locale = null)
     {
-        $this->getOrCreateNamespace($model)->set($key, $data, $locale);
+        $this->getOrCreateSpace($model)->set($key, $data, $locale);
     }
 
     /**
@@ -50,59 +34,64 @@ class Container
      */
     public function merge(array $items, ModelInterface $model, $locale = null)
     {
-        $this->getOrCreateNamespace($model)->setMultiple($items, $locale);
+        $this->getOrCreateSpace($model)->setMultiple($items, $locale);
     }
 
     /**
-     * Returns an existing or fresh namespace instance
-     * @param object $namespace
-     * @return \Kabas\Database\Json\Cache\Namespace
+     * Returns stored item from given Space
+     * @param string $key
+     * @param string|Kabas\Database\ModelInterface $space
+     * @param string $locale
+     * @return \Kabas\Database\Json\Cache\Item|null
      */
-    public function getOrCreateNamespace(ModelInterface $model)
+    public function retrieve($key, $space, $locale = null)
     {
-        if($existing = $this->getNamespace($model->getObjectName())) {
+        if(!($space = $this->getSpace($space))) return;
+        return $space->find($key, $locale);
+    }
+
+    /**
+     * Returns an existing or fresh Space instance
+     * @param object $space
+     * @return \Kabas\Database\Json\Cache\Space
+     */
+    public function getOrCreateSpace(ModelInterface $model)
+    {
+        if($existing = $this->getSpace($model->getObjectName())) {
             return $existing;
         }
-        return $this->registerNamespace($model);
+        return $this->registerSpace($model);
     }
 
     /**
-     * Returns requested existing namespace instance
-     * @param string $name
-     * @return \Kabas\Database\Json\Cache\Namespace|null
+     * Returns requested existing Space instance
+     * @param string|Kabas\Database\ModelInterface $space
+     * @return \Kabas\Database\Json\Cache\Space|null
      */
-    public function getNamespace(string $name)
+    public function getSpace($space)
     {
-        if(!isset($this->container[$name])) return;
-        return $this->container[$name];
+        if($space instanceof ModelInterface) $space = $space->getObjectName();
+        if(!isset($this->spaces[$space])) return;
+        return $this->spaces[$space];
     }
 
     /**
-     * Returns a freshly added namespace instance
+     * Returns a freshly added Space instance
      * @param object $model
-     * @return \Kabas\Database\Json\Cache\Namespace
+     * @return \Kabas\Database\Json\Cache\Space
      */
-    public function registerNamespace(ModelInterface $model)
+    public function registerSpace(ModelInterface $model)
     {
-        return $this->container[$model->getObjectName()] = $this->getNewNamespace($model);
+        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model);
     }
 
     /**
-     * Returns an empty namespace instance
+     * Returns an empty Space instance
      * @param object $model
-     * @return \Kabas\Database\Json\Cache\Namespace
+     * @return \Kabas\Database\Json\Cache\Space
      */
-    public function getNewNamespace(ModelInterface $model)
+    public function getNewSpace(ModelInterface $model)
     {
-        return new Namespace($model->getObjectName(), get_class($model), true);
-    }
-
-    /**
-     * Forwards static calls on the cache's instance
-     * @return \Kabas\Database\Json\Cache\Container
-     */
-    public static function __callStatic($method, $arguments = [])
-    {
-        return call_user_func_array(static::getInstance(), $arguments);
+        return new Space($model->getObjectName(), get_class($model), true);
     }
 }

@@ -2,7 +2,7 @@
     "fields": {
         "foo": {
             "type": "textarea",
-            "label": "Test field"
+            "label": "Foo"
         }
     }
 }
