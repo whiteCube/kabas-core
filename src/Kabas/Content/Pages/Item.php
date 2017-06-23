@@ -3,6 +3,8 @@
 namespace Kabas\Content\Pages;
 
 use \Kabas\App;
+use Kabas\Utils\File;
+use Kabas\Utils\Lang;
 use \Kabas\Content\BaseItem;
 
 class Item extends BaseItem
@@ -24,8 +26,24 @@ class Item extends BaseItem
 
     protected function getMeta($data)
     {
-        // TODO : merge default site meta with given meta
-        return $data->meta ?? [];
+        $default = $this->getDefaultMeta();
+        $meta = $data->meta ?? [];
+        return $this->mergeMetaWithDefault($default, $meta);
+    }
+
+    protected function getDefaultMeta()
+    {
+        $defaultMetaPath = CONTENT_PATH . DS . Lang::getCurrent()->original . DS . 'meta.json';
+        return file_exists($defaultMetaPath) ? File::loadJson($defaultMetaPath) : [];
+    }
+
+    protected function mergeMetaWithDefault($default, $meta)
+    {
+        foreach($meta as $key => $value)
+        {
+            $default->$key = $value;
+        }
+        return (array) $default;
     }
 
     protected function getTemplateNamespace()

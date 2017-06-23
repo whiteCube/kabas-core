@@ -78,7 +78,7 @@ class Text
      * @param bool $caseSensitive 
      * @return bool
      */
-    static function contains($haystack, $needle, $caseSensitive = true)
+    static function contains($needle, $haystack, $caseSensitive = true)
     {
         if($caseSensitive) return (strpos($haystack, $needle) !== false);
         return (stripos($haystack, $needle) !== false);

@@ -47,7 +47,7 @@ class Textual extends Item
      */
     public function contains($string, $caseSensitive = true)
     {
-        return Text::contains($this->output, $string, $caseSensitive);
+        return Text::contains($string, $this->output, $caseSensitive);
     }
 
     /**

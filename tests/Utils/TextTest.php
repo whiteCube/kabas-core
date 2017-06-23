@@ -47,9 +47,9 @@ class TextTest extends TestCase
     /** @test */
     public function can_check_if_value_contains_a_string()
     {
-        $this->assertFalse(Text::contains('My foo title', 'Foo'));
-        $this->assertTrue(Text::contains('My foo title', 'Foo', false));
-        $this->assertFalse(Text::contains('My foo title', 'bar'));
+        $this->assertFalse(Text::contains('Foo', 'My foo title'));
+        $this->assertTrue(Text::contains('Foo', 'My foo title', false));
+        $this->assertFalse(Text::contains('bar', 'My foo title'));
     }
 
     /** @test */
