@@ -111,23 +111,11 @@ class Space
     }
 
     /**
-     * Retrieves or adds locale repository
-     * @param string $locale
-     * @return array
-     */
-    protected function getOrCreateLocaleRepository($locale = null) {
-        if(is_array($existing = $this->getItemsForLocale($locale))) {
-            return $existing;
-        }
-        return $this->container[$this->getLocaleIdentifier($locale)] = [];
-    }
-
-    /**
      * Retrieves locale repository
      * @param string $locale
      * @return array
      */
-    protected function getItemsForLocale($locale = null) {
+    public function getItemsForLocale($locale = null) {
         if(!$this->translatable) return $this->container;
         $locale = $this->getLocaleIdentifier($locale);
         if(!isset($this->container[$locale])) return [];

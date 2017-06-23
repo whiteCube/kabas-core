@@ -51,6 +51,18 @@ class Container
     }
 
     /**
+     * Returns all stored item from given Space and locale
+     * @param string|Kabas\Database\ModelInterface $space
+     * @param string $locale
+     * @return array|null
+     */
+    public function all($space, $locale = null)
+    {
+        if(!($space = $this->getSpace($space))) return;
+        return $space->getItemsForLocale($locale);
+    }
+
+    /**
      * Returns an existing or fresh Space instance
      * @param object $space
      * @return \Kabas\Database\Json\Cache\Space
