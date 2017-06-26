@@ -13,6 +13,56 @@ class Container
     protected $spaces = [];
 
     /**
+     * Checks if space exists and contains items for locale
+     * @param object $model
+     * @param string $locale
+     * @return bool
+     */
+    public function has(ModelInterface $model, $locale = null)
+    {
+        if(!($space = $this->getSpace($model))) return false;
+        if(count($space->getItemsForLocale($locale))) return true;
+        return false;
+    }
+    
+    /**
+     * Adds or updates an empty cached item for given model and locale
+     * @param string $key
+     * @param object $path
+     * @param object $model
+     * @param string $locale
+     * @return void
+     */
+    public function addEmpty($key, $path, ModelInterface $model, $locale = null)
+    {
+        $this->getOrCreateSpace($model)->make($key, $path, $locale);
+    }
+
+    /**
+     * Adds or updates multiple empty cached items for given model and locale
+     * @param array  $items
+     * @param object $model
+     * @param string $locale
+     * @return void
+     */
+    public function addEmpties(array $items, ModelInterface $model, $locale = null)
+    {
+        $this->getOrCreateSpace($model)->makeMultiple($items, $locale);
+    }
+
+    /**
+     * Loads data from cached items paths for given model and locale
+     * @param object $model
+     * @param string $locale
+     * @return void
+     */
+    public function loadEmpties(ModelInterface $model, $locale = null)
+    {
+        if(!($space = $this->getSpace($model))) return;
+        $space->loadWherePaths($locale);
+    }
+
+    /**
      * Adds or updates a cached item for given model and locale
      * @param string $key
      * @param object $data

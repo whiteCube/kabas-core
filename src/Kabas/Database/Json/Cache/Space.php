@@ -45,6 +45,29 @@ class Space
     }
 
     /**
+     * Initializes empty stored item
+     * @param string $key
+     * @param mixed  $path
+     * @param string $locale
+     * @return \Kabas\Database\Json\Cache\Item
+     */
+    public function make($key, $path, $locale = null) {
+        return $this->findOrCreate($key, $locale)->setPath($path);
+    }
+
+    /**
+     * Initializes emultiple mpty stored items
+     * @param array  $items
+     * @param string $locale
+     * @return void
+     */
+    public function makeMultiple($items, $locale = null) {
+        foreach ($items as $path => $key) {
+            $this->make($key, $path, $locale);
+        }
+    }
+
+    /**
      * Adds or updates stored item for given locale
      * @param string $key
      * @param mixed  $data
@@ -64,6 +87,18 @@ class Space
     public function setMultiple(array $items, $locale = null) {
         foreach ($items as $key => $data) {
             $this->set($key, $data, $locale);
+        }
+    }
+
+    /**
+     * Loads data from path for all empty cached items
+     * @param string $locale
+     * @return void
+     */
+    public function loadWherePaths($locale = null) {
+        foreach ($this->getItemsForLocale($locale) as $key => $item) {
+            if($item->data) continue;
+            if($item->path) $item->load();
         }
     }
 

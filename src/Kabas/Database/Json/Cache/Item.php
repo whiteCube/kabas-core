@@ -2,6 +2,8 @@
 
 namespace Kabas\Database\Json\Cache;
 
+use Kabas\Utils\File;
+
 class Item
 {
     /**
@@ -15,6 +17,12 @@ class Item
     * @var mixed
     */
     public $data;
+
+    /**
+    * path to item's file
+    * @var mixed
+    */
+    public $path;
 
     /**
     * Item's cache Space
@@ -44,6 +52,16 @@ class Item
     }
 
     /**
+     * Updates file path for cached item
+     * @param string $path
+     * @return this
+     */
+    public function setPath($path) {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
      * Updates identifier key for cached item
      * @param string $key
      * @return this
@@ -52,4 +70,26 @@ class Item
         $this->key = $key;
         return $this;
     }
+
+    /**
+     * Sets data from item's file content
+     * @return this
+     */
+    public function load() {
+        if(is_null($content = File::loadJsonIfValid($this->path))) return $this->set(false);
+        return $this->set($content);
+    }
+
+    /**
+     * Transforms this item to stdClass
+     * @param string $key
+     * @return \stdClass
+     */
+    public function toDataObject($key) {
+        if(is_null($this->data)) $this->load();
+        if(is_object($this->data)) $item = $this->data;
+        $item->{$key} = $this->key;
+        return $item;
+    }
+    
 }

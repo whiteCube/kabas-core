@@ -43,18 +43,26 @@ class JsonCacheTest extends TestCase
     }
 
     /** @test */
-    public function can_inject_single_item()
+    public function can_inject_single_item_and_retrieve_it()
     {
         Cache::inject('foo', 'bar', new JsonModel);
         $this->assertInstanceOf(Item::class, Cache::retrieve('foo', 'jsonModel'));
     }
 
     /** @test */
-    public function can_inject_multiple_items()
+    public function can_inject_multiple_items_and_retrieve_item()
     {
         $items = ['foo' => 'test', 'bar' => 'test'];
         Cache::merge($items, new JsonModel);
         $this->assertEquals('test', Cache::retrieve('foo', 'jsonModel')->data);
         $this->assertEquals('test', Cache::retrieve('bar', 'jsonModel')->data);
+    }
+
+    /** @test */
+    public function can_retrieve_all_items_for_space()
+    {
+        $items = ['foo' => 'test', 'bar' => 'test'];
+        Cache::merge($items, new JsonModel);
+        $this->assertCount(2, Cache::all('jsonModel'));
     }
 }
