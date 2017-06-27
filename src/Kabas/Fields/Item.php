@@ -202,7 +202,6 @@ class Item
     public function check($value = null)
     {
         if(!$this->validate($value)) {
-           var_dump($value);
             $error = 'Field "' . $this->name . '" of type "' . $this->type . '" has an incorrect value.';
             throw new \Kabas\Exceptions\TypeException($error);
         }

@@ -1,4 +1,12 @@
 {
 	"fields": {
+        "phone": {
+            "type": "tel",
+            "label": "Phone",
+            "default": {
+                "label": "0400/00.00.00",
+                "href": "0400000000"
+            }
+        }
 	}
 }

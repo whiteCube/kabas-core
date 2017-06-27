@@ -41,7 +41,7 @@ class FileTest extends TestCase
         $this->assertSame('index', $this->file->filename);
         $this->assertSame('php', $this->file->extension);
         $this->assertSame('php', $this->file->extension());
-        $this->assertSame(743, $this->file->size);
+        $this->assertSame(761, $this->file->size);
     }
 
     /** @test */
