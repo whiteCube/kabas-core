@@ -4,7 +4,7 @@
  * @author Filipe Dobreira <http://github.com/filp>
  */
 
-namespace Kabas\Exceptions;
+namespace Kabas\Exceptions\Whoops;
 
 use \Whoops\Handler\PrettyPageHandler;
 
