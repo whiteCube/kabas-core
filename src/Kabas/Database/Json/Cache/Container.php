@@ -18,7 +18,7 @@ class Container
      * @param string $locale
      * @return bool
      */
-    public function has(ModelInterface $model, $locale = null)
+    public function has($model, $locale = null)
     {
         if(!($space = $this->getSpace($model))) return false;
         if(count($space->getItemsForLocale($locale))) return true;
@@ -52,13 +52,14 @@ class Container
 
     /**
      * Loads data from cached items paths for given model and locale
-     * @param object $model
+     * @param object $space
      * @param string $locale
      * @return void
      */
-    public function loadEmpties(ModelInterface $model, $locale = null)
+    public function loadEmpties($space, $locale = null)
     {
-        if(!($space = $this->getSpace($model))) return;
+        var_dump('here motherfucker');
+        if(!($space = $this->getSpace($space))) return;
         $space->loadWherePaths($locale);
     }
 

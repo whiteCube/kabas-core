@@ -16,6 +16,12 @@ class Container
         $this->setDriver();
     }
 
+    /**
+     * Forwards method calls to settings class
+     * @param string $name 
+     * @param array $arguments 
+     * @return mixed
+     */
     public function __call($name, $arguments)
     {
         if(!method_exists($this->settings, $name)) {

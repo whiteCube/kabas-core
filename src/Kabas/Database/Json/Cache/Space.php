@@ -62,7 +62,7 @@ class Space
      * @return void
      */
     public function makeMultiple($items, $locale = null) {
-        foreach ($items as $path => $key) {
+        foreach ($items as $key => $path) {
             $this->make($key, $path, $locale);
         }
     }

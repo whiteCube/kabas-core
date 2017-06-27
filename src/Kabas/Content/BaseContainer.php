@@ -74,10 +74,19 @@ class BaseContainer
      */
     protected function loop($files)
     {
-        foreach($files as $file) {
+        foreach($files as $name => $file) {
+            $file->id = isset($file->id) ? $file->id : $this->extractNameFromFile($name);
+            $file->template = isset($file->template) ? $file->template : $this->extractNameFromFile($name);
             if(is_array($file)) $this->loop($file);
             else $this->items[$file->id] = $this->makeItem($file);
         }
+    }
+
+    protected function extractNameFromFile($filename)
+    {
+        $exploded = explode(DS, $filename);
+        $name = str_replace('.json', '', end($exploded));
+        return $name;
     }
     
 }

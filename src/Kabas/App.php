@@ -34,7 +34,7 @@ class App extends Container
         self::$instance = $this;
         $this->registerPaths($public_path);
         $this->whoops = new \Whoops\Run;
-        $this->whoopsPrettyPageHandler = new \Kabas\Exceptions\KabasPrettyPageHandler;
+        $this->whoopsPrettyPageHandler = new \Kabas\Exceptions\Whoops\KabasPrettyPageHandler;
         $this->whoops->pushHandler($this->whoopsPrettyPageHandler);
         $this->whoops->register();
     }

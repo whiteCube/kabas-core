@@ -76,7 +76,7 @@ class Item
      * @return this
      */
     public function load() {
-        if(is_null($content = File::loadJsonIfValid($this->path))) return $this->set(false);
+        if(is_null($content = File::loadJsonIfValid($this->path, false))) return $this->set(false);
         return $this->set($content);
     }
 
