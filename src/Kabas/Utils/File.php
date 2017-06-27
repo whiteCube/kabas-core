@@ -106,11 +106,11 @@ class File
     static function loadJsonFromDir($path, $recursive = false)
     {
         $items = [];
-        foreach (static::scanJsonFromDir($path, $recursive) as $file => $name) {
+        foreach (static::scanJsonFromDir($path, $recursive) as $name => $file) {
             if(App::config()->get('app.debug')) {
-                $items[$file] = File::loadJson($file);
+                $items[$name] = File::loadJson($file);
             } else {
-                if($content = static::loadJsonIfValid($file)) $items[$file] = $content;
+                if($content = static::loadJsonIfValid($file)) $items[$name] = $content;
             }
         }
         return $items;
@@ -136,7 +136,7 @@ class File
             }
             $info = pathinfo($item);
             if($info['extension'] != 'json') continue;
-            $items[$item] = $info['filename'];
+            $items[$info['filename']] = $item;
         }
         return $items;
     }

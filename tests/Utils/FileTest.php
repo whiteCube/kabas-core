@@ -83,6 +83,16 @@ class FileTest extends TestCase
     }
 
     /** @test */
+    public function can_load_files_that_do_and_do_not_exist_without_exceptions()
+    {
+        $this->createFakeFiles();
+        $this->assertNull(File::loadJsonIfValid(__DIR__ . '/test.json'));
+        $data = File::loadJsonIfValid(__DIR__ . '/test/dummy1.json');
+        $this->assertEquals('bar', $data->foo);
+        $this->deleteFakeFiles();
+    }
+
+    /** @test */
     public function can_determine_if_a_file_has_json_extension()
     {
         $this->createFakeFiles();
@@ -153,8 +163,8 @@ class FileTest extends TestCase
         ]);
         $this->createFakeFiles();
         $data = File::loadJsonFromDir(__DIR__ . DS . 'test');
-        $this->assertEquals('bar', $data[__DIR__ . DS . 'test' . DS . 'dummy1.json']->foo);
-        $this->assertEquals('bar', $data[__DIR__ . DS . 'test' . DS . 'dummy2.json']->foo);
+        $this->assertEquals('bar', $data['dummy1']->foo);
+        $this->assertEquals('bar', $data['dummy2']->foo);
         $this->deleteFakeFiles();
     }
 
