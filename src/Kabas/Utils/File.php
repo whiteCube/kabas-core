@@ -8,17 +8,20 @@ use Kabas\Exceptions\FileNotFoundException;
 
 class File
 {
+    protected static $cache = [];
     /**
      * Get the contents of a json file
      * @param  string $file
      * @return object
      */
-    static function loadJson($file)
+    static function loadJson($file, $cache = true)
     {
+        if(isset(self::$cache[$file])) return self::$cache[$file];
         if(!file_exists($file)) throw new FileNotFoundException($file);
         $string = file_get_contents($file);
         $json = json_decode($string);
         if(!$json) throw new JsonException($file, $string);
+        if($cache) self::$cache[$file] = $json;
         return $json;
     }
 
@@ -27,10 +30,10 @@ class File
      * @param  string $file
      * @return object|null
      */
-    static function loadJsonIfValid($file)
+    static function loadJsonIfValid($file, $cache = true)
     {
         try {
-            $content = self::loadJson($file);
+            $content = self::loadJson($file, $cache);
         } catch (\Exception $e) {
             return;
         }
@@ -56,6 +59,7 @@ class File
      */
     static function write($data, $path)
     {
+        if(isset(self::$cache[$path])) self::$cache[$path] = $data;
         file_put_contents($path, $data);
     }
 
@@ -64,13 +68,17 @@ class File
      * @param  string $path
      * @return string
      */
-    static function read($path)
+    static function read($path, $cache = true)
     {
-        return file_get_contents($path);
+        if(isset(self::$cache[$path])) return self::$cache[$path];
+        $content = file_get_contents($path);
+        if($cache) self::$cache[$path] = $content;
+        return $content;
     }
 
     static function deleteJson($path)
     {
+        unset(self::$cache[$path]);
         unlink($path . '.json');
     }
 
@@ -103,14 +111,14 @@ class File
      * @param  boolean $recursive
      * @return array
      */
-    static function loadJsonFromDir($path, $recursive = false)
+    static function loadJsonFromDir($path, $recursive = false, $cache = true)
     {
         $items = [];
         foreach (static::scanJsonFromDir($path, $recursive) as $file => $name) {
             if(App::config()->get('app.debug')) {
-                $items[$file] = File::loadJson($file);
+                $items[$file] = File::loadJson($file, $cache);
             } else {
-                if($content = static::loadJsonIfValid($file)) $items[$file] = $content;
+                if($content = static::loadJsonIfValid($file, $cache)) $items[$file] = $content;
             }
         }
         return $items;
