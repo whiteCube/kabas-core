@@ -33,6 +33,16 @@ class App extends Container
     {
         self::$instance = $this;
         $this->registerPaths($public_path);
+        $this->whoops = new \Whoops\Run;
+        $this->whoopsPrettyPageHandler = new \Kabas\Exceptions\KabasPrettyPageHandler;
+        $this->whoops->pushHandler($this->whoopsPrettyPageHandler);
+        $this->whoops->register();
+    }
+
+    public static function debug($title, $data)
+    {
+        if(is_string($data)) $data = [$data];
+        return self::$instance->whoopsPrettyPageHandler->addDataTable($title, $data);
     }
 
     /**

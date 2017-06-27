@@ -34,7 +34,7 @@ class Item extends BaseItem
     protected function getDefaultMeta()
     {
         $defaultMetaPath = CONTENT_PATH . DS . Lang::getCurrent()->original . DS . 'meta.json';
-        return file_exists($defaultMetaPath) ? File::loadJson($defaultMetaPath) : [];
+        return file_exists($defaultMetaPath) ? File::loadJson($defaultMetaPath) : new \stdClass;
     }
 
     protected function mergeMetaWithDefault($default, $meta)
