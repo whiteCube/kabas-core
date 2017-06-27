@@ -261,7 +261,13 @@ class Commander
         File::writeJson($content, $file);
     }
 
-
+    /**
+     * Creates content file for a model
+     * @param string $model 
+     * @param string $lang 
+     * @param array $fields 
+     * @return void
+     */
     protected function generateObjectFile($model, $lang, $fields)
     {
         $path = $this->dir('content' . DS . $lang . DS . 'objects' . DS . $model);
@@ -324,6 +330,12 @@ class Commander
         return '';
     }
 
+    /**
+     * Generates a pre-filled object for an image field
+     * @param string $key 
+     * @param object $field 
+     * @return object
+     */
     protected function getImageFieldContent($key, $field)
     {
         $image = new \stdClass();
@@ -338,6 +350,12 @@ class Commander
         return $image;
     }
 
+    /**
+     * Generates a pre-filled object for a number field
+     * @param string $key 
+     * @param object $field 
+     * @return object
+     */
     protected function getNumberFieldContent($key, $field)
     {
         if(is_null($field->default ?? null)) return 0;
@@ -345,6 +363,12 @@ class Commander
         throw new \Exception('default value for number field "' . $key . '" is invalid.'); // @codeCoverageIgnore
     }
 
+    /**
+     * Generates a pre-filled object for a selectable field
+     * @param string $key 
+     * @param object $field 
+     * @return object
+     */
     protected function getSelectableFieldContent($key, $field)
     {
         if(is_null($field->default ?? null)) return [];
@@ -352,6 +376,11 @@ class Commander
         throw new \Exception('default value for ' . $field->type . ' field "' . $key . '" is invalid.'); // @codeCoverageIgnore
     }
 
+    /**
+     * Gets (or creates) the path to a directory
+     * @param string $path 
+     * @return string
+     */
     protected function dir($path){
         if(!realpath($path)) mkdir($path, 0755, true);
         return realpath($path);
