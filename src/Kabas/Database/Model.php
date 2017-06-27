@@ -59,6 +59,16 @@ abstract class Model extends EloquentModel
     }
 
     /**
+     * Returns the current model's repository path for given locale
+     * @param string $locale
+     * @return string
+     */
+    public function getRepositoryPath($locale) : string
+    {
+        return realpath(CONTENT_PATH . DS . $locale . DS . $this->getRepository());
+    }
+
+    /**
      * Returns the current model's full path to its JSON structure file
      * @return string
      */

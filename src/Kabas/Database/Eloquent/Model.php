@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Database;
+namespace Kabas\Database\Eloquent;
 
 use Kabas\Database\ModelInterface;
 use Kabas\Database\Model as BaseModel;
