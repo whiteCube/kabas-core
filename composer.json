@@ -24,7 +24,7 @@
         "seld/jsonlint": "^1.4",
         "nyratas/php-console-log": "^1.1",
         "whitecube/lingua": "^1.0",
-        "symfony/debug": "^3.3"
+        "filp/whoops": "^2.1"
     },
     "autoload": {
         "psr-4": {
