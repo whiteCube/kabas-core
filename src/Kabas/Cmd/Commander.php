@@ -80,7 +80,7 @@ class Commander
      */
     protected function help()
     {
-        require  TEMPLATES_PATH . 'Help.php';
+        require TEMPLATES_PATH . 'Help.php';
     }
 
     /**
