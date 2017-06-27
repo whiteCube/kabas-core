@@ -13,6 +13,8 @@ class KabasPrettyPageHandler extends PrettyPageHandler
 
     public function handle()
     {
+        $this->addResourcePath(__DIR__);
+        $this->addCustomCss('CustomWhoopsStyles.css');
         parent::handle();
     }
 
