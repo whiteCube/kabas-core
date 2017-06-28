@@ -122,8 +122,19 @@ class JsonCacheTest extends TestCase
         $this->assertEquals('bar', Cache::retrieve('foo', 'jsonModel')->data->data->foo);
     }
 
+    /** @test */
     public function does_not_throw_error_when_trying_to_load_unexisting_empty_items()
     {
         $this->assertNull(Cache::loadEmpties('foo'));
+    }
+
+    /** @test */
+    public function can_convert_cached_item_to_stdClass()
+    {
+        Cache::inject('foo', 'bar', new JsonModel);
+        $object = Cache::retrieve('foo', 'jsonModel')->toDataObject('id');
+        $this->assertInstanceOf(\stdClass::class, $object);
+        $this->assertEquals('foo', $object->id);
+        $this->assertEquals('bar', $object->value);
     }
 }

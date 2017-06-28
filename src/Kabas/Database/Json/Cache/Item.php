@@ -87,9 +87,17 @@ class Item
      */
     public function toDataObject($key) {
         if(is_null($this->data)) $this->load();
-        if(is_object($this->data)) $item = $this->data;
+        $item = $this->getDataAsObject();
         $item->{$key} = $this->key;
         return $item;
+    }
+
+    protected function getDataAsObject() {
+        if(is_object($this->data)) return $this->data;
+        if(is_array($this->data)) return (object) $this->data;
+        $data = new \stdClass;
+        $data->value = $this->data;
+        return $data;
     }
     
 }
