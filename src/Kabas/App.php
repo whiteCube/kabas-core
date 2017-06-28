@@ -33,16 +33,6 @@ class App extends Container
     {
         self::$instance = $this;
         $this->registerPaths($public_path);
-        $this->whoops = new \Whoops\Run;
-        $this->whoopsPrettyPageHandler = new \Kabas\Exceptions\Whoops\KabasPrettyPageHandler;
-        $this->whoops->pushHandler($this->whoopsPrettyPageHandler);
-        $this->whoops->register();
-    }
-
-    public static function debug($title, $data)
-    {
-        if(is_string($data)) $data = [$data];
-        return self::$instance->whoopsPrettyPageHandler->addDataTable($title, $data);
     }
 
     /**
@@ -64,7 +54,6 @@ class App extends Container
     {
         if(is_null($singletons)) $singletons = static::getBootingSingletons();
         $this->registerBindings($singletons);
-        $this->setErrorMode();
     }
 
     /**
@@ -74,6 +63,7 @@ class App extends Container
     public function handle()
     {
         $this->loadAliases();
+        $this->exceptions->boot();
         $this->themes->loadCurrent();
         $this->router->load()->setCurrent();
         $this->content->parse();
@@ -98,7 +88,8 @@ class App extends Container
             'content' => \Kabas\Content\Container::class,
             'request' => \Kabas\Http\Request::class,
             'response' => \Kabas\Http\Response::class,
-            'themes' => \Kabas\Themes\Container::class
+            'themes' => \Kabas\Themes\Container::class,
+            'exceptions' => \Kabas\Exceptions\Handler::class
         ];
     }
 
@@ -111,11 +102,6 @@ class App extends Container
         foreach($this->config->get('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
-    }
-
-    protected function setErrorMode()
-    {
-        if(!$this->config->get('app.debug')) error_reporting(0);
     }
 
     public function loadTranslations()
