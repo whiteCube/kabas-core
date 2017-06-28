@@ -115,6 +115,14 @@ class JsonCacheTest extends TestCase
     }
 
     /** @test */
+    public function can_add_empty_items_to_untranslatable_space()
+    {
+        Cache::registerSpace(new JsonModel, false);
+        $this->addMultipleEmptyItems();
+        $this->assertCount(2, Cache::all('jsonModel'));
+    }
+
+    /** @test */
     public function can_load_previously_set_empty_items()
     {
         $this->addMultipleEmptyItems();

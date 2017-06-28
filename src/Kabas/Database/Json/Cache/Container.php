@@ -122,7 +122,7 @@ class Container
         if($existing = $this->getSpace($model->getObjectName())) {
             return $existing;
         }
-        return $this->registerSpace($model);
+        return $this->registerSpace($model, $model->isTranslatable());
     }
 
     /**
@@ -140,20 +140,22 @@ class Container
     /**
      * Returns a freshly added Space instance
      * @param object $model
+     * @param bool   $translatable
      * @return \Kabas\Database\Json\Cache\Space
      */
-    public function registerSpace(ModelInterface $model)
+    public function registerSpace(ModelInterface $model, $translatable = true)
     {
-        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model);
+        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model, $translatable);
     }
 
     /**
      * Returns an empty Space instance
      * @param object $model
+     * @param bool   $translatable
      * @return \Kabas\Database\Json\Cache\Space
      */
-    public function getNewSpace(ModelInterface $model)
+    public function getNewSpace(ModelInterface $model, $translatable = true)
     {
-        return new Space($model->getObjectName(), get_class($model), true);
+        return new Space($model->getObjectName(), get_class($model), $translatable);
     }
 }
