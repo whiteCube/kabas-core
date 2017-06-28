@@ -58,7 +58,6 @@ class Container
      */
     public function loadEmpties($space, $locale = null)
     {
-        var_dump('here motherfucker');
         if(!($space = $this->getSpace($space))) return;
         $space->loadWherePaths($locale);
     }

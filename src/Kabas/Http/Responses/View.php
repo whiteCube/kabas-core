@@ -33,7 +33,7 @@ class View extends Response implements ResponseInterface
         $this->addVarsObject($a, $this->item->fields);
         $this->addVarsObject($a, $this->item->data);
         if(is_a($this->item, \Kabas\Content\Menus\Item::class)) {
-            $a['items'] = $this->item->items;
+            $a['items'] = $this->item->getMenuItems();
         }
         return $a;
     }

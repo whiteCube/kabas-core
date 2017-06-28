@@ -7,7 +7,11 @@ use \Kabas\Utils\File;
 
 class BaseContainer
 {
-    public $items = [];
+    /**
+     * The loaded content items
+     * @var array
+     */
+    protected $items;
 
     /**
      * path to the JSON content files
@@ -19,7 +23,18 @@ class BaseContainer
     {
         // TODO : use the defined driver in App::$driver in order to get content
         $this->path = $this->getPath();
-        $this->loop(File::loadJsonFromDir($this->path));
+    }
+
+    /**
+     * Loads and/or returns all items for content type
+     * @return array
+     */
+    public function getItems()
+    {
+        if(is_null($this->items)) {
+            $this->items = $this->loop(File::loadJsonFromDir($this->path));
+        }
+        return $this->items;
     }
 
     /**
@@ -29,7 +44,7 @@ class BaseContainer
      */
     public function has($id)
     {
-        if(array_key_exists($id, $this->items)) return true;
+        if(array_key_exists($id, $this->getItems())) return true;
         return false;
     }
 
@@ -41,7 +56,7 @@ class BaseContainer
      */
     public function get($id, $lang = null)
     {
-        if($this->has($id)) return $this->items[$id];
+        if($this->has($id)) return $this->getItems()[$id];
         return false;
     }
 
@@ -51,7 +66,7 @@ class BaseContainer
      */
     public function parse()
     {
-        foreach ($this->items as $item) {
+        foreach ($this->getItems() as $item) {
             $item->parse();
         }
     }
@@ -70,16 +85,18 @@ class BaseContainer
     /**
      * Recursively go through the files array to instanciate items
      * @param  array $files
-     * @return void
+     * @return array
      */
     protected function loop($files)
     {
+        $items = [];
         foreach($files as $name => $file) {
-            $file->id = isset($file->id) ? $file->id : $this->extractNameFromFile($name);
-            $file->template = isset($file->template) ? $file->template : $this->extractNameFromFile($name);
+            $file->id = $file->id ?? $this->extractNameFromFile($name);
+            $file->template = $file->template ?? $this->extractNameFromFile($name);
             if(is_array($file)) $this->loop($file);
-            else $this->items[$file->id] = $this->makeItem($file);
+            else $items[$file->id] = $this->makeItem($file);
         }
+        return $items;
     }
 
     protected function extractNameFromFile($filename)

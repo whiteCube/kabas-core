@@ -31,8 +31,7 @@ trait CreatesApplication {
             'response' => \Kabas\Http\Response::class,
         ]);
         $this->setPageRoute($route);
-        $this->app->config->get('site.theme'); // a random config call is required in order to make the config instance
-        $this->app->router->load()->setCurrent();
+        $this->app->router->capture()->load()->setCurrent();
     }
 
     protected function getDefaultSingletons()

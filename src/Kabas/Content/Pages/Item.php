@@ -27,8 +27,8 @@ class Item extends BaseItem
     protected function getMeta($data)
     {
         $default = $this->getDefaultMeta();
-        $meta = $data->meta ?? [];
-        return $this->mergeMetaWithDefault($default, $meta);
+        var_dump($default);
+        return $this->mergeMetaWithDefault($default, $data->meta ?? []);
     }
 
     protected function getDefaultMeta()
@@ -39,8 +39,7 @@ class Item extends BaseItem
 
     protected function mergeMetaWithDefault($default, $meta)
     {
-        foreach($meta as $key => $value)
-        {
+        foreach($meta as $key => $value) {
             $default->$key = $value;
         }
         return (array) $default;

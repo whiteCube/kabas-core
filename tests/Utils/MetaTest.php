@@ -29,6 +29,7 @@ class MetaTest extends TestCase
     /** @test */
     public function can_fetch_a_default_meta_item()
     {
+;        var_dump(Meta::get('description'));die();
         $this->assertSame('A test default description', Meta::get('description'));
     }
 

@@ -22,7 +22,7 @@ class RedirectResponseTest extends TestCase
             'content' => \Kabas\Content\Container::class,
             'themes' => \Kabas\Themes\Container::class
         ]);
-        $this->app->router->load();
+        $this->app->router->capture()->load();
     }
 
     /** @test */

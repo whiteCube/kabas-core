@@ -24,9 +24,9 @@ class RouterTest extends TestCase
             'fields' => \Kabas\Fields\Container::class,
             'themes' => \Kabas\Themes\Container::class
         ]);
-        if(!$route) return $this->app->router->load();
+        if(!$route) return $this->app->router->capture()->load();
         $this->setPageRoute($route);
-        $this->app->router->load()->setCurrent();
+        $this->app->router->capture()->load()->setCurrent();
     }
 
     /** @test */

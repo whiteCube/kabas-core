@@ -45,12 +45,6 @@ class Router
     public function __construct(UrlWorker $urlWorker)
     {
         $this->urlWorker = $urlWorker;
-        $this->rootURL = $this->getRootURL();
-        $this->baseURL = $this->getBaseURL();
-        $this->query = $this->urlWorker->getQuery($_SERVER['REQUEST_URI']);
-        $query = $this->urlWorker->getCleanQuery($this->query);
-        $this->route = $query->route;
-        Lang::set($query->lang ? $query->lang : $this->detectLang());
     }
 
     /**
@@ -59,12 +53,29 @@ class Router
      */
     public function load()
     {
-        foreach (App::content()->pages->items as $id => $aggregate) {
+        foreach (App::content()->pages->getItems() as $id => $aggregate) {
             $this->routes[] = new Route($id, $aggregate);
         }
         $this->notFound = App::getInstance()->make('Kabas\Http\RouteNotFound');
         return $this;
     }
+
+    /**
+     * Analyses the current incoming request
+     * @return object $this
+     */
+    public function capture()
+    {
+        $this->rootURL = $this->getRootURL();
+        $this->baseURL = $this->getBaseURL();
+        $this->query = $this->urlWorker->getQuery($_SERVER['REQUEST_URI']);
+        $query = $this->urlWorker->getCleanQuery($this->query);
+        $this->route = $query->route;
+        Lang::set($query->lang ? $query->lang : $this->detectLang());
+        return $this;
+    }
+
+
 
     /**
      * Get the current route query

@@ -119,8 +119,7 @@ class JsonCacheTest extends TestCase
     {
         $this->addMultipleEmptyItems();
         Cache::loadEmpties('jsonModel');
-        $this->assertEquals('foo', Cache::retrieve('foo', 'jsonModel')->data);
-        // $this->assertEquals('foo', Cache::retrieve('foo', 'jsonModel')->data->data->foo);
+        $this->assertEquals('bar', Cache::retrieve('foo', 'jsonModel')->data->data->foo);
     }
 
     public function does_not_throw_error_when_trying_to_load_unexisting_empty_items()
