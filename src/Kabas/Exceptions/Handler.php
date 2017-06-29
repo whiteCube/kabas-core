@@ -19,13 +19,6 @@ class Handler
     public function boot()
     {
         $this->instance->register();
-        $this->setErrorMode();
     }
-
-    protected function setErrorMode()
-    {
-        if(!App::config()->get('app.debug')) {
-            error_reporting(0);
-        }
-    }
+    
 }

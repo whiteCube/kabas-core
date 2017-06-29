@@ -21,13 +21,22 @@ return [
 
       /**
        * The driver used by Intervention Image (gd | imagick)
+       * @var string
        */
       'imageDriver' => 'gd',
 
       /**
        * Debug mode
+       * @var bool
        */
       'debug' => true,
+
+      /**
+       * The e-mail address that should be used for error reporting.
+       * If you do not wish to allow error reporting, delete it, set it to false, or comment it.
+       * @var string|bool
+       */
+      'reporting' => 'adrien@whitecube.be',
 
       /**
        * Aliases for classes

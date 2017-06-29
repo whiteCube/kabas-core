@@ -7,19 +7,13 @@ use \Kabas\App;
 
 class TypeException extends Exception
 {
+    public $hint;
+    public $path;
+
     public function __construct($message, $code = 0, Exception $previous = null)
     {
-        $title = 'TypeException';
-        $type = $title;
-
-        if(ob_get_level()) ob_clean();
-
-        ob_start();
-        include(__DIR__ . DS . 'ErrorTemplate.php');
-        $template = ob_get_clean();
-
-
-        parent::__construct($template, $code, $previous);
+        $this->hint = $message;
+        parent::__construct($message, $code, $previous);
     }
 
     /**

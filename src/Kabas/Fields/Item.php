@@ -19,6 +19,8 @@ class Item
 
     protected $label;
 
+    protected $filepath;
+
     protected $description;
 
     protected $options;
@@ -226,6 +228,7 @@ class Item
      */
     protected function implement($structure)
     {
+        $this->type = $structure->type;
         $this->default = $structure->default;
         $this->label = isset($structure->label) ? trim($structure->label) : ucfirst($this->type);
         $this->description = isset($structure->description) ? $structure->description : null;
