@@ -6,6 +6,9 @@ use \Exception;
 
 class NotFoundException extends Exception
 {
+    public $hint;
+    public $path;
+    
     public function __construct($identifier, $type = 'page', $code = 0, Exception $previous = null)
     {
         $message = ucfirst($type) . ' not found: ' . $identifier;

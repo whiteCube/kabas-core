@@ -2,8 +2,6 @@
 
 namespace kabas\Exceptions;
 
-use Kabas\App;
-
 class Handler
 {
     protected $instance;
@@ -20,5 +18,5 @@ class Handler
     {
         $this->instance->register();
     }
-    
+
 }

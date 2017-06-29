@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1498745600">
-  <project timestamp="1498745600">
+<coverage generated="1498751003">
+  <project timestamp="1498751003">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -256,17 +256,16 @@
     <package name="Kabas\Config">
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Config/Container.php">
         <class name="Container" namespace="Kabas\Config">
-          <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+          <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="16" elements="20" coveredelements="20"/>
         </class>
-        <line num="11" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="160"/>
-        <line num="13" type="stmt" count="160"/>
+        <line num="12" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="160"/>
         <line num="14" type="stmt" count="160"/>
         <line num="15" type="stmt" count="160"/>
         <line num="16" type="stmt" count="160"/>
         <line num="17" type="stmt" count="160"/>
-        <line num="25" type="method" name="__call" visibility="public" complexity="2" crap="2" count="119"/>
-        <line num="27" type="stmt" count="119"/>
-        <line num="28" type="stmt" count="1"/>
+        <line num="18" type="stmt" count="160"/>
+        <line num="26" type="method" name="__call" visibility="public" complexity="2" crap="2" count="119"/>
+        <line num="28" type="stmt" count="119"/>
         <line num="29" type="stmt" count="1"/>
         <line num="31" type="stmt" count="118"/>
         <line num="39" type="method" name="setDatabase" visibility="protected" complexity="1" crap="1" count="160"/>
@@ -279,7 +278,7 @@
         <line num="53" type="stmt" count="160"/>
         <line num="54" type="stmt" count="160"/>
         <line num="55" type="stmt" count="160"/>
-        <metrics loc="56" ncloc="41" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="17" elements="21" coveredelements="21"/>
+        <metrics loc="56" ncloc="41" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="16" elements="20" coveredelements="20"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Config/Language.php">
         <class name="Language" namespace="Kabas\Config">
@@ -3152,6 +3151,6 @@
         <metrics loc="91" ncloc="65" classes="1" methods="7" coveredmethods="7" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="31" coveredelements="31"/>
       </file>
     </package>
-    <metrics files="96" loc="7729" ncloc="5513" classes="86" methods="597" coveredmethods="575" conditionals="0" coveredconditionals="0" statements="1942" coveredstatements="1861" elements="2539" coveredelements="2436"/>
+    <metrics files="96" loc="7729" ncloc="5513" classes="86" methods="597" coveredmethods="575" conditionals="0" coveredconditionals="0" statements="1941" coveredstatements="1860" elements="2538" coveredelements="2435"/>
   </project>
 </coverage>

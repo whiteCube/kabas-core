@@ -6,6 +6,9 @@ use \Exception;
 
 class MassAssignmentException extends Exception
 {
+    public $hint;
+    public $path;
+
     public function __construct($key, $code = 0, Exception $previous = null)
     {
         $message = "Mass assignment exception [$key]";

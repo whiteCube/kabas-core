@@ -4,6 +4,7 @@ namespace Kabas\Config;
 
 use Kabas\App;
 use Kabas\Utils\Text;
+use Kabas\Exceptions\MethodNotFoundException;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class Container
@@ -25,8 +26,7 @@ class Container
     public function __call($name, $arguments)
     {
         if(!method_exists($this->settings, $name)) {
-            $error = 'Error: Method "' . $name . '" does not exist on config tree.';
-            throw new \Exception($error);
+            throw new MethodNotFoundException($name);
         }
         return call_user_func_array([$this->settings, $name], $arguments);
     }
