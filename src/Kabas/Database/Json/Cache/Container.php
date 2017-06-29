@@ -21,8 +21,7 @@ class Container
     public function has($model, $locale = null)
     {
         if(!($space = $this->getSpace($model))) return false;
-        if(count($space->getItemsForLocale($locale))) return true;
-        return false;
+        return count($space->getItemsForLocale($locale)) > 0;
     }
     
     /**
