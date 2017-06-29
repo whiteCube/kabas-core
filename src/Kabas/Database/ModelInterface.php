@@ -8,4 +8,5 @@ interface ModelInterface
     public function getRepository() : string;
     public function getStructurePath() : string;
     public function getRawFields();
+    public function isTranslatable() : bool;
 }

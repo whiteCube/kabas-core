@@ -41,7 +41,7 @@ class Query extends QueryBuilder
      */
     protected function runSelect()
     {
-        \Kabas\Utils\Debug::backtrace();
+        \Kabas\Utils\Debug::backtrace(); die();
         $select = new Select($this);
         return $select->run();
     }

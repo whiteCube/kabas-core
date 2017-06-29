@@ -29,6 +29,12 @@ abstract class Model extends EloquentModel
     static protected $structure;
 
     /**
+    * Indicates if the model is translatable
+    * @var bool
+    */
+    static protected $translated = true;
+
+    /**
      * The "booting" method of the model.
      * @return void
      */
@@ -77,6 +83,11 @@ abstract class Model extends EloquentModel
         $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . static::$structure);
         if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($path);
         return $path;
+    }
+
+    public function isTranslatable() : bool
+    {
+        return static::$translated;
     }
 
     /**

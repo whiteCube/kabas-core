@@ -18,6 +18,11 @@ class Item extends BaseItem
         $this->items->parse();
     }
 
+    public function getMenuItems()
+    {
+        return $this->items;
+    }
+
     protected function setData($data)
     {
         $this->items = new Links($data->items ?? null, $this->structure->item ?? null);

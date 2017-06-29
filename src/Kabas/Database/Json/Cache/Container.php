@@ -18,7 +18,7 @@ class Container
      * @param string $locale
      * @return bool
      */
-    public function has(ModelInterface $model, $locale = null)
+    public function has($model, $locale = null)
     {
         if(!($space = $this->getSpace($model))) return false;
         if(count($space->getItemsForLocale($locale))) return true;
@@ -52,13 +52,13 @@ class Container
 
     /**
      * Loads data from cached items paths for given model and locale
-     * @param object $model
+     * @param object $space
      * @param string $locale
      * @return void
      */
-    public function loadEmpties(ModelInterface $model, $locale = null)
+    public function loadEmpties($space, $locale = null)
     {
-        if(!($space = $this->getSpace($model))) return;
+        if(!($space = $this->getSpace($space))) return;
         $space->loadWherePaths($locale);
     }
 
@@ -122,7 +122,7 @@ class Container
         if($existing = $this->getSpace($model->getObjectName())) {
             return $existing;
         }
-        return $this->registerSpace($model);
+        return $this->registerSpace($model, $model->isTranslatable());
     }
 
     /**
@@ -140,20 +140,22 @@ class Container
     /**
      * Returns a freshly added Space instance
      * @param object $model
+     * @param bool   $translatable
      * @return \Kabas\Database\Json\Cache\Space
      */
-    public function registerSpace(ModelInterface $model)
+    public function registerSpace(ModelInterface $model, $translatable = true)
     {
-        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model);
+        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model, $translatable);
     }
 
     /**
      * Returns an empty Space instance
      * @param object $model
+     * @param bool   $translatable
      * @return \Kabas\Database\Json\Cache\Space
      */
-    public function getNewSpace(ModelInterface $model)
+    public function getNewSpace(ModelInterface $model, $translatable = true)
     {
-        return new Space($model->getObjectName(), get_class($model), true);
+        return new Space($model->getObjectName(), get_class($model), $translatable);
     }
 }

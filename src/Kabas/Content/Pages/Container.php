@@ -9,22 +9,6 @@ use Kabas\Content\BaseContainer;
 
 class Container extends BaseContainer
 {
-
-    /**
-    * identifier of the language (linked to $this->$path)
-    * @var string
-    */
-    protected $language;
-
-    public function __construct()
-    {
-        foreach (Lang::getAll() as $language) {
-            $this->setLanguage($language);
-            $this->loop(File::loadJsonFromDir($this->path));
-        }
-        $this->setLanguage(Lang::getCurrent());
-    }
-
     public function get($id, $lang = null)
     {
         if(!($aggregate = parent::get($id))) return false;
@@ -40,9 +24,10 @@ class Container extends BaseContainer
 
     public function parse()
     {
-        foreach ($this->items as $aggregate) {
-            if(!isset($aggregate[$this->language])) continue;
-            $aggregate[$this->language]->parse();
+        $locale = Lang::getCurrent()->original;
+        foreach ($this->getItems() as $aggregate) {
+            if(!isset($aggregate[$locale])) continue;
+            $aggregate[$locale]->parse();
         }
     }
 
@@ -51,22 +36,52 @@ class Container extends BaseContainer
         return parent::getPath($lang) . DS . 'pages';
     }
 
-    protected function makeItem($file)
+    /**
+     * Loads and/or returns all items for content type
+     * @return array
+     */
+    public function getItems()
     {
-        $aggregate = $this->getAggregate($file);
-        $aggregate[$this->language] = new Item($file);
-        return $aggregate;
+        if(is_null($this->items)) {
+            $this->items = $this->loop($this->getLocalesFilesArray());
+        }
+        return $this->items;
     }
 
-    protected function getAggregate($file)
+    /**
+     * Loads all files for all available languages
+     * @return array
+     */
+    protected function getLocalesFilesArray()
     {
-        if(!isset($this->items[$file->id])) return [];
-        return $this->items[$file->id];
+        $files = [];
+        foreach (Lang::getAll() as $language) {
+            $files[$language->original] = File::loadJsonFromDir($this->getPath($language));
+        }
+        return $files;
     }
 
-    protected function setLanguage($lang)
+    /**
+     * Recursively go through the files array to instanciate items
+     * @param  array $locales
+     * @return array
+     */
+    protected function loop($locales)
     {
-        $this->language = $lang->original;
-        $this->path = $this->getPath($lang);
+        $items = [];
+        foreach($locales as $locale => $files) {
+            foreach ($files as $key => $data) {
+                $data->id = $data->id ?? $key;
+                $data->template = $data->template ?? $key;
+                if(!isset($items[$data->id])) $items[$data->id] = [];
+                $items[$data->id][$locale] = $this->makeItem($data);
+            }
+        }
+        return $items;
+    }
+
+    protected function makeItem($data)
+    {
+        return new Item($data);
     }
 }

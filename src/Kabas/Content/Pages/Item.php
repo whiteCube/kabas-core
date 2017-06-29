@@ -17,6 +17,8 @@ class Item extends BaseItem
 
     public $title;
 
+    protected static $defaultMeta = [];
+
     protected function setData($data)
     {
         $this->route = isset($data->route) ? $data->route : false;
@@ -27,23 +29,27 @@ class Item extends BaseItem
     protected function getMeta($data)
     {
         $default = $this->getDefaultMeta();
-        $meta = $data->meta ?? [];
-        return $this->mergeMetaWithDefault($default, $meta);
+        return $this->mergeMetaWithDefault($default, $data->meta ?? []);
     }
 
     protected function getDefaultMeta()
     {
-        $defaultMetaPath = CONTENT_PATH . DS . Lang::getCurrent()->original . DS . 'meta.json';
-        return file_exists($defaultMetaPath) ? File::loadJson($defaultMetaPath) : new \stdClass;
+        // TODO : this should be the item's locale...
+        $locale = Lang::getCurrent()->original;
+        if(!isset(static::$defaultMeta[$locale])) {
+            $defaultMetaPath = CONTENT_PATH . DS . $locale . DS . 'meta.json';
+            static::$defaultMeta[$locale] = file_exists($defaultMetaPath) ? File::loadJson($defaultMetaPath) : new \stdClass;
+        }
+        return static::$defaultMeta[$locale];
     }
 
     protected function mergeMetaWithDefault($default, $meta)
     {
-        foreach($meta as $key => $value)
-        {
-            $default->$key = $value;
+        $merged = (array) $default;
+        foreach($meta as $key => $value) {
+            $merged[$key] = $value;
         }
-        return (array) $default;
+        return $merged;
     }
 
     protected function getTemplateNamespace()

@@ -8,9 +8,8 @@ use \Kabas\Content\Menus\Link;
 
 class Links extends BaseContainer implements \IteratorAggregate
 {
-    public $items = [];
-
     protected $structure;
+    public $items = [];
 
     public function __construct($items = [], $structure = null)
     {
@@ -28,6 +27,7 @@ class Links extends BaseContainer implements \IteratorAggregate
 
     public function add($item)
     {
+        if(is_null($this->items)) $this->items;
         $this->items[] = $this->makeItem($item);
     }
 
