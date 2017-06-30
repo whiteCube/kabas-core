@@ -4,6 +4,7 @@ namespace Kabas\Http;
 
 use \Kabas\App;
 use \Kabas\View\View;
+use Kabas\Exceptions\NoResponseException;
 
 class Response
 {
@@ -60,7 +61,7 @@ class Response
     public function send($response)
     {
         if(!is_null($response)) return $response->run();
-        else throw new \Exception('No response defined');
+        else throw new NoResponseException;
     }
 
     /**

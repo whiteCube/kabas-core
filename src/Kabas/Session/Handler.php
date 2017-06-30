@@ -2,6 +2,8 @@
 
 namespace Kabas\Session;
 
+use Kabas\Exceptions\SessionCouldNotStartException;
+
 class Handler
 {
     /**
@@ -17,7 +19,7 @@ class Handler
     public function start()
     {
         if(headers_sent()) return;
-        if(!session_start()) throw new \Exception('Unable to start sessions');
+        if(!session_start()) throw new SessionCouldNotStartException();
     }
 
     /**

@@ -4,11 +4,17 @@ namespace Tests\Fields;
 
 use Kabas\Fields\Container;
 use Kabas\Fields\Types\Text;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\TypeException;
 
 class ContainerTest extends TestCase
 {
+
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
@@ -35,6 +41,9 @@ class ContainerTest extends TestCase
     /** @test */
     public function throws_exception_if_making_field_type_that_does_not_exist()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(TypeException::class);
         $data = new \stdClass;
         $data->label = "Foo";

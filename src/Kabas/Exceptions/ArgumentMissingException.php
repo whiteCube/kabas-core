@@ -4,7 +4,7 @@ namespace Kabas\Exceptions;
 
 use \Exception;
 
-class MassAssignmentException extends Exception
+class ArgumentMissingException extends Exception
 {
 
     use CleansOutputBuffering;
@@ -12,10 +12,11 @@ class MassAssignmentException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($key, $code = 0, Exception $previous = null)
+    public function __construct($context, $message, $code = 0, Exception $previous = null)
     {
         $this->clean();
-        $message = "Mass assignment exception [$key]";
+        $message = 'Argument missing for ' . $context . ': ' . $message;
         parent::__construct($message, $code, $previous);
     }
+
 }

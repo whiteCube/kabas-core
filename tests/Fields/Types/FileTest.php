@@ -3,11 +3,17 @@
 namespace Tests\Fields\Types;
 
 use Kabas\Fields\Types\File;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\TypeException;
 
 class FileTest extends TestCase
 {
+
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
@@ -29,6 +35,9 @@ class FileTest extends TestCase
     /** @test */
     public function throws_exception_if_failed_to_get_file()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(TypeException::class);
         $this->file->set('foo.php');
     }

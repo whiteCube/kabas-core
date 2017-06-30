@@ -4,6 +4,7 @@ namespace Kabas\Fields;
 
 use \Kabas\App;
 use \Kabas\Fields\Option;
+use Kabas\Exceptions\TypeException;
 
 class Selectable extends Item implements \IteratorAggregate
 {
@@ -162,7 +163,7 @@ class Selectable extends Item implements \IteratorAggregate
      */
     protected function makeOptions($options)
     {
-        if(!is_array($options) && !is_object($options)) throw new \Exception('Selectable field requires a valid options list.');
+        if(!is_array($options) && !is_object($options)) throw new TypeException('Selectable field requires a valid options list.');
         $opts = [];
         $formatKeys = is_array($options) ? true : false;
         foreach($options as $key => $value){

@@ -2,12 +2,18 @@
 
 namespace Tests\Database;
 
-use PHPUnit\Framework\TestCase;
 use Kabas\Database\Model;
+use Tests\CreatesApplication;
+use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\FileNotFoundException;
 
 class ModelTest extends TestCase
 {
+
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
@@ -74,6 +80,9 @@ class ModelTest extends TestCase
     /** @test */
     public function can_throw_exception_when_structure_file_not_found()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(FileNotFoundException::class);
         $model = $this->getModel('test');
         $path = $model->getStructurePath();

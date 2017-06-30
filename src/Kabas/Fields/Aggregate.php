@@ -3,6 +3,7 @@
 namespace Kabas\Fields;
 
 use \Kabas\App;
+use Kabas\Exceptions\TypeException;
 
 class Aggregate extends Item implements \IteratorAggregate, \Countable 
 {
@@ -49,7 +50,7 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
      */
     protected function makeOptions($options)
     {
-        if(!is_array($options) && !is_object($options)) throw new \Exception('Field groups require a valid fields list.');
+        if(!is_array($options) && !is_object($options)) throw new TypeException('Field groups require a valid fields list.');
         return $options;
     }
 

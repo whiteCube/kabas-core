@@ -5,7 +5,10 @@ namespace Kabas\Cmd;
 use Kabas\Utils\File;
 use Kabas\Utils\Text;
 use Kabas\Config\Settings;
+use Kabas\Exceptions\TypeException;
 use Kabas\Config\LanguageRepository;
+use Kabas\Exceptions\InvalidDriverException;
+use Kabas\Exceptions\ArgumentMissingException;
 
 class Commander
 {
@@ -90,7 +93,7 @@ class Commander
     protected function makeTheme()
     {
         $theme = $this->arguments[0] ?? null;
-        if(!$theme) throw new \Exception("Missing argument 1 for 'make:theme'. Please specify the name of your theme (e.g. php kabas make:theme MyTheme)");
+        if(!$theme) throw new ArgumentMissingException('make:theme', 'Missing argument 1. Please specify the name of your theme (e.g. php kabas make:theme MyTheme)');
         echo 'Kabas: Creating directory structure for "' . $theme . '"...';
         $themePath = THEMES_PATH . DS . $theme;
         $paths = [];
@@ -125,7 +128,8 @@ class Commander
     protected function makeThemeContentFile($type, $example)
     {
         $name = $this->arguments[0] ?? null;
-        if(!$name) throw new \Exception("Missing argument 1 for '" . $this->command . "'. Please specify the name of your " . $type . " (e.g. 'php kabas " . $this->command . " " . $example . "')");
+        
+        if(!$name) throw new ArgumentMissingException($this->command, "Missing argument 1. Please specify the name of your " . $type . " (e.g. 'php kabas " . $this->command . " " . $example . "')");
         echo 'Kabas: Making ' . $type . ' "' . $name . '"';
         $this->makeControllerFile($name, $type);
         $this->makeViewFile($name, $type);
@@ -142,9 +146,9 @@ class Commander
         //  TODO : this needs to be refactored for new models.
         $model = $this->arguments[0];
         $driver = $this->arguments[1];
-        if(!$model) die("\n\033[31mKabas: Missing argument 1 for make:model\nPlease specify the name of your model (e.g. php kabas make:model news eloquent)\n");
-        if(!$driver) die("\n\033[31mKabas: Missing argument 2 for make:model\nPlease specify the driver of your model (e.g. php kabas make:model news eloquent)\n");
-        if($driver !== 'eloquent' && $driver !== 'json') die("\n\033[31mKabas: Please specify a valid driver to use with your model. ('eloquent' or 'json')\n");
+        if(!$model) throw new ArgumentMissingException('make:model', 'Missing argument 1. Please specify the name of your model (e.g. php kabas make:model news eloquent)');
+        if(!$driver) throw new ArgumentMissingException('make:model', 'Missing argument 2. Please specify the driver of your model (e.g. php kabas make:model news eloquent)');
+        if($driver !== 'eloquent' && $driver !== 'json') throw new InvalidDriverException($driver);
         echo "Kabas: Making model " . $model;
         $this->makeModelFile($model, $driver);
         $this->makeStructureFile($model, 'model');
@@ -287,7 +291,7 @@ class Commander
         if(!$languages) return array_map(function($item){ return $item->original;}, $this->languages->getAll());
         foreach($languages as $locale) {
             if($this->languages->has($locale)) continue;
-            throw new \Exception('Locale "' . $locale . '" is not defined in the lang.php configuration file.'); // @codeCoverageIgnore
+            throw new LocaleNotFoundException($locale); // @codeCoverageIgnore
         }
         return $languages;
     }
@@ -343,7 +347,7 @@ class Commander
         $image->alt = '';
         if(!isset($field->default)) return $image;
         if(!is_object($field->default)){
-            throw new \Exception('default value for image field "' . $key . '" is invalid.'); // @codeCoverageIgnore
+            throw new TypeException('default value for image field "' . $key . '" is invalid.'); // @codeCoverageIgnore
         }
         $image->path = is_string($field->default->path ?? null) ? $field->default->path : '';
         $image->alt = is_string($field->default->alt ?? null) ? $field->default->alt : '';
@@ -360,7 +364,7 @@ class Commander
     {
         if(is_null($field->default ?? null)) return 0;
         if(is_numeric($field->default)) return $field->default;
-        throw new \Exception('default value for number field "' . $key . '" is invalid.'); // @codeCoverageIgnore
+        throw new TypeException('default value for number field "' . $key . '" is invalid.'); // @codeCoverageIgnore
     }
 
     /**
@@ -373,7 +377,7 @@ class Commander
     {
         if(is_null($field->default ?? null)) return [];
         if(is_array($field->default)) return $field->default;
-        throw new \Exception('default value for ' . $field->type . ' field "' . $key . '" is invalid.'); // @codeCoverageIgnore
+        throw new TypeException('default value for ' . $field->type . ' field "' . $key . '" is invalid.'); // @codeCoverageIgnore
     }
 
     /**

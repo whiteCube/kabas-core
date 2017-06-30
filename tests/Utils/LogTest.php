@@ -24,21 +24,21 @@ class LogTest extends TestCase
     /** @test */
     public function can_write_errors_to_log_file()
     {
-        Log::error('Test');
+        Log::error('Unit tests - Test');
         $this->logHas('[ERROR]');
     }
 
     /** @test */
     public function can_write_success_to_log_file()
     {
-        Log::success('Success');
+        Log::success('Unit tests - Success');
         $this->logHas('[SUCCESS]');
     }
 
     /** @test */
     public function can_write_info_to_log_file()
     {
-        Log::info('Info');
+        Log::info('Unit tests - Info');
         $this->logHas('[INFO]');
     }
 

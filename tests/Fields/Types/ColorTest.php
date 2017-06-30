@@ -3,11 +3,17 @@
 namespace Tests\Fields\Types;
 
 use Kabas\Fields\Types\Color;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\TypeException;
 
 class ColorTest extends TestCase
 {
+
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
@@ -47,6 +53,9 @@ class ColorTest extends TestCase
     /** @test */
     public function throws_exception_when_setting_incorrect_value()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(TypeException::class);
         $this->color->set(['foo']);
     }

@@ -6,6 +6,7 @@ use Kabas\App;
 use Kabas\Http\Route;
 use Kabas\Utils\Lang;
 use Kabas\Exceptions\NotFoundException;
+use Kabas\Exceptions\ArgumentMissingException;
 
 class Url
 {
@@ -125,7 +126,7 @@ class Url
         $str = $route->strings[$lang->original];
         foreach($route->parameters as $parameter){
             if($parameter->isRequired && !array_key_exists($parameter->variable, $params)){
-                throw new \Exception('Unable to generate URL: required parameter "' . $parameter->variable . '" is undefined');
+                throw new ArgumentMissingException('route', 'required parameter "' . $parameter->variable . '" is undefined');
             } else if(array_key_exists($parameter->variable, $params)) {
                 $str = str_replace($parameter->string, $params[$parameter->variable], $str);
             } else {

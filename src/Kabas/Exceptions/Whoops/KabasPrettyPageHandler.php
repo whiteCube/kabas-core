@@ -1,8 +1,4 @@
 <?php
-/**
- * Whoops - php errors for cool kids
- * @author Filipe Dobreira <http://github.com/filp>
- */
 
 namespace Kabas\Exceptions\Whoops;
 
@@ -20,6 +16,7 @@ class KabasPrettyPageHandler extends PrettyPageHandler
      */
     public function handle()
     {
+        ob_clean();
         $this->prepare();
         Log::error($this->exception->getMessage());
         if(App::config()->get('app.debug')) return $this->showWhoopsError();
@@ -33,6 +30,7 @@ class KabasPrettyPageHandler extends PrettyPageHandler
      */
     public function showUserFriendlyError()
     {
+        ob_end_clean();
         $exception = $this->getExceptionName();
         $hint = $this->exception->hint;
         $path = $this->getPath();

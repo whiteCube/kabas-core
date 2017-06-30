@@ -80,15 +80,15 @@ class App extends Container
     protected static function getBootingSingletons()
     {
         return [
-            'session' => \Kabas\Session\Manager::class,
             'config' => \Kabas\Config\Container::class,
+            'exceptions' => \Kabas\Exceptions\Handler::class,
+            'session' => \Kabas\Session\Manager::class,
             'themes' => \Kabas\Themes\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'router' => \Kabas\Http\Router::class,
             'content' => \Kabas\Content\Container::class,
             'request' => \Kabas\Http\Request::class,
-            'response' => \Kabas\Http\Response::class,
-            'exceptions' => \Kabas\Exceptions\Handler::class
+            'response' => \Kabas\Http\Response::class
         ];
     }
 

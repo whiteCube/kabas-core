@@ -6,11 +6,15 @@ use \Exception;
 
 class FileNotFoundException extends Exception
 {
+
+    use CleansOutputBuffering;
+
     public $hint = 'The file does not exist.';
     public $path;
 
     public function __construct($file, $code = 0, Exception $previous = null)
     {
+        $this->clean();
         $this->path = $file;
         $message = 'File not found: ' . $file;
         $hint = $this->hint;

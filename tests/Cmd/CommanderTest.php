@@ -4,18 +4,46 @@ namespace Tests;
 
 use Kabas\Cmd\Commander;
 use Tests\HandlesOutput;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
+use Kabas\Exceptions\ArgumentMissingException;
+use Kabas\Exceptions\CommandNotAllowedException;
 
 class CommanderTest extends TestCase
 {
-    use HandlesOutput;
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
+    protected $configbackup;
 
     public function setUp()
     {
         if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        $this->spoofConfig();
         if(!defined('THEMES_DIR')) define('THEMES_DIR', __DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'themes');
         if(!defined('THEME')) define('THEME', 'FooTheme');
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         if(is_dir(THEMES_DIR . DS . THEME)) $this->rrmdir(THEMES_DIR . DS . THEME);
+    }
+
+    protected function spoofConfig()
+    {
+        $this->backupConfig();
+        $spoof = __DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'spoofs' . DS . 'site.php';
+        copy($spoof, __DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'config' . DS . 'site.php');
+    }
+
+    protected function backupConfig()
+    {
+        $this->configbackup = file_get_contents(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'config' . DS . 'site.php');
+    }
+
+    protected function restoreConfig()
+    {
+        file_put_contents(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'config' . DS . 'site.php', $this->configbackup);
     }
 
     public function cmd(...$args)
@@ -99,7 +127,7 @@ class CommanderTest extends TestCase
     {
         $this->catch(function() {
             $this->cmd('make:template', 'foopage');
-            $this->createFakeConfigFiles('templates');
+            $this->createFakeStructureFiles('templates');
             $this->cmd('content:page', 'foopage');
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'pages', 'foopage.json'));
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'pages', 'foopage.json'));
@@ -112,7 +140,7 @@ class CommanderTest extends TestCase
     {
         $this->catch(function() {
             $this->cmd('make:partial', 'foopartial');
-            $this->createFakeConfigFiles('partials');
+            $this->createFakeStructureFiles('partials');
             $this->cmd('content:partial', 'foopartial');
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'partials', 'foopartial.json'));
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'partials', 'foopartial.json'));
@@ -125,7 +153,7 @@ class CommanderTest extends TestCase
     {
         $this->catch(function() {
             $this->cmd('make:menu', 'foomenu');
-            $this->createFakeConfigFiles('menus');
+            $this->createFakeStructureFiles('menus');
             $this->cmd('content:menu', 'foomenu');
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'menus', 'foomenu.json'));
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'menus', 'foomenu.json'));
@@ -138,7 +166,7 @@ class CommanderTest extends TestCase
     {
         $this->catch(function() {
             $this->cmd('make:model', 'foonews', 'eloquent');
-            $this->createFakeConfigFiles('objects');
+            $this->createFakeStructureFiles('objects');
             $this->cmd('content:object', 'foonews');
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'objects', 'foonews', '1.json'));
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'objects', 'foonews', '1.json'));
@@ -151,7 +179,7 @@ class CommanderTest extends TestCase
     {
         $this->catch(function() {
             $this->cmd('make:template', 'foopage');
-            $this->createFakeConfigFiles('templates');
+            $this->createFakeStructureFiles('templates');
             $this->cmd('content:page', 'foopage', 'en-GB');
             $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'pages', 'foopage.json'));
             $this->assertFalse($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'pages', 'foopage.json'));
@@ -166,7 +194,7 @@ class CommanderTest extends TestCase
         $this->cmd('foo');
     }
 
-    public function createFakeConfigFiles($type)
+    public function createFakeStructureFiles($type)
     {
         $spoof = __DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'spoofs' . DS . 'fields.json';
         if($type == 'templates') {
@@ -186,19 +214,20 @@ class CommanderTest extends TestCase
     /** @test */
     public function throws_exception_if_missing_args()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(ArgumentMissingException::class);
         $this->cmd('make:theme');
     }
 
     public function tearDown()
     {
+        $this->restoreConfig();
         if(is_dir(THEMES_DIR . DS . THEME)) $this->rrmdir(THEMES_DIR . DS . THEME);
     }
 
     public function rrmdir($dir) { 
-        if(realpath($dir) == '/') { return; throw new \Exception('Oh no..'); die(); } // attempted a "rm -rf /"
+        if(realpath($dir) == '/') { throw new CommandNotAllowedException('Attempted a recursive deletion on "/" (rm -rf /)'); die(); }
         if (is_dir($dir)) { 
-            $objects = scandir($dir); 
+            $objects = scandir($dir);
             foreach ($objects as $object) { 
                 if ($object != '.' && $object != '..') { 
                     if (is_dir($dir.'/'.$object))

@@ -3,11 +3,17 @@
 namespace Tests\Fields\Types;
 
 use Kabas\Fields\Types\Email;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\TypeException;
 
 class EmailTest extends TestCase
 {
+
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
@@ -28,6 +34,9 @@ class EmailTest extends TestCase
     /** @test */
     public function can_only_accept_valid_email_values()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(TypeException::class);
         $this->email->set('foo');
     }

@@ -2,6 +2,8 @@
 
 namespace Kabas\Utils;
 
+use Kabas\Exceptions\NotFoundException;
+
 class Benchmark
 {
     /**
@@ -27,7 +29,7 @@ class Benchmark
      */
     static function inspect($name)
     {
-        if(!array_key_exists($name, self::$benchmarks)) throw new \Exception('No benchmarks named ' . $name . ' currently running');
+        if(!array_key_exists($name, self::$benchmarks)) throw new NotFoundException($name, 'Benchmark');
         $end = microtime(true);
         $time = $end - self::$benchmarks[$name];
         $time = sprintf('%0.7f', $time);

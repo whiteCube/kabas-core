@@ -4,12 +4,18 @@ namespace Tests\Fields;
 
 use Kabas\Fields\Item;
 use Kabas\Fields\Types\Text;
+use Tests\CreatesApplication;
 use Kabas\Fields\Types\Select;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\TypeException;
 
 class ItemTest extends TestCase
 {
+
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
 
     public function setUp()
     {
@@ -93,6 +99,9 @@ class ItemTest extends TestCase
     /** @test */
     public function can_check_its_own_value_and_throw_exception_when_invalid()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(TypeException::class);
         $this->item->set(['foo']);
     }

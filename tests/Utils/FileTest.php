@@ -78,6 +78,9 @@ class FileTest extends TestCase
     /** @test */
     public function throws_exception_if_loading_file_that_does_not_exist()
     {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
         $this->expectException(FileNotFoundException::class);
         File::loadJson(__DIR__ . '/test.json');
     }

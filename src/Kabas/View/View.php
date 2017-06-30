@@ -32,8 +32,7 @@ class View
             self::$isFirst = $view;
             return true;
         }
-        else if(self::$isFirst === $view) return true;
-        return false;
+        else return self::$isFirst === $view;
     }
 
     /**
@@ -73,8 +72,7 @@ class View
 
     protected function showPage()
     {
-        $page = ob_get_contents();
-        ob_end_clean();
+        $page = ob_get_clean();
         $page = Assets::load($page);
         echo $page;
     }
