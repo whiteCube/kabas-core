@@ -12,7 +12,7 @@ class MassAssignmentException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($key, $code = 0, Exception $previous = null)
+    public function __construct($key, $code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = "Mass assignment exception [$key]";

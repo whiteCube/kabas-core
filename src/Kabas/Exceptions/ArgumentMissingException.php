@@ -12,7 +12,7 @@ class ArgumentMissingException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($context, $message, $code = 0, Exception $previous = null)
+    public function __construct($context, $message, $code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = 'Argument missing for ' . $context . ': ' . $message;

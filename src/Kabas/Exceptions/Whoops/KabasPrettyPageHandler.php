@@ -5,6 +5,7 @@ namespace Kabas\Exceptions\Whoops;
 use Kabas\App;
 use Kabas\Utils\Log;
 use Kabas\Utils\Text;
+use Kabas\Http\Response;
 use Whoops\Handler\Handler;
 use \Whoops\Handler\PrettyPageHandler;
 
@@ -18,7 +19,7 @@ class KabasPrettyPageHandler extends PrettyPageHandler
     {
         ob_clean();
         $this->prepare();
-        Log::error($this->exception->getMessage());
+        Log::error($this->exception->getMessage() . PHP_EOL . $this->exception->getTraceAsString());
         if(App::config()->get('app.debug')) return $this->showWhoopsError();
         return $this->showUserFriendlyError();
     }
@@ -30,11 +31,15 @@ class KabasPrettyPageHandler extends PrettyPageHandler
      */
     public function showUserFriendlyError()
     {
-        ob_end_clean();
         $exception = $this->getExceptionName();
-        $hint = $this->exception->hint;
+        $hint = $this->getHint();
         $path = $this->getPath();
+        $code = $this->exception->getCode();
         $reporting = App::config()->get('app.reporting');
+
+        if(App::content()->pages->has($code)) {
+            return App::response()->init($code);
+        }
 
         include(__DIR__ . DS . 'UserFriendlyErrorPage.php');
         die();
@@ -59,13 +64,18 @@ class KabasPrettyPageHandler extends PrettyPageHandler
         return Text::removeNamespace(get_class($this->exception));
     }
 
+    protected function getHint()
+    {
+        return isset($this->exception->hint) ? $this->exception->hint : false;
+    }
+
     /**
      * Gets the exception's origin if it is defined
      * @return string
      */
     protected function getPath()
     {
-        if(!$this->exception->path) return 'Location unknown';
+        if(!isset($this->exception->path) || !$this->exception->path) return 'Location unknown';
         return str_replace(ROOT_PATH, '', $this->exception->path);
     }
 

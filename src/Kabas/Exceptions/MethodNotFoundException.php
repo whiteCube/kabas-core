@@ -12,7 +12,7 @@ class MethodNotFoundException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($name, $code = 0, Exception $previous = null)
+    public function __construct($name, $code = 500, Exception $previous = null)
     {
         $this->clean();
         $this->hint = 'Method ' . $name . ' does not exist, please refer to the documentation.';
