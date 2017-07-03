@@ -12,6 +12,9 @@ class File
     /**
      * Get the contents of a json file
      * @param  string $file
+     * @param bool $cache
+     * @throws FileNotFoundException if file does not exist on disk
+     * @throws JsonException if json could not be decoded
      * @return object
      */
     static function loadJson($file, $cache = true)
@@ -76,10 +79,15 @@ class File
         return $content;
     }
 
-    static function deleteJson($path)
+    /**
+     * Erases a file from disk.
+     * @param string $path 
+     * @return void
+     */
+    static function delete($path)
     {
         unset(self::$cache[$path]);
-        unlink($path . '.json');
+        unlink($path);
     }
 
     /**
@@ -109,6 +117,7 @@ class File
      * content from all valid JSON files for given directory
      * @param  string $path
      * @param  boolean $recursive
+     * @param  boolean $cache
      * @return array
      */
     static function loadJsonFromDir($path, $recursive = false, $cache = true)

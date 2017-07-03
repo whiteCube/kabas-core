@@ -42,9 +42,9 @@ class FileTest extends TestCase
 
     public function deleteFakeFiles()
     {
-        File::deleteJson(__DIR__ . '/test/dummy1');
-        File::deleteJson(__DIR__ . '/test/dummy2');
-        File::deleteJson(__DIR__ . '/test/foo/bar');
+        File::delete(__DIR__ . '/test/dummy1.json');
+        File::delete(__DIR__ . '/test/dummy2.json');
+        File::delete(__DIR__ . '/test/foo/bar.json');
         rmdir(__DIR__ . '/test/foo');
         rmdir(__DIR__ . '/test');
     }
@@ -108,7 +108,7 @@ class FileTest extends TestCase
     public function can_erase_a_json_file_from_disk()
     {
         File::write('test', __DIR__ . '/dummy.json');
-        File::deleteJson(__DIR__ . '/dummy');
+        File::delete(__DIR__ . '/dummy.json');
         $this->assertFileNotExists(__DIR__ . '/dummy.json');
     }
 
@@ -117,7 +117,7 @@ class FileTest extends TestCase
     {
         File::write('test', __DIR__ . '/dummy.json');
         $this->assertEquals('test', File::read(__DIR__ . '/dummy.json'));
-        File::deleteJson(__DIR__ . '/dummy');
+        File::delete(__DIR__ . '/dummy.json');
     }
 
     /** @test */
@@ -138,7 +138,7 @@ class FileTest extends TestCase
         $data = ['foo' => 'bar'];
         File::writeJson($data, __DIR__ . '/test');
         $this->assertEquals('bar', File::loadJson(__DIR__ . '/test.json')->foo);
-        File::deleteJson(__DIR__ . '/test');
+        File::delete(__DIR__ . '/test.json');
     }
 
     /** @test */
