@@ -86,7 +86,6 @@ class KabasPrettyPageHandler extends PrettyPageHandler
     protected function showWhoopsError()
     {
         $this->addResourcePath(__DIR__);
-        $this->addCustomCss('CustomWhoopsStyles.css');
         parent::handle();
     }
 
