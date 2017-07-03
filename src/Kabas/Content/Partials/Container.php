@@ -9,10 +9,6 @@ use \Kabas\Content\BaseContainer;
 
 class Container extends BaseContainer
 {
-    public function __construct()
-    {
-        $this->path = $this->getPath();
-    }
 
     /**
      * Load the specified part into memory.

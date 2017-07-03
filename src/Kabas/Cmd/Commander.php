@@ -143,9 +143,8 @@ class Commander
      */
     protected function makeModel()
     {
-        //  TODO : this needs to be refactored for new models.
         $model = $this->arguments[0];
-        $driver = $this->arguments[1];
+        $driver = $this->arguments[1] ?? $this->getDefaultDriver();
         if(!$model) throw new ArgumentMissingException('make:model', 'Missing argument 1. Please specify the name of your model (e.g. php kabas make:model news eloquent)');
         if(!$driver) throw new ArgumentMissingException('make:model', 'Missing argument 2. Please specify the driver of your model (e.g. php kabas make:model news eloquent)');
         if($driver !== 'eloquent' && $driver !== 'json') throw new InvalidDriverException($driver);
@@ -153,6 +152,16 @@ class Commander
         $this->makeModelFile($model, $driver);
         $this->makeStructureFile($model, 'model');
         echo "\n\033[32mDone!";
+    }
+
+    /**
+     * Gets the default driver defined in config
+     * @return string
+     */
+    protected function getDefaultDriver()
+    {
+        $app = include(CONFIG_PATH . DS . 'app.php');
+        return isset($app['driver']) ? $app['driver'] : null;
     }
 
     /**
@@ -165,9 +174,9 @@ class Commander
     {
         $file = $this->dir(THEME_MODELS) . DS . ucfirst($name) . '.php';
         $fileContent = File::read(TEMPLATES_PATH . 'Model.php');
-        $fileContent = str_replace('##THEME##', $this->theme, $fileContent);
+        $fileContent = str_replace('##THEME##', THEME, $fileContent);
         $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
-        $fileContent = str_replace('##DRIVER##', $driver, $fileContent);
+        $fileContent = str_replace('##DRIVER##', Text::toNamespace($driver), $fileContent);
         $fileContent = str_replace('##TABLE##', $name, $fileContent);
         File::write($fileContent, $file);
     }

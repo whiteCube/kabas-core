@@ -23,7 +23,9 @@ class PartialsTest extends TestCase
             'config' => \Kabas\Config\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'router' => \Kabas\Http\Router::class,
+            'request' => \Kabas\Http\Request::class,
             'content' => \Kabas\Content\Container::class,
+            'uploads' => \Kabas\Objects\Uploads\Container::class,
             'response' => \Kabas\Http\Response::class,
             'themes' => \Kabas\Themes\Container::class
         ]);
