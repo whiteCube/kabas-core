@@ -3,14 +3,22 @@
 namespace Tests\Fields\Types;
 
 use Kabas\Fields\Types\Image;
+use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase
 {
 
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
+
     public function setUp()
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        $this->createApplication([
+            'uploads' => \Kabas\Objects\Uploads\Container::class
+        ]);
         if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(__DIR__ . DS . '..' . DS . '..' . DS . '..' . DS ));
         $data = new \stdClass;
         $data->label = 'Image';

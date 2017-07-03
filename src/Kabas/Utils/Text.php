@@ -24,7 +24,8 @@ class Text
      */
     static function removeNamespace($text)
     {
-        return substr($text, strrpos($text, '\\') + 1);
+        $exploded = explode('\\', $text);
+        return end($exploded);
     }
 
     /**

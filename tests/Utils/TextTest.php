@@ -18,6 +18,8 @@ class TextTest extends TestCase
     public function can_remove_a_namespace_from_a_string()
     {
         $this->assertEquals('Text', Text::removeNamespace('Kabas\Utils\Text'));
+        $this->assertEquals('Error', Text::removeNamespace('Error'));
+        $this->assertEquals('Error', Text::removeNamespace('\Error'));
     }
 
     /** @test */

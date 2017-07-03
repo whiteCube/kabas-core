@@ -17,8 +17,11 @@ class FileTest extends TestCase
 
     public function setUp()
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
-        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', __DIR__ . '/../../TestTheme/public');
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class,
+            'router' => \Kabas\Http\Router::class,
+            'uploads' => \Kabas\Objects\Uploads\Container::class
+        ]);
         $data = new \stdClass;
         $data->label = "File";
         $data->type = "file";
@@ -35,9 +38,6 @@ class FileTest extends TestCase
     /** @test */
     public function throws_exception_if_failed_to_get_file()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class
-        ]);
         $this->expectException(TypeException::class);
         $this->file->set('foo.php');
     }

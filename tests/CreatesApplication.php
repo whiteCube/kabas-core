@@ -27,6 +27,7 @@ trait CreatesApplication {
             'themes' => \Kabas\Themes\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'content' => \Kabas\Content\Container::class,
+            'uploads' => \Kabas\Objects\Uploads\Container::class,
             'router' => \Kabas\Http\Router::class,
             'response' => \Kabas\Http\Response::class,
         ]);
@@ -41,6 +42,7 @@ trait CreatesApplication {
             'config' => \Kabas\Config\Container::class,
             'themes' => \Kabas\Themes\Container::class,
             'fields' => \Kabas\Fields\Container::class,
+            'uploads' => \Kabas\Objects\Uploads\Container::class,
             'router' => \Kabas\Http\Router::class,
             'content' => \Kabas\Content\Container::class,
             'request' => \Kabas\Http\Request::class,

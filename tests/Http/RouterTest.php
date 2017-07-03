@@ -21,6 +21,7 @@ class RouterTest extends TestCase
             'config' => \Kabas\Config\Container::class,
             'content' => \Kabas\Content\Container::class,
             'router' => \Kabas\Http\Router::class,
+            'uploads' => \Kabas\Objects\Uploads\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'themes' => \Kabas\Themes\Container::class
         ]);
