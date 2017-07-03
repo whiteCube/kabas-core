@@ -15,7 +15,10 @@ class BaseController
     public function __construct($item)
     {
         $this->item = $item;
-        $params = App::router()->getCurrent()->getParameters();
+        $params = [];
+        if($current = App::router()->getCurrent()) {
+            $params = $current->getParameters();
+        }
         $response = call_user_func_array([$this, 'setup'], $params);
         if(is_null($response)) {
             $response = $this->view($this->getTemplateName(), false);

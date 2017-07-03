@@ -42,11 +42,4 @@ class ViewTest extends TestCase
         $this->assertInstanceOf(View::class, $result);
     }
 
-    /** @test */
-    public function can_return_a_404()
-    {
-        $this->expectOutputRegex('/404/');
-        View::notFound();
-    }
-
 }

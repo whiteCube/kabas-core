@@ -4,6 +4,7 @@ namespace Kabas\Http;
 
 use Kabas\App;
 use Kabas\Utils\Lang;
+use Kabas\Exceptions\NotFoundException;
 
 class Router
 {
@@ -22,12 +23,6 @@ class Router
      * @var object
      */
     protected $current;
-
-    /**
-     * 404 route
-     * @var object
-     */
-    protected $notFound;
 
     /**
      * Routes for the current application
@@ -56,7 +51,6 @@ class Router
         foreach (App::content()->pages->getItems() as $id => $aggregate) {
             $this->routes[] = new Route($id, $aggregate);
         }
-        $this->notFound = App::getInstance()->make('Kabas\Http\RouteNotFound');
         return $this;
     }
 
@@ -74,8 +68,6 @@ class Router
         Lang::set($query->lang ? $query->lang : $this->detectLang());
         return $this;
     }
-
-
 
     /**
      * Get the current route query
@@ -143,8 +135,7 @@ class Router
      */
     public function routeExists($route = null)
     {
-        if($this->findMatchingRoute($route) !== false) return true;
-        return false;
+        return $this->findMatchingRoute($route) !== false;
     }
 
     /**
@@ -153,6 +144,7 @@ class Router
      */
     public function setCurrent()
     {
+        if(!$current = $this->findMatchingRoute($this->route)) throw new NotFoundException($this->route, 'page', 404);
         $this->current = $this->findMatchingRoute($this->route);
         if($this->current) $this->current->gatherParameters($this->route, Lang::getCurrent()->original);
         return $this;
@@ -191,17 +183,7 @@ class Router
      */
     public function getCurrent()
     {
-        if($this->current === false) return $this->get404();
         return $this->current;
-    }
-
-    /**
-     * Returns the NotFound route
-     * @return object
-     */
-    public function get404()
-    {
-        return $this->notFound;
     }
 
     /**

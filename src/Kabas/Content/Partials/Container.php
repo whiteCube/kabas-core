@@ -68,7 +68,7 @@ class Container extends BaseContainer
         $view = $this->getView($id);
         if($view) return $this->loadFromView($id, $view);
         // Not found.
-        throw new \Kabas\Exceptions\NotFoundException($id,'partial');
+        throw new \Kabas\Exceptions\NotFoundException($id, 'partial');
     }
 
     protected function loadFromContent($file)

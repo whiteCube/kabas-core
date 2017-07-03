@@ -72,18 +72,10 @@ class View
 
     protected function showPage()
     {
+        if(App::$muted) ob_end_clean();
         $page = ob_get_clean();
         $page = Assets::load($page);
         echo $page;
     }
 
-    /**
-     * Shows the default 404 page.
-     * @return void
-     */
-    static function notFound()
-    {
-        if(ob_get_level()) ob_clean();
-        require '404.php';
-    }
 }

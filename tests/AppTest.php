@@ -3,8 +3,8 @@
 namespace Tests;
 
 use Kabas\App;
-
 use PHPUnit\Framework\TestCase;
+use Kabas\Exceptions\NotFoundException;
 
 class AppTest extends TestCase
 {
@@ -39,7 +39,9 @@ class AppTest extends TestCase
     /** @test */
     public function can_return_a_four_o_four()
     {
-        $this->visit('/doesnotexist')->see('404');
+        $this->expectException(NotFoundException::class);
+        ob_end_clean();
+        $this->visit('/doesnotexist');
     }
 
 }

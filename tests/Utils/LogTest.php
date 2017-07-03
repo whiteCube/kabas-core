@@ -12,12 +12,17 @@ class LogTest extends TestCase
     {
         if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
         if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(__DIR__ . DS . '..' . DS . 'TestTheme'));
-        file_put_contents(ROOT_PATH . DS . 'logs' . DS . 'kabas.log', '');
+        file_put_contents(ROOT_PATH . DS . 'storage' . DS . 'logs' . DS . 'kabas.log', '');
+    }
+
+    public function tearDown()
+    {
+        file_put_contents(ROOT_PATH . DS . 'storage' . DS . 'logs' . DS . 'kabas.log', '');
     }
 
     protected function logHas($string)
     {
-        $logs = file_get_contents(ROOT_PATH . DS . 'logs' . DS . 'kabas.log');
+        $logs = file_get_contents(ROOT_PATH . DS . 'storage' . DS . 'logs' . DS . 'kabas.log');
         $this->assertContains($string, $logs);
     }
 

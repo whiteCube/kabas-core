@@ -22,11 +22,21 @@ class App extends Container
     public $driver;
 
     /**
+     * Turns on or off any output
+     * @var bool
+     */
+    public static $muted = false;
+
+    /**
      * The instance of the app
      * @var Kabas
      */
     protected static $instance;
 
+    /**
+     * The Illuminate Translator instance
+     * @var Illuminate\Translation\Translator
+     */
     protected static $translator;
 
     public function __construct($public_path)
@@ -164,6 +174,11 @@ class App extends Container
             $this->singleton($name, $class);
             if(method_exists($this[$name], 'boot')) $this[$name]->boot();
         }
+    }
+
+    static function preventFurtherOutput($muted = true)
+    {
+        self::$muted = $muted;
     }
 
 }

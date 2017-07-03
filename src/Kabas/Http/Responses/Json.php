@@ -2,6 +2,7 @@
 
 namespace Kabas\Http\Responses;
 
+use Kabas\App;
 use Kabas\Http\Response;
 
 class Json extends Response implements ResponseInterface
@@ -41,8 +42,10 @@ class Json extends Response implements ResponseInterface
      */
     public function run()
     {
+        if(ob_get_level()) ob_clean();
         $this->encodeData();
         $this->setHeaders();
         echo $this->data;
+        App::preventFurtherOutput();
     }
 }

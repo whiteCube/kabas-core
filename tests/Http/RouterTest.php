@@ -42,7 +42,7 @@ class RouterTest extends TestCase
     public function can_load_routes_from_content_files()
     {
         $this->bootBaseRouterApplication();
-        $this->assertCount(3, $this->app->router->getRoutes());
+        $this->assertCount(4, $this->app->router->getRoutes());
     }
 
     /** @test */
