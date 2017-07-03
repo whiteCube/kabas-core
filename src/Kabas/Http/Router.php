@@ -115,6 +115,7 @@ class Router
 
     protected function getBaseURL()
     {
+        $this->subdirectory = $this->urlWorker->setSubdirectory();
         return $this->rootURL . $this->subdirectory . '/';
     }
 

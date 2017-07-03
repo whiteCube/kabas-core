@@ -2,10 +2,9 @@
 
 namespace Theme\##THEME##\Models;
 
-use Kabas\Model\Model as BaseModel;
+use Kabas\Database\##DRIVER##\Model;
 
-class ##NAME## extends BaseModel
+class ##NAME## extends Model
 {
-    protected $driver = '##DRIVER##';
-    protected static $table = '##TABLE##';
+
 }

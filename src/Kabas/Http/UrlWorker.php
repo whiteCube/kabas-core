@@ -16,7 +16,7 @@ class UrlWorker {
      * Retrieves the subdirectory the CMS may be in.
      * @return string
      */
-    protected function setSubdirectory()
+    public function setSubdirectory()
     {
         preg_match('/(.+)?index.php$/', $_SERVER['SCRIPT_NAME'], $matches);
         if(strlen($matches[1]) > 1) return (substr($matches[1], 0, 1) == '/' ? '' : '/') . rtrim($matches[1], '/');
