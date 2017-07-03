@@ -47,4 +47,14 @@ class JsonSelectRunnerTest extends TestCase
         $this->assertCount(1, $items);
         $this->assertInstanceOf(JsonModel::class, $item);
     }
+
+    /** @test */
+    public function can_get_all_and_first_items_from_simple_whereData_condition()
+    {
+        $items = JsonModel::whereFoo('third')->get();
+        $item = JsonModel::where('foo', '=', 'third')->first();
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $items);
+        $this->assertCount(1, $items);
+        $this->assertInstanceOf(JsonModel::class, $item);
+    }
 }

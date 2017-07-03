@@ -90,8 +90,8 @@ class Select
         switch ($operator) {
             case '=': return ($argument == $value); break;
             //  TODO : all other available operators
+            default: return; break;
         }
-        return false;
     }
 
     /**
@@ -105,7 +105,7 @@ class Select
         if($key === $this->query->getModel()->getQualifiedKeyName()) {
             return $item->key;
         }
-        return $item->get()->{$key} ?? null;
+        return $item->get()->data->{$key} ?? null;
     }
 
     /**
