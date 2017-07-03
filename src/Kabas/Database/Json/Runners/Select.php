@@ -88,9 +88,8 @@ class Select
     protected function runCondition($argument, $operator, $value)
     {
         switch ($operator) {
-            case '=': return ($argument == $value); break;
             //  TODO : all other available operators
-            default: return; break;
+            case '=': return ($argument == $value); break;
         }
     }
 

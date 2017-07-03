@@ -18,14 +18,11 @@ trait HasCache
      * @param bool $withData
      * @return this
      */
-    protected function loadModelCache($locale, $withData = false)
+    protected function loadModelCache($locale)
     {
         $model = $this->query->getModel();
         if(!Cache::has($model)) {
             Cache::addEmpties($this->getModelScan($model, $locale), $model);
-        }
-        if($withData) {
-            Cache::loadEmpties($model);
         }
         $this->cached = Cache::all($model);
         $this->stack = $this->cached;
