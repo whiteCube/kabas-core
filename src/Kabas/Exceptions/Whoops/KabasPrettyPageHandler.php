@@ -18,7 +18,7 @@ class KabasPrettyPageHandler extends PrettyPageHandler
     {
         ob_clean();
         $this->prepare();
-        Log::error($this->exception->getMessage());
+        Log::error($this->exception->getMessage() . PHP_EOL . $this->exception->getTraceAsString());
         if(App::config()->get('app.debug')) return $this->showWhoopsError();
         return $this->showUserFriendlyError();
     }
