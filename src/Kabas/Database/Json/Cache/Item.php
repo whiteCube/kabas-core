@@ -52,6 +52,15 @@ class Item
     }
 
     /**
+     * Returns cached item's data
+     * @return stdClass
+     */
+    public function get() {
+        if(is_null($this->data)) $this->load();
+        return $this->getDataAsObject();
+    }
+
+    /**
      * Updates file path for cached item
      * @param string $path
      * @return this
@@ -86,12 +95,15 @@ class Item
      * @return \stdClass
      */
     public function toDataObject($key) {
-        if(is_null($this->data)) $this->load();
-        $item = $this->getDataAsObject();
+        $item = $this->get();
         $item->{$key} = $this->key;
         return $item;
     }
 
+    /**
+     * Returns a stdClass representation of the currently stored data
+     * @return \stdClass
+     */
     protected function getDataAsObject() {
         if(is_object($this->data)) return $this->data;
         if(is_array($this->data)) return (object) $this->data;
