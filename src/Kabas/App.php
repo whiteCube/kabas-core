@@ -97,6 +97,7 @@ class App extends Container
             'fields' => \Kabas\Fields\Container::class,
             'router' => \Kabas\Http\Router::class,
             'content' => \Kabas\Content\Container::class,
+            'uploads' => \Kabas\Objects\Uploads\Container::class,
             'request' => \Kabas\Http\Request::class,
             'response' => \Kabas\Http\Response::class
         ];

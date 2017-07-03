@@ -19,8 +19,6 @@ class Item
 
     protected $label;
 
-    protected $filepath;
-
     protected $description;
 
     protected $options;

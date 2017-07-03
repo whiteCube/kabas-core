@@ -2,10 +2,10 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\Fields\Item;
+use \Kabas\Fields\Uploadable;
 use \Kabas\Utils\Url as UrlUtil;
 
-class File extends Item
+class File extends Uploadable
 {
 
     protected $reference;

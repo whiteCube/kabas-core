@@ -3,10 +3,10 @@
 namespace Kabas\Fields\Types;
 
 use \Kabas\App;
-use \Kabas\Fields\Item;
+use \Kabas\Fields\Uploadable;
 use \Kabas\Objects\Image\Item as ImageObject;
 
-class Image extends Item
+class Image extends Uploadable
 {
 
     /**

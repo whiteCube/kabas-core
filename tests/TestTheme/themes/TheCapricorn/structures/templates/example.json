@@ -18,6 +18,10 @@
         "email": {
             "label": "Email",
             "type": "email"
+        },
+        "userfile": {
+            "label": "File input",
+            "type": "file"
         }
 	}
 }
