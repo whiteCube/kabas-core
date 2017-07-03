@@ -109,6 +109,10 @@ body:before {
     margin-top: 10px;
 }
 
+.error__code {
+    
+}
+
 .error__path {
     background: #f1f1f1;
     padding: 2px 7px;

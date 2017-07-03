@@ -12,7 +12,7 @@ class NoResponseException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($code = 0, Exception $previous = null)
+    public function __construct($code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = 'No response was sent to the current request.';

@@ -2,8 +2,9 @@
 
 namespace Kabas\Http\Responses;
 
-use Kabas\View\View as ViewEngine;
+use Kabas\App;
 use Kabas\Http\Response;
+use Kabas\View\View as ViewEngine;
 
 class View extends Response implements ResponseInterface
 {

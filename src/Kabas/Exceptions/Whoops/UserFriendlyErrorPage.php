@@ -22,6 +22,9 @@
                 <input type="checkbox" class="error__isShowing" id="isshowing">
                 <div class="error__more">
                     <span class="error__classname">
+                        <?php if($code): ?>
+                            <span class="error__code"><?= $code ?></span>
+                        <?php endif; ?>
                         <?= $exception ?>
                     </span>
                     <?php if(isset($path)): ?>

@@ -12,7 +12,7 @@ class CommandNotAllowedException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($message, $code = 0, Exception $previous = null)
+    public function __construct($message, $code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = 'Command not allowed: ' . $message;

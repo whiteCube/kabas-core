@@ -18,7 +18,6 @@ class Response
     public function init($pageID)
     {
         $page = App::content()->pages->get($pageID);
-        if(!$page) return View::notFound();
         $page->make();
     }
 

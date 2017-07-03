@@ -1,0 +1,560 @@
+body .Whoops {
+  font: 12px "Helvetica Neue", helvetica, arial, sans-serif;
+  color: #131313;
+  background: #eeeeee;
+  padding:0;
+  margin: 0;
+  max-height: 100%;
+
+  text-rendering: optimizeLegibility;
+}
+  .Whoops a {
+    text-decoration: none;
+  }
+
+.Whoops .panel {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    position: fixed;
+    margin: 0;
+    left: 0;
+    top: 0;
+}
+
+.Whoops .branding {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #777777;
+  font-size: 10px;
+    z-index: 100;
+}
+  .Whoops .branding a {
+    color: #e95353;
+  }
+
+.Whoops header {
+  color: white;
+  box-sizing: border-box;
+  background-color: #2a2a2a;
+  padding: 35px 40px;
+  max-height: 180px;
+  overflow: hidden;
+  transition: 0.5s;
+}
+
+  .Whoops header.header-expand {
+    max-height: 1000px;
+  }
+
+  .Whoops .exc-title {
+    margin: 0;
+    color: #bebebe;
+    font-size: 14px;
+  }
+    .Whoops .exc-title-primary {
+      color: #e95353;
+    }
+
+    .Whoops .exc-message {
+      font-size: 20px;
+      word-wrap: break-word;
+      margin: 4px 0 0 0;
+      color: white;
+    }
+      .Whoops .exc-message span {
+        display: block;
+      }
+      .Whoops .exc-message-empty-notice {
+        color: #a29d9d;
+        font-weight: 300;
+      }
+
+.Whoops .details-container {
+  left: 30%;
+  width: 70%;
+  background: #fafafa;
+}
+  .Whoops .details {
+    padding: 5px;
+  }
+
+    .Whoops .details-heading {
+      color: #4288CE;
+      font-weight: 300;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+    }
+
+    .Whoops .details pre.sf-dump {
+      white-space: pre;
+      word-wrap: inherit;
+    }
+
+    .Whoops .details pre.sf-dump,
+    .Whoops .details pre.sf-dump .sf-dump-num,
+    .Whoops .details pre.sf-dump .sf-dump-const,
+    .Whoops .details pre.sf-dump .sf-dump-str,
+    .Whoops .details pre.sf-dump .sf-dump-note,
+    .Whoops .details pre.sf-dump .sf-dump-ref,
+    .Whoops .details pre.sf-dump .sf-dump-public,
+    .Whoops .details pre.sf-dump .sf-dump-protected,
+    .Whoops .details pre.sf-dump .sf-dump-private,
+    .Whoops .details pre.sf-dump .sf-dump-meta,
+    .Whoops .details pre.sf-dump .sf-dump-key,
+    .Whoops .details pre.sf-dump .sf-dump-index {
+      color: #463C54;
+    }
+
+.Whoops .left-panel {
+  width: 30%;
+  background: #ded8d8;
+}
+
+  .Whoops .frames-description {
+    background: rgba(0, 0, 0, .05);
+    padding: 8px 15px;
+    color: #a29d9d;
+    font-size: 11px;
+  }
+
+  .Whoops .frames-description.frames-description-application {
+    text-align: center;
+    font-size: 12px;
+  }
+  .Whoops .frames-container.frames-container-application .frame:not(.frame-application) {
+    display: none;
+  }
+
+  .Whoops .frames-tab {
+    color: #a29d9d;
+    display: inline-block;
+    padding: 4px 8px;
+    margin: 0 2px;
+    border-radius: 3px;
+  }
+
+  .Whoops .frames-tab.frames-tab-active {
+    background-color: #2a2a2a;
+    color: #bebebe;
+  }
+
+  .Whoops .frame {
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    background: #eeeeee;
+  }
+    .Whoops .frame:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, .05);
+    }
+
+    .Whoops .frame.active {
+      box-shadow: inset -5px 0 0 0 #4288CE;
+      color: #4288CE;
+    }
+
+    .Whoops .frame:not(.active):hover {
+      background: #BEE9EA;
+    }
+
+    .Whoops .frame-method-info {
+      margin-bottom: 10px;
+    }
+
+    .Whoops .frame-class, .Whoops .frame-function, .Whoops .frame-index {
+      font-size: 14px;
+    }
+
+    .Whoops .frame-index {
+      float: left;
+    }
+
+    .Whoops .frame-method-info {
+      margin-left: 24px;
+    }
+
+    .Whoops .frame-index {
+      font-size: 11px;
+      color: #a29d9d;
+      background-color: rgba(0, 0, 0, .05);
+      height: 18px;
+      width: 18px;
+      line-height: 18px;
+      border-radius: 5px;
+      padding: 0 1px 0 1px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .Whoops .frame-application .frame-index {
+      background-color: #2a2a2a;
+      color: #bebebe;
+    }
+
+    .Whoops .frame-file {
+      font-family: "Inconsolata", "Fira Mono", "Source Code Pro", Monaco, Consolas, "Lucida Console", monospace;
+      color: #a29d9d;
+    }
+
+      .Whoops .frame-file .editor-link {
+        color: #a29d9d;
+      }
+
+    .Whoops .frame-line {
+      font-weight: bold;
+    }
+
+    .Whoops .frame-line:before {
+      content: ":";
+    }
+
+    .Whoops .frame-code {
+      padding: 5px;
+      background: #303030;
+      display: none;
+    }
+
+    .Whoops .frame-code.active {
+      display: block;
+    }
+
+    .Whoops .frame-code .frame-file {
+      color: #a29d9d;
+      padding: 12px 6px;
+
+      border-bottom: none;
+    }
+
+    .Whoops .code-block {
+      max-height: 345px;
+      overflow: hidden;
+      padding: 10px;
+      margin: 0;
+      border-radius: 6px;
+      box-shadow: 0 3px 0 rgba(0, 0, 0, .05),
+                  0 10px 30px rgba(0, 0, 0, .05),
+                  inset 0 0 1px 0 rgba(255, 255, 255, .07);
+      -moz-tab-size: 4;
+      -o-tab-size: 4;
+      tab-size: 4;
+    }
+
+    .Whoops .linenums {
+      margin: 0;
+      margin-left: 10px;
+    }
+
+    .Whoops .frame-comments {
+      border-top: none;
+      margin-top: 15px;
+
+      font-size: 12px;
+    }
+
+    .Whoops .frame-comments.empty {
+    }
+
+    .Whoops .frame-comments.empty:before {
+      content: "No comments for this stack frame.";
+      font-weight: 300;
+      color: #a29d9d;
+    }
+
+    .Whoops .frame-comment {
+      padding: 10px;
+      color: #e3e3e3;
+      border-radius: 6px;
+      background-color: rgba(255, 255, 255, .05);
+    }
+      .Whoops .frame-comment a {
+        font-weight: bold;
+        text-decoration: none;
+      }
+        .Whoops .frame-comment a:hover {
+          color: #4bb1b1;
+        }
+
+    .Whoops .frame-comment:not(:last-child) {
+      border-bottom: 1px dotted rgba(0, 0, 0, .3);
+    }
+
+    .Whoops .frame-comment-context {
+      font-size: 10px;
+      color: white;
+    }
+
+.Whoops .delimiter {
+  display: inline-block;
+}
+
+.Whoops .data-table-container label {
+  font-size: 16px;
+  color: #303030;
+  font-weight: bold;
+  margin: 10px 0;
+
+  display: block;
+
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
+  .Whoops .data-table {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .Whoops .data-table tbody {
+    font: 13px "Inconsolata", "Fira Mono", "Source Code Pro", Monaco, Consolas, "Lucida Console", monospace;
+  }
+
+  .Whoops .data-table thead {
+    display: none;
+  }
+
+  .Whoops .data-table tr {
+    padding: 5px 0;
+  }
+
+  .Whoops .data-table td:first-child {
+    width: 20%;
+    min-width: 130px;
+    overflow: hidden;
+    font-weight: bold;
+    color: #463C54;
+    padding-right: 5px;
+
+  }
+
+  .Whoops .data-table td:last-child {
+    width: 80%;
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .Whoops .data-table span.empty {
+    color: rgba(0, 0, 0, .3);
+    font-weight: 300;
+  }
+  .Whoops .data-table label.empty {
+    display: inline;
+  }
+
+.Whoops .handler {
+  padding: 4px 0;
+  font: 14px "Inconsolata", "Fira Mono", "Source Code Pro", Monaco, Consolas, "Lucida Console", monospace;
+}
+
+/* prettify code style
+Uses the Doxy theme as a base */
+.Whoops pre .str, .Whoops code .str { color: #BCD42A; }  /* string  */
+.Whoops pre .kwd, .Whoops code .kwd { color: #4bb1b1;  font-weight: bold; }  /* keyword*/
+.Whoops pre .com, .Whoops code .com { color: #888; font-weight: bold; } /* comment */
+.Whoops pre .typ, .Whoops code .typ { color: #ef7c61; }  /* type  */
+.Whoops pre .lit, .Whoops code .lit { color: #BCD42A; }  /* literal */
+.Whoops pre .pun, .Whoops code .pun { color: #fff; font-weight: bold;  } /* punctuation  */
+.Whoops pre .pln, .Whoops code .pln { color: #e9e4e5; }  /* plaintext  */
+.Whoops pre .tag, .Whoops code .tag { color: #4bb1b1; }  /* html/xml tag  */
+.Whoops pre .htm, .Whoops code .htm { color: #dda0dd; }  /* html tag */
+.Whoops pre .xsl, .Whoops code .xsl { color: #d0a0d0; }  /* xslt tag */
+.Whoops pre .atn, .Whoops code .atn { color: #ef7c61; font-weight: normal;} /* html/xml attribute name */
+.Whoops pre .atv, .Whoops code .atv { color: #bcd42a; }  /* html/xml attribute value  */
+.Whoops pre .dec, .Whoops code .dec { color: #606; }  /* decimal  */
+.Whoops pre.code-block, .Whoops code.code-block, .Whoops .frame-args.code-block, .Whoops .frame-args.code-block samp {
+  font-family: "Inconsolata", "Fira Mono", "Source Code Pro", Monaco, Consolas, "Lucida Console", monospace;
+  background: #333;
+  color: #e9e4e5;
+}
+  .Whoops pre.code-block {
+    white-space: pre-wrap;
+  }
+
+  .Whoops pre.code-block a, .Whoops code.code-block a {
+    text-decoration:none;
+  }
+
+  .Whoops .linenums li {
+    color: #A5A5A5;
+  }
+
+  .Whoops .linenums li.current{
+    background: rgba(255, 100, 100, .07);
+    padding-top: 4px;
+    padding-left: 1px;
+  }
+    .Whoops .linenums li.current.active {
+      background: rgba(255, 100, 100, .17);
+    }
+
+.Whoops #plain-exception {
+  display: none;
+}
+
+.Whoops #copy-button {
+  cursor: pointer;
+  border: 0;
+}
+
+.Whoops .clipboard {
+  opacity: .8;
+  background: none;
+
+  color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+
+  border-radius: 3px;
+
+  outline: none !important;
+}
+
+  .Whoops .clipboard:hover {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+/* inspired by githubs kbd styles */
+.Whoops kbd {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background-color: #fcfcfc;
+  border-color: #ccc #ccc #bbb;
+  border-image: none;
+  border-style: solid;
+  border-width: 1px;
+  color: #555;
+  display: inline-block;
+  font-size: 11px;
+  line-height: 10px;
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+
+/* == Media queries */
+
+/* Expand the spacing in the details section */
+@media (min-width: 1000px) {
+  .Whoops .details, .Whoops .frame-code {
+    padding: 20px 40px;
+  }
+
+  .Whoops .details-container {
+    left: 32%;
+    width: 68%;
+  }
+
+  .Whoops .frames-container {
+    margin: 5px;
+  }
+
+  .Whoops .left-panel {
+    width: 32%;
+  }
+}
+
+.Whoops .tooltipped {
+  position: relative
+}
+.Whoops .tooltipped:after {
+  position: absolute;
+  z-index: 1000000;
+  display: none;
+  padding: 5px 8px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: break-word;
+  white-space: pre;
+  pointer-events: none;
+  content: attr(aria-label);
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+  -webkit-font-smoothing: subpixel-antialiased
+}
+.Whoops .tooltipped:before {
+  position: absolute;
+  z-index: 1000001;
+  display: none;
+  width: 0;
+  height: 0;
+  color: rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  content: "";
+  border: 5px solid transparent
+}
+.Whoops .tooltipped:hover:before,
+.Whoops .tooltipped:hover:after,
+.Whoops .tooltipped:active:before,
+.Whoops .tooltipped:active:after,
+.Whoops .tooltipped:focus:before,
+.Whoops .tooltipped:focus:after {
+  display: inline-block;
+  text-decoration: none
+}
+.Whoops .tooltipped-s:after {
+  top: 100%;
+  right: 50%;
+  margin-top: 5px
+}
+.Whoops .tooltipped-s:before {
+  top: auto;
+  right: 50%;
+  bottom: -5px;
+  margin-right: -5px;
+  border-bottom-color: rgba(0, 0, 0, 0.8)
+}
+
+.Whoops pre.sf-dump {
+  padding: 0px !important;
+  margin: 0px !important;
+}
+
+.Whoops .search-for-help {
+  width: 85%;
+  padding: 0;
+  margin: 10px 0;
+  list-style-type: none;
+  display: inline-block;
+}
+  .Whoops .search-for-help li {
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .Whoops .search-for-help li:last-child {
+    margin-right: 0;
+  }
+    .Whoops .search-for-help li a {
+
+    }
+      .Whoops .search-for-help li a i {
+        width: 16px;
+        height: 16px;
+        overflow: hidden;
+        display: block;
+      }
+      .Whoops .search-for-help li a svg {
+        fill: #fff;
+      }
+      .Whoops .search-for-help li a svg path {
+        background-size: contain;
+      }
+.Whoops .details-container {
+    position: static;
+    float: right;
+}
+
+.Whoops .left-panel {
+    position: static;
+    float: left;
+}

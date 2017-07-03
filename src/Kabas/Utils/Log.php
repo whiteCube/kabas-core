@@ -5,20 +5,20 @@ namespace Kabas\Utils;
 class Log
 {
     /**
-     * The path to the log file
+     * The path to the log folder
      * @var string
      */
-    const LOGFILE = ROOT_PATH . DS . 'logs' . DS . 'kabas.log';
+    const LOGFOLDER = ROOT_PATH . DS . 'storage' . DS . 'logs' . DS;
 
     /**
      * Writes a line of type INFO into the logs
      * @param string $message 
      * @return string
      */
-    public static function info($message)
+    public static function info($message, $logfile = 'kabas.log')
     {
         $string = self::buildString('INFO', $message);
-        self::appendLog($string);
+        self::appendLog($string, $logfile);
         return $string;
     }
 
@@ -27,10 +27,10 @@ class Log
      * @param string $message 
      * @return string
      */
-    public static function error($message)
+    public static function error($message, $logfile = 'kabas.log')
     {
         $string = self::buildString('ERROR', $message);
-        self::appendLog($string);
+        self::appendLog($string, $logfile);
         return $string;
     }
 
@@ -39,10 +39,10 @@ class Log
      * @param string $message 
      * @return string
      */
-    public static function success($message)
+    public static function success($message, $logfile = 'kabas.log')
     {
         $string = self::buildString('SUCCESS', $message);
-        self::appendLog($string);
+        self::appendLog($string, $logfile);
         return $string;
     }
 
@@ -63,11 +63,11 @@ class Log
      * @param string $message 
      * @return void
      */
-    protected static function appendLog($message)
+    protected static function appendLog($message, $logfile)
     {
-        $log = self::getLog();
+        $log = self::getLog($logfile);
         $log .= $message;
-        self::saveLog($log);
+        self::saveLog($log, $logfile);
     }
 
     /**
@@ -75,10 +75,10 @@ class Log
      * If it didn't exist, it creates it.
      * @return string
      */
-    protected static function getLog()
+    protected static function getLog($file)
     {
-        if(!file_exists(self::LOGFILE)) self::saveLog('');
-        return file_get_contents(self::LOGFILE);
+        if(!file_exists(self::LOGFOLDER . $file)) self::saveLog('', $file);
+        return file_get_contents(self::LOGFOLDER . $file);
     }
 
     /**
@@ -86,8 +86,9 @@ class Log
      * @param string $log 
      * @return void
      */
-    protected static function saveLog($log)
+    protected static function saveLog($log, $file)
     {
-        file_put_contents(self::LOGFILE, $log);
+        if(!is_dir(self::LOGFOLDER)) mkdir(self::LOGFOLDER, 0777, true);
+        file_put_contents(self::LOGFOLDER . $file, $log);
     }
 }

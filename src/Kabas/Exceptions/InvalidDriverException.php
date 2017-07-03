@@ -12,7 +12,7 @@ class InvalidDriverException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($driver, $code = 0, Exception $previous = null)
+    public function __construct($driver, $code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = 'Driver "'. $driver .'"" does not exist. Available drivers: json, eloquent';

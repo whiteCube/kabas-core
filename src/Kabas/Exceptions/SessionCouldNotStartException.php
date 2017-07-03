@@ -12,7 +12,7 @@ class SessionCouldNotStartException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($code = 0, Exception $previous = null)
+    public function __construct($code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = 'Session could not be started. Please check your server configuration.';
