@@ -15,14 +15,13 @@ trait HasCache
 
     /**
      * Puts all items for model in global cache
-     * @param bool $withData
      * @return this
      */
-    protected function loadModelCache($locale)
+    protected function loadModelCache()
     {
         $model = $this->query->getModel();
         if(!Cache::has($model)) {
-            Cache::addEmpties($this->getModelScan($model, $locale), $model);
+            Cache::addEmpties($this->getModelScan($model), $model);
         }
         $this->cached = Cache::all($model);
         $this->stack = $this->cached;
@@ -32,11 +31,29 @@ trait HasCache
     /**
      * Returns all keys with paths from the model's repository
      * @param Kabas\Database\Json\Model $model
-     * @param string $locale
      * @return array
      */
-    protected function getModelScan($model, $locale)
+    protected function getModelScan($model)
     {
-        return File::scanJsonFromDir($model->getRepositoryPath($locale), true);
+        $items = [];
+        foreach ($model->getRepositories() as $locale => $path) {
+            $items = $this->mergeInRepository($path, $locale, $items);
+        }
+        return $items;
+    }
+
+    /**
+     * Adds locale files from given repository to the model's scan array
+     * @param string $path
+     * @param string $locale
+     * @param array $items
+     * @return array
+     */
+    protected function mergeInRepository($path, $locale, $items) {
+        foreach (File::scanJsonFromDir($path, true) as $key => $file) {
+            if(!isset($items[$key])) $items[$key] = [];
+            $items[$key][$locale] = $file;
+        }
+        return $items;
     }
 }

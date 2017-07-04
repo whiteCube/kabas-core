@@ -32,20 +32,10 @@ class Select
      */
     public function run()
     {
-        return $this->loadModelCache($this->getLocale())
+        return $this->loadModelCache()
             ->applyWheres()
             ->applyLimit()
             ->toData();
-    }
-
-    /**
-     * Returns the locale in which the query should perfom
-     * @return string
-     */
-    protected function getLocale()
-    {
-        // TODO : define locale from query ?
-        return Lang::getOrDefault()->original;
     }
 
     /**
@@ -69,13 +59,10 @@ class Select
      */
     protected function applyCondition($condition, $stack)
     {
-        $validated = [];
-        foreach ($stack as $item) {
+        return array_filter($stack, function($item) use ($condition) {
             $column = $this->getColumnValue($item, $condition['column']);
-            if(!$this->runCondition($column, $condition['operator'], $condition['value'])) continue;
-            $validated[] = $item;
-        }
-        return $validated;
+            return $this->runCondition($column, $condition['operator'], $condition['value']);
+        });
     }
 
     /**
@@ -104,6 +91,7 @@ class Select
         if($key === $this->query->getModel()->getQualifiedKeyName()) {
             return $item->key;
         }
+        // TODO : apply locale on get()
         return $item->get()->data->{$key} ?? null;
     }
 
@@ -124,10 +112,9 @@ class Select
      */
     protected function toData()
     {
-        $data = [];
-        foreach ($this->stack as $key => $item) {
-            $data[] = $item->toDataObject($this->query->getModel()->getQualifiedKeyName());
-        }
-        return $data;
+        return array_map(function($item) {
+            // TODO : apply locale on toDataObject
+            return $item->toDataObject($this->query->getModel()->getQualifiedKeyName());
+        }, $this->stack);
     }
 }

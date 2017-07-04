@@ -59,7 +59,7 @@ class Item
      * @param string $locale
      * @return \stdClass
      */
-    protected function get($locale = null) {
+    public function get($locale = null) {
         return $this->mergeDataObjects(
             $this->getDataAsObject(SHARED_DIR),
             $this->getDataAsObject($this->getLocaleIdentifier($locale))
