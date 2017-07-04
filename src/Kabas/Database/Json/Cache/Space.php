@@ -70,18 +70,6 @@ class Space
     }
 
     /**
-     * Loads data from path for all empty cached items
-     * @param string $locale
-     * @return void
-     */
-    public function loadWherePaths($locale = null) {
-        foreach ($this->getItems() as $key => $item) {
-            if($item->isLoaded($locale)) continue;
-            if($item->hasPath($locale)) $item->load($locale);
-        }
-    }
-
-    /**
      * Retrieves stored item for given locale
      * @param string $key
      * @return \Kabas\Database\Json\Cache\Item

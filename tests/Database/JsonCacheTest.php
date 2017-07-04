@@ -34,6 +34,12 @@ class JsonCacheTest extends TestCase
         ];
     }
 
+    protected function mockParsedJsonFile(array $data) {
+        $json = new \stdClass();
+        $json->data = (object) $data;
+        return $json;
+    }
+
     /** @test */
     public function can_be_used_as_facade_and_make_a_proper_Space_instance()
     {
@@ -143,5 +149,17 @@ class JsonCacheTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $object);
         $this->assertEquals('foo', $object->id);
         $this->assertEquals('bar', $object->value);
+    }
+
+    /** @test */
+    public function can_merge_shared_properties_into_locale()
+    {
+        $model = new JsonModel;
+        Cache::inject('foo', $this->mockParsedJsonFile(['bar' => 'test', 'test' => 'content']), $model, 'shared');
+        Cache::inject('foo', $this->mockParsedJsonFile(['bar' => 'foo', 'foo' => 'bar']), $model, 'en-GB');
+        $foo = Cache::retrieve('foo', $model)->toDataObject('id');
+        $this->assertEquals('foo', $foo->data->bar);
+        $this->assertEquals('content', $foo->data->test);
+        $this->assertEquals('bar', $foo->data->foo);
     }
 }
