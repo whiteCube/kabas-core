@@ -34,10 +34,11 @@ class Lang
     /**
      * Fetch a translation
      * @param string $key 
+     * @param array $args
      * @return string
      */
-    static function trans($key)
+    static function trans($key, $args = [])
     {
-        return App::translator()->get($key);
+        return App::translator()->get($key, $args);
     }
 }
