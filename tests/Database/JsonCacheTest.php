@@ -25,6 +25,15 @@ class JsonCacheTest extends TestCase
         if(!defined('THEME_PATH')) define('THEME_PATH', __DIR__);
     }
 
+    protected function mockModelGetPaths($key)
+    {
+        return [
+            'shared' => __DIR__ . '/../TestTheme/content/shared/testJsonModels/' . $key . '.json',
+            'en-GB' => __DIR__ . '/../TestTheme/content/en-GB/testJsonModels/' . $key . '.json',
+            'fr-FR' => __DIR__ . '/../TestTheme/content/fr-FR/testJsonModels/' . $key . '.json'
+        ];
+    }
+
     /** @test */
     public function can_be_used_as_facade_and_make_a_proper_Space_instance()
     {
@@ -43,20 +52,18 @@ class JsonCacheTest extends TestCase
     }
 
     /** @test */
-    public function can_inject_single_item_and_retrieve_it()
+    public function can_inject_items_and_retrieve_item()
     {
-        Cache::inject('foo', 'bar', new JsonModel);
-        $this->assertInstanceOf(Item::class, Cache::retrieve('foo', 'jsonModel'));
-    }
-
-    /** @test */
-    public function can_inject_multiple_items_and_retrieve_item()
-    {
-        $items = ['foo' => 'test', 'bar' => 'test'];
-        Cache::merge($items, new JsonModel);
-        Cache::inject('test','content', new JsonModel);
-        $this->assertEquals('test', Cache::retrieve('foo', 'jsonModel')->data);
-        $this->assertEquals('test', Cache::retrieve('bar', 'jsonModel')->data);
+        $model = new JsonModel;
+        $items = ['foo' => 'test1', 'bar' => 'test2'];
+        Cache::merge($items, $model);
+        Cache::inject('test', 'test3', $model);
+        $foo = Cache::retrieve('foo', 'jsonModel');
+        $bar = Cache::retrieve('bar', $model);
+        $test = Cache::retrieve('test', $model);
+        $this->assertInstanceOf(Item::class, $foo);
+        $this->assertInstanceOf(Item::class, $bar);
+        $this->assertInstanceOf(Item::class, $test);
     }
 
     /** @test */
@@ -65,6 +72,14 @@ class JsonCacheTest extends TestCase
         $items = ['foo' => 'test', 'bar' => 'test'];
         Cache::merge($items, new JsonModel);
         $this->assertCount(2, Cache::all('jsonModel'));
+    }
+
+    /** @test */
+    public function can_get_locale_data_from_retrieved_item()
+    {
+        $model = new JsonModel;
+        Cache::inject('foo', 'bar', $model);
+        $this->assertEquals('bar', Cache::retrieve('foo', $model)->getData());
     }
 
     /** @test */
@@ -91,20 +106,19 @@ class JsonCacheTest extends TestCase
     /** @test */
     public function can_add_empty_item_to_space()
     {
-        $path = realpath('../TestTheme/content/en-GB/testJsonModels/bar.json');
-        Cache::addEmpty('foo', $path, new JsonModel, 'en-GB');
-        $item = Cache::retrieve('foo', 'jsonModel', 'en-GB');
-        $this->assertNull($item->data);
-        $this->assertEquals($path, $item->path);
+        Cache::addEmpty('foo', $this->mockModelGetPaths('bar'), new JsonModel);
+        $item = Cache::retrieve('foo', 'jsonModel');
+        $this->assertNull($item->data['shared']);
+        $this->assertContains('TestTheme/content/shared/testJsonModels/bar.json', $item->paths['shared']);
     }
 
     protected function addMultipleEmptyItems()
     {
         $items = [
-            'test' => realpath(__DIR__ . '/../TestTheme/content/en-GB/testJsonModels/test.json'),
-            'foo' => realpath(__DIR__ . '/../TestTheme/content/en-GB/testJsonModels/bar.json')
+            'test' => $this->mockModelGetPaths('test'),
+            'foo' => $this->mockModelGetPaths('bar')
         ];
-        Cache::addEmpties($items, new JsonModel, 'en-GB');
+        Cache::addEmpties($items, new JsonModel);
     }
 
     /** @test */
@@ -115,25 +129,10 @@ class JsonCacheTest extends TestCase
     }
 
     /** @test */
-    public function can_add_empty_items_to_untranslatable_space()
-    {
-        Cache::registerSpace(new JsonModel, false);
-        $this->addMultipleEmptyItems();
-        $this->assertCount(2, Cache::all('jsonModel'));
-    }
-
-    /** @test */
     public function can_load_previously_set_empty_items()
     {
         $this->addMultipleEmptyItems();
-        Cache::loadEmpties('jsonModel');
-        $this->assertEquals('bar', Cache::retrieve('foo', 'jsonModel')->data->data->foo);
-    }
-
-    /** @test */
-    public function does_not_throw_error_when_trying_to_load_unexisting_empty_items()
-    {
-        $this->assertNull(Cache::loadEmpties('foo'));
+        $this->assertEquals('bar', Cache::retrieve('foo', 'jsonModel')->getData()->data->foo);
     }
 
     /** @test */

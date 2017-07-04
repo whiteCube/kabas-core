@@ -2,8 +2,6 @@
 
 namespace Kabas\Database\Json\Cache;
 
-use Kabas\Utils\Lang;
-
 class Space
 {
     /**
@@ -11,19 +9,6 @@ class Space
     * @var string
     */
     protected $name;
-
-    /**
-    * Underlying object classname
-    * @var string
-    */
-    protected $classname;
-
-    /**
-    * Indicates if the items should be
-    * stored under different locale identifiers
-    * @var boolean
-    */
-    protected $translatable;
 
     /**
     * Cached items
@@ -34,36 +19,30 @@ class Space
     /**
      * Create a new Space instance
      * @param string $name
-     * @param string $classname
-     * @param bool   $translatable
      * @return void
      */
-    public function __construct($name, $classname, $translatable = true) {
+    public function __construct($name) {
         $this->name = $name;
-        $this->classname = $classname;
-        $this->translatable = $translatable;
     }
 
     /**
-     * Initializes empty stored item
+     * Initializes empty stored item for all its locales
      * @param string $key
-     * @param mixed  $path
-     * @param string $locale
+     * @param mixed  $paths
      * @return \Kabas\Database\Json\Cache\Item
      */
-    public function make($key, $path, $locale = null) {
-        return $this->findOrCreate($key, $locale)->setPath($path);
+    public function make($key, $paths) {
+        return $this->findOrCreate($key)->setPaths($paths);
     }
 
     /**
      * Initializes emultiple mpty stored items
      * @param array  $items
-     * @param string $locale
      * @return void
      */
-    public function makeMultiple($items, $locale = null) {
-        foreach ($items as $key => $path) {
-            $this->make($key, $path, $locale);
+    public function makeMultiple($items) {
+        foreach ($items as $key => $paths) {
+            $this->make($key, $paths);
         }
     }
 
@@ -75,7 +54,7 @@ class Space
      * @return \Kabas\Database\Json\Cache\Item
      */
     public function set($key, $data, $locale = null) {
-        return $this->findOrCreate($key, $locale)->set($data);
+        return $this->findOrCreate($key)->set($data, $locale);
     }
 
     /**
@@ -96,74 +75,49 @@ class Space
      * @return void
      */
     public function loadWherePaths($locale = null) {
-        foreach ($this->getItemsForLocale($locale) as $key => $item) {
-            if($item->data) continue;
-            if($item->path) $item->load();
+        foreach ($this->getItems() as $key => $item) {
+            if($item->isLoaded($locale)) continue;
+            if($item->hasPath($locale)) $item->load($locale);
         }
     }
 
     /**
      * Retrieves stored item for given locale
      * @param string $key
-     * @param string $locale
      * @return \Kabas\Database\Json\Cache\Item
      */
-    public function find($key, $locale = null) {
-        $repository = $this->getItemsForLocale($locale);
-        if(!isset($repository[$key])) return;
-        return $repository[$key];
+    public function find($key) {
+        if(!isset($this->container[$key])) return;
+        return $this->container[$key];
     }
 
     /**
-     * Retrieves or creates new stored item for given locale
+     * Retrieves or creates new stored item
      * @param string $key
-     * @param string $locale
      * @return \Kabas\Database\Json\Cache\Item
      */
-    public function findOrCreate($key, $locale = null) {
-        if($existing = $this->find($key, $locale)) return $existing;
-        return $this->registerNewEmptyItem($key, $locale);
+    public function findOrCreate($key) {
+        if($existing = $this->find($key)) return $existing;
+        return $this->registerNewEmptyItem($key);
     }
 
     /**
-     * Adds and returns a new stored item for given locale
+     * Adds and returns a new stored item
      * @param string $key
-     * @param string $locale
      * @return \Kabas\Database\Json\Cache\Item
      */
-    protected function registerNewEmptyItem($key, $locale = null) {
+    protected function registerNewEmptyItem($key) {
         $item = $this->getNewEmptyItem()->setKey($key);
-        if(!$this->translatable) {
-            $this->container[$key] = $item;
-            return $item;
-        }
-        $locale = $this->getLocaleIdentifier($locale);
-        if(!isset($this->container[$locale])) {
-            $this->container[$locale] = [];
-        }
-        $this->container[$locale][$key] = $item; 
+        $this->container[$key] = $item;
         return $item;
     }
 
     /**
      * Retrieves locale repository
-     * @param string $locale
      * @return array
      */
-    public function getItemsForLocale($locale = null) {
-        if(!$this->translatable) return $this->container;
-        $locale = $this->getLocaleIdentifier($locale);
-        if(!isset($this->container[$locale])) return [];
-        return $this->container[$locale];
-    }
-
-    /**
-     * Transforms given locale to common locale syntax
-     * @param string $locale
-     * @return string
-     */
-    protected function getLocaleIdentifier($locale = null) {
-        return Lang::getOrDefault($locale)->original;
+    public function getItems() {
+        return $this->container;
     }
 
     /**

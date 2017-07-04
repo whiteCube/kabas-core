@@ -13,52 +13,37 @@ class Container
     protected $spaces = [];
 
     /**
-     * Checks if space exists and contains items for locale
+     * Checks if space exists
      * @param object $model
-     * @param string $locale
      * @return bool
      */
-    public function has($model, $locale = null)
+    public function has($model)
     {
         if(!($space = $this->getSpace($model))) return false;
-        return count($space->getItemsForLocale($locale)) > 0;
+        return count($space->getItems()) > 0;
     }
     
     /**
-     * Adds or updates an empty cached item for given model and locale
+     * Adds or updates an empty cached item for given model
      * @param string $key
-     * @param object $path
+     * @param array $paths
      * @param object $model
-     * @param string $locale
      * @return void
      */
-    public function addEmpty($key, $path, ModelInterface $model, $locale = null)
+    public function addEmpty($key, $paths, ModelInterface $model)
     {
-        $this->getOrCreateSpace($model)->make($key, $path, $locale);
+        $this->getOrCreateSpace($model)->make($key, $paths);
     }
 
     /**
-     * Adds or updates multiple empty cached items for given model and locale
+     * Adds or updates multiple empty cached items for given model
      * @param array  $items
      * @param object $model
-     * @param string $locale
      * @return void
      */
-    public function addEmpties(array $items, ModelInterface $model, $locale = null)
+    public function addEmpties(array $items, ModelInterface $model)
     {
-        $this->getOrCreateSpace($model)->makeMultiple($items, $locale);
-    }
-
-    /**
-     * Loads data from cached items paths for given model and locale
-     * @param object $space
-     * @param string $locale
-     * @return void
-     */
-    public function loadEmpties($space, $locale = null)
-    {
-        if(!($space = $this->getSpace($space))) return;
-        $space->loadWherePaths($locale);
+        $this->getOrCreateSpace($model)->makeMultiple($items);
     }
 
     /**
@@ -100,15 +85,14 @@ class Container
     }
 
     /**
-     * Returns all stored item from given Space and locale
+     * Returns all stored item from given Space
      * @param string|Kabas\Database\ModelInterface $space
-     * @param string $locale
      * @return array|null
      */
-    public function all($space, $locale = null)
+    public function all($space)
     {
         if(!($space = $this->getSpace($space))) return;
-        return $space->getItemsForLocale($locale);
+        return $space->getItems();
     }
 
     /**
@@ -121,7 +105,7 @@ class Container
         if($existing = $this->getSpace($model->getObjectName())) {
             return $existing;
         }
-        return $this->registerSpace($model, $model->isTranslatable());
+        return $this->registerSpace($model);
     }
 
     /**
@@ -139,22 +123,20 @@ class Container
     /**
      * Returns a freshly added Space instance
      * @param object $model
-     * @param bool   $translatable
      * @return \Kabas\Database\Json\Cache\Space
      */
-    public function registerSpace(ModelInterface $model, $translatable = true)
+    public function registerSpace(ModelInterface $model)
     {
-        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model, $translatable);
+        return $this->spaces[$model->getObjectName()] = $this->getNewSpace($model);
     }
 
     /**
      * Returns an empty Space instance
      * @param object $model
-     * @param bool   $translatable
      * @return \Kabas\Database\Json\Cache\Space
      */
-    public function getNewSpace(ModelInterface $model, $translatable = true)
+    public function getNewSpace(ModelInterface $model)
     {
-        return new Space($model->getObjectName(), get_class($model), $translatable);
+        return new Space($model->getObjectName());
     }
 }
