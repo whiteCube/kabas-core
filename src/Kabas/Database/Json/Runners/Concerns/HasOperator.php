@@ -7,13 +7,13 @@ use Kabas\Database\Json\Runners\Exceptions\InvalidOperatorException;
 trait HasOperator
 {
     static protected $operators = [
-        '=' => 'IsEqual',
+        '=' => 'IsEqualTo',
         '<' => null,
         '>' => null,
         '<=' => null,
         '>=' => null,
-        '<>' => 'IsDifferent',
-        '!=' => 'IsDifferent',
+        '<>' => 'IsDifferentFrom',
+        '!=' => 'IsDifferentFrom',
         '<=>' => null,
         'like' => 'IsLike',
         'like binary' => null,

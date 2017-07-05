@@ -4,10 +4,10 @@ namespace Kabas\Database\Json\Runners\Operators;
 
 use Kabas\Database\Json\Runners\Concerns\HasSimpleExpression;
 
-class IsEqual implements OperatorInterface
+class IsEqualTo implements OperatorInterface
 {
     use HasSimpleExpression;
-    
+
     /**
      * Tests if given value is equal to this expression
      * @param mixed $value

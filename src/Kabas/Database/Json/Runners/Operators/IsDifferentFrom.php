@@ -4,7 +4,7 @@ namespace Kabas\Database\Json\Runners\Operators;
 
 use Kabas\Database\Json\Runners\Concerns\HasSimpleExpression;
 
-class IsDifferent implements OperatorInterface
+class IsDifferentFrom implements OperatorInterface
 {
     use HasSimpleExpression;
     
