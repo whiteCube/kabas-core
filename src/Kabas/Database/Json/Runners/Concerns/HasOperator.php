@@ -15,7 +15,7 @@ trait HasOperator
         '<>' => null,
         '!=' => null,
         '<=>' => null,
-        'like' => null,
+        'like' => 'IsLike',
         'like binary' => null,
         'not like' => null,
         'between' => null,
@@ -58,6 +58,7 @@ trait HasOperator
      */
     protected function getOperatorName($grammar)
     {
+        $grammar = strtolower($grammar);
         if(!isset(static::$operators[$grammar])) {
             throw new InvalidOperatorException($grammar);
         }
