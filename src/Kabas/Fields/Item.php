@@ -47,7 +47,7 @@ class Item
         if(self::$baseStructure) $structure = self::$baseStructure;
         $structure = new \stdClass;
         $structure->label = '';
-        $structure->type = '';
+        $structure->type = $this->getType();
         $structure->option = null;
         $structure->default = null;
         $structure->description = '';
