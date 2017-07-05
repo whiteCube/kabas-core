@@ -4,7 +4,7 @@ namespace Kabas\Database\Json\Runners\Operators;
 
 use Kabas\Database\Json\Runners\Concerns\HasSimpleExpression;
 
-class IsEqual implements OperatorInterface
+class IsDifferent implements OperatorInterface
 {
     use HasSimpleExpression;
     
@@ -14,6 +14,6 @@ class IsEqual implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        return ($value == $this->expression);
+        return ($value != $this->expression);
     }
 }
