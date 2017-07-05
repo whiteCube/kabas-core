@@ -23,8 +23,7 @@ trait HasCache
         if(!Cache::has($model)) {
             Cache::addEmpties($this->getModelScan($model), $model);
         }
-        $this->cached = Cache::all($model);
-        $this->stack = $this->cached;
+        $this->stack = Cache::all($model);
         return $this;
     }
 
