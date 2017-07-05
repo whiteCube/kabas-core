@@ -35,6 +35,7 @@ class Select
     {
         return $this->loadModelCache()
             ->applyWheres()
+            ->applyOrder()
             ->applyLimit()
             ->toData();
     }
@@ -48,6 +49,20 @@ class Select
         $conditions = new NestedCondition(['query' => $this->query, 'boolean' => 'AND']);
         $this->stack = $conditions->apply($this->stack);
         return $this;
+    }
+
+    /**
+     * Reorders current stack using the query's order
+     * statement or key (filename) if not defined
+     * @return this
+     */
+    protected function applyOrder()
+    {
+        if(!$this->query->orders) {
+            ksort($this->stack);
+            return $this;
+        }
+        // TODO : real sorting on the $this->query->orders array
     }
 
     /**
