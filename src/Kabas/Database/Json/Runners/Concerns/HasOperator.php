@@ -10,7 +10,7 @@ trait HasOperator
         '=' => 'IsEqualTo',
         '<' => 'IsLessThan',
         '>' => 'IsGreaterThan',
-        '<=' => null,
+        '<=' => 'IsLessThanOrEqualTo',
         '>=' => null,
         '<>' => 'IsDifferentFrom',
         '!=' => 'IsDifferentFrom',
