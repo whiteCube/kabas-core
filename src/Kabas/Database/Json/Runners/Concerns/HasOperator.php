@@ -9,7 +9,7 @@ trait HasOperator
     static protected $operators = [
         '=' => 'IsEqualTo',
         '<' => 'IsLessThan',
-        '>' => null,
+        '>' => 'IsGreaterThan',
         '<=' => null,
         '>=' => null,
         '<>' => 'IsDifferentFrom',
