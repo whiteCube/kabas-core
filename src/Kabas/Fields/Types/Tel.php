@@ -8,6 +8,11 @@ use \Kabas\Fields\Item;
 class Tel extends Item
 {
 
+    public function __toString()
+    {
+        return $this->output->label;
+    }
+
     public function condition()
     {
         return (is_object($this->value) 
