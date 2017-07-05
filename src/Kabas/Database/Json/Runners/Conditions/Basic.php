@@ -2,10 +2,12 @@
 
 namespace Kabas\Database\Json\Runners\Conditions;
 
+use Kabas\Database\Json\Runners\Concerns\HasOperator;
 use Kabas\Database\Json\Runners\Concerns\HasBooleanChaining;
 
 class Basic implements ConditionInterface
 {
+    use HasOperator;
     use HasBooleanChaining;
 
     protected $query;
@@ -13,8 +15,6 @@ class Basic implements ConditionInterface
     protected $key;
 
     protected $operator;
-
-    protected $value;
     
     /**
      * Makes a new simple Condition from given information
@@ -24,8 +24,7 @@ class Basic implements ConditionInterface
     public function __construct($info) {
         $this->query = $info['query'];
         $this->key = $info['column'];
-        $this->operator = $info['operator'];
-        $this->value = $info['value'];
+        $this->operator = $this->makeOperator($info['operator'], $info['value']);
         $this->setBooleanMode($info['boolean']);
     }
 
@@ -46,30 +45,8 @@ class Basic implements ConditionInterface
      */
     public function run($stack) : array {
         return array_filter($stack, function($item) {
-            $argument = $this->getItemKeyValue($item, $this->key);
-            return $this->checkCondition($argument, $this->operator, $this->value);
+            return $this->operator->compare($this->getItemKeyValue($item, $this->key));
         });
-    }
-
-    /**
-     * Tests if given argument applys to given value using given operator
-     * @param string $argument
-     * @param string $operator
-     * @param string $value
-     * @return bool
-     */
-    protected function checkCondition($argument, $operator, $value)
-    {
-        switch ($operator) {
-            //  TODO : all other available operators
-            case '=': return ($argument == $value); break;
-            case 'LIKE': return $this->isLike($argument, $value); break;
-        }
-    }
-
-    protected function isLike($value, $expression)
-    {
-        return true;
     }
 
     /**
