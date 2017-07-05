@@ -11,7 +11,7 @@ trait HasOperator
         '<' => 'IsLessThan',
         '>' => 'IsGreaterThan',
         '<=' => 'IsLessThanOrEqualTo',
-        '>=' => null,
+        '>=' => 'IsGreaterThanOrEqualTo',
         '<>' => 'IsDifferentFrom',
         '!=' => 'IsDifferentFrom',
         '<=>' => null,
