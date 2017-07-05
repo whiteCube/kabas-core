@@ -14,6 +14,6 @@ class IsEqualTo implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        return ($value == $this->expression);
+        return ($this->secureExpression($value) == $this->expression);
     }
 }
