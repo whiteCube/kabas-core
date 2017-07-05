@@ -1,6 +1,6 @@
 {
 	"fields": {
-        "todo": {
+        "list": {
             "label": "To do",
             "type": "repeater",
             "options": [
