@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1499245682">
-  <project timestamp="1499245682">
+<coverage generated="1499258196">
+  <project timestamp="1499258196">
     <package name="Kabas">
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/App.php">
         <class name="App" namespace="Kabas">
@@ -481,13 +481,13 @@
         <line num="38" type="stmt" count="61"/>
         <line num="39" type="stmt" count="61"/>
         <line num="40" type="stmt" count="61"/>
-        <line num="42" type="method" name="__set" visibility="public" complexity="4" crap="4" count="61"/>
-        <line num="44" type="stmt" count="61"/>
+        <line num="42" type="method" name="__set" visibility="public" complexity="4" crap="4" count="35"/>
+        <line num="44" type="stmt" count="35"/>
         <line num="45" type="stmt" count="2"/>
         <line num="46" type="stmt" count="2"/>
-        <line num="49" type="stmt" count="61"/>
-        <line num="50" type="stmt" count="61"/>
-        <line num="52" type="stmt" count="61"/>
+        <line num="49" type="stmt" count="35"/>
+        <line num="50" type="stmt" count="35"/>
+        <line num="52" type="stmt" count="35"/>
         <line num="54" type="method" name="__get" visibility="public" complexity="3" crap="3" count="28"/>
         <line num="56" type="stmt" count="28"/>
         <line num="57" type="stmt" count="3"/>
@@ -498,7 +498,7 @@
         <line num="67" type="method" name="set" visibility="public" complexity="4" crap="4" count="61"/>
         <line num="69" type="stmt" count="61"/>
         <line num="70" type="stmt" count="61"/>
-        <line num="71" type="stmt" count="61"/>
+        <line num="71" type="stmt" count="35"/>
         <line num="74" type="stmt" count="61"/>
         <line num="76" type="method" name="make" visibility="public" complexity="2" crap="2" count="29"/>
         <line num="78" type="stmt" count="29"/>
@@ -1279,14 +1279,14 @@
         <line num="51" type="method" name="makeOptions" visibility="protected" complexity="3" crap="3" count="66"/>
         <line num="53" type="stmt" count="66"/>
         <line num="54" type="stmt" count="66"/>
-        <line num="61" type="method" name="getIterator" visibility="public" complexity="2" crap="2" count="2"/>
-        <line num="63" type="stmt" count="2"/>
-        <line num="64" type="stmt" count="2"/>
+        <line num="61" type="method" name="getIterator" visibility="public" complexity="2" crap="2" count="29"/>
+        <line num="63" type="stmt" count="29"/>
+        <line num="64" type="stmt" count="29"/>
         <line num="71" type="method" name="count" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="72" type="stmt" count="1"/>
-        <line num="80" type="method" name="get" visibility="public" complexity="2" crap="2" count="3"/>
-        <line num="82" type="stmt" count="3"/>
-        <line num="83" type="stmt" count="1"/>
+        <line num="80" type="method" name="get" visibility="public" complexity="2" crap="2" count="23"/>
+        <line num="82" type="stmt" count="23"/>
+        <line num="83" type="stmt" count="21"/>
         <metrics loc="85" ncloc="54" classes="1" methods="8" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="16" elements="24" coveredelements="24"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Fields/Container.php">
@@ -1322,16 +1322,16 @@
         <class name="Groupable" namespace="Kabas\Fields">
           <metrics complexity="5" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="10" coveredelements="10"/>
         </class>
-        <line num="9" type="method" name="__set" visibility="public" complexity="2" crap="2" count="12"/>
-        <line num="11" type="stmt" count="12"/>
-        <line num="12" type="stmt" count="12"/>
-        <line num="13" type="stmt" count="12"/>
-        <line num="15" type="method" name="__get" visibility="public" complexity="1" crap="1" count="2"/>
-        <line num="17" type="stmt" count="2"/>
+        <line num="9" type="method" name="__set" visibility="public" complexity="2" crap="2" count="35"/>
+        <line num="11" type="stmt" count="35"/>
+        <line num="12" type="stmt" count="35"/>
+        <line num="13" type="stmt" count="35"/>
+        <line num="15" type="method" name="__get" visibility="public" complexity="1" crap="1" count="22"/>
+        <line num="17" type="stmt" count="22"/>
         <line num="20" type="method" name="__call" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="22" type="stmt" count="1"/>
-        <line num="29" type="method" name="condition" visibility="public" complexity="1" crap="1" count="10"/>
-        <line num="31" type="stmt" count="10"/>
+        <line num="29" type="method" name="condition" visibility="public" complexity="1" crap="1" count="34"/>
+        <line num="31" type="stmt" count="34"/>
         <metrics loc="33" ncloc="29" classes="1" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="10" coveredelements="10"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Fields/Item.php">
@@ -1364,8 +1364,8 @@
         <line num="64" type="stmt" count="164"/>
         <line num="72" type="method" name="format" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="74" type="stmt" count="1"/>
-        <line num="81" type="method" name="getType" visibility="public" complexity="1" crap="1" count="32"/>
-        <line num="83" type="stmt" count="32"/>
+        <line num="81" type="method" name="getType" visibility="public" complexity="1" crap="1" count="164"/>
+        <line num="83" type="stmt" count="164"/>
         <line num="90" type="method" name="getName" visibility="public" complexity="1" crap="1" count="1"/>
         <line num="92" type="stmt" count="1"/>
         <line num="95" type="method" name="get" visibility="public" complexity="1" crap="1" count="7"/>
@@ -1445,10 +1445,10 @@
         <line num="18" type="stmt" count="1"/>
         <line num="19" type="stmt" count="1"/>
         <line num="20" type="stmt" count="1"/>
-        <line num="27" type="method" name="condition" visibility="public" complexity="1" crap="1" count="5"/>
-        <line num="29" type="stmt" count="5"/>
-        <line num="37" type="method" name="getMultiFieldname" visibility="protected" complexity="1" crap="1" count="4"/>
-        <line num="39" type="stmt" count="4"/>
+        <line num="27" type="method" name="condition" visibility="public" complexity="1" crap="1" count="32"/>
+        <line num="29" type="stmt" count="32"/>
+        <line num="37" type="method" name="getMultiFieldname" visibility="protected" complexity="1" crap="1" count="31"/>
+        <line num="39" type="stmt" count="31"/>
         <metrics loc="41" ncloc="27" classes="1" methods="3" coveredmethods="3" conditionals="0" coveredconditionals="0" statements="5" coveredstatements="5" elements="8" coveredelements="8"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Fields/Selectable.php">
@@ -1677,9 +1677,9 @@
         <class name="Email" namespace="Kabas\Fields\Types">
           <metrics complexity="2" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
         </class>
-        <line num="15" type="method" name="condition" visibility="public" complexity="2" crap="2" count="4"/>
-        <line num="17" type="stmt" count="4"/>
-        <line num="18" type="stmt" count="4"/>
+        <line num="15" type="method" name="condition" visibility="public" complexity="2" crap="2" count="2"/>
+        <line num="17" type="stmt" count="2"/>
+        <line num="18" type="stmt" count="2"/>
         <metrics loc="20" ncloc="15" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Fields/Types/File.php">
@@ -1763,24 +1763,24 @@
         <class name="Group" namespace="Kabas\Fields\Types">
           <metrics complexity="7" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="16" elements="18" coveredelements="18"/>
         </class>
-        <line num="15" type="method" name="makeOptions" visibility="protected" complexity="3" crap="3" count="8"/>
-        <line num="17" type="stmt" count="8"/>
-        <line num="18" type="stmt" count="8"/>
+        <line num="15" type="method" name="makeOptions" visibility="protected" complexity="3" crap="3" count="35"/>
+        <line num="17" type="stmt" count="35"/>
+        <line num="18" type="stmt" count="35"/>
         <line num="19" type="stmt" count="7"/>
         <line num="20" type="stmt" count="7"/>
         <line num="21" type="stmt" count="7"/>
         <line num="22" type="stmt" count="7"/>
         <line num="23" type="stmt" count="7"/>
-        <line num="25" type="stmt" count="8"/>
-        <line num="33" type="method" name="parse" visibility="protected" complexity="4" crap="4" count="7"/>
-        <line num="35" type="stmt" count="7"/>
-        <line num="36" type="stmt" count="7"/>
+        <line num="25" type="stmt" count="35"/>
+        <line num="33" type="method" name="parse" visibility="protected" complexity="4" crap="4" count="34"/>
+        <line num="35" type="stmt" count="34"/>
+        <line num="36" type="stmt" count="34"/>
         <line num="37" type="stmt" count="7"/>
         <line num="38" type="stmt" count="7"/>
         <line num="39" type="stmt" count="7"/>
         <line num="40" type="stmt" count="7"/>
         <line num="41" type="stmt" count="7"/>
-        <line num="44" type="stmt" count="7"/>
+        <line num="44" type="stmt" count="34"/>
         <metrics loc="46" ncloc="37" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="16" elements="18" coveredelements="18"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Fields/Types/Image.php">
@@ -1912,9 +1912,9 @@
         <line num="16" type="method" name="parse" visibility="protected" complexity="3" crap="3" count="28"/>
         <line num="18" type="stmt" count="28"/>
         <line num="19" type="stmt" count="28"/>
-        <line num="20" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="1"/>
-        <line num="22" type="stmt" count="1"/>
+        <line num="20" type="stmt" count="28"/>
+        <line num="21" type="stmt" count="28"/>
+        <line num="22" type="stmt" count="28"/>
         <line num="25" type="stmt" count="28"/>
         <metrics loc="28" ncloc="23" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="6" coveredstatements="6" elements="7" coveredelements="7"/>
       </file>
@@ -2885,9 +2885,9 @@
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Utils/Debug.php">
         <class name="Debug" namespace="Kabas\Utils">
-          <metrics complexity="2" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="8" coveredelements="0"/>
+          <metrics complexity="3" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="9" coveredelements="0"/>
         </class>
-        <line num="8" type="method" name="backtrace" visibility="public" complexity="2" crap="6" count="0"/>
+        <line num="8" type="method" name="backtrace" visibility="public" complexity="3" crap="12" count="0"/>
         <line num="9" type="stmt" count="0"/>
         <line num="10" type="stmt" count="0"/>
         <line num="11" type="stmt" count="0"/>
@@ -2895,7 +2895,8 @@
         <line num="13" type="stmt" count="0"/>
         <line num="14" type="stmt" count="0"/>
         <line num="15" type="stmt" count="0"/>
-        <metrics loc="16" ncloc="16" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="7" coveredstatements="0" elements="8" coveredelements="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <metrics loc="17" ncloc="17" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="8" coveredstatements="0" elements="9" coveredelements="0"/>
       </file>
       <file name="/Users/whitecube/Sites/kabas/core/src/Kabas/Utils/File.php">
         <class name="File" namespace="Kabas\Utils">
@@ -3095,9 +3096,9 @@
         <line num="16" type="stmt" count="196"/>
         <line num="17" type="stmt" count="196"/>
         <line num="18" type="stmt" count="196"/>
-        <line num="25" type="method" name="removeNamespace" complexity="1" crap="1" count="53"/>
-        <line num="27" type="stmt" count="53"/>
-        <line num="28" type="stmt" count="53"/>
+        <line num="25" type="method" name="removeNamespace" complexity="1" crap="1" count="166"/>
+        <line num="27" type="stmt" count="166"/>
+        <line num="28" type="stmt" count="166"/>
         <line num="36" type="method" name="toSlug" complexity="1" crap="1" count="1"/>
         <line num="38" type="stmt" count="1"/>
         <line num="39" type="stmt" count="1"/>
@@ -3451,6 +3452,6 @@
         <metrics loc="81" ncloc="59" classes="1" methods="6" coveredmethods="6" conditionals="0" coveredconditionals="0" statements="20" coveredstatements="20" elements="26" coveredelements="26"/>
       </file>
     </package>
-    <metrics files="100" loc="8266" ncloc="5935" classes="91" methods="644" coveredmethods="595" conditionals="0" coveredconditionals="0" statements="2166" coveredstatements="1913" elements="2810" coveredelements="2508"/>
+    <metrics files="100" loc="8267" ncloc="5936" classes="91" methods="644" coveredmethods="595" conditionals="0" coveredconditionals="0" statements="2167" coveredstatements="1913" elements="2811" coveredelements="2508"/>
   </project>
 </coverage>

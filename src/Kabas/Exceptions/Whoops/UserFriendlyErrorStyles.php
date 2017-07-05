@@ -21,7 +21,7 @@ body:before {
     font-family: 'Open Sans', sans-serif;
     color: #485151;
     vertical-align: middle;
-    width: 920px;
+    width: 650px;
 
     font-size: 15px;
     display: inline-block;
@@ -48,6 +48,13 @@ body:before {
     opacity: 1;
     transform: none;
     pointer-events: all;
+}
+
+.error__img {
+    width: 150px;
+    float: left;
+    margin-top: -50px;
+    margin-right: 50px;
 }
 
 .error__showmore {
