@@ -14,7 +14,7 @@ trait CleansOutputBuffering {
      */
     protected function clean()
     {
-        if(!App::config()->get('app.debug') && ob_get_level()) ob_clean();
+        if(!DEBUG && ob_get_level()) ob_clean();
     }
 
 }

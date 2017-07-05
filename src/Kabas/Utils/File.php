@@ -124,7 +124,7 @@ class File
     {
         $items = [];
         foreach (static::scanJsonFromDir($path, $recursive) as $name => $file) {
-            if(App::config()->get('app.debug')) {
+            if(DEBUG) {
                 $items[$name] = File::loadJson($file, $cache);
             } else {
                 if($content = static::loadJsonIfValid($file, $cache)) $items[$name] = $content;

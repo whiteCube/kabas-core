@@ -48,6 +48,7 @@ return [
             'Lang' => Kabas\Utils\Lang::class,
             'Menu' => Kabas\Utils\Menu::class,
             'Meta' => Kabas\Utils\Meta::class,
+            'Options' => Kabas\Utils\Options::class,
             'Page' => Kabas\Utils\Page::class,
             'Part' => Kabas\Utils\Part::class,
             'Session' => Kabas\Utils\Session::class,

@@ -10,11 +10,12 @@ class Container
 
     protected static $parsed = false;
 
-    public function __construct(Pages\Container $pages, Partials\Container $partials, Menus\Container $menus)
+    public function __construct(Pages\Container $pages, Partials\Container $partials, Menus\Container $menus, Options\Container $options)
     {
         $this->pages = $pages;
         $this->partials = $partials;
         $this->menus = $menus;
+        $this->options = $options;
     }
 
     public function parse()
