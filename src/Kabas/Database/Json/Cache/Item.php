@@ -3,6 +3,7 @@
 namespace Kabas\Database\Json\Cache;
 
 use Kabas\Utils\File;
+use Kabas\Utils\Lang;
 
 class Item
 {
@@ -14,15 +15,15 @@ class Item
 
     /**
     * contained data
-    * @var mixed
+    * @var array
     */
-    public $data;
+    public $data = [];
 
     /**
-    * path to item's file
-    * @var mixed
+    * paths to item's files
+    * @var array
     */
-    public $path;
+    public $paths = [];
 
     /**
     * Item's cache Space
@@ -42,22 +43,51 @@ class Item
     }
 
     /**
-     * Updates data for cached item
+     * Updates data for given locale
      * @param mixed  $data
+     * @param string $locale
      * @return this
      */
-    public function set($data) {
-        $this->data = $data;
+    public function set($data, $locale = null) {
+        $this->data[$this->getSharedOrLocale($locale)] = $data;
         return $this;
     }
 
     /**
-     * Updates file path for cached item
-     * @param string $path
+     * Returns a stdClass representation of the currently 
+     * stored data for given locale
+     * @param string $locale
+     * @return \stdClass
+     */
+    public function get($locale = null) {
+        return $this->mergeDataObjects(
+            $this->getDataAsObject(SHARED_DIR),
+            $this->getDataAsObject($this->getLocaleIdentifier($locale))
+        );
+    }
+
+    /**
+     * Only returns data for given locale or shared if no locale given
+     * @param string $locale
+     * @return mixed
+     */
+    public function getData($locale = null) {
+        if(is_null($locale)) $locale = SHARED_DIR;
+        if(!isset($this->data[$locale]) && !isset($this->paths[$locale])) return;
+        if(is_null($this->data[$locale])) $this->load($locale);
+        return $this->data[$locale];
+    }
+
+    /**
+     * Updates file paths for cached item
+     * @param array $path
      * @return this
      */
-    public function setPath($path) {
-        $this->path = $path;
+    public function setPaths($paths) {
+        foreach ($paths as $locale => $path) {
+            $this->paths[$locale] = realpath($path);
+            $this->data[$locale] = null;
+        }
         return $this;
     }
 
@@ -73,31 +103,78 @@ class Item
 
     /**
      * Sets data from item's file content
+     * @param string $key
      * @return this
      */
-    public function load() {
-        if(is_null($content = File::loadJsonIfValid($this->path, false))) return $this->set(false);
-        return $this->set($content);
+    public function load($key) {
+        if(is_null($content = File::loadJsonIfValid($this->paths[$key], false))) return $this->set(false, $key);
+        return $this->set($content, $key);
     }
 
     /**
      * Transforms this item to stdClass
      * @param string $key
+     * @param string $locale
      * @return \stdClass
      */
-    public function toDataObject($key) {
-        if(is_null($this->data)) $this->load();
-        $item = $this->getDataAsObject();
+    public function toDataObject($key, $locale = null) {
+        $item = $this->get($locale);
         $item->{$key} = $this->key;
         return $item;
     }
 
-    protected function getDataAsObject() {
-        if(is_object($this->data)) return $this->data;
-        if(is_array($this->data)) return (object) $this->data;
+    /**
+     * Returns a stdClass representation of the currently stored data
+     * @param string $locale
+     * @return \stdClass
+     */
+    protected function getDataAsObject($locale) {
+        $value = $this->getData($locale);
+        if(is_null($value) || $value === false) return new \stdClass();
+        if(is_object($value)) return $value;
+        if(is_array($value)) return (object) $value;
         $data = new \stdClass;
-        $data->value = $this->data;
+        $data->value = $value;
         return $data;
     }
-    
+
+    /**
+     * Returns a new object containing merged values from two original objects
+     * @param object $first
+     * @param object $second
+     * @return \stdClass
+     */
+    protected function mergeDataObjects($first, $second) {
+        // First we'll merge the "data" attribute from the first given object
+        // into the second. This way, developpers can have untranslatable
+        // fields nested under the shared object and add them to the 
+        // translated fields from the locale object.
+        if(is_object($first->data ?? null) && is_object($second->data ?? null)) {
+            $second->data = (object) array_merge((array) $first->data, (array) $second->data);
+        }
+        // Now let's merge all first-level items from the second object
+        // into the first, which will give priority to values from the
+        // second object when conflicts are encountered.
+        return (object) array_merge((array) $first, (array) $second);
+    }
+
+    /**
+     * Transforms given locale to common locale syntax or "shared" if null
+     * @param string $locale
+     * @return string
+     */
+    protected function getSharedOrLocale($locale = null) {
+        if(is_null($locale) || $locale == SHARED_DIR) return SHARED_DIR;
+        return $this->getLocaleIdentifier($locale);
+    }
+
+    /**
+     * Transforms given locale to common locale syntax
+     * @param string $locale
+     * @return string
+     */
+    protected function getLocaleIdentifier($locale) {
+        return Lang::getOrDefault($locale)->original;
+    }
+
 }

@@ -21,14 +21,15 @@ class ModelTest extends TestCase
         if(!defined('THEME_PATH')) define('THEME_PATH', __DIR__);
     }
 
-    public function getModel($objectName = null, $repositoryName = null, $structureFileName = null)
+    public function getModel($objectName = null, $repositoryName = null, $structureFileName = null, $translated = true)
     {
-        return (new class([], $objectName, $repositoryName, $structureFileName) extends Model {
+        return (new class([], $objectName, $repositoryName, $structureFileName, $translated) extends Model {
             static protected $object;
-            public function __construct(array $attributes = [], $object, $repository, $structure) {
+            public function __construct(array $attributes = [], $object, $repository, $structure, $translated) {
                 static::$object = $object;
                 static::$repository = $repository;
                 static::$structure = $structure;
+                static::$translated = $translated;
                 $this->bootIfNotBooted();
                 $this->syncOriginal();
             }
@@ -53,14 +54,14 @@ class ModelTest extends TestCase
     public function can_guess_and_return_repository()
     {
         $model = $this->getModel('foo');
-        $this->assertEquals('foos', $model->getRepository());
+        $this->assertEquals('foos', $model->getRepositoryName());
     }
 
     /** @test */
     public function can_return_defined_repository()
     {
         $model = $this->getModel('foo', 'bar');
-        $this->assertEquals('bar', $model->getRepository());
+        $this->assertEquals('bar', $model->getRepositoryName());
     }
 
     /** @test */
@@ -86,6 +87,32 @@ class ModelTest extends TestCase
         $this->expectException(FileNotFoundException::class);
         $model = $this->getModel('test');
         $path = $model->getStructurePath();
+    }
+
+    /** @test */
+    public function can_return_all_available_paths()
+    {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = $this->getModel('test', null, 'foo.json');
+        $paths = $model->getRepositories();
+        $this->assertCount(3, $paths);
+        $this->assertContains('TestTheme/content/shared/tests', $paths['shared']);
+        $this->assertContains('TestTheme/content/en-GB/tests', $paths['en-GB']);
+        $this->assertContains('TestTheme/content/fr-FR/tests', $paths['fr-FR']);
+    }
+
+    /** @test */
+    public function can_return_shared_path_for_untranslatable_model()
+    {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = $this->getModel('test', null, 'foo.json', false);
+        $paths = $model->getRepositories();
+        $this->assertCount(1, $paths);
+        $this->assertContains('TestTheme/content/shared/tests', $paths['shared']);
     }
 
 }

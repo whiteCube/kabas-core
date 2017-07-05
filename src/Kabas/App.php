@@ -160,6 +160,7 @@ class App extends Container
         if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', $public_path);
         if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
         if(!defined('CONTENT_PATH')) define('CONTENT_PATH', ROOT_PATH . DS . 'content');
+        if(!defined('SHARED_DIR')) define('SHARED_DIR', 'shared');
         if(!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . DS . 'config');
         if(!defined('THEMES_PATH')) define('THEMES_PATH', ROOT_PATH . DS . 'themes');
     }

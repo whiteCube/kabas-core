@@ -3,7 +3,7 @@
 namespace Kabas\Database;
 
 use Kabas\Utils\Text;
-
+use Kabas\Utils\Lang;
 use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 abstract class Model extends EloquentModel
@@ -59,7 +59,7 @@ abstract class Model extends EloquentModel
      * Returns the current model's repository name
      * @return string
      */
-    public function getRepository() : string
+    public function getRepositoryName() : string
     {
         return static::$repository;
     }
@@ -69,9 +69,24 @@ abstract class Model extends EloquentModel
      * @param string $locale
      * @return string
      */
-    public function getRepositoryPath($locale) : string
+    public function getRepositoryPath($locale = null) : string
     {
-        return realpath(CONTENT_PATH . DS . $locale . DS . $this->getRepository());
+        if(is_null($locale)) $locale = SHARED_DIR;
+        return realpath(CONTENT_PATH) . DS . $locale . DS . $this->getRepositoryName();
+    }
+
+    /**
+     * Returns the all the paths for the current model's content directories
+     * @return array
+     */
+    public function getRepositories() : array
+    {
+        $paths = [SHARED_DIR => $this->getRepositoryPath()];
+        if(!$this->isTranslatable()) return $paths;
+        foreach (Lang::getAll() as $locale) {
+            $paths[$locale->original] = $this->getRepositoryPath($locale->original);
+        }
+        return $paths; 
     }
 
     /**
@@ -85,6 +100,10 @@ abstract class Model extends EloquentModel
         return $path;
     }
 
+    /**
+     * Indicates if the model has translatable fields
+     * @return bool
+     */
     public function isTranslatable() : bool
     {
         return static::$translated;
@@ -160,7 +179,7 @@ abstract class Model extends EloquentModel
      */
     public function getTable()
     {
-        return $this->getRepository();
+        return $this->getRepositoryName();
     }
 
     /**

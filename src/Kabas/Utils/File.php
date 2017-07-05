@@ -152,7 +152,7 @@ class File
                 continue;
             }
             $info = pathinfo($item);
-            if($info['extension'] != 'json') continue;
+            if(!isset($info['extension']) || $info['extension'] != 'json') continue;
             $items[$info['filename']] = $item;
         }
         return $items;

@@ -10,4 +10,15 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
  */
 class Builder extends EloquentBuilder
 {
+    /**
+     * Create a new instance of the model being queried.
+     *
+     * @param  array  $attributes
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function newModelInstance($attributes = [])
+    {
+        return $this->model->newInstance($attributes);
+    }
+ 
 }

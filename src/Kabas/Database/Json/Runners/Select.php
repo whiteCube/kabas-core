@@ -32,27 +32,67 @@ class Select
      */
     public function run()
     {
-        return $this->loadModelCache($this->getLocale(), $this->hasOtherWheresThanKey())
+        return $this->loadModelCache()
+            ->applyWheres()
             ->applyLimit()
             ->toData();
     }
 
     /**
-     * Checks if the query should perform any
-     * other where statement than on the primary key
-     * @return boolean
+     * Performs conditions to reduce current stack
+     * @return this
      */
-    protected function hasOtherWheresThanKey()
+    protected function applyWheres()
     {
-        if(!$this->wheres) return false;
-        // TODO : check where statements
-        return true;
+        if(is_null($this->query->wheres)) return $this;
+        foreach ($this->query->wheres as $condition) {
+            $this->stack = $this->applyCondition($condition, $this->stack);
+        }
+        return $this;
     }
 
-    protected function getLocale()
+    /**
+     * Performs single condition on given stack
+     * @param array $condition
+     * @param array $stack
+     * @return array
+     */
+    protected function applyCondition($condition, $stack)
     {
-        // TODO : define locale from query ?
-        return Lang::getOrDefault()->original;
+        return array_filter($stack, function($item) use ($condition) {
+            $column = $this->getColumnValue($item, $condition['column']);
+            return $this->runCondition($column, $condition['operator'], $condition['value']);
+        });
+    }
+
+    /**
+     * Tests if given argument applys to given value using given operator
+     * @param string $argument
+     * @param string $operator
+     * @param string $value
+     * @return bool
+     */
+    protected function runCondition($argument, $operator, $value)
+    {
+        switch ($operator) {
+            //  TODO : all other available operators
+            case '=': return ($argument == $value); break;
+        }
+    }
+
+    /**
+     * Returns the column's real value for given item
+     * @param Kabas\Database\Json\Cache\Item $item
+     * @param string $key
+     * @return mixed
+     */
+    protected function getColumnValue($item, $key)
+    {
+        if($key === $this->query->getModel()->getQualifiedKeyName()) {
+            return $item->key;
+        }
+        // TODO : apply locale on get()
+        return $item->get()->data->{$key} ?? null;
     }
 
     /**
@@ -72,10 +112,9 @@ class Select
      */
     protected function toData()
     {
-        $data = [];
-        foreach ($this->stack as $key => $item) {
-            $data[] = $item->toDataObject($this->query->getModel()->getQualifiedKeyName());
-        }
-        return $data;
+        return array_map(function($item) {
+            // TODO : apply locale on toDataObject
+            return $item->toDataObject($this->query->getModel()->getQualifiedKeyName());
+        }, $this->stack);
     }
 }
