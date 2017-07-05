@@ -82,6 +82,7 @@ class Settings
      */
     protected function registerConfigurationConstants()
     {
+        if(!defined('DEBUG')) define('DEBUG', $this->get('app.debug'));
         if(!defined('THEME')) define('THEME', $this->get('site.theme'));
         if(!defined('THEME_PATH')) define('THEME_PATH', THEMES_PATH . DS . THEME);
     }
