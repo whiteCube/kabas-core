@@ -17,7 +17,7 @@ trait HasOperator
         '<=>' => null,
         'like' => 'IsLike',
         'like binary' => null,
-        'not like' => null,
+        'not like' => 'IsNotLike',
         'between' => null,
         'ilike' => null,
         '&' => null,
