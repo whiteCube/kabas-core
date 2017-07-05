@@ -2,6 +2,8 @@
 
 namespace Kabas\Database\Json\Runners\Concerns;
 
+use Kabas\Database\Json\Runners\Exceptions\InvalidOperatorException;
+
 trait HasOperator
 {
     static protected $operators = [
@@ -57,8 +59,7 @@ trait HasOperator
     protected function getOperatorName($grammar)
     {
         if(!isset(static::$operators[$grammar])) {
-            // TODO : NotAJsonOperator or something similar
-            throw new Exception("Error Processing Request", 1);
+            throw new InvalidOperatorException($grammar);
         }
         return static::$operators[$grammar];
     }
