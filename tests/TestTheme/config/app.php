@@ -44,6 +44,7 @@ return [
        */
       'aliases' => [
             'Assets' => Kabas\Utils\Assets::class,
+            'Auth' => Kabas\Utils\Auth::class,
             'Benchmark' => Kabas\Utils\Benchmark::class,
             'Lang' => Kabas\Utils\Lang::class,
             'Menu' => Kabas\Utils\Menu::class,
