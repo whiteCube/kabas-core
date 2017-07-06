@@ -19,7 +19,7 @@ trait HasOperator
         'like binary' => 'IsCaseSensitivelyLike',
         'not like' => 'IsNotLike',
         'between' => null,
-        'ilike' => null,
+        'ilike' => 'IsCaseSensitivelyLike',
         '&' => null,
         '|' => null,
         '^' => null,
