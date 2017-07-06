@@ -2,11 +2,11 @@
 
 namespace Kabas\Database\Json\Runners\Operators\Expressions;
 
-class Like
+class Like extends Expression implements ExpressionInterface
 {
     protected $escape;
 
-    protected $parsed;
+    protected $prepared;
 
     /**
      * Makes a new "LIKE" Operator
@@ -14,13 +14,14 @@ class Like
      * @return void
      */
     public function __construct($expression, $escape = '\\') {
+        parent::__construct($expression);
         $this->escape = preg_quote($escape, '/');
-        $this->parsed = $this->parse($expression, $escape);
+        $this->prepared = $this->parse($expression, $escape);
     }
 
     public function toRegex()
     {
-        return '/^' . $this->parsed . '$/i';
+        return '/^' . $this->prepared . '$/i';
     }
 
     protected function parse($expression, $originalEscape)

@@ -2,20 +2,25 @@
 
 namespace Kabas\Database\Json\Runners\Operators;
 
-use Carbon\Carbon;
 use Kabas\Utils\Text;
+use Kabas\Database\Json\Runners\Operators\Expressions\Expression;
+use Kabas\Database\Json\Runners\Exceptions\InvalidExpressionException;
 
 abstract class Operator
 {
     protected $expression;
 
+    protected $type;
+
     /**
      * Makes a new simple Operator
      * @param string $expression
+     * @param string $type
      * @return void
      */
-    public function __construct($expression) {
-        $this->expression = $this->castValue($expression);
+    public function __construct($expression, $type) {
+        $this->expression = $this->makeExpression($expression);
+        $this->type = $type;
     }
 
     /**
@@ -23,7 +28,7 @@ abstract class Operator
      * @return string
      */
     public function getExpressionString() {
-        return (string) $this->expression;
+        return $this->expression->toString();
     }
 
     /**
@@ -35,39 +40,34 @@ abstract class Operator
     }
 
     /**
-     * Transforms value to usable values if needed.
-     * @param mixed $value
-     * @return mixed
+     * Returns the key/column type this operator should perform on
+     * @return string
      */
-    protected function castValue($value) {
-        $value = $this->castNullStringToNull($value);
-        return $this->castDateStringToDate($value);
+    public function getType() {
+        return $this->type;
     }
 
     /**
-     * Transforms "null" strings to real null values if needed.
-     * @param mixed $value
-     * @return mixed
+     * Returns a basic expression instance
+     * @param mixed $expression
+     * @return Kabas\Database\Json\Runners\Operators\Expressions\Expression
      */
-    protected function castNullStringToNull($value) {
-        if(!is_string($value)) return $value;
-        if(strtolower($value) == 'null') return null;
-        return $value;
+    protected function makeExpression($expression) {
+        return new Expression($expression);
     }
-
+    
     /**
-     * Transforms date strings to Carbon instances if needed.
-     * @param mixed $value
+     * Transforms given expression to key type syntax
+     * @param Kabas\Database\Json\Runners\Operators\Expressions\Expression $expression
+     * @throws Kabas\Database\Json\Runners\Exceptions\InvalidExpressionException
      * @return mixed
      */
-    protected function castDateStringToDate($value) {
-        if(!is_string($value)) return $value;
-        if(strlen($value) < 2) return $value;
+    protected function prepare(Expression $expression) {
         try {
-            $date = Carbon::parse($value);
+            $value = $expression->toType($this->getType());
         } catch (\Exception $e) {
-            return $value;
+            throw new InvalidExpressionException($this, null, $e);
         }
-        return $date;
+        return $value;
     }
 }

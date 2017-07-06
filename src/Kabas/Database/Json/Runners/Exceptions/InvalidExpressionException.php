@@ -13,7 +13,7 @@ class InvalidExpressionException extends Exception
     public function __construct(OperatorInterface $operator, $code = 500, Exception $previous = null)
     {
         $this->clean();
-        $message = 'Operator "'. $operator->getName() .'" has an invalid expression "' . $operator->getExpressionString() . '"';
+        $message = 'Operator "'. $operator->getName() .'" for key type "' . $operator->getType() '" has an invalid expression "' . $operator->getExpressionString() . '"';
         parent::__construct($message, $code, $previous);
     }
 

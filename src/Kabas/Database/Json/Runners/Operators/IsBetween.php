@@ -2,23 +2,16 @@
 
 namespace Kabas\Database\Json\Runners\Operators;
 
-use Carbon\Carbon;
-use Kabas\Database\Json\Runners\Exceptions\InvalidExpressionException;
-
 class IsBetween extends Operator implements OperatorInterface
 {
-    protected $expression;
-
-    protected $type;
-
     /**
      * Makes a new "BETWEEN" Operator
      * @param array $expression
+     * @param string $type
      * @return void
      */
-    public function __construct(array $expression) {
-        $this->expression = $this->cleanupExpression($expression);
-        $this->type = $this->guessType();
+    public function __construct(array $expression, $type) {
+        parent::__construct($expression, $type);
     }
 
     /**
@@ -27,46 +20,11 @@ class IsBetween extends Operator implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        $value = $this->castValue($value);
-        if($this->type == 'date') {
-            if(!is_a($value, Carbon::class)) return false;
-            return ($value->gte($this->expression[0]) && $value->lte($this->expression[1]));
+        $value = $this->prepare(parent::makeExpression($value));
+        if($this->getType() == 'date') {
+            return ($value->gte($this->minimum()) && $value->lte($this->maximum()));
         }
-        return ($value >= $this->expression[0] && $value <= $this->expression[1]);
-    }
-
-    /**
-     * Cleans array of expressions for between use.
-     * @param array $values
-     * @return array
-     */
-    protected function cleanupExpression($values) {
-        return array_map(function($expression) {
-            return $this->castValue($expression);
-        }, array_replace([null, null], array_slice(array_values($values), 0, 2)));
-    }
-
-    /**
-     * Returns the type of comparaison we shold perform
-     * @return string
-     */
-    protected function guessType() {
-        $type = $this->getType($this->expression[0]);
-        if($type != $this->getType($this->expression[1]) || $type == 'NULL') {
-            throw new InvalidExpressionException($this);
-        }
-        return $type;
-    }
-
-    /**
-     * Returns the type of given expression
-     * @param mixed $value
-     * @return string
-     */
-    protected function getType($value) {
-        if(is_null($value)) return 'NULL';
-        if(is_object($value) && is_a($value, Carbon::class)) return 'date';
-        return 'regular';
+        return ($value >= $this->minimum() && $value <= $this->maximum());
     }
 
     /**
@@ -74,6 +32,35 @@ class IsBetween extends Operator implements OperatorInterface
      * @return string
      */
     public function getExpressionString() {
-        return $this->getName() . ' ' . ($this->expression[0] ?? 'NULL') . ' AND ' . ($this->expression[1] ?? 'NULL');
+        return 'BETWEEN ' . implode(' AND ', array_map(function($expression) {
+            return $expression->toType($this->type, true);
+        }, $this->expression));
+    }
+
+    /**
+     * Returns a basic expression instance
+     * @param $values
+     * @return array
+     */
+    protected function makeExpression($values) {
+        return array_map(function($expression) {
+            return parent::makeExpression($expression);
+        }, array_replace([null, null], array_slice(array_values($values), 0, 2)));
+    }
+
+    /**
+     * Returns first expression prepared for key type
+     * @return mixed
+     */
+    protected function minimum() {
+        return $this->prepare($this->expression[0]);
+    }
+
+    /**
+     * Returns second expression prepared for key type
+     * @return mixed
+     */
+    protected function maximum() {
+        return $this->prepare($this->expression[1]);
     }
 }

@@ -13,6 +13,9 @@ class Container
      */
     protected $supported = [];
 
+    const DEFAULT = 'text';
+    const KEY = 'number';
+
     public function __construct()
     {
         foreach(scandir( __DIR__ . DS . 'Types' ) as $file) {
@@ -33,7 +36,7 @@ class Container
     {
         // If the developper did not provide a field type, we'll
         // assume it is a regular text field.
-        $type = $this->getClass($structure->type ?? 'text');
+        $type = $this->getClass($structure->type ?? static::DEFAULT);
         return new $type($name, $value, $structure);
     }
 
