@@ -44,4 +44,14 @@ class Query extends QueryBuilder
         $select = new Select($this);
         return $select->run();
     }
+
+    /**
+     * Determine if the given operator is supported.
+     * @param  string  $operator
+     * @return bool
+     */
+    protected function invalidOperator($operator)
+    {
+        return !in_array(strtolower($operator), $this->operators, true);
+    }
 }

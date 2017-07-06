@@ -4,6 +4,7 @@ namespace Kabas\Database\Json\Runners;
 
 use Kabas\Utils\Lang;
 use Kabas\Database\Json\Query;
+use Kabas\Database\Json\Runners\Conditions\Nested as NestedCondition;
 
 class Select
 {
@@ -34,6 +35,7 @@ class Select
     {
         return $this->loadModelCache()
             ->applyWheres()
+            ->applyOrder()
             ->applyLimit()
             ->toData();
     }
@@ -44,55 +46,23 @@ class Select
      */
     protected function applyWheres()
     {
-        if(is_null($this->query->wheres)) return $this;
-        foreach ($this->query->wheres as $condition) {
-            $this->stack = $this->applyCondition($condition, $this->stack);
-        }
+        $conditions = new NestedCondition(['query' => $this->query, 'boolean' => 'AND']);
+        $this->stack = $conditions->apply($this->stack);
         return $this;
     }
 
     /**
-     * Performs single condition on given stack
-     * @param array $condition
-     * @param array $stack
-     * @return array
+     * Reorders current stack using the query's order
+     * statement or key (filename) if not defined
+     * @return this
      */
-    protected function applyCondition($condition, $stack)
+    protected function applyOrder()
     {
-        return array_filter($stack, function($item) use ($condition) {
-            $column = $this->getColumnValue($item, $condition['column']);
-            return $this->runCondition($column, $condition['operator'], $condition['value']);
-        });
-    }
-
-    /**
-     * Tests if given argument applys to given value using given operator
-     * @param string $argument
-     * @param string $operator
-     * @param string $value
-     * @return bool
-     */
-    protected function runCondition($argument, $operator, $value)
-    {
-        switch ($operator) {
-            //  TODO : all other available operators
-            case '=': return ($argument == $value); break;
+        if(!$this->query->orders) {
+            ksort($this->stack);
+            return $this;
         }
-    }
-
-    /**
-     * Returns the column's real value for given item
-     * @param Kabas\Database\Json\Cache\Item $item
-     * @param string $key
-     * @return mixed
-     */
-    protected function getColumnValue($item, $key)
-    {
-        if($key === $this->query->getModel()->getQualifiedKeyName()) {
-            return $item->key;
-        }
-        // TODO : apply locale on get()
-        return $item->get()->data->{$key} ?? null;
+        // TODO : real sorting on the $this->query->orders array
     }
 
     /**
