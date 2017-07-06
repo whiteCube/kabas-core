@@ -16,7 +16,7 @@ trait HasOperator
         '!=' => 'IsDifferentFrom',
         '<=>' => 'IsEqualTo',
         'like' => 'IsLike',
-        'like binary' => null,
+        'like binary' => 'IsCaseSensitivelyLike',
         'not like' => 'IsNotLike',
         'between' => null,
         'ilike' => null,
