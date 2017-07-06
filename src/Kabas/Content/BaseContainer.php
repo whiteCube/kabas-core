@@ -37,6 +37,11 @@ class BaseContainer
         return $this->items;
     }
 
+    public function count()
+    {
+        return count($this->items);
+    }
+
     /**
      * Check if item exists
      * @param  string $id
