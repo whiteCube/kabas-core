@@ -54,4 +54,21 @@ class Query extends QueryBuilder
     {
         return !in_array(strtolower($operator), $this->operators, true);
     }
+
+    /**
+     * Add a where between statement to the query.
+     *
+     * @param  string  $column
+     * @param  array   $value
+     * @param  string  $boolean
+     * @param  bool  $not
+     * @return $this
+     */
+    public function whereBetween($column, array $value, $boolean = 'and', $not = false)
+    {
+        $type = 'Basic';
+        $operator = 'between';
+        $this->wheres[] = compact('column', 'type', 'operator', 'value', 'boolean', 'not');
+        return $this;
+    }
 }

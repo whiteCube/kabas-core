@@ -18,7 +18,7 @@ trait HasOperator
         'like' => 'IsLike',
         'like binary' => 'IsCaseSensitivelyLike',
         'not like' => 'IsNotLike',
-        'between' => null,
+        'between' => 'IsBetween',
         'ilike' => 'IsCaseSensitivelyLike',
         '&' => null,
         '|' => null,

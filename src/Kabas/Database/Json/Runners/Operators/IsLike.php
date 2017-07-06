@@ -4,7 +4,7 @@ namespace Kabas\Database\Json\Runners\Operators;
 
 use Kabas\Database\Json\Runners\Operators\Expressions\Like;
 
-class IsLike implements OperatorInterface
+class IsLike extends Operator implements OperatorInterface
 {
     protected $expression;
 
