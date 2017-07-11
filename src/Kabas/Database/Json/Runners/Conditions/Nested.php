@@ -53,11 +53,20 @@ class Nested implements ConditionInterface
      * @return \Kabas\Database\Json\Runners\Conditions\ConditionInterface
      */
     protected function makeCondition($info) {
-        if(!isset($info['query'])) {
-            $info['query'] = $this->query;
-        }
+        $info = $this->alterConditionInfo($info);
         $condition = '\\Kabas\\Database\\Json\\Runners\\Conditions\\' . $info['type'];
         return new $condition($info);
+    }
+
+    /**
+     * Transforms Eloquent condition information to usable
+     * JSON Driver condition information.
+     * @param array $info
+     * @return array
+     */
+    protected function alterConditionInfo($info) {
+        if(!isset($info['query'])) $info['query'] = $this->query;
+        return $info;
     }
 
     /**

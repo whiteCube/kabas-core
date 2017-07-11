@@ -2,18 +2,14 @@
 
 namespace Kabas\Database\Json\Runners\Operators;
 
-use Kabas\Database\Json\Runners\Concerns\HasSimpleExpression;
-
-class IsGreaterThan implements OperatorInterface
+class IsGreaterThan extends Operator implements OperatorInterface
 {
-    use HasSimpleExpression;
-
     /**
      * Tests if given value is equal to this expression
      * @param mixed $value
      * @return bool
      */
     public function compare($value) : bool {
-        return ($value > $this->expression);
+        return ($this->castNullStringToNull($value) > $this->expression);
     }
 }

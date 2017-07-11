@@ -24,7 +24,7 @@ class Basic implements ConditionInterface
     public function __construct($info) {
         $this->query = $info['query'];
         $this->key = $info['column'];
-        $this->operator = $this->makeOperator($info['operator'], $info['value']);
+        $this->operator = $this->makeOperator($info['operator'], $info['value'], $this->key);
         $this->setBooleanMode($info['boolean']);
     }
 

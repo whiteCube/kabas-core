@@ -62,6 +62,17 @@ trait HasFields
         if(is_null(static::$rawFields)) $this->loadRawFields();
         return static::$rawFields;
     }
+
+    /**
+     * Returns a raw field from static rawFields repository
+     * @param string $key
+     * @return object|false
+     */
+    public function getRawField($key)
+    {
+        if(!($fields = $this->getRawFields())) return false;
+        return $fields->{$key} ?? false;
+    }
     
     /**
      * Create all field instances for this model and fill with given attribute values

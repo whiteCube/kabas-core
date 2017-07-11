@@ -4,19 +4,8 @@ namespace Kabas\Database\Json\Runners\Operators;
 
 use Kabas\Database\Json\Runners\Operators\Expressions\Like;
 
-class IsLike implements OperatorInterface
+class IsLike extends Operator implements OperatorInterface
 {
-    protected $expression;
-
-    /**
-     * Makes a new "LIKE" Operator
-     * @param string $expression
-     * @return void
-     */
-    public function __construct($expression) {
-        $this->expression = $this->makeRegexFromExpression($expression);
-    }
-
     /**
      * Tests if given value is equal to this expression
      * @param mixed $value
@@ -31,7 +20,7 @@ class IsLike implements OperatorInterface
      * @param string $expression
      * @return Kabas\Database\Json\Runners\Operators\Expressions\Like
      */
-    protected function makeRegexFromExpression($expression)
+    protected function makeExpression($expression)
     {
         return new Like($expression);
     }

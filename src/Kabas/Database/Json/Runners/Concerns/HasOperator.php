@@ -3,6 +3,7 @@
 namespace Kabas\Database\Json\Runners\Concerns;
 
 use Kabas\Database\Json\Runners\Exceptions\InvalidOperatorException;
+use Kabas\Fields\Container as Fields;
 
 trait HasOperator
 {
@@ -16,10 +17,10 @@ trait HasOperator
         '!=' => 'IsDifferentFrom',
         '<=>' => 'IsEqualTo',
         'like' => 'IsLike',
-        'like binary' => null,
+        'like binary' => 'IsCaseSensitivelyLike',
         'not like' => 'IsNotLike',
-        'between' => null,
-        'ilike' => null,
+        'between' => 'IsBetween',
+        'ilike' => 'IsCaseSensitivelyLike',
         '&' => null,
         '|' => null,
         '^' => null,
@@ -43,12 +44,13 @@ trait HasOperator
      * Instantiates an operator for given SQL operator and expression
      * @param string $grammar
      * @param string $expression
+     * @param string $key
      * @return Kabas\Database\Json\Runners\Operators\OperatorInterface
      */
-    protected function makeOperator($grammar, $expression)
+    protected function makeOperator($grammar, $expression, $key)
     {
         $operator = '\\Kabas\\Database\\Json\\Runners\\Operators\\' . $this->getOperatorName($grammar);
-        return new $operator($expression);
+        return new $operator($expression, $this->getKeyType($key));
     }
 
     /**
@@ -63,5 +65,16 @@ trait HasOperator
             throw new InvalidOperatorException($grammar);
         }
         return static::$operators[$grammar];
+    }
+
+    /**
+     * Returns the underlaying field type for given key
+     * @param string $key
+     * @return string
+     */
+    protected function getKeyType($key)
+    {
+        if($this->query->getModel()->getQualifiedKeyName() == $key) return Fields::KEY;
+        return $this->query->getModel()->getRawField($key)->type ?? Fields::DEFAULT;
     }
 }
