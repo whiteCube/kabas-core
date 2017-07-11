@@ -80,9 +80,6 @@ class MenuItem
      */
     protected function getTargetUrl()
     {
-        echo '<pre>';
-        var_dump($this);
-        echo '</pre>';
         foreach ($this->fields as $field) {
             if($field->getType() == 'Url') return $field;
         }

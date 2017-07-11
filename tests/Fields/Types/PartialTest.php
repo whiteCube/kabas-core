@@ -71,13 +71,5 @@ class PartialTest extends TestCase
         $this->expectException(NotFoundException::class);
         $this->createPartial('baz');
     }
-
-    /** @test */
-    public function returns_false_if_partial_does_not_exist()
-    {
-        $partial = $this->createPartial('foo');
-        $this->assertSame(0, $partial->count());
-    }
-
     
 }
