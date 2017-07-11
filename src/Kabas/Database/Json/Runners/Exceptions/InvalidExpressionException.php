@@ -10,11 +10,11 @@ class InvalidExpressionException extends Exception
 {
     use CleansOutputBuffering;
 
-    public function __construct(OperatorInterface $operator, $code = 500, Exception $previous = null)
+    public function __construct(OperatorInterface $operator, $code = null, Exception $previous = null)
     {
         $this->clean();
-        $message = 'Operator "'. $operator->getName() .'" for key type "' . $operator->getType() '" has an invalid expression "' . $operator->getExpressionString() . '"';
-        parent::__construct($message, $code, $previous);
+        $message = 'Operator "' . $operator->getName() . '" for key type "' . $operator->getType() . '" has an invalid expression "' . $operator->getExpressionString() . '"';
+        parent::__construct($message, $code ?? 500, $previous);
     }
 
 }
