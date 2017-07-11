@@ -46,7 +46,7 @@ class Item extends BaseItem
         return File::writeJson($this->data, $this->getPath($username));
     }
 
-    public function authenticate($password)
+    public function login($password)
     {
         if($matches = password_verify($password, (string) $this->password)) {
             Session::set('_kabas.authenticated', true);
