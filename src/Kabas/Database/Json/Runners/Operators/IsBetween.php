@@ -12,6 +12,7 @@ class IsBetween extends Operator implements OperatorInterface
      */
     public function __construct(array $expression, $type) {
         parent::__construct($expression, $type);
+        $this->checkExpressions();
     }
 
     /**
@@ -33,7 +34,7 @@ class IsBetween extends Operator implements OperatorInterface
      */
     public function getExpressionString() {
         return 'BETWEEN ' . implode(' AND ', array_map(function($expression) {
-            return $expression->toType($this->type, true);
+            return $expression->toType($this->getType(), true);
         }, $this->expression));
     }
 
@@ -62,5 +63,11 @@ class IsBetween extends Operator implements OperatorInterface
      */
     protected function maximum() {
         return $this->prepare($this->expression[1]);
+    }
+
+    protected function checkExpressions() {
+        foreach ($this->expression as $expression) {
+            $this->prepare($expression);
+        }
     }
 }

@@ -28,7 +28,7 @@ abstract class Operator
      * @return string
      */
     public function getExpressionString() {
-        return $this->expression->toString();
+        return $this->expression->__toString();
     }
 
     /**
@@ -68,6 +68,7 @@ abstract class Operator
         } catch (\Exception $e) {
             throw new InvalidExpressionException($this, null, $e);
         }
+        var_dump($value, $expression, $this->getType());
         return $value;
     }
 }
