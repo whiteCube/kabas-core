@@ -67,11 +67,13 @@ class Container extends BaseContainer
         return Session::forget('_kabas.authenticated');
     }
 
-    public function authenticate($username, $password)
+    public function login($data)
     {
+        $username = $data[0];
+        $password = $data[1];
         if(!$this->has($username)) return false;
         $user = $this->get($username);
-        return $user->authenticate($password);
+        return $user->login($password);
     }
 
     protected function validate(array $data)
@@ -79,6 +81,24 @@ class Container extends BaseContainer
         return  isset($data['password']) 
                 && isset($data['username']) 
                 && !$this->has($data['username']);
+    }
+
+    /**
+     * Recursively go through the files array to instanciate items
+     * @param  array $files
+     * @return array
+     */
+    protected function loop($files)
+    {
+        $items = [];
+        foreach($files as $name => $file) {
+            $file->id = $file->id ?? $this->extractNameFromFile($name);
+            $file->template = $file->template ?? $this->extractNameFromFile($name);
+            $file->username = $file->id;
+            if(is_array($file)) $this->loop($file);
+            else $items[$file->id] = $this->makeItem($file);
+        }
+        return $items;
     }
 
     //    TODO :
