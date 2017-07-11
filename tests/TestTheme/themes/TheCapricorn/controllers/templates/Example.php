@@ -2,6 +2,7 @@
 
 namespace Theme\TheCapricorn\Templates;
 
+use \Auth;
 use Kabas\App;
 use Kabas\Utils\Uploads;
 use Kabas\Controller\TemplateController;

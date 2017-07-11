@@ -13,7 +13,7 @@ class Item extends BaseItem
 
     public function __construct($data, $encrypt)
     {
-        if($encrypt) $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        if($encrypt) $data->password = password_hash($data->password, PASSWORD_BCRYPT);
         return parent::__construct($data);
     }
 
@@ -40,8 +40,10 @@ class Item extends BaseItem
     }
 
     public function persist()
-    {
-        return File::writeJson($this->data, $this->getPath());
+    {  
+        $username = $this->data->username;
+        unset($this->data->username);
+        return File::writeJson($this->data, $this->getPath($username));
     }
 
     public function authenticate($password)
@@ -52,8 +54,8 @@ class Item extends BaseItem
         return $matches;
     }
 
-    protected function getPath()
+    protected function getPath($username)
     {
-        return STORAGE_PATH . DS . $this->directory . DS . $this->username;
+        return STORAGE_PATH . DS . $this->directory . DS . $username;
     }
 }

@@ -81,6 +81,24 @@ class Container extends BaseContainer
                 && !$this->has($data['username']);
     }
 
+    /**
+     * Recursively go through the files array to instanciate items
+     * @param  array $files
+     * @return array
+     */
+    protected function loop($files)
+    {
+        $items = [];
+        foreach($files as $name => $file) {
+            $file->id = $file->id ?? $this->extractNameFromFile($name);
+            $file->template = $file->template ?? $this->extractNameFromFile($name);
+            $file->username = $file->id;
+            if(is_array($file)) $this->loop($file);
+            else $items[$file->id] = $this->makeItem($file);
+        }
+        return $items;
+    }
+
     //    TODO :
     //    All the following should move to BaseItem
     //    and be supported on each content type.
