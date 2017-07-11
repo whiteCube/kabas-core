@@ -1,6 +1,6 @@
 # Kabas
 
-[![Travis](https://img.shields.io/travis/whiteCube/kabas-core.svg)]()
+[![Travis](https://travis-ci.org/whiteCube/kabas-core.svg?branch=master)]()
 [![Code Climate](https://img.shields.io/codeclimate/coverage/github/whiteCube/kabas-core.svg)]()
 [![GitHub release](https://img.shields.io/github/tag/whiteCube/kabas-core.svg)]()
 [![Github All Releases](https://img.shields.io/github/downloads/whiteCube/kabas-core/total.svg)]()
