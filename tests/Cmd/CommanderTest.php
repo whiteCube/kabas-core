@@ -123,6 +123,17 @@ class CommanderTest extends TestCase
     }
 
     /** @test */
+    public function can_use_the_default_driver_when_making_a_model()
+    {
+        $this->catch(function() {
+            $this->cmd('make:model', 'news');
+            $this->assertTrue($this->hasFile('FooTheme', 'models', 'News.php'));
+            $this->assertTrue($this->hasFile('FooTheme', 'structures', 'models', 'news.json'));
+            $this->assertTrue($this->fileContains('Kabas\Database\Json\Model', 'FooTheme', 'models', 'News.php'));
+        });
+    }
+
+    /** @test */
     public function can_create_content_files_for_pages()
     {
         $this->catch(function() {
@@ -265,6 +276,16 @@ class CommanderTest extends TestCase
             $path .= DS . $pathFragment;
         }
         return unlink($path);
+    }
+
+    public function fileContains($needle, ...$pathFragments)
+    {
+        $path = THEMES_DIR;
+        foreach($pathFragments as $pathFragment) {
+            $path .= DS . $pathFragment;
+        }
+        $contents = file_get_contents($path);
+        return strpos($contents, $needle) !== false;
     }
 
 }
