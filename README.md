@@ -3,7 +3,7 @@
 [![Travis](https://travis-ci.org/whiteCube/kabas-core.svg?branch=master)](https://travis-ci.org/whiteCube/kabas-core)
 [![Code Climate](https://img.shields.io/codeclimate/coverage/github/whiteCube/kabas-core.svg)](https://codeclimate.com/github/whiteCube/kabas-core)
 [![GitHub release](https://img.shields.io/github/tag/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/releases)
-[![Github All Releases](https://img.shields.io/github/downloads/whiteCube/kabas-core/total.svg)](https://github.com/whiteCube/kabas-core/releases)
+[![Packagist](https://img.shields.io/packagist/dt/kabas/core.svg)](https://packagist.org/packages/kabas/core)
 [![GitHub issues](https://img.shields.io/github/issues/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/pulls)
 [![license](https://img.shields.io/github/license/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/blob/master/LICENSE)
