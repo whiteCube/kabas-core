@@ -12,35 +12,12 @@ class Container extends BaseContainer
 {
 
     /**
-     * Load the specified administrator into memory.
-     * @param  string $admin
-     * @return object
-     */
-    public function load($admin)
-    {
-        if($item = $this->get($admin)) return $item;
-        $item = $this->loadItem($admin);
-        $this->items[$admin] = $this->makeItem($item);
-        return $this->items[$admin];
-    }
-
-    /**
      * Returns path to administrators directory
      * @return string
      */
     protected function getPath($lang = null)
     {
         return STORAGE_PATH . DS . 'administrators';
-    }
-
-    /**
-     * Returns path to option JSON file
-     * @param  string $file
-     * @return string
-     */
-    protected function getFile($file)
-    {
-        return realpath($this->path . DS . $file . '.json');
     }
 
     protected function makeItem($file, $encrypt = false)
@@ -100,23 +77,4 @@ class Container extends BaseContainer
         }
         return $items;
     }
-
-    //    TODO :
-    //    All the following should move to BaseItem
-    //    and be supported on each content type.
-
-    protected function loadItem($id)
-    {
-        $file = $this->getFile($id);
-        if($file) return $this->loadFromContent($file);
-        // Not found.
-        throw new \Kabas\Exceptions\NotFoundException($id, 'administrator');
-    }
-
-    protected function loadFromContent($file)
-    {
-        $file = File::loadJson($file);
-        return $file;
-    }
-
 }
