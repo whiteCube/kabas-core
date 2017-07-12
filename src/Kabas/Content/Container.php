@@ -47,6 +47,7 @@ class Container
         self::setParsed(true);
         foreach ($this as $key => $container) {
             if($key === 'translator') continue;
+            var_dump($key);
             $container->parse();
         }
     }

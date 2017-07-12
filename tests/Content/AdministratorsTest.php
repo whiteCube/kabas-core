@@ -21,6 +21,7 @@ class AdministratorsTest extends TestCase
         $this->createApplication();
         $this->visit('/foo/bar');
         $this->container = new Container;
+        $this->container->parse();
     }
 
     /** @test */
@@ -35,7 +36,6 @@ class AdministratorsTest extends TestCase
         $this->createUser();
         $file = STORAGE_PATH . DS . 'administrators' . DS . 'Foo.json';
         $this->assertTrue(file_exists($file));
-        unlink($file);
     }
 
     /** @test */
@@ -77,6 +77,14 @@ class AdministratorsTest extends TestCase
         $this->assertFalse($this->container->isAuthenticated());
     }
 
+    /** @test */
+    public function can_return_the_number_of_items()
+    {
+        $this->assertSame(1, $this->container->count());
+        $this->createUser();
+        $this->assertSame(2, $this->container->count());
+    }
+
     protected function createUser()
     {
         $this->container->create([
@@ -88,6 +96,12 @@ class AdministratorsTest extends TestCase
     protected function login()
     {
         $this->container->login(['Foo', 'bar']);
+    }
+
+    public function tearDown()
+    {
+        $file = STORAGE_PATH . DS . 'administrators' . DS . 'Foo.json';
+        if(file_exists($file)) unlink($file);
     }
 
 }
