@@ -214,7 +214,7 @@ class CommanderTest extends TestCase
     /** @test */
     public function throws_exception_if_missing_args()
     {
-        $this->expectException(ArgumentMissingException::class);
+        $this->expectOutputRegex('/Missing argument/');
         $this->cmd('make:theme');
     }
 

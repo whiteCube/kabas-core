@@ -12,6 +12,7 @@ class LogTest extends TestCase
     {
         if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
         if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(__DIR__ . DS . '..' . DS . 'TestTheme'));
+        if(!is_dir(ROOT_PATH . DS . 'storage' . DS . 'logs')) mkdir(ROOT_PATH . DS . 'storage' . DS . 'logs', 0777, true);
         file_put_contents(ROOT_PATH . DS . 'storage' . DS . 'logs' . DS . 'kabas.log', '');
     }
 
