@@ -64,6 +64,7 @@ class LanguageRepository
         foreach ($this->available as $language) {
             if($language->isCurrent) return $language;
         }
+        return $this->getDefault();
     }
 
     /**

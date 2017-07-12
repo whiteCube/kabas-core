@@ -39,6 +39,6 @@ class Lang
      */
     static function trans($key, $args = [])
     {
-        return App::translator()->get($key, $args);
+        return App::content()->translator->get($key, $args);
     }
 }

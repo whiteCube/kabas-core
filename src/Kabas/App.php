@@ -3,9 +3,6 @@
 namespace Kabas;
 
 use \Illuminate\Container\Container;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Translation\FileLoader;
-use Illuminate\Translation\Translator;
 
 class App extends Container
 {
@@ -39,6 +36,23 @@ class App extends Container
      */
     protected static $translator;
 
+    /**
+     * The classes to instantiate for the application to work
+     * @var array
+     */
+    protected static $bootingSingletons = [
+        'config' => \Kabas\Config\Container::class,
+        'exceptions' => \Kabas\Exceptions\Handler::class,
+        'session' => \Kabas\Session\Manager::class,
+        'themes' => \Kabas\Themes\Container::class,
+        'fields' => \Kabas\Fields\Container::class,
+        'router' => \Kabas\Http\Router::class,
+        'content' => \Kabas\Content\Container::class,
+        'uploads' => \Kabas\Objects\Uploads\Container::class,
+        'request' => \Kabas\Http\Request::class,
+        'response' => \Kabas\Http\Response::class
+    ];
+
     public function __construct($public_path)
     {
         self::$instance = $this;
@@ -62,7 +76,7 @@ class App extends Container
      */
     public function boot(array $singletons = null)
     {
-        if(is_null($singletons)) $singletons = static::getBootingSingletons();
+        if(is_null($singletons)) $singletons = static::$bootingSingletons;
         $this->registerBindings($singletons);
     }
 
@@ -77,30 +91,8 @@ class App extends Container
         $this->router->capture()->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->page;
-        $this->loadTranslations();
         $this->response->init($this->page);
         $this->session->save();
-    }
-    
-    /**
-     * Returns the classes to boot as singletons
-     * on a regular setup.
-     * @return array
-     */
-    protected static function getBootingSingletons()
-    {
-        return [
-            'config' => \Kabas\Config\Container::class,
-            'exceptions' => \Kabas\Exceptions\Handler::class,
-            'session' => \Kabas\Session\Manager::class,
-            'themes' => \Kabas\Themes\Container::class,
-            'fields' => \Kabas\Fields\Container::class,
-            'router' => \Kabas\Http\Router::class,
-            'content' => \Kabas\Content\Container::class,
-            'uploads' => \Kabas\Objects\Uploads\Container::class,
-            'request' => \Kabas\Http\Request::class,
-            'response' => \Kabas\Http\Response::class
-        ];
     }
 
     /**
@@ -112,14 +104,6 @@ class App extends Container
         foreach($this->config->get('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
-    }
-
-    public function loadTranslations()
-    {
-        $locale = $this->config->languages->getCurrent()->original;
-        $path = THEME_PATH . '/lang';
-        $translationLoader = new FileLoader(new Filesystem, $path);
-        $this->translator = new Translator($translationLoader, $locale);
     }
 
     /**
