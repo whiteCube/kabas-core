@@ -16,13 +16,13 @@ class Repeater extends Repeatable
     protected function parse($value)
     {
         $a = [];
-        if(is_array($value)){
-            $class = App::fields()->getClass('group');
-            foreach ($value as $i => $item) {
-                $options = ['options' => $this->options[0]];
-                $a[] = new $class($this->getMultiFieldname($i), $item, $options);
-            }
+        if(!is_array($value)) return $a;
+        $class = App::fields()->getClass($this->options->type);
+
+        foreach ($value as $i => $item) {
+            $a[] = new $class($this->getMultiFieldname($i), $item, $this->options);
         }
+        
         return $a;
     }
 

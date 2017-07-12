@@ -6,7 +6,7 @@ use Kabas\Controller\PartialController;
 
 class Foo extends PartialController
 {
-    public static $template = 'test.php';
+    public static $template = 'test';
 
     protected function setup()
     {

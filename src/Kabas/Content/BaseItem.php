@@ -126,11 +126,7 @@ class BaseItem
     protected function loadStructure()
     {
         if(!is_null($this->structure)) return;
-        try {
-            $this->structure = File::loadJson($this->getStructureFile());
-        } catch (FileNotFoundException $e) {
-            $this->structure = null;
-        }
+        $this->structure = File::loadJson($this->getStructureFile());
     }
 
     protected function getStructureFile()
