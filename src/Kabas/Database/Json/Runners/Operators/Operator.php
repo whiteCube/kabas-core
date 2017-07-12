@@ -48,6 +48,15 @@ abstract class Operator
     }
 
     /**
+     * Returns a prepared expression for given value
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function toType($value) {
+        return $this->prepare($this->makeExpression($value));
+    }
+
+    /**
      * Returns a basic expression instance
      * @param mixed $expression
      * @return Kabas\Database\Json\Runners\Operators\Expressions\Expression
@@ -68,7 +77,6 @@ abstract class Operator
         } catch (\Exception $e) {
             throw new InvalidExpressionException($this, null, $e);
         }
-        var_dump($value, $expression, $this->getType());
         return $value;
     }
 }

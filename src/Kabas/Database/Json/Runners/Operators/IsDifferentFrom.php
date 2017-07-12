@@ -10,6 +10,9 @@ class IsDifferentFrom extends Operator implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        return ($this->castNullStringToNull($value) != $this->expression);
+        $value = $this->toType($value);
+        $expression = $this->prepare($this->expression);
+        if($this->getType() == 'date') return $value->ne($expression);
+        return ($value != $expression);
     }
 }

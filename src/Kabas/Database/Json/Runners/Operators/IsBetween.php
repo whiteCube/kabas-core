@@ -21,7 +21,7 @@ class IsBetween extends Operator implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        $value = $this->prepare(parent::makeExpression($value));
+        $value = $this->toType($value);
         if($this->getType() == 'date') {
             return ($value->gte($this->minimum()) && $value->lte($this->maximum()));
         }

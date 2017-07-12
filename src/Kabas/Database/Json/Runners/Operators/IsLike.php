@@ -12,7 +12,7 @@ class IsLike extends Operator implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        return (bool) preg_match($this->expression->toRegex(), $value);
+        return (bool) preg_match($this->expression->toRegex(), $this->prepare($this->expression));
     }
 
     /**
