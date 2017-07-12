@@ -26,7 +26,19 @@ class Commander
         $this->settings = new Settings();
         $this->languages = new LanguageRepository($this->settings->pluck('lang.available'), $this->settings->get('lang.default'));
         $this->setThemeConstants();
-        $this->executeCommand();
+        try {
+            $this->executeCommand();
+        } catch(\Exception $e) {
+            $this->showErrorMessage($e);
+        }
+    }
+
+    protected function showErrorMessage($exception)
+    {
+        echo PHP_EOL;
+        echo '•• Error ••' . PHP_EOL;
+        echo $exception->getMessage();
+        echo PHP_EOL;
     }
 
     /**
