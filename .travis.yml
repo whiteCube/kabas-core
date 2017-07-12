@@ -14,6 +14,6 @@ addons:
   code_climate:
     repo_token: 678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
 
-after_success:
+after_script:
   - echo "Tests complete"
   - CODECLIMATE_REPO_TOKEN=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658 ./vendor/bin/test-reporter
