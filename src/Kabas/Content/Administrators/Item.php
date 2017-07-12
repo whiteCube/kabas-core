@@ -13,8 +13,14 @@ class Item extends BaseItem
 
     public function __construct($data, $encrypt)
     {
+        $this->checkDirectoryIntegrity();
         if($encrypt) $data->password = password_hash($data->password, PASSWORD_BCRYPT);
         return parent::__construct($data);
+    }
+
+    protected function checkDirectoryIntegrity()
+    {
+        if(!is_dir(STORAGE_PATH . DS . 'administrators')) mkdir(STORAGE_PATH . DS . 'administrators', 0777, true);
     }
 
     public function setData($data)
