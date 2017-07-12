@@ -181,12 +181,10 @@ class Selectable extends Item implements \IteratorAggregate
     protected function parse($value)
     {
         $this->resetSelect();
-        if($this->multiple){
-            foreach ($value as $val) {
-                $this->parseValue($val);
-            }
+        if(!is_array($value)) return $this->parseValue($value);
+        foreach ($value as $val) {
+            $this->parseValue($val);
         }
-        else $this->parseValue($value);
     }
 
     protected function parseValue($value)
