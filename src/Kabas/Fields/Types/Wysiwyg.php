@@ -50,8 +50,7 @@ class Wysiwyg extends Textual
 
       protected function updateDelta($i)
       {
-            if($this->headingLowest === false) $this->headingLowest = $i;
-            elseif($i < $this->headingLowest) $this->headingLowest = $i;
+            if($this->headingLowest === false || $i < $this->headingLowest) $this->headingLowest = $i;
       }
 
       protected function getNewHeadingTag($heading)
