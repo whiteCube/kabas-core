@@ -23,9 +23,10 @@ class RepeaterTest extends TestCase
         $data->label = 'Repeater';
         $data->type = 'repeater';
 
-        $opt1 = new \stdClass;
-        $opt1->label = 'title';
-        $opt1->type = 'text';
+        $data->options = (object) [
+            "type" => "text",
+            "label" => "Title"
+        ];
 
         $val1 = new \stdClass;
         $val1->value = 'My foo title';

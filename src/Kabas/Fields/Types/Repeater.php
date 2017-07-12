@@ -17,7 +17,6 @@ class Repeater extends Repeatable
     {
         $a = [];
         if(!is_array($value)) return $a;
-
         $class = App::fields()->getClass($this->options->type);
 
         foreach ($value as $i => $item) {
