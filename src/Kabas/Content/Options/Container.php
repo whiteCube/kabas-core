@@ -2,10 +2,10 @@
 
 namespace Kabas\Content\Options;
 
-use \Kabas\App;
-use \Kabas\Utils\File;
-use \Kabas\Utils\Text;
-use \Kabas\Content\BaseContainer;
+use Kabas\App;
+use Kabas\Utils\File;
+use Kabas\Utils\Text;
+use Kabas\Content\BaseContainer;
 
 class Container extends BaseContainer
 {

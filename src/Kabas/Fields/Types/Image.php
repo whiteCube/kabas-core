@@ -2,9 +2,9 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\App;
-use \Kabas\Fields\Uploadable;
-use \Kabas\Objects\Image\Item as ImageObject;
+use Kabas\App;
+use Kabas\Fields\Uploadable;
+use Kabas\Objects\Image\Item as ImageObject;
 
 class Image extends Uploadable
 {

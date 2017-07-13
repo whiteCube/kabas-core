@@ -5,7 +5,6 @@ namespace Kabas\Objects\Image;
 use Kabas\Objects\Image\Editor;
 use Kabas\Utils\Image;
 use Kabas\Utils\Url;
-use Kabas\App;
 
 class Item
 {

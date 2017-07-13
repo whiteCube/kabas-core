@@ -2,8 +2,8 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\Fields\Uploadable;
-use \Kabas\Utils\Url as UrlUtil;
+use Kabas\Fields\Uploadable;
+use Kabas\Utils\Url as UrlUtil;
 
 class File extends Uploadable
 {

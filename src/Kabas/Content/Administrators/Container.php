@@ -2,11 +2,11 @@
 
 namespace Kabas\Content\Administrators;
 
-use \Kabas\App;
-use \Kabas\Utils\File;
-use \Kabas\Utils\Text;
+use Kabas\App;
+use Kabas\Utils\File;
+use Kabas\Utils\Text;
 use Kabas\Utils\Session;
-use \Kabas\Content\BaseContainer;
+use Kabas\Content\BaseContainer;
 
 class Container extends BaseContainer
 {

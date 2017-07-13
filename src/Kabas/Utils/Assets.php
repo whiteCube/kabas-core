@@ -2,7 +2,7 @@
 
 namespace Kabas\Utils;
 
-use \Kabas\App;
+use Kabas\App;
 
 class Assets
 {

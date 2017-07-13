@@ -2,7 +2,6 @@
 
 namespace Kabas\Fields;
 
-use \Kabas\App;
 use Kabas\Exceptions\TypeException;
 
 class Aggregate extends Item implements \IteratorAggregate, \Countable 

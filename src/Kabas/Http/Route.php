@@ -2,9 +2,6 @@
 
 namespace Kabas\Http;
 
-use Kabas\App;
-use Kabas\Utils\Lang;
-
 class Route
 {
     /**

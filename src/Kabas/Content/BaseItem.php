@@ -2,10 +2,10 @@
 
 namespace Kabas\Content;
 
-use \Kabas\App;
-use \Kabas\Utils\File;
-use \Kabas\Utils\Text;
-use \Kabas\Fields\Item as Field;
+use Kabas\App;
+use Kabas\Utils\File;
+use Kabas\Utils\Text;
+use Kabas\Fields\Item as Field;
 use Kabas\Exceptions\FileNotFoundException;
 
 class BaseItem

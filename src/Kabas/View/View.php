@@ -4,8 +4,8 @@ namespace Kabas\View;
 
 use \RecursiveDirectoryIterator as RDI;
 use \RecursiveIteratorIterator as RII;
-use \Kabas\Utils\Assets;
-use \Kabas\App;
+use Kabas\Utils\Assets;
+use Kabas\App;
 
 class View
 {

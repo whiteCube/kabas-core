@@ -2,8 +2,8 @@
 
 namespace Kabas\Utils;
 
-use \Kabas\App;
-use \Kabas\Utils\Url;
+use Kabas\App;
+use Kabas\Utils\Url;
 
 class Lang
 {

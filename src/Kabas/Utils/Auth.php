@@ -3,7 +3,6 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
-use Kabas\Exceptions\NotFoundException;
 
 class Auth
 {

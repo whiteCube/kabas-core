@@ -2,7 +2,7 @@
 
 namespace Kabas;
 
-use \Illuminate\Container\Container;
+use Illuminate\Container\Container;
 
 class App extends Container
 {

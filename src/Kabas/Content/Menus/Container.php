@@ -2,8 +2,8 @@
 
 namespace Kabas\Content\Menus;
 
-use \Kabas\App;
-use \Kabas\Content\BaseContainer;
+use Kabas\App;
+use Kabas\Content\BaseContainer;
 
 class Container extends BaseContainer
 {

@@ -2,8 +2,6 @@
 
 namespace Kabas\Fields;
 
-use \Kabas\App;
-
 class Groupable extends Aggregate
 {
     public function __set($name, $value)

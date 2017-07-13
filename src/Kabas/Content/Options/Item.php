@@ -2,8 +2,8 @@
 
 namespace Kabas\Content\Options;
 
-use \Kabas\App;
-use \Kabas\Content\BaseItem;
+use Kabas\App;
+use Kabas\Content\BaseItem;
 
 class Item extends BaseItem
 {

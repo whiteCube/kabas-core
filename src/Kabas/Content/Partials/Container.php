@@ -2,10 +2,11 @@
 
 namespace Kabas\Content\Partials;
 
-use \Kabas\App;
-use \Kabas\Utils\File;
-use \Kabas\Utils\Text;
-use \Kabas\Content\BaseContainer;
+use Kabas\App;
+use Kabas\Utils\File;
+use Kabas\Utils\Text;
+use Kabas\Content\BaseContainer;
+use Kabas\Exceptions\NotFoundException;
 
 class Container extends BaseContainer
 {
@@ -64,7 +65,7 @@ class Container extends BaseContainer
         $view = $this->getView($id);
         if($view) return $this->loadFromView($id, $view);
         // Not found.
-        throw new \Kabas\Exceptions\NotFoundException($id, 'partial');
+        throw new NotFoundException($id, 'partial');
     }
 
     protected function loadFromContent($file)
@@ -80,7 +81,7 @@ class Container extends BaseContainer
         $file->id = $id;
         $file->controller = $controller;
         $ref = new \ReflectionClass($file->controller);
-        if(!$ref->getStaticPropertyValue('template')) throw new \Kabas\Exceptions\NotFoundException($id,'partial');
+        if(!$ref->getStaticPropertyValue('template')) throw new NotFoundException($id,'partial');
         $file->template = $ref->getStaticPropertyValue('template');
         return $file;
     }

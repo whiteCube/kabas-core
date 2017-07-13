@@ -2,8 +2,7 @@
 
 namespace Kabas\Fields;
 
-use \Kabas\App;
-use \Kabas\Fields\Option;
+use Kabas\Fields\Option;
 use Kabas\Exceptions\TypeException;
 
 class Selectable extends Item implements \IteratorAggregate

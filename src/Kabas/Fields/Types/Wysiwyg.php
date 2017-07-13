@@ -2,7 +2,7 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\Fields\Textual;
+use Kabas\Fields\Textual;
 
 class Wysiwyg extends Textual
 {

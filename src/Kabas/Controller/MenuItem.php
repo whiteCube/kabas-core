@@ -2,9 +2,9 @@
 
 namespace Kabas\Controller;
 
-use \Kabas\App;
-use \Kabas\Utils\Url;
-use \Kabas\Utils\Page;
+use Kabas\App;
+use Kabas\Utils\Url;
+use Kabas\Utils\Page;
 
 class MenuItem
 {

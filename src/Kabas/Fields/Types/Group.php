@@ -2,8 +2,8 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\App;
-use \Kabas\Fields\Groupable;
+use Kabas\App;
+use Kabas\Fields\Groupable;
 
 class Group extends Groupable
 {

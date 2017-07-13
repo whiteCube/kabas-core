@@ -2,7 +2,6 @@
 
 namespace Kabas\Utils;
 
-use Kabas\App;
 use Kabas\Exceptions\JsonException;
 use Kabas\Exceptions\FileNotFoundException;
 

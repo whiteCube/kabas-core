@@ -2,9 +2,9 @@
 
 namespace Kabas\Content\Menus;
 
-use \Kabas\App;
-use \Kabas\Content\BaseContainer;
-use \Kabas\Content\Menus\Link;
+use Kabas\App;
+use Kabas\Content\BaseContainer;
+use Kabas\Content\Menus\Link;
 
 class Links extends BaseContainer implements \IteratorAggregate
 {

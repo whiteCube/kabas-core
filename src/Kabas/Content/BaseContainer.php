@@ -2,8 +2,8 @@
 
 namespace Kabas\Content;
 
-use \Kabas\Utils\Lang;
-use \Kabas\Utils\File;
+use Kabas\Utils\Lang;
+use Kabas\Utils\File;
 
 class BaseContainer
 {
