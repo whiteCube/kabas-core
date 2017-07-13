@@ -56,7 +56,7 @@ class PartialsTest extends TestCase
     {
         $this->expectException(NotFoundException::class);
         $this->visit('/foo/bar');
-        $this->container->load('Bar');
+        $this->container->load('NoTemplate');
     }
 
     /** @test */

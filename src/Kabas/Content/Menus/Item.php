@@ -18,6 +18,12 @@ class Item extends BaseItem
         $this->items->parse();
     }
 
+    protected function loadStructure()
+    {
+        if(!is_null($this->structure)) return;
+        $this->structure = File::loadJson($this->getStructureFile());
+    }
+
     public function getMenuItems()
     {
         return $this->items;

@@ -4,9 +4,8 @@ namespace Theme\TheCapricorn\Partials;
 
 use Kabas\Controller\PartialController;
 
-class Bar extends PartialController
+class NoTemplate extends PartialController
 {
-    public static $template = 'bar';
 
     protected function setup()
     {
