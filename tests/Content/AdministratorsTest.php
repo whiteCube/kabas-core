@@ -20,6 +20,8 @@ class AdministratorsTest extends TestCase
     {
         $this->createApplication();
         $this->visit('/foo/bar');
+        if(!is_dir(STORAGE_PATH . DS . 'administrators')) mkdir(STORAGE_PATH . DS . 'administrators', 0777, true);
+        file_put_contents(STORAGE_PATH . DS . 'administrators' . DS . 'Void.json', json_encode(['password' => 'foobar']));
         $this->container = new Container;
         $this->container->parse();
     }
@@ -101,7 +103,9 @@ class AdministratorsTest extends TestCase
     public function tearDown()
     {
         $file = STORAGE_PATH . DS . 'administrators' . DS . 'Foo.json';
+        $file2 = STORAGE_PATH . DS . 'administrators' . DS . 'Void.json';
         if(file_exists($file)) unlink($file);
+        if(file_exists($file2)) unlink($file2);
     }
 
 }
