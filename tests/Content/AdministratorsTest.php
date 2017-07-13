@@ -80,9 +80,9 @@ class AdministratorsTest extends TestCase
     /** @test */
     public function can_return_the_number_of_items()
     {
-        $this->assertSame(0, $this->container->count());
-        $this->createUser();
         $this->assertSame(1, $this->container->count());
+        $this->createUser();
+        $this->assertSame(2, $this->container->count());
     }
 
     protected function createUser()

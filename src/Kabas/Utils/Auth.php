@@ -10,7 +10,7 @@ class Auth
 
     static function __callStatic($name, $args)
     {
-        return App::content()->administrators->$name($args);
+        return App::content()->administrators->$name(...$args);
     }
 
     /**
