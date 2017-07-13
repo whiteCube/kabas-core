@@ -12,7 +12,7 @@
 
 Ever wanted a light, simple yet flexible Content Management System? That's exactly what we're working on here. Based on the ideas behind Laravel and some of its components, Kabas should feel familiar and easy to use.
 
-> **Note:** this repository only contains the core files for Kabas. To run a fully equiped instance of the CMS, please use the Kabas\Project repository instead.
+> **Note:** this repository only contains the core files for Kabas. To run a fully equiped instance of the CMS, please use the kabas-project repository instead.
 
 **Important**: Kabas has not yet reached a fully stable version, and unit tests might not always be green.  
 We also rewrite large portions of the codebase from time to time.  
