@@ -110,5 +110,20 @@ class BaseContainer
         $name = str_replace('.json', '', end($exploded));
         return $name;
     }
+
+
+    protected function loadItem($id)
+    {
+        $file = $this->getFile($id);
+        if($file) return $this->loadFromContent($file);
+        // Not found.
+        throw new \Kabas\Exceptions\NotFoundException($id, Text::removeNamespace(get_class()));
+    }
+
+    protected function loadFromContent($file)
+    {
+        $file = File::loadJson($file);
+        return $file;
+    }
     
 }
