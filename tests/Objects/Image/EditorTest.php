@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\Objects;
+namespace Tests\Objects\Image;
 
 use Tests\CreatesApplication;
 use Kabas\Objects\Image\Editor;
@@ -139,8 +139,8 @@ class EditorTest extends TestCase
     {
         $this->editor->filter(new FooFilter);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-filter-Tests\Objects\FooFilter'));
-        $this->del('foo-filter-Tests\Objects\FooFilter');
+        $this->assertTrue($this->exists('foo-filter-Tests\Objects\Image\FooFilter'));
+        $this->del('foo-filter-Tests\Objects\Image\FooFilter');
     }
 
     /** @test */

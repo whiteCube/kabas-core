@@ -2,11 +2,11 @@
 
 namespace Tests\Utils;
 
-use Kabas\Utils\Options;
+use Kabas\Utils\Uploads;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
-class OptionsTest extends TestCase
+class UploadsTest extends TestCase
 {
 
     use CreatesApplication;
@@ -21,9 +21,9 @@ class OptionsTest extends TestCase
     }
 
     /** @test */
-    public function can_forward_method_calls_to_options_container()
+    public function can_forward_method_calls_to_uploads_container()
     {
-        $this->assertSame('0444/44.44.44', (string) Options::contact('phone')->label);
+        $this->assertFalse(Uploads::has('foo'));
     }
 
 }
