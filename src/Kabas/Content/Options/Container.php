@@ -6,6 +6,7 @@ use Kabas\App;
 use Kabas\Utils\File;
 use Kabas\Utils\Text;
 use Kabas\Content\BaseContainer;
+use Kabas\Exceptions\NotFoundException;
 
 class Container extends BaseContainer
 {
@@ -24,4 +25,12 @@ class Container extends BaseContainer
         return new Item($file);
     }
 
+    protected function loadItem($id)
+    {
+        $file = $this->getFile($id);
+        if($file) return $this->loadFromContent($file);
+        // Not found.
+        throw new NotFoundException($id, 'option');
+    }
+    
 }

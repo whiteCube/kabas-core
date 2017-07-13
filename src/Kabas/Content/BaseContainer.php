@@ -111,4 +111,27 @@ class BaseContainer
         return $name;
     }
 
+        /**
+     * Load the specified part into memory.
+     * @param  string $part
+     * @return object
+     */
+    public function load($option)
+    {
+        if($item = $this->get($option)) return $item;
+        $item = $this->loadItem($option);
+        $this->items[$option] = $this->makeItem($item);
+        return $this->items[$option];
+    }
+
+    /**
+     * Returns path to partial JSON file
+     * @param  string $file
+     * @return string
+     */
+    protected function getFile($file)
+    {
+        return realpath($this->path . DS . $file . '.json');
+    }
+
 }
