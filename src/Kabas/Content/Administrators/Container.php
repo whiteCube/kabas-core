@@ -44,10 +44,8 @@ class Container extends BaseContainer
         return Session::forget('_kabas.authenticated');
     }
 
-    public function login($data)
+    public function login($username, $password)
     {
-        $username = $data[0];
-        $password = $data[1];
         if(!$this->has($username)) return false;
         $user = $this->get($username);
         return $user->login($password);

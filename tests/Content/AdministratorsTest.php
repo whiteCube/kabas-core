@@ -58,7 +58,7 @@ class AdministratorsTest extends TestCase
     /** @test */
     public function returns_false_if_logging_in_with_incorrect_info()
     {
-        $this->assertFalse($this->container->login(['Bar', 'baz']));
+        $this->assertFalse($this->container->login('Bar', 'baz'));
     }
 
     /** @test */
@@ -97,7 +97,7 @@ class AdministratorsTest extends TestCase
 
     protected function login()
     {
-        $this->container->login(['Foo', 'bar']);
+        $this->container->login('Foo', 'bar');
     }
 
     public function tearDown()
