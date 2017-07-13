@@ -3,7 +3,6 @@
 namespace Tests\Objects\Uploads;
 
 use \Mockery as M;
-use Tests\CreatesApplication;
 use Kabas\Objects\Uploads\Item;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\NotFoundException;
@@ -11,15 +10,11 @@ use Kabas\Exceptions\NotFoundException;
 class ItemTest extends TestCase
 {
 
-    use CreatesApplication;
-
-    protected $preserveGlobalState = false;
-    protected $runTestInSeparateProcess = true;
-
     public function setUp()
     {
-        $this->createMinimalContentApplicationForRoute('/foo/bar');
-        $this->app->loadAliases();
+        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        if(!defined('DEBUG')) define('DEBUG', true);
+        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', realpath(__DIR__ . DS . '..' . DS . '..' . DS . 'TestTheme' . DS . 'public'));
         $mover = M::mock('Kabas\Objects\Uploads\UploadMover');
         $mover->shouldReceive('move')->andReturn(true);
         $mover->shouldReceive('copy')->andReturn(true);

@@ -2,7 +2,6 @@
 
 namespace Tests\Objects\Uploads;
 
-use Tests\CreatesApplication;
 use Kabas\Objects\Uploads\Item;
 use PHPUnit\Framework\TestCase;
 use Kabas\Objects\Uploads\Container;
@@ -10,16 +9,10 @@ use Kabas\Objects\Uploads\Container;
 class ContainerTest extends TestCase
 {
 
-    use CreatesApplication;
-
-    protected $preserveGlobalState = false;
-    protected $runTestInSeparateProcess = true;
-
     public function setUp()
     {
-        $this->createMinimalContentApplicationForRoute('/foo/bar');
-        $this->app->loadAliases();
-
+        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
+        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', realpath(__DIR__ . DS . '..' . DS . '..' . DS . 'TestTheme' . DS . 'public'));
         $_FILES = [
             'foo' => [
                 'size' => 424242,
