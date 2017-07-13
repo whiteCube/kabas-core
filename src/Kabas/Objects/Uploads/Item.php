@@ -47,9 +47,7 @@ class Item {
     {
         $this->prepare();
         $src = $this->getFullPath($name);
-        if(!$this->mover->move($this->tmp_name, $src)) {
-            $this->copy($name);
-        }
+        $this->mover->move($this->tmp_name, $src);
         $this->src = $src;
         return $this;
     }
