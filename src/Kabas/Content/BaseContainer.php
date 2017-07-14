@@ -133,26 +133,12 @@ class BaseContainer
     }
 
     /**
-     * Load the specified part into memory.
-     * @param  string $part
+     * Load the specified item into memory.
+     * @param  string $item
      * @return object
      */
-    public function load($option)
+    public function load($item)
     {
-        if($item = $this->get($option)) return $item;
-        $item = $this->loadItem($option);
-        $this->items[$option] = $this->makeItem($item);
-        return $this->items[$option];
+        return $this->get($item);
     }
-
-    /**
-     * Returns path to partial JSON file
-     * @param  string $file
-     * @return string
-     */
-    protected function getFile($file)
-    {
-        return realpath($this->path . DS . $file . '.json');
-    }
-
 }
