@@ -65,6 +65,37 @@ class Backtrace {
         return $this->output;
     }
 
+    public function cli()
+    {
+        $output = '' . PHP_EOL;
+        foreach($this->stack as $trace) {
+            $output .= $this->generateCliRow($trace);
+        }
+        echo $output;
+    }
+
+    protected function generateCliRow($trace)
+    {
+        // TODO: this is very dirty but I needed it quickly
+        // We can refactor this to have multiple formatters 
+        // that follow an interfacewhen we have more time
+        $spaces = str_repeat(' ', 5 - strlen($trace['index']));
+        $header = $spaces . $trace['index'] . ' | ' . ($trace['file'] ? $trace['file'] : 'unknown file') . PHP_EOL;
+        $detail = '        ' . $trace['function']['prefix'] . $trace['function']['name'] ;
+        if($this->hasArguments && $trace['function']['arguments']) {
+            $detail .= '(';
+            foreach($trace['function']['arguments'] as $index => $arg) {
+                if($arg['formatter'] == 'formatStringArgument') $detail .= '\''; 
+                $detail .= $arg['value'];
+                if($arg['formatter'] == 'formatStringArgument') $detail .= '\''; 
+                if($index < count($trace['function']['arguments']) - 1) $detail .= ', ';
+            }
+            $detail .= ')';
+        }
+        $detail .= PHP_EOL . PHP_EOL;
+        return $header . $detail;
+    }
+
     protected function prepareStack($stack)
     {
         $items = [];
