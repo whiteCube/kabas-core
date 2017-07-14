@@ -9,6 +9,9 @@ class ExpressionConversionException extends Exception
 {
     use CleansOutputBuffering;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct($expression, $format, $code = null, Exception $previous = null)
     {
         $this->clean();
