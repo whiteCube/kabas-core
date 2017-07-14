@@ -184,8 +184,8 @@ class EditorTest extends TestCase
     {
         $this->editor->heighten(200);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-height200'));
-        $this->del('foo-height200');
+        $this->assertTrue($this->exists('foo-heighten200'));
+        $this->del('foo-heighten200');
     }
 
     /** @test */

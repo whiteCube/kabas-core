@@ -16,6 +16,16 @@ class Item
     public $src;
     protected $renamed;
     protected $editor;
+    protected $dataMethods = [
+        'filesize',
+        'getCore',
+        'height',
+        'iptc',
+        'exif',
+        'mime',
+        'pickColor',
+        'width'
+    ];
 
     public function __construct($content)
     {
@@ -34,7 +44,7 @@ class Item
     public function __call($name, $args)
     {
         $this->makeEditor(false);
-        if(!method_exists($this->editor, $name)) return $this->forwardToIntervention($name, $args);
+        if(in_array($name, $this->dataMethods)) return $this->forwardToIntervention($name, $args);
         call_user_func_array([$this->editor, $name], $args);
         return $this;
     }
