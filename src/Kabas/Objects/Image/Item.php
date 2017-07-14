@@ -34,56 +34,15 @@ class Item
     public function __call($name, $args)
     {
         $this->makeEditor(false);
+        if(!method_exists($this->editor, $name)) return $this->forwardToIntervention($name, $args);
         call_user_func_array([$this->editor, $name], $args);
         return $this;
     }
 
-    public function filesize()
+    protected function forwardToIntervention($name, $args)
     {
-        $this->makeEditor();
-        return $this->editor->intervention->filesize();
-    }
-
-    public function getCore()
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->getCore();
-    }
-
-    public function height()
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->height();
-    }
-
-    public function iptc($key = null)
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->iptc($key);
-    }
-
-    public function exif($key = null)
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->exif($key);
-    }
-
-    public function mime()
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->mime();
-    }
-
-    public function pickColor($x, $y, $format = null)
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->pickColor($x, $y, $format);
-    }
-
-    public function width()
-    {
-        $this->makeEditor();
-        return $this->editor->intervention->width();
+        $this->editor->prepareIntervention();
+        return call_user_func_array([$this->editor->intervention, $name], $args);
     }
 
     public function apply()
