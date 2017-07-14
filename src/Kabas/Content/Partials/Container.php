@@ -33,16 +33,6 @@ class Container extends BaseContainer
         return parent::getPath($lang) . DS . 'partials';
     }
 
-    /**
-     * Returns path to partial JSON file
-     * @param  string $file
-     * @return string
-     */
-    protected function getFile($file)
-    {
-        return realpath($this->path . DS . $file . '.json');
-    }
-
     protected function makeItem($file)
     {
         return new Item($file);
@@ -54,25 +44,15 @@ class Container extends BaseContainer
 
     protected function loadItem($id)
     {
-        $file = $this->getFile($id);
-        if($file) return $this->loadFromContent($file);
-        // The content file was not found, we'll have to check
-        // if the controller exists
+        // check if controller exists
         $controller = $this->getController($id);
         if($controller) return $this->loadFromController($id, $controller);
-        // Controller does not exist either.
+        // Controller does not exist.
         // check view file
         $view = $this->getView($id);
         if($view) return $this->loadFromView($id, $view);
         // Not found.
         throw new NotFoundException($id, 'partial');
-    }
-
-    protected function loadFromContent($file)
-    {
-        $file = File::loadJson($file);
-        $file->controller = $this->getController($file->template);
-        return $file;
     }
 
     protected function loadFromController($id, $controller)
