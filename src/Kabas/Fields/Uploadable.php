@@ -6,7 +6,7 @@ use Kabas\App;
 
 class Uploadable extends Item {
 
-    protected $upload;
+    public $upload;
 
     protected function implement($structure)
     {
