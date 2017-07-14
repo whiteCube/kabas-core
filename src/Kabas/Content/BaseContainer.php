@@ -37,6 +37,10 @@ class BaseContainer
         return $this->items;
     }
 
+    /**
+     * Returns the number of items within this container
+     * @return int
+     */   
     public function count()
     {
         return count($this->items);
