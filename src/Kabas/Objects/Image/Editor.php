@@ -44,10 +44,6 @@ class Editor
         return md5(serialize($args));
     }
 
-    protected function appendFirstArgumentToName($name, $argument){
-        return $name . $argument;
-    }
-
     public function hasChanges()
     {
         if (count($this->history)) return true;
