@@ -72,20 +72,20 @@ class Editor
 
     protected function getHistoryString()
     {
-        $s = '';
+        $string = '';
         foreach ($this->history as $o) {
-            $s .= '-' . str_replace('.', 'dot', $o->slug);
+            $string .= '-' . str_replace('.', 'dot', $o->slug);
         }
-        return $s;
+        return $string;
     }
 
-    protected function getAction($name, $args, $slug = false)
+    protected function getAction($name, $args, $slug = null)
     {
-        $o = new \stdClass();
-        $o->action = $name;
-        $o->args = $args;
-        $o->slug = $slug ? $slug : $name;
-        return $o;
+        $edit = new \stdClass();
+        $edit->action = $name;
+        $edit->args = $args;
+        $edit->slug = $slug ?? $name;
+        return $edit;
     }
 
     protected function executeActions()
