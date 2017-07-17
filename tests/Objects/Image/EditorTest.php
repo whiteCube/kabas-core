@@ -198,7 +198,7 @@ class EditorTest extends TestCase
         $editor->fill('#ff0000');
         $editor->save();
         $this->editor->insert(PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-fill3c7ebbba89b30b4c85bacd20463dd2e3.jpg');
-        $this->editor->save();
+        var_dump($this->editor->save());
         $this->assertTrue($this->exists('foo-insertf65127670fb50a205c8ddebe87fa083c'));
         $this->del('foo-fill3c7ebbba89b30b4c85bacd20463dd2e3');
         $this->del('foo-insertf65127670fb50a205c8ddebe87fa083c');
