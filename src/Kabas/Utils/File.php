@@ -164,8 +164,8 @@ class File
      */
     static function isJson($path)
     {
-        $path_parts = pathinfo($path);
-        return $path_parts['extension'] === 'json';
+        $parts = pathinfo($path);
+        return $parts['extension'] === 'json';
     }
 
 }
