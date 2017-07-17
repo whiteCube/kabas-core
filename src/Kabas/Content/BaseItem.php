@@ -103,9 +103,9 @@ class BaseItem
         return $fields;
     }
 
-    protected function getFieldObject($o)
+    protected function getFieldObject($obj)
     {
-        if(is_object($o)) return clone($o);
+        if(is_object($obj)) return clone($obj);
         return new \stdClass();
     }
 

@@ -18,8 +18,8 @@ class Wysiwyg extends Textual
 
       protected function parse($value)
       {
-            $md = new \ParsedownExtra();
-            return $md->text($value);
+            $parser = new \ParsedownExtra();
+            return $parser->text($value);
       }
 
       public function headingLevel($level)
@@ -29,28 +29,28 @@ class Wysiwyg extends Textual
             return $this;
       }
 
-      protected function formatHeadings($s)
+      protected function formatHeadings($text)
       {
-            $this->computeDelta($s);
+            $this->computeDelta($text);
             
             $result = preg_replace_callback('/<(\/)?[hH]([1-6])([^>]*)?>/', function($matches) {
                   return $this->getNewHeadingTag($matches);
-            }, $s);
+            }, $text);
 
             return $result;
       }
 
-      protected function computeDelta($s)
+      protected function computeDelta($text)
       {
-            preg_match_all('/\<[hH]([1-6])(?:.*?)\>/', $s, $matches);
+            preg_match_all('/\<[hH]([1-6])(?:.*?)\>/', $text, $matches);
             foreach($matches[1] as $level) {
                   $this->updateDelta($level);
             }
       }
 
-      protected function updateDelta($i)
+      protected function updateDelta($level)
       {
-            if($this->headingLowest === false || $i < $this->headingLowest) $this->headingLowest = $i;
+            if($this->headingLowest === false || $level < $this->headingLowest) $this->headingLowest = $level;
       }
 
       protected function getNewHeadingTag($heading)
@@ -58,11 +58,11 @@ class Wysiwyg extends Textual
             return '<' . $heading[1] . 'h' . $this->getNewHeadingLevel($heading[2]) . $heading[3] . '>';
       }
 
-      protected function getNewHeadingLevel($i)
+      protected function getNewHeadingLevel($level)
       {
-            $i = $this->headingStart + ($i - $this->headingLowest);
-            if($i > 6) return 6;
-            return $i;
+            $level = $this->headingStart + ($level - $this->headingLowest);
+            if($level > 6) return 6;
+            return $level;
       }
 
 
