@@ -12,8 +12,6 @@ class Make extends Command
 
     public function theme($theme = null)
     {
-        \Kabas\Utils\Debug::backtrace();
-        die();
         if(!$theme) throw new ArgumentMissingException('make:theme', 'Missing argument 1. Please specify the name of your theme (e.g. php kabas make:theme MyTheme)');
         echo 'Kabas: Creating directory structure for "' . $theme . '"...';
         $themePath = THEMES_PATH . DS . $theme;

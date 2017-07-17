@@ -15,7 +15,6 @@ class Example extends TemplateController
      */
     protected function setup()
     {
-        \Kabas\Utils\Debug::backtrace();
         if(App::request()->isPost()) {
             Uploads::userfile()->save();
         }
