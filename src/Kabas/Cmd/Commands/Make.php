@@ -108,13 +108,42 @@ class Make extends Command
      */
     protected function makeControllerFile($name, $type)
     {
+        $template = 'Controller.php'; 
         $file = $this->dir(THEME_CONTROLLERS . DS . $type . 's') . DS . ucfirst($name) . '.php';
-        $fileContent = File::read(TEMPLATES_PATH . DS . 'Controller.php');
-        $fileContent = str_replace('##THEME##', THEME, $fileContent);
-        $fileContent = str_replace('##TYPE##', ucfirst($type . 's'), $fileContent);
-        $fileContent = str_replace('##TYPECONTROLLER##', Text::toNamespace($type . 'Controller'), $fileContent);
-        $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
-        File::write($fileContent, $file);
+        $this->scaffold($template, $file, [
+            '##THEME##' => THEME,
+            '##TYPE##' => ucfirst($type . 's'),
+            '##TYPECONTROLLER##' => Text::toNamespace($type . 'Controller'),
+            '##NAME##' => Text::toNamespace($name)
+        ]);
+    }
+
+    /**
+     * Gets the template, fills it with values, then writes it to disk
+     * @param string $templatePath 
+     * @param string $file 
+     * @param array $data 
+     * @return void
+     */
+    protected function scaffold($templateName, $file, $data)
+    {
+        $template = File::read(TEMPLATES_PATH . $templateName);
+        $template = $this->insertData($template, $data);
+        File::write($template, $file);
+    }
+
+    /**
+     * Fills the values inside a template
+     * @param string $template 
+     * @param array $data 
+     * @return string
+     */
+    protected function insertData($template, $data)
+    {
+        foreach($data as $key => $value) {
+            $template = str_replace($key, $value, $template);
+        }
+        return $template;
     }
 
     /**
@@ -137,13 +166,14 @@ class Make extends Command
      */
     protected function makeModelFile($name, $driver)
     {
+        $template = 'Model.php';
         $file = $this->dir(THEME_MODELS) . DS . ucfirst($name) . '.php';
-        $fileContent = File::read(TEMPLATES_PATH . 'Model.php');
-        $fileContent = str_replace('##THEME##', THEME, $fileContent);
-        $fileContent = str_replace('##NAME##', Text::toNamespace($name), $fileContent);
-        $fileContent = str_replace('##DRIVER##', Text::toNamespace($driver), $fileContent);
-        $fileContent = str_replace('##TABLE##', $name, $fileContent);
-        File::write($fileContent, $file);
+        $this->scaffold($template, $file, [
+            '##THEME##' => THEME,
+            '##NAME##' => Text::toNamespace($name),
+            '##DRIVER##' => Text::toNamespace($driver),
+            '##TABLE##' => $name
+        ]);
     }
 
     /**
