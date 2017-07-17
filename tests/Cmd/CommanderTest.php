@@ -66,6 +66,13 @@ class CommanderTest extends TestCase
     }
 
     /** @test */
+    public function can_show_help_if_no_commands_specified()
+    {
+        $this->expectOutputRegex('/Kabas Help/');
+        $this->cmd('');
+    }
+
+    /** @test */
     public function can_initialise_a_new_theme()
     {
         $this->catch(function() {
@@ -201,7 +208,7 @@ class CommanderTest extends TestCase
     /** @test */
     public function can_be_explicit_when_command_not_found()
     {
-        $this->expectOutputRegex('/Command \'foo\' not found!/');
+        $this->expectOutputRegex('/Command not found!/');
         $this->cmd('foo');
     }
 
