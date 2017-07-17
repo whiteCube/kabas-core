@@ -193,7 +193,7 @@ class Backtrace {
         $tag = '<table' . $this->getStyle('table') . '>';
         $tag .= '<thead>';
         $tag .= '<tr' . $this->getStyle('headRow') . '>';
-        foreach ($this->columns as $key => $title) {
+        foreach ($this->columns as $title) {
             $tag .= '<th' . $this->getStyle('headCell') . '>' . $title . '</th>';
         }
         $tag .= '</tr>';
@@ -212,7 +212,7 @@ class Backtrace {
     protected function getTraceRow($trace)
     {
         $tag = '<tr>';
-        foreach ($this->columns as $key => $title) {
+        foreach (array_keys($this->columns) as $key) {
             $tag .= call_user_func_array([$this, 'get' . ucfirst($key) . 'Column'], [$trace[$key]]);
         }
         $tag .= '</tr>';
