@@ -53,10 +53,10 @@ class App extends Container
         'response' => \Kabas\Http\Response::class
     ];
 
-    public function __construct($public_path)
+    public function __construct($publicPath)
     {
         self::$instance = $this;
-        $this->registerPaths($public_path);
+        $this->registerPaths($publicPath);
     }
 
     /**
