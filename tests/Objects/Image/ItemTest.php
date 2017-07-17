@@ -140,7 +140,7 @@ class ItemTest extends TestCase
             'config' => \Kabas\Config\Container::class
         ]);
         $this->item->blur(2)->save();
-        $file = PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-blur2.jpg';
+        $file = PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-blura5f5d7a5fc80600513c623db108873af.jpg';
         $this->assertTrue(file_exists($file));
         unlink($file);
     }

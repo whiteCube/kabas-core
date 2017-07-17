@@ -33,28 +33,15 @@ class Editor
 
     protected function getSlug($name, $args)
     {
-        switch($name) {
-            case 'blur':
-            case 'brightness':
-            case 'contrast':
-            case 'gamma':
-            case 'heighten':
-            case 'opacity':
-            case 'rotate':
-            case 'sharpen':
-            case 'widen':       return $this->appendFirstArgumentToName($name, $args[0]);
-            case 'flip':        return 'flip-' . $args[0];
-            case 'circle':      return 'circleX' . $args[1] . 'Y' . $args[2];
-            case 'colorize':    return 'r' . $args[0] . 'g' . $args[1] . 'b' . $args[2];
-            case 'crop':        return 'crop' . $args[0] . 'x' . $args[1];
-            case 'ellipse':     return 'ellipseX' . $args[2] . 'Y' . $args[3];
-            case 'filter':      return 'filter-' . get_class($args[0]);
-            case 'fit':
-            case 'resize':
-            case 'resizeCanvas':return $args[0] . 'x' . $args[1];
-            case 'limitColors': return $args[0] . 'colors';
-            default: return null;
+        return $name . $this->serialize($args);
+    }
+
+    protected function serialize($args)
+    {
+        foreach($args as $arg) {
+            if(is_callable($arg)) return md5('closure');
         }
+        return md5(serialize($args));
     }
 
     protected function appendFirstArgumentToName($name, $argument){
