@@ -174,9 +174,9 @@ class App extends Container
         }
     }
 
-    static function preventFurtherOutput($muted = true)
+    static function preventFurtherOutput()
     {
-        self::$muted = $muted;
+        self::$muted = true;
     }
 
 }
