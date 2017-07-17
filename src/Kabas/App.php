@@ -137,11 +137,11 @@ class App extends Container
      * Defines path constants
      * @return void
      */
-    protected function registerPaths($public_path)
+    protected function registerPaths($publicPath)
     {
         if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
         if(!defined('CORE_PATH')) define('CORE_PATH', __DIR__);
-        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', $public_path);
+        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', $publicPath);
         if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
         if(!defined('CONTENT_PATH')) define('CONTENT_PATH', ROOT_PATH . DS . 'content');
         if(!defined('STORAGE_PATH')) define('STORAGE_PATH', ROOT_PATH . DS . 'storage');
