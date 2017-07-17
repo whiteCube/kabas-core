@@ -139,15 +139,26 @@ class App extends Container
      */
     protected function registerPaths($publicPath)
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
-        if(!defined('CORE_PATH')) define('CORE_PATH', __DIR__);
-        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', $publicPath);
-        if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
-        if(!defined('CONTENT_PATH')) define('CONTENT_PATH', ROOT_PATH . DS . 'content');
-        if(!defined('STORAGE_PATH')) define('STORAGE_PATH', ROOT_PATH . DS . 'storage');
-        if(!defined('SHARED_DIR')) define('SHARED_DIR', 'shared');
-        if(!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . DS . 'config');
-        if(!defined('THEMES_PATH')) define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+        $this->define('DS', DIRECTORY_SEPARATOR);
+        $this->define('CORE_PATH', __DIR__);
+        $this->define('PUBLIC_PATH', $publicPath);
+        $this->define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
+        $this->define('CONTENT_PATH', ROOT_PATH . DS . 'content');
+        $this->define('STORAGE_PATH', ROOT_PATH . DS . 'storage');
+        $this->define('SHARED_DIR', 'shared');
+        $this->define('CONFIG_PATH', ROOT_PATH . DS . 'config');
+        $this->define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+    }
+
+    /**
+     * Sets a new constant if it does not exist yet
+     * @param string $name 
+     * @param string $value 
+     * @return void
+     */
+    protected function define($name, $value)
+    {
+        if(!defined($name)) define($name, $value);
     }
 
     /**
