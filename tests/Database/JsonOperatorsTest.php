@@ -55,4 +55,11 @@ class JsonOperatorsTest extends TestCase
         $operator = new IsBetween(['2017-03-16 14:30:20', '2017-08-19 07:12:24'], 'date');
         $operator->compare(5);
     }
+
+    /** @test */
+    public function can_convert_isBetween_to_string()
+    {
+        $operator = new IsBetween([1, 8], 'number');
+        $this->assertEquals('BETWEEN 1 AND 8', $operator->getExpressionString());
+    }
 }
