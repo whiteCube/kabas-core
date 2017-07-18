@@ -62,4 +62,11 @@ class IsBetweenTest extends TestCase
         $operator = new IsBetween([1, 8], 'number');
         $this->assertEquals('BETWEEN 1 AND 8', $operator->getExpressionString());
     }
+
+    /** @test */
+    public function can_get_isBetween_name()
+    {
+        $operator = new IsBetween([1, 8], 'number');
+        $this->assertEquals('IsBetween', $operator->getName());
+    }
 }
