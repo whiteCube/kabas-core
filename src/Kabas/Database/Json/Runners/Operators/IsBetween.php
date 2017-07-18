@@ -66,6 +66,10 @@ class IsBetween extends Operator implements OperatorInterface
         return $this->prepare($this->expression[1]);
     }
 
+    /**
+     * Runs a preparation on each expression
+     * @return void
+     */
     protected function checkExpressions() {
         foreach ($this->expression as $expression) {
             $this->prepare($expression);
