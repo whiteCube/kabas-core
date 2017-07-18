@@ -5,7 +5,7 @@ namespace Tests\Database;
 use PHPUnit\Framework\TestCase;
 use Kabas\Database\Json\Runners\Operators\IsBetween;
 
-class JsonOperatorsTest extends TestCase
+class JsonIsBetweenOperatorTest extends TestCase
 {
     public function setUp()
     {
