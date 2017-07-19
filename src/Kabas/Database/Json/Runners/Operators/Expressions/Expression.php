@@ -3,6 +3,7 @@
 namespace Kabas\Database\Json\Runners\Operators\Expressions;
 
 use Carbon\Carbon;
+use Kabas\Database\Json\Runners\Exceptions\ExpressionTypeException;
 use Kabas\Database\Json\Runners\Exceptions\ExpressionConversionException;
 
 class Expression implements ExpressionInterface
@@ -85,7 +86,7 @@ class Expression implements ExpressionInterface
         if(is_null($this->cleaned)) return false;
         if(is_a($this->cleaned, Carbon::class)) return $this->cleaned;
         try {
-            $date = Carbon::parse($this->cleaned);
+            $date = new Carbon($this->cleaned);
         } catch (\Exception $e) {
             throw new ExpressionConversionException($this, 'date', null, $e);
         }
@@ -108,9 +109,23 @@ class Expression implements ExpressionInterface
      * @return mixed
      */
     protected function cleanupValue($value) {
+        if(!$this->checkValue($value)) {
+            throw new ExpressionTypeException($value);
+        }
         $value = $this->castNullStringToNull($value);
         if(!is_string($value)) return $value;
         return trim($value);
+    }
+
+    /**
+     * Checks if given value is usable inside an expression
+     * @param mixed $value
+     * @return bool
+     */
+    protected function checkValue($value) {
+        if(is_array($value)) return false;
+        if(is_object($value) && !method_exists($value, '__toString')) return false;
+        return true;
     }
 
     /**
