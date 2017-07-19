@@ -8,13 +8,15 @@ class Item {
 
     protected $key;
     protected $data;
+    protected $mover;
     protected $src;
     protected $folder = PUBLIC_PATH . DS . 'uploads';
 
-    function __construct($key, $data)
+    function __construct($key, $data, UploadMover $mover)
     {
         $this->key = $key;
         $this->data = $data;
+        $this->mover = $mover;
     }
 
     /**
@@ -45,9 +47,7 @@ class Item {
     {
         $this->prepare();
         $src = $this->getFullPath($name);
-        if(!move_uploaded_file($this->tmp_name, $src)) {
-            $this->copy($name);
-        }
+        $this->mover->move($this->tmp_name, $src);
         $this->src = $src;
         return $this;
     }
@@ -61,7 +61,7 @@ class Item {
     public function copy($name)
     {
         if(is_null($this->src)) throw new NotFoundException('Could not find "' . $this->name . '" on disk to perform a copy. Please save it first.', 'file');
-        copy($this->src, $this->getFullPath($name));
+        $this->mover->copy($this->src, $this->getFullPath($name));
         return $this;
     }
 

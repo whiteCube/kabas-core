@@ -2,8 +2,8 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\App;
-use \Kabas\Fields\Repeatable;
+use Kabas\App;
+use Kabas\Fields\Repeatable;
 
 class Repeater extends Repeatable
 {

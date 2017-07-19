@@ -3,14 +3,13 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
-use Kabas\Exceptions\NotFoundException;
 
 class Auth
 {
 
     static function __callStatic($name, $args)
     {
-        return App::content()->administrators->$name($args);
+        return App::content()->administrators->$name(...$args);
     }
 
     /**

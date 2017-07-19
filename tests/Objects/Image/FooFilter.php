@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Objects;
+namespace Tests\Objects\Image;
 
 use Intervention\Image\Filters\FilterInterface;
 

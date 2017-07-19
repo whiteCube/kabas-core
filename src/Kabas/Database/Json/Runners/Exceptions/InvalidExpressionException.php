@@ -10,6 +10,9 @@ class InvalidExpressionException extends Exception
 {
     use CleansOutputBuffering;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct(OperatorInterface $operator, $code = null, Exception $previous = null)
     {
         $this->clean();

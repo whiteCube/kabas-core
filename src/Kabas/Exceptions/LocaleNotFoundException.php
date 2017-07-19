@@ -4,7 +4,7 @@ namespace Kabas\Exceptions;
 
 use \Exception;
 
-class CommandNotAllowedException extends Exception
+class LocaleNotFoundException extends Exception
 {
 
     use CleansOutputBuffering;
@@ -12,7 +12,7 @@ class CommandNotAllowedException extends Exception
     public $hint;
     public $path;
 
-    public function __construct($message, $code = 500, Exception $previous = null)
+    public function __construct($locale, $code = 500, Exception $previous = null)
     {
         $this->clean();
         $message = 'Locale "' . $locale . '" is not defined in the lang.php configuration file.';

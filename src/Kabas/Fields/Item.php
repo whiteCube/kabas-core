@@ -28,10 +28,10 @@ class Item
     protected $multiple = false;
 
 
-    public function __construct($name = null, $value = null, $user_structure = null)
+    public function __construct($name = null, $value = null, $userStructure = null)
     {
         $this->name = $name;
-        $structure = $this->getOrBuildStructure($user_structure);
+        $structure = $this->getOrBuildStructure($userStructure);
         $this->implement($structure);
         if(Content::isParsed()) $this->set($value);
         else $this->value = $value;
@@ -42,7 +42,7 @@ class Item
         return (string) $this->output;
     }
 
-    public function getOrBuildStructure($user_structure)
+    public function getOrBuildStructure($userStructure)
     {
         if(self::$baseStructure) $structure = self::$baseStructure;
         $structure = new \stdClass;
@@ -55,8 +55,8 @@ class Item
         $structure->options = [];
         self::$baseStructure = $structure;
 
-        if(!is_null($user_structure)) {
-            foreach($user_structure as $key => $value) {
+        if(!is_null($userStructure)) {
+            foreach($userStructure as $key => $value) {
                 $structure->$key = $value;
             }
         }

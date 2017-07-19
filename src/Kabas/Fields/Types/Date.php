@@ -2,8 +2,8 @@
 
 namespace Kabas\Fields\Types;
 
-use \Carbon\Carbon;
-use \Kabas\Fields\Item;
+use Carbon\Carbon;
+use Kabas\Fields\Item;
 
 class Date extends Item
 {

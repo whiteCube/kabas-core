@@ -2,7 +2,7 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\Fields\Item;
+use Kabas\Fields\Item;
 
 class Color extends Item
 {

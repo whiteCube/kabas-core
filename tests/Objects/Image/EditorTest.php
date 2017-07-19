@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\Objects;
+namespace Tests\Objects\Image;
 
 use Tests\CreatesApplication;
 use Kabas\Objects\Image\Editor;
@@ -45,8 +45,8 @@ class EditorTest extends TestCase
     {
         $this->editor->backup();
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-backup'));
-        $this->del('foo-backup');
+        $this->assertTrue($this->exists('foo-backup40cd750bba9870f18aada2478b24840a'));
+        $this->del('foo-backup40cd750bba9870f18aada2478b24840a');
     }
 
     /** @test */
@@ -54,8 +54,8 @@ class EditorTest extends TestCase
     {
         $this->editor->blur(4);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-blur4'));
-        $this->del('foo-blur4');
+        $this->assertTrue($this->exists('foo-bluradcb9b75260590ff6058773ddcb9ddd6'));
+        $this->del('foo-bluradcb9b75260590ff6058773ddcb9ddd6');
     }
 
     /** @test */
@@ -63,8 +63,8 @@ class EditorTest extends TestCase
     {
         $this->editor->brightness(2);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-brightness2'));
-        $this->del('foo-brightness2');
+        $this->assertTrue($this->exists('foo-brightnessa5f5d7a5fc80600513c623db108873af'));
+        $this->del('foo-brightnessa5f5d7a5fc80600513c623db108873af');
     }
 
     /** @test */
@@ -74,8 +74,8 @@ class EditorTest extends TestCase
             $draw->background('#0000ff');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-circleX50Y50'));
-        $this->del('foo-circleX50Y50');
+        $this->assertTrue($this->exists('foo-circle580601915d6ef3900dc60cebbc7ba2b5'));
+        $this->del('foo-circle580601915d6ef3900dc60cebbc7ba2b5');
     }
 
     /** @test */
@@ -83,8 +83,8 @@ class EditorTest extends TestCase
     {
         $this->editor->colorize(40, 35, 22);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-r40g35b22'));
-        $this->del('foo-r40g35b22');
+        $this->assertTrue($this->exists('foo-colorize3140a865cb8a6cc6f2d89d663b657f2c'));
+        $this->del('foo-colorize3140a865cb8a6cc6f2d89d663b657f2c');
     }
 
     /** @test */
@@ -92,8 +92,8 @@ class EditorTest extends TestCase
     {
         $this->editor->contrast(50);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-contrast50'));
-        $this->del('foo-contrast50');
+        $this->assertTrue($this->exists('foo-contrast68d22f41eb0a025961de0a8e20e64064'));
+        $this->del('foo-contrast68d22f41eb0a025961de0a8e20e64064');
     }
 
     /** @test */
@@ -101,8 +101,8 @@ class EditorTest extends TestCase
     {
         $this->editor->crop(35, 35, 10, 15);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-crop35x35'));
-        $this->del('foo-crop35x35');
+        $this->assertTrue($this->exists('foo-crop4363047344496dceabdada1ea0d91e23'));
+        $this->del('foo-crop4363047344496dceabdada1ea0d91e23');
     }
 
     /** @test */
@@ -112,8 +112,8 @@ class EditorTest extends TestCase
             $draw->background('#0000ff');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-ellipseX50Y50'));
-        $this->del('foo-ellipseX50Y50');
+        $this->assertTrue($this->exists('foo-ellipse580601915d6ef3900dc60cebbc7ba2b5'));
+        $this->del('foo-ellipse580601915d6ef3900dc60cebbc7ba2b5');
     }
 
     /** @test */
@@ -121,8 +121,8 @@ class EditorTest extends TestCase
     {
         $this->editor->encode('png', 40);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-encode'));
-        $this->del('foo-encode');
+        $this->assertTrue($this->exists('foo-encode02991df65bdb2707fa52544fc660fd97'));
+        $this->del('foo-encode02991df65bdb2707fa52544fc660fd97');
     }
 
     /** @test */
@@ -130,8 +130,8 @@ class EditorTest extends TestCase
     {
         $this->editor->fill('#ff0000');
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-fill'));
-        $this->del('foo-fill');
+        $this->assertTrue($this->exists('foo-fill3c7ebbba89b30b4c85bacd20463dd2e3'));
+        $this->del('foo-fill3c7ebbba89b30b4c85bacd20463dd2e3');
     }
 
     /** @test */
@@ -139,8 +139,8 @@ class EditorTest extends TestCase
     {
         $this->editor->filter(new FooFilter);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-filter-Tests\Objects\FooFilter'));
-        $this->del('foo-filter-Tests\Objects\FooFilter');
+        $this->assertTrue($this->exists('foo-filter105fabd09b4031d5d8566a5937016692'));
+        $this->del('foo-filter105fabd09b4031d5d8566a5937016692');
     }
 
     /** @test */
@@ -148,8 +148,8 @@ class EditorTest extends TestCase
     {
         $this->editor->flip('v');
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-flip-v'));
-        $this->del('foo-flip-v');
+        $this->assertTrue($this->exists('foo-flipa2ef886f60da0eed54e35cfbd189e202'));
+        $this->del('foo-flipa2ef886f60da0eed54e35cfbd189e202');
     }
 
     /** @test */
@@ -157,8 +157,8 @@ class EditorTest extends TestCase
     {
         $this->editor->fit(50, 50);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-50x50'));
-        $this->del('foo-50x50');
+        $this->assertTrue($this->exists('foo-fitc2e895775853fbce22c5fa8238390e0d'));
+        $this->del('foo-fitc2e895775853fbce22c5fa8238390e0d');
     }
 
     /** @test */
@@ -166,8 +166,8 @@ class EditorTest extends TestCase
     {
         $this->editor->gamma(1.5);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-gamma1dot5'));
-        $this->del('foo-gamma1dot5');
+        $this->assertTrue($this->exists('foo-gamma823762f4bcd8c42fd66067371ddfbaeb'));
+        $this->del('foo-gamma823762f4bcd8c42fd66067371ddfbaeb');
     }
 
     /** @test */
@@ -175,8 +175,8 @@ class EditorTest extends TestCase
     {
         $this->editor->greyscale();
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-greyscale'));
-        $this->del('foo-greyscale');
+        $this->assertTrue($this->exists('foo-greyscale40cd750bba9870f18aada2478b24840a'));
+        $this->del('foo-greyscale40cd750bba9870f18aada2478b24840a');
     }
 
     /** @test */
@@ -184,8 +184,8 @@ class EditorTest extends TestCase
     {
         $this->editor->heighten(200);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-height200'));
-        $this->del('foo-height200');
+        $this->assertTrue($this->exists('foo-heighten8f5aa12cdf6c786350be18f502a1be0c'));
+        $this->del('foo-heighten8f5aa12cdf6c786350be18f502a1be0c');
     }
 
     /** @test */
@@ -197,11 +197,12 @@ class EditorTest extends TestCase
         $editor = new Editor($dir, $file, $ext);
         $editor->fill('#ff0000');
         $editor->save();
-        $this->editor->insert(PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-fill.jpg');
+        $this->editor->insert(PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-fill3c7ebbba89b30b4c85bacd20463dd2e3.jpg');
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-insert'));
-        $this->del('foo-fill');
-        $this->del('foo-insert');
+        $filename = 'foo-insert' . md5(serialize([PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-fill3c7ebbba89b30b4c85bacd20463dd2e3.jpg']));
+        $this->assertTrue($this->exists($filename));
+        $this->del('foo-fill3c7ebbba89b30b4c85bacd20463dd2e3');
+        $this->del($filename);
     }
 
     /** @test */
@@ -209,8 +210,8 @@ class EditorTest extends TestCase
     {
         $this->editor->interlace();
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-interlace'));
-        $this->del('foo-interlace');
+        $this->assertTrue($this->exists('foo-interlace40cd750bba9870f18aada2478b24840a'));
+        $this->del('foo-interlace40cd750bba9870f18aada2478b24840a');
     }
 
     /** @test */
@@ -218,8 +219,8 @@ class EditorTest extends TestCase
     {
         $this->editor->invert();
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-invert'));
-        $this->del('foo-invert');
+        $this->assertTrue($this->exists('foo-invert40cd750bba9870f18aada2478b24840a'));
+        $this->del('foo-invert40cd750bba9870f18aada2478b24840a');
     }
 
     /** @test */
@@ -227,8 +228,8 @@ class EditorTest extends TestCase
     {
         $this->editor->limitColors(2);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-2colors'));
-        $this->del('foo-2colors');
+        $this->assertTrue($this->exists('foo-limitColorsa5f5d7a5fc80600513c623db108873af'));
+        $this->del('foo-limitColorsa5f5d7a5fc80600513c623db108873af');
     }
 
     /** @test */
@@ -238,8 +239,8 @@ class EditorTest extends TestCase
             $draw->color('#0000ff');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-line'));
-        $this->del('foo-line');
+        $this->assertTrue($this->exists('foo-line580601915d6ef3900dc60cebbc7ba2b5'));
+        $this->del('foo-line580601915d6ef3900dc60cebbc7ba2b5');
     }
 
     /** Commented for now because it takes over 2 minutes to complete */
@@ -266,8 +267,8 @@ class EditorTest extends TestCase
     {
         $this->editor->orientate();
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-orientate'));
-        $this->del('foo-orientate');
+        $this->assertTrue($this->exists('foo-orientate40cd750bba9870f18aada2478b24840a'));
+        $this->del('foo-orientate40cd750bba9870f18aada2478b24840a');
     }
 
     /** @test */
@@ -275,8 +276,8 @@ class EditorTest extends TestCase
     {
         $this->editor->pixel('#ff0000', 30, 30);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-pixel'));
-        $this->del('foo-pixel');
+        $this->assertTrue($this->exists('foo-pixel3d106fde6106dd53faddc6a9f66e40a9'));
+        $this->del('foo-pixel3d106fde6106dd53faddc6a9f66e40a9');
     }
 
     /** @test */
@@ -284,8 +285,8 @@ class EditorTest extends TestCase
     {
         $this->editor->pixelate(10);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-pixelate'));
-        $this->del('foo-pixelate');
+        $this->assertTrue($this->exists('foo-pixelatec8bde69a9f79ca24059e3807f9a3bcf8'));
+        $this->del('foo-pixelatec8bde69a9f79ca24059e3807f9a3bcf8');
     }
 
     /** @test */
@@ -300,8 +301,8 @@ class EditorTest extends TestCase
             $draw->background('#ff0000');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-polygon'));
-        $this->del('foo-polygon');
+        $this->assertTrue($this->exists('foo-polygon580601915d6ef3900dc60cebbc7ba2b5'));
+        $this->del('foo-polygon580601915d6ef3900dc60cebbc7ba2b5');
     }
 
     /** @test */
@@ -311,8 +312,8 @@ class EditorTest extends TestCase
             $draw->background('#ff0000');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-rectangle'));
-        $this->del('foo-rectangle');
+        $this->assertTrue($this->exists('foo-rectangle580601915d6ef3900dc60cebbc7ba2b5'));
+        $this->del('foo-rectangle580601915d6ef3900dc60cebbc7ba2b5');
     }
 
     /** @test */
@@ -323,8 +324,8 @@ class EditorTest extends TestCase
         $this->editor->invert();
         $this->editor->reset('pixelated');
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-pixelate-backup-invert-reset'));
-        $this->del('foo-pixelate-backup-invert-reset');
+        $this->assertTrue($this->exists('foo-pixelatec8bde69a9f79ca24059e3807f9a3bcf8-backupcb0a26bb0638a938266393507a780848-invert40cd750bba9870f18aada2478b24840a-resetcb0a26bb0638a938266393507a780848'));
+        $this->del('foo-pixelatec8bde69a9f79ca24059e3807f9a3bcf8-backupcb0a26bb0638a938266393507a780848-invert40cd750bba9870f18aada2478b24840a-resetcb0a26bb0638a938266393507a780848');
     }
 
     /** @test */
@@ -332,8 +333,8 @@ class EditorTest extends TestCase
     {
         $this->editor->resize(50, 50);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-50x50'));
-        $this->del('foo-50x50');
+        $this->assertTrue($this->exists('foo-resizec2e895775853fbce22c5fa8238390e0d'));
+        $this->del('foo-resizec2e895775853fbce22c5fa8238390e0d');
     }
 
     /** @test */
@@ -341,8 +342,8 @@ class EditorTest extends TestCase
     {
         $this->editor->resizeCanvas(400, 400);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-400x400'));
-        $this->del('foo-400x400');
+        $this->assertTrue($this->exists('foo-resizeCanvas146d830bd399ae02cb0c7fd29dba555f'));
+        $this->del('foo-resizeCanvas146d830bd399ae02cb0c7fd29dba555f');
     }
 
     /** @test */
@@ -350,8 +351,8 @@ class EditorTest extends TestCase
     {
         $this->editor->rotate(35);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-rotate35'));
-        $this->del('foo-rotate35');
+        $this->assertTrue($this->exists('foo-rotate3c2f09ef3307c7968f556ae704095acf'));
+        $this->del('foo-rotate3c2f09ef3307c7968f556ae704095acf');
     }
 
     /** @test */
@@ -367,8 +368,8 @@ class EditorTest extends TestCase
     {
         $this->editor->sharpen(40);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-sharpen40'));
-        $this->del('foo-sharpen40');
+        $this->assertTrue($this->exists('foo-sharpenb4267a67df0cfb11e30d6396f858b5c9'));
+        $this->del('foo-sharpenb4267a67df0cfb11e30d6396f858b5c9');
     }
 
     /** @test */
@@ -376,8 +377,8 @@ class EditorTest extends TestCase
     {
         $this->editor->text('Kabas', 25, 25);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-text'));
-        $this->del('foo-text');
+        $this->assertTrue($this->exists('foo-text916feeae665310f9d5eea0a60dd1dfb3'));
+        $this->del('foo-text916feeae665310f9d5eea0a60dd1dfb3');
     }
 
     /** @test */
@@ -385,8 +386,8 @@ class EditorTest extends TestCase
     {
         $this->editor->trim();
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-trim'));
-        $this->del('foo-trim');
+        $this->assertTrue($this->exists('foo-trim40cd750bba9870f18aada2478b24840a'));
+        $this->del('foo-trim40cd750bba9870f18aada2478b24840a');
     }
 
     /** @test */
@@ -394,8 +395,8 @@ class EditorTest extends TestCase
     {
         $this->editor->widen(500);
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-widen500'));
-        $this->del('foo-widen500');
+        $this->assertTrue($this->exists('foo-widen35b7f6c570420def4713f94c889d15e4'));
+        $this->del('foo-widen35b7f6c570420def4713f94c889d15e4');
     }
 
     

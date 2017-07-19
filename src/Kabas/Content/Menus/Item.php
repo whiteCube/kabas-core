@@ -2,9 +2,10 @@
 
 namespace Kabas\Content\Menus;
 
-use \Kabas\App;
-use \Kabas\Content\BaseItem;
-use \Kabas\Content\Menus\Links;
+use Kabas\App;
+use Kabas\Utils\File;
+use Kabas\Content\BaseItem;
+use Kabas\Content\Menus\Links;
 
 class Item extends BaseItem
 {
@@ -16,6 +17,12 @@ class Item extends BaseItem
     {
         parent::parse();
         $this->items->parse();
+    }
+
+    protected function loadStructure()
+    {
+        if(!is_null($this->structure)) return;
+        $this->structure = File::loadJson($this->getStructureFile());
     }
 
     public function getMenuItems()

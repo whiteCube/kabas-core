@@ -2,8 +2,7 @@
 
 namespace Kabas\Fields;
 
-use \Kabas\App;
-use \Kabas\Utils\Text;
+use Kabas\Utils\Text;
 
 class Container
 {

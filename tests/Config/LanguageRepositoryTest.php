@@ -2,8 +2,9 @@
 
 namespace Tests\Config;
 
-use Kabas\Config\LanguageRepository;
+use Kabas\Config\Language;
 use PHPUnit\Framework\TestCase;
+use Kabas\Config\LanguageRepository;
 
 class LanguageRepositoryTest extends TestCase
 {
@@ -56,9 +57,11 @@ class LanguageRepositoryTest extends TestCase
     }
 
     /** @test */
-    public function returns_null_if_no_current_language_is_set()
+    public function returns_default_if_no_current_language_is_set()
     {
-        $this->assertNull($this->repo->getCurrent());
+        $current = $this->repo->getCurrent();
+        $this->assertInstanceOf(Language::class, $current);
+        $this->assertSame('en-GB', $current->original);
     }
 
     /** @test */

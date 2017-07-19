@@ -2,8 +2,6 @@
 
 namespace Kabas\Fields;
 
-use \Kabas\Utils\Text;
-
 class Option
 {
     protected $key;

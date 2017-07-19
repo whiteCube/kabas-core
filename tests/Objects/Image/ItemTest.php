@@ -1,6 +1,6 @@
 <?php 
 
-namespace Tests\Objects;
+namespace Tests\Objects\Image;
 
 use Kabas\Objects\Image\Item;
 use Tests\CreatesApplication;
@@ -16,7 +16,7 @@ class ItemTest extends TestCase
     public function setUp()
     {
         if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
-        if(!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__ . DS . '..' . DS . 'TestTheme');
+        if(!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__ . DS . '..' . DS . '..' . DS . 'TestTheme');
         if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . DS . 'public');
         $data = [
             'path' => 'public/TheCapricorn/foo.jpg',
@@ -140,7 +140,7 @@ class ItemTest extends TestCase
             'config' => \Kabas\Config\Container::class
         ]);
         $this->item->blur(2)->save();
-        $file = PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-blur2.jpg';
+        $file = PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-blura5f5d7a5fc80600513c623db108873af.jpg';
         $this->assertTrue(file_exists($file));
         unlink($file);
     }

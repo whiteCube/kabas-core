@@ -20,6 +20,12 @@ class TelTest extends TestCase
     }
 
     /** @test */
+    public function can_be_cast_as_a_string()
+    {
+        $this->assertSame('0400/00.00.00', (string) $this->tel);
+    }
+
+    /** @test */
     public function can_be_instantiated_properly()
     {
         $this->assertInstanceOf(Tel::class, $this->tel);

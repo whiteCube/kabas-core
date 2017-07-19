@@ -2,7 +2,6 @@
 
 namespace Kabas\Http\Responses;
 
-use Kabas\App;
 use Kabas\Http\Response;
 use Kabas\View\View as ViewEngine;
 

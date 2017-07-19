@@ -2,10 +2,7 @@
 
 namespace Kabas;
 
-use \Illuminate\Container\Container;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Translation\FileLoader;
-use Illuminate\Translation\Translator;
+use Illuminate\Container\Container;
 
 class App extends Container
 {
@@ -39,10 +36,27 @@ class App extends Container
      */
     protected static $translator;
 
-    public function __construct($public_path)
+    /**
+     * The classes to instantiate for the application to work
+     * @var array
+     */
+    protected static $bootingSingletons = [
+        'config' => \Kabas\Config\Container::class,
+        'exceptions' => \Kabas\Exceptions\Handler::class,
+        'session' => \Kabas\Session\Manager::class,
+        'themes' => \Kabas\Themes\Container::class,
+        'fields' => \Kabas\Fields\Container::class,
+        'router' => \Kabas\Http\Router::class,
+        'content' => \Kabas\Content\Container::class,
+        'uploads' => \Kabas\Objects\Uploads\Container::class,
+        'request' => \Kabas\Http\Request::class,
+        'response' => \Kabas\Http\Response::class
+    ];
+
+    public function __construct($publicPath)
     {
         self::$instance = $this;
-        $this->registerPaths($public_path);
+        $this->registerPaths($publicPath);
     }
 
     /**
@@ -62,7 +76,7 @@ class App extends Container
      */
     public function boot(array $singletons = null)
     {
-        if(is_null($singletons)) $singletons = static::getBootingSingletons();
+        if(is_null($singletons)) $singletons = static::$bootingSingletons;
         $this->registerBindings($singletons);
     }
 
@@ -77,30 +91,8 @@ class App extends Container
         $this->router->capture()->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->page;
-        $this->loadTranslations();
         $this->response->init($this->page);
         $this->session->save();
-    }
-    
-    /**
-     * Returns the classes to boot as singletons
-     * on a regular setup.
-     * @return array
-     */
-    protected static function getBootingSingletons()
-    {
-        return [
-            'config' => \Kabas\Config\Container::class,
-            'exceptions' => \Kabas\Exceptions\Handler::class,
-            'session' => \Kabas\Session\Manager::class,
-            'themes' => \Kabas\Themes\Container::class,
-            'fields' => \Kabas\Fields\Container::class,
-            'router' => \Kabas\Http\Router::class,
-            'content' => \Kabas\Content\Container::class,
-            'uploads' => \Kabas\Objects\Uploads\Container::class,
-            'request' => \Kabas\Http\Request::class,
-            'response' => \Kabas\Http\Response::class
-        ];
     }
 
     /**
@@ -112,14 +104,6 @@ class App extends Container
         foreach($this->config->get('app.aliases') as $alias => $class) {
             class_alias($class, $alias);
         }
-    }
-
-    public function loadTranslations()
-    {
-        $locale = $this->config->languages->getCurrent()->original;
-        $path = THEME_PATH . '/lang';
-        $translationLoader = new FileLoader(new Filesystem, $path);
-        $this->translator = new Translator($translationLoader, $locale);
     }
 
     /**
@@ -153,17 +137,28 @@ class App extends Container
      * Defines path constants
      * @return void
      */
-    protected function registerPaths($public_path)
+    protected function registerPaths($publicPath)
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
-        if(!defined('CORE_PATH')) define('CORE_PATH', __DIR__);
-        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', $public_path);
-        if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
-        if(!defined('CONTENT_PATH')) define('CONTENT_PATH', ROOT_PATH . DS . 'content');
-        if(!defined('STORAGE_PATH')) define('STORAGE_PATH', ROOT_PATH . DS . 'storage');
-        if(!defined('SHARED_DIR')) define('SHARED_DIR', 'shared');
-        if(!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . DS . 'config');
-        if(!defined('THEMES_PATH')) define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+        $this->define('DS', DIRECTORY_SEPARATOR);
+        $this->define('CORE_PATH', __DIR__);
+        $this->define('PUBLIC_PATH', $publicPath);
+        $this->define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
+        $this->define('CONTENT_PATH', ROOT_PATH . DS . 'content');
+        $this->define('STORAGE_PATH', ROOT_PATH . DS . 'storage');
+        $this->define('SHARED_DIR', 'shared');
+        $this->define('CONFIG_PATH', ROOT_PATH . DS . 'config');
+        $this->define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+    }
+
+    /**
+     * Sets a new constant if it does not exist yet
+     * @param string $name 
+     * @param string $value 
+     * @return void
+     */
+    protected function define($name, $value)
+    {
+        if(!defined($name)) define($name, $value);
     }
 
     /**
@@ -179,9 +174,9 @@ class App extends Container
         }
     }
 
-    static function preventFurtherOutput($muted = true)
+    static function preventFurtherOutput()
     {
-        self::$muted = $muted;
+        self::$muted = true;
     }
 
 }

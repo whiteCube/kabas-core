@@ -35,7 +35,7 @@ class Container {
     protected function load()
     {
         foreach($_FILES as $key => $file) {
-            $this->items[$key] = new Item($key, $file);
+            $this->items[$key] = new Item($key, $file, new UploadMover);
         }
     }
 

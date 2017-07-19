@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Utils;
 
 use Kabas\Utils\Lang;
 use Tests\CreatesApplication;
@@ -35,7 +35,6 @@ class LangTest extends TestCase
     public function can_provide_translated_strings()
     {
         $this->createMinimalContentApplicationForRoute('/foo/bar');
-        $this->app->loadTranslations();
         $this->assertSame('Translation 1', Lang::trans('foo.trans'));
     }
 

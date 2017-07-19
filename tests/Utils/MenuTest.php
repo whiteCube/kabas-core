@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Utils;
 
 use Kabas\Utils\Menu;
 use Tests\CreatesApplication;

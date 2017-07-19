@@ -2,8 +2,7 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\App;
-use \Kabas\Fields\Item;
+use Kabas\Fields\Item;
 
 class Tel extends Item
 {

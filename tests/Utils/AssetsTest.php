@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Utils;
 
 use Kabas\Utils\Assets;
 use Tests\CreatesApplication;

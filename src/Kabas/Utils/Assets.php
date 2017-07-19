@@ -2,7 +2,7 @@
 
 namespace Kabas\Utils;
 
-use \Kabas\App;
+use Kabas\App;
 
 class Assets
 {
@@ -58,7 +58,7 @@ class Assets
 
         preg_match_all(self::getLocationPattern(), $page, $matches);
         foreach($matches[1] as $i => $location) {
-            $page = self::includeLocation($location, self::getLocationAssets($location), $matches[0][$i], $page);
+            $page = self::includeLocation(self::getLocationAssets($location), $matches[0][$i], $page);
         }
         return $page;
     }
@@ -70,10 +70,10 @@ class Assets
      */
     public static function src($src)
     {
-        $s = Url::base();
-        $s .= '/' . App::themes()->getCurrent('name') . '/';
-        $s .= $src;
-        return $s;
+        $href = Url::base();
+        $href .= '/' . App::themes()->getCurrent('name') . '/';
+        $href .= $src;
+        return $href;
     }
 
     /**
@@ -166,9 +166,9 @@ class Assets
      */
     protected static function getLocationPattern()
     {
-        $s = '/';
-        $s .= sprintf(self::$placeholder, '(.+)?');
-        return $s .= '/';
+        $pattern = '/';
+        $pattern .= sprintf(self::$placeholder, '(.+)?');
+        return $pattern .= '/';
     }
 
     /**
@@ -178,13 +178,13 @@ class Assets
      */
     protected static function getLocationAssets($location)
     {
-        $a = [];
+        $assets = [];
         if(isset(self::$required[$location])){
             foreach (self::$required[$location] as $src) {
-                if($src = self::getAsset($src)) array_push($a, $src);
+                if($src = self::getAsset($src)) array_push($assets, $src);
             }
         }
-        return $a;
+        return $assets;
     }
 
     /**
@@ -216,7 +216,7 @@ class Assets
      * @param  string $page
      * @return string
      */
-    protected static function includeLocation($location, $assets, $placeholder, $page)
+    protected static function includeLocation($assets, $placeholder, $page)
     {
         $page = str_replace($placeholder, self::getTagsString($assets), $page);
         return $page;

@@ -2,8 +2,6 @@
 
 namespace Kabas\Fields;
 
-use \Kabas\App;
-
 class Repeatable extends Aggregate
 {
     protected $multiple = true;

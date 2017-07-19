@@ -43,6 +43,12 @@ class AggregateTest extends TestCase
     }
 
     /** @test */
+    public function can_count_amount_of_items()
+    {
+        $this->assertSame(1, $this->aggregate->count());
+    }
+
+    /** @test */
     public function returns_null_when_getting_value_that_does_not_exist()
     {
         $this->assertNull($this->aggregate->get('foo'));

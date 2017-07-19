@@ -66,6 +66,13 @@ class CommanderTest extends TestCase
     }
 
     /** @test */
+    public function can_show_help_if_no_commands_specified()
+    {
+        $this->expectOutputRegex('/Kabas Help/');
+        $this->cmd('');
+    }
+
+    /** @test */
     public function can_initialise_a_new_theme()
     {
         $this->catch(function() {
@@ -119,6 +126,17 @@ class CommanderTest extends TestCase
             $this->cmd('make:model', 'news', 'eloquent');
             $this->assertTrue($this->hasFile('FooTheme', 'models', 'News.php'));
             $this->assertTrue($this->hasFile('FooTheme', 'structures', 'models', 'news.json'));
+        });
+    }
+
+    /** @test */
+    public function can_use_the_default_driver_when_making_a_model()
+    {
+        $this->catch(function() {
+            $this->cmd('make:model', 'news');
+            $this->assertTrue($this->hasFile('FooTheme', 'models', 'News.php'));
+            $this->assertTrue($this->hasFile('FooTheme', 'structures', 'models', 'news.json'));
+            $this->assertTrue($this->fileContains('Kabas\Database\Json\Model', 'FooTheme', 'models', 'News.php'));
         });
     }
 
@@ -190,7 +208,7 @@ class CommanderTest extends TestCase
     /** @test */
     public function can_be_explicit_when_command_not_found()
     {
-        $this->expectOutputRegex('/Command \'foo\' not found!/');
+        $this->expectOutputRegex('/Command not found!/');
         $this->cmd('foo');
     }
 
@@ -265,6 +283,16 @@ class CommanderTest extends TestCase
             $path .= DS . $pathFragment;
         }
         return unlink($path);
+    }
+
+    public function fileContains($needle, ...$pathFragments)
+    {
+        $path = THEMES_DIR;
+        foreach($pathFragments as $pathFragment) {
+            $path .= DS . $pathFragment;
+        }
+        $contents = file_get_contents($path);
+        return strpos($contents, $needle) !== false;
     }
 
 }

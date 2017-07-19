@@ -2,8 +2,7 @@
 
 namespace Kabas\Http;
 
-use \Kabas\App;
-use \Kabas\View\View;
+use Kabas\App;
 use Kabas\Exceptions\NoResponseException;
 
 class Response

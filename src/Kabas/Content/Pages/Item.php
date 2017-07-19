@@ -2,10 +2,10 @@
 
 namespace Kabas\Content\Pages;
 
-use \Kabas\App;
+use Kabas\App;
 use Kabas\Utils\File;
 use Kabas\Utils\Lang;
-use \Kabas\Content\BaseItem;
+use Kabas\Content\BaseItem;
 
 class Item extends BaseItem
 {

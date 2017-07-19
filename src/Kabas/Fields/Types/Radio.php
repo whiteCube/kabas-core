@@ -2,7 +2,7 @@
 
 namespace Kabas\Fields\Types;
 
-use \Kabas\Fields\Selectable;
+use Kabas\Fields\Selectable;
 
 class Radio extends Selectable
 {

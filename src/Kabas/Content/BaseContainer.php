@@ -2,8 +2,8 @@
 
 namespace Kabas\Content;
 
-use \Kabas\Utils\Lang;
-use \Kabas\Utils\File;
+use Kabas\Utils\Lang;
+use Kabas\Utils\File;
 
 class BaseContainer
 {
@@ -37,6 +37,10 @@ class BaseContainer
         return $this->items;
     }
 
+    /**
+     * Returns the number of items within this container
+     * @return int
+     */   
     public function count()
     {
         return count($this->items);
@@ -96,19 +100,45 @@ class BaseContainer
     {
         $items = [];
         foreach($files as $name => $file) {
-            $file->id = $file->id ?? $this->extractNameFromFile($name);
-            $file->template = $file->template ?? $this->extractNameFromFile($name);
+            $file = $this->checkFileIntegrity($name, $file);
             if(is_array($file)) $this->loop($file);
             else $items[$file->id] = $this->makeItem($file);
         }
         return $items;
     }
 
+    /**
+     * Ensures the file has an id and a template
+     * @param string $name 
+     * @param object $file 
+     * @return object
+     */
+    protected function checkFileIntegrity($name, $file)
+    {
+        $file->id = $file->id ?? $this->extractNameFromFile($name);
+        $file->template = $file->template ?? $this->extractNameFromFile($name);
+        return $file;
+    }
+
+    /**
+     * Turn file path into a name
+     * @param string $filename 
+     * @return string
+     */
     protected function extractNameFromFile($filename)
     {
         $exploded = explode(DS, $filename);
         $name = str_replace('.json', '', end($exploded));
         return $name;
     }
-    
+
+    /**
+     * Load the specified item into memory.
+     * @param  string $item
+     * @return object
+     */
+    public function load($item)
+    {
+        return $this->get($item);
+    }
 }
