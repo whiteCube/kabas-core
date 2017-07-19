@@ -6,6 +6,6 @@ class CaseSensitiveLike extends Like
 {
     public function toRegex()
     {
-        return '/^' . $this->parsed . '$/';
+        return '/^' . $this->prepared . '$/';
     }
 }

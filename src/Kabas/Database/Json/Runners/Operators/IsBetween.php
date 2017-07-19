@@ -43,8 +43,7 @@ class IsBetween extends Operator implements OperatorInterface
      * @param $values
      * @return array
      */
-    protected function makeExpression($values) {
-        if(!is_array($values)) return parent::makeExpression($values);
+    protected function makeBaseExpression($values) {
         return array_map(function($expression) {
             return parent::makeExpression($expression);
         }, array_replace([null, null], array_slice(array_values($values), 0, 2)));

@@ -19,7 +19,7 @@ abstract class Operator
      * @return void
      */
     public function __construct($expression, $type) {
-        $this->expression = $this->makeExpression($expression);
+        $this->expression = $this->makeBaseExpression($expression);
         $this->type = $type;
     }
 
@@ -54,6 +54,15 @@ abstract class Operator
      */
     protected function toType($value) {
         return $this->prepare($this->makeExpression($value));
+    }
+
+    /**
+     * Returns the base expression used for all comparaisons
+     * @param mixed $expression
+     * @return Kabas\Database\Json\Runners\Operators\Expressions\Expression
+     */
+    protected function makeBaseExpression($expression) {
+        return $this->makeExpression($expression);
     }
 
     /**

@@ -11,7 +11,7 @@ class IsCaseSensitivelyLike extends IsLike implements OperatorInterface
      * @param string $expression
      * @return Kabas\Database\Json\Runners\Operators\Expressions\CaseSensitiveLike
      */
-    protected function makeRegexFromExpression($expression)
+    protected function makeBaseExpression($expression)
     {
         return new CaseSensitiveLike($expression);
     }

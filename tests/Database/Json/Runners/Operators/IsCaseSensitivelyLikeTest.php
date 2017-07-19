@@ -18,4 +18,31 @@ class IsCaseSensitivelyLikeTest extends TestCase
         $this->expectException(\Kabas\Database\Json\Runners\Exceptions\ExpressionTypeException::class);
         $operator = new IsCaseSensitivelyLike(['foo','bar'], 'string');
     }
+
+    /** @test */
+    public function can_convert_isCaseSensitivelyLike_expression_to_string()
+    {
+        $operator = new IsCaseSensitivelyLike('%Foo_!', 'string');
+        $this->assertEquals('%Foo_!', $operator->getExpressionString());
+    }
+
+    /** @test */
+    public function can_compare_isCaseSensitivelyLike()
+    {
+        $operator = new IsCaseSensitivelyLike('F_o%', 'string');
+        $this->assertTrue($operator->compare('Foo'));
+        $this->assertTrue($operator->compare('Fao bar'));
+        $this->assertFalse($operator->compare('foo'));
+        $this->assertFalse($operator->compare('bar Foo'));
+    }
+
+    /** @test */
+    public function can_compare_isCaseSensitivelyLike_with_escaped_characters()
+    {
+        $operator = new IsCaseSensitivelyLike('%Foo\%\\\_!', 'string');
+        $this->assertTrue($operator->compare('bar Foo%\f!'));
+        $this->assertTrue($operator->compare('Foo%\ !'));
+        $this->assertFalse($operator->compare('bar Foo%\!'));
+        $this->assertFalse($operator->compare('bar foo%\f!'));
+    }
 }

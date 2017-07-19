@@ -12,7 +12,7 @@ class IsLike extends Operator implements OperatorInterface
      * @return bool
      */
     public function compare($value) : bool {
-        return (bool) preg_match($this->expression->toRegex(), $this->prepare($this->expression));
+        return (bool) preg_match($this->expression->toRegex(), $this->toType($value));
     }
 
     /**
@@ -20,7 +20,7 @@ class IsLike extends Operator implements OperatorInterface
      * @param string $expression
      * @return Kabas\Database\Json\Runners\Operators\Expressions\Like
      */
-    protected function makeExpression($expression)
+    protected function makeBaseExpression($expression)
     {
         return new Like($expression);
     }
