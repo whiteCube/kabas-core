@@ -13,6 +13,6 @@ class IsDifferentFrom extends Operator implements OperatorInterface
         $value = $this->toType($value);
         $expression = $this->prepare($this->expression);
         if($this->getType() == 'date') return $value->ne($expression);
-        return ($value != $expression);
+        return (strtolower($value) != strtolower($expression));
     }
 }
