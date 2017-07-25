@@ -13,6 +13,6 @@ class IsEqualTo extends Operator implements OperatorInterface
         $value = $this->toType($value);
         $expression = $this->prepare($this->expression);
         if($this->getType() == 'date') return $value->eq($expression);
-        return ($value == $expression);
+        return (strtolower($value) == strtolower($expression));
     }
 }
