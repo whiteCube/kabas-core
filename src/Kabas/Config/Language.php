@@ -37,6 +37,9 @@ class Language
     {
         $this->isCurrent = true;
         setlocale(LC_ALL, $this->php);
+        // Keep integer and float values with a "dot" decimal separator.
+        // Numbers should be formatted using number_format().
+        setlocale(LC_NUMERIC, 'C');
     }
 
     /**
