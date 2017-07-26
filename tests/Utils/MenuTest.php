@@ -3,6 +3,7 @@
 namespace Tests\Utils;
 
 use Kabas\Utils\Menu;
+use Kabas\Exceptions\NotFoundException;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
@@ -32,6 +33,13 @@ class MenuTest extends TestCase
     {
         $this->expectOutputRegex('/Homepage/');
         Menu::main();
+    }
+
+    /** @test */
+    public function cannot_render_undefined_menu()
+    {
+        $this->expectException(NotFoundException::class);
+        Menu::foobar();
     }
 
 }

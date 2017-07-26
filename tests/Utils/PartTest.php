@@ -3,6 +3,7 @@
 namespace Tests\Utils;
 
 use Kabas\Utils\Part;
+use Kabas\Exceptions\NotFoundException;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
@@ -32,6 +33,13 @@ class PartTest extends TestCase
     {
         $this->expectOutputRegex('/An incredible test page/');
         Part::header();
+    }
+
+    /** @test */
+    public function cannot_render_undefined_part()
+    {
+        $this->expectException(NotFoundException::class);
+        Part::foobar();
     }
 
 }
