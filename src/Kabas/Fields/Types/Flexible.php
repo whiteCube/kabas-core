@@ -19,7 +19,7 @@ class Flexible extends Repeatable
             $item = new \stdClass();
             $item->class = App::fields()->getClass(isset($field->type) ? $field->type : 'text');
             $item->structure = $field;
-            $item->structure->option = $key;
+            $item->structure->key = $key;
             $a[] = $item;
         }
         return $a;
@@ -47,7 +47,7 @@ class Flexible extends Repeatable
     protected function findOption($key)
     {
         foreach ($this->options as $option) {
-            if($option->structure->option === $key) return $option;
+            if($option->structure->key === $key) return $option;
         }
         return false;
     }
