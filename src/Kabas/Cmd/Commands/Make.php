@@ -35,7 +35,7 @@ class Make extends Command
         foreach($paths as $path) {
             mkdir($path);
         }
-        echo "\nDone!";
+        echo '\nDone!\n';
     }
 
     public function template($template = null)
@@ -62,7 +62,7 @@ class Make extends Command
         echo 'Kabas: Making model ' . $model;
         $this->makeModelFile($model, $driver);
         $this->makeStructureFile($model, 'model');
-        echo "\n\033[32mDone!";
+        echo '\n\033[32mDone!';
     }
 
     /**
@@ -78,7 +78,7 @@ class Make extends Command
         $this->makeControllerFile($name, $type);
         $this->makeViewFile($name, $type);
         $this->makeStructureFile($name, $type);
-        echo "\nDone!";
+        echo '\nDone!\n';
     }
 
     /**
