@@ -23,6 +23,8 @@ class Item
 
     protected $options;
 
+    protected $option;
+
     protected static $baseStructure;
 
     protected $multiple = false;
@@ -174,9 +176,9 @@ class Item
      * @param  string $option
      * @return void
      */
-    public function setOption($option = null)
+    public function setFlexible($option = null)
     {
-        $this->option = is_string($option) ? $option : false;
+        $this->flexible = is_string($option) ? $option : false;
     }
 
     /**
@@ -230,7 +232,7 @@ class Item
         $this->default = $structure->default;
         $this->label = isset($structure->label) ? trim($structure->label) : ucfirst($this->type);
         $this->description = isset($structure->description) ? $structure->description : null;
-        $this->setOption($structure->option);
+        $this->option = isset($structure->option) ? $structure->option : null;
     }
 
     /**
