@@ -3,22 +3,22 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
+use Kabas\Exceptions\NotFoundException;
 
 trait GetsContent
 {
     /**
      * Get and display the item with the corresponding ID onto the page.
-     * @param  string $item
+     * @param  string $identifier
      * @param  array $params (optionnal)
      * @return void
      */
-    static function get($item, $params = [])
+    static function get($identifier, $params = [])
     {
-        $item = App::content()->{self::$type}->get($item);
-        if($item){
-            $item->set($params);
-            $item->make();
-        }
+        $item = App::content()->{self::$type}->get($identifier);
+        if(!$item) throw new NotFoundException($identifier, self::$type);
+        $item->set($params);
+        $item->make();
     }
 
     static function __callStatic($method, $params)
