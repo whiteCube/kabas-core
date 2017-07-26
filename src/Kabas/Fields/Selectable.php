@@ -13,6 +13,16 @@ class Selectable extends Item implements \IteratorAggregate
     }
 
     /**
+     * Make a deep clone (options included)
+     * @return void
+     */
+    public function __clone() {
+        foreach ($this->options as $key => $option) {
+            $this->options[$key] = clone $option;
+        }
+    }
+
+    /**
      * Formats a raw value in order and makes it usable for said field type
      * @param mixed $value
      * @return string
