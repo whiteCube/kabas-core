@@ -60,6 +60,9 @@ class Route
         foreach ($this->strings as $lang => $route) {
             $regexen[$lang] = $this->generateRegex($route);
         }
+        // Reset parameters indexes to numeric. This
+        // way parameter values can be properly gathered.
+        $this->parameters = array_values($this->parameters);
         return $regexen;
     }
 
@@ -74,31 +77,45 @@ class Route
         $regex = trim($route, '/');
         $regex = $this->upgradeParamsToRegex($regex);
         $regex = preg_replace('/([^\\\])\//', '$1\/', $regex);
-        $regex = strlen($regex) ? '/^\/' . $regex . '\/?$/' : '/^\/?$/';
+        $regex = strlen($regex) ? '/^\/?' . $regex . '\/?$/' : '/^\/?$/';
         return $regex;
     }
 
     protected function upgradeParamsToRegex($regex)
     {
-        preg_match_all('/\{([a-zA-Z0-9]*)(?:::)?(\/.[^\/]+\/+)?(\?)?\}/', $regex, $a);
+        preg_match_all('/(\/)?\{([a-zA-Z0-9]*)(?:::)?(\/.[^\/]+\/+)?(\?)?\}/', $regex, $a);
         foreach ($a[0] as $i => $param) {
-            $param = $this->makeParameter($param, $a[1][$i], $a[2][$i], $a[3][$i]);
+            $param = $this->makeParameter($param, $a[1][$i], $a[2][$i], $a[3][$i], $a[4][$i]);
             $regex = str_replace($param->string, $param->regex, $regex);
-            $this->parameters[] = $param;
+            $this->parameters[$param->variable] = $param;
         }
         return $regex;
     }
 
-    protected function makeParameter($string, $variable, $regex, $optional)
+    protected function makeParameter($string, $startSlash, $variable, $regex, $optional)
     {
         $o = new \stdClass();
         $o->string = $string;
         $o->variable = $variable;
         $o->isRequired = $optional === '?' ? false : true;
-        $o->regex = strlen($regex) ? '(' . trim($regex,'/') . ')' : '(.[^\/]*)';
-        if(!$o->isRequired) $o->regex .= '?';
+        $o->regex = $this->makeParameterRegex($startSlash, $regex, $o->isRequired);
         $o->value = null;
         return $o;
+    }
+
+    /**
+     * Transforms a catched parameter into a proper regex string
+     * @param  string $startSlash
+     * @param  string $regex
+     * @param  bool $required
+     * @return string
+     */
+    protected function makeParameterRegex($startSlash, $regex, $required)
+    {
+        $optional = !$required ? '?' : '';
+        $startSlash = strlen($startSlash) ? '\/' . $optional : '';
+        if(strlen($regex)) return $startSlash . '(' . trim($regex,'/') . ')' . $optional;
+        return $startSlash . '(.[^\/]*)' . $optional;
     }
 
     /**

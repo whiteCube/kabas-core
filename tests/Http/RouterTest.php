@@ -43,7 +43,7 @@ class RouterTest extends TestCase
     public function can_load_routes_from_content_files()
     {
         $this->bootBaseRouterApplication();
-        $this->assertCount(4, $this->app->router->getRoutes());
+        $this->assertCount(5, $this->app->router->getRoutes());
     }
 
     /** @test */
@@ -57,8 +57,29 @@ class RouterTest extends TestCase
     public function can_determine_if_a_route_exists()
     {
         $this->bootBaseRouterApplication();
+        $this->assertTrue($this->app->router->routeExists('about'));
         $this->assertTrue($this->app->router->routeExists('/about'));
         $this->assertFalse($this->app->router->routeExists('/test'));
+    }
+
+    /** @test */
+    public function can_determine_if_a_route_with_params_exists()
+    {
+        $this->bootBaseRouterApplication();
+        $this->assertTrue($this->app->router->routeExists('params/foo'));
+        $this->assertTrue($this->app->router->routeExists('/params/foo'));
+        $this->assertFalse($this->app->router->routeExists('/params/foo/bar'));
+    }
+
+    /** @test */
+    public function can_determine_if_a_route_with_optional_params_exists()
+    {
+        $this->bootBaseRouterApplication();
+        $this->assertTrue($this->app->router->routeExists('optional'));
+        $this->assertTrue($this->app->router->routeExists('/optional'));
+        $this->assertTrue($this->app->router->routeExists('/optional/foo'));
+        $this->assertTrue($this->app->router->routeExists('/optional/foo/bar'));
+        $this->assertFalse($this->app->router->routeExists('/optional/foo/bar/test'));
     }
 
     /** @test */

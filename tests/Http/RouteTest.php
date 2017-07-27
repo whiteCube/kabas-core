@@ -36,13 +36,20 @@ class RouteTest extends TestCase
     /** @test */
     public function can_check_if_route_matches_another()
     {
-        $route = $this->generateRoute(['en-GB' => '/foo/{bar}']);
+        $route = $this->generateRoute(['en-GB' => 'foo/{bar}']);
+        $slashRoute = $this->generateRoute(['en-GB' => '/foo/{bar}/']);
         $multilangRoute = $this->generateRoute(['en-GB' => '/test', 'fr-FR' => '/foo/{bar}']);
 
         $lang = new \stdClass;
         $lang->original = 'en-GB';
 
         $this->assertFalse($route->matches('/test', $lang));
+        $this->assertTrue($route->matches('/foo/bar', $lang));
+        $this->assertTrue($route->matches('/foo/bar/', $lang));
+        $this->assertTrue($route->matches('foo/bar', $lang));
+        $this->assertTrue($slashRoute->matches('/foo/bar', $lang));
+        $this->assertTrue($slashRoute->matches('/foo/bar/', $lang));
+        $this->assertTrue($slashRoute->matches('foo/bar', $lang));
         $this->assertTrue($multilangRoute->matches('/test', $lang));
     }
 

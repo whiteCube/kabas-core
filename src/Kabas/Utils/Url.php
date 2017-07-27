@@ -128,9 +128,9 @@ class Url
             if($parameter->isRequired && !array_key_exists($parameter->variable, $params)){
                 throw new ArgumentMissingException('route', 'required parameter "' . $parameter->variable . '" is undefined');
             } else if(array_key_exists($parameter->variable, $params)) {
-                $str = str_replace($parameter->string, $params[$parameter->variable], $str);
+                $str = str_replace(ltrim($parameter->string, '/'), $params[$parameter->variable], $str);
             } else {
-                $str = str_replace($parameter->string, '', $str);
+                $str = str_replace(ltrim($parameter->string, '/'), '', $str);
             }
         }
         return trim($str, '/');
