@@ -86,12 +86,13 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Retrieves one of the contained fields
+     * Retrieves one or all of the contained fields
      * @param  string $name
      * @return object
      */
     public function get($key = null)
     {
+        if(is_null($key)) return $this->output;
         if(isset($this->output[$key])) return $this->output[$key];
         return null;
     }
