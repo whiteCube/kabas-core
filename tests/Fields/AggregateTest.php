@@ -54,4 +54,11 @@ class AggregateTest extends TestCase
         $this->assertNull($this->aggregate->get('foo'));
     }
 
+    /** @test */
+    public function can_override_single_aggregate_option()
+    {
+        $this->aggregate->setOption('title', 'foo');
+        $this->assertSame('foo', $this->aggregate->title);
+    }
+
 }

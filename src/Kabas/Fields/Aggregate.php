@@ -44,6 +44,19 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
     }
 
     /**
+     * Overrides one of the contained fields
+     * @param  string $name
+     * @param  mixed $value
+     * @return this
+     */
+    public function setOption($key = null, $value)
+    {
+        if(!isset($this->output[$key])) return $this;
+        $this->output[$key] = $value;
+        return $this;
+    }
+
+    /**
      * makes options from user defined list
      * @return array
      */
