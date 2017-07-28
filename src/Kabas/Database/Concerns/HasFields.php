@@ -95,7 +95,7 @@ trait HasFields
     {
         foreach ($this->fields as $name => $field) {
             if(!isset($attributes[$name])) continue;
-            $field->set($attributes[$name]);
+            $field->set(forward_static_call([get_class($field), 'format'], $attributes[$name]));
         }
     }
 }
