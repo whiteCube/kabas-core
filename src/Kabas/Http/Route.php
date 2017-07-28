@@ -131,16 +131,27 @@ class Route
     }
 
     /**
-     * Retrieves the parameters for the current route.
+     * Fills the parameters for given route
      * @return void
      */
     public function gatherParameters($route, $lang)
     {
+        foreach ($this->extractParameters($route, $lang) as $i => $parameter) {
+            $this->parameters[$i]->value = $parameter;
+        }
+    }
+
+    /**
+     * Retrieves the parameters for the given route.
+     * @return array
+     */
+    public function extractParameters($route, $lang)
+    {
         preg_match($this->regexen[$lang], $route, $matches);
         array_shift($matches);
-        foreach ($matches as $i => $value) {
-            $this->parameters[$i]->value = urldecode($value);
-        }
+        return array_map(function($parameter) {
+            return urldecode($parameter);
+        }, $matches);
     }
 
     /**

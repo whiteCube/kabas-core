@@ -103,8 +103,8 @@ class MenuItem
      */
     protected function isPageActive()
     {
-        if($this->url->getTarget()->id == Page::id()) return true;
-        return false;
+        if($this->url->getTarget()->id != Page::id()) return false;
+        return true;
     }
 
     /**
@@ -113,8 +113,17 @@ class MenuItem
      */
     protected function isUrlActive()
     {
-        $route = Url::route($this->url);
-        if($route) return App::router()->getCurrent()->matches($route, Lang::getCurrent());
-        return false;
+        if(!($route = Url::route($this->url))) return false;
+        $current = App::router()->getCurrent();
+        $lang = Lang::getCurrent();
+        if(!$current->matches($route, $lang)) return false;
+        $parameters = $current->extractParameters($route, $lang->original);
+        foreach ($current->parameters as $i => $parameter) {
+            if(is_null($parameter->value) && !isset($parameters[$i])) continue;
+            if(!$parameter->isRequired && !isset($parameters[$i])) continue;
+            if($parameter->value === $parameters[$i]) continue;
+            return false;
+        }
+        return true;
     }
 }

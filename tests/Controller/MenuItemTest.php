@@ -5,6 +5,7 @@ namespace Tests\Controllers;
 use Kabas\App;
 use Tests\CreatesApplication;
 use Kabas\Controller\MenuItem;
+use Kabas\Content\Menus\Link;
 use PHPUnit\Framework\TestCase;
 
 class MenuItemTest extends TestCase
@@ -54,6 +55,28 @@ class MenuItemTest extends TestCase
         $withSubitems = new MenuItem($this->menu->items->items[4]);
         $this->assertFalse($withSubitems->isActive(false));
         $this->assertTrue($withSubitems->isActive(true));
+    }
+
+    /** @test */
+    public function can_check_if_url_is_current_page()
+    {
+        $this->setPageRoute('/optional/foo');
+        $this->app->router->capture()->load()->setCurrent();
+        $items = [
+            'root' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional'],
+            'wrong' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional/bar'],
+            'right' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional/foo'],
+            'full' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional/foo/bar'],
+            'over' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional/foo/bar/test']
+        ];
+        foreach ($items as $key => $value) {
+            $items[$key] = new MenuItem(new Link($value, $key, $this->menu->getStructure()->item));
+        }
+        $this->assertTrue($items['root']->isActive());
+        $this->assertFalse($items['wrong']->isActive());
+        $this->assertTrue($items['right']->isActive());
+        $this->assertFalse($items['full']->isActive());
+        $this->assertFalse($items['over']->isActive());
     }
 
     /** @test */
