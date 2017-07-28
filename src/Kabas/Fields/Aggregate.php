@@ -18,6 +18,7 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
      */
     public static function format($value)
     {
+        if(is_null($value) || (is_string($value) && !strlen($value))) return;
         if(is_string($value) && ($json = json_decode($value))) return $json;
         if(is_array($value) || is_object($value)) return $value;
         return false;
