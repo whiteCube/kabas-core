@@ -93,6 +93,11 @@ class BaseItem
         return null;
     }
 
+    public function getStructure()
+    {
+        return $this->structure;
+    }
+
     protected function loadFields($obj = null)
     {
         $this->loadStructure();
