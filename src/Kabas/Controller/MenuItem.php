@@ -5,6 +5,7 @@ namespace Kabas\Controller;
 use Kabas\App;
 use Kabas\Utils\Url;
 use Kabas\Utils\Page;
+use Kabas\Utils\Lang;
 
 class MenuItem
 {
@@ -113,7 +114,7 @@ class MenuItem
     protected function isUrlActive()
     {
         $route = Url::route($this->url);
-        if($route) return App::router()->getCurrent()->matches($route);
+        if($route) return App::router()->getCurrent()->matches($route, Lang::getCurrent());
         return false;
     }
 }
