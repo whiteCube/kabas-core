@@ -36,10 +36,10 @@ class FileTest extends TestCase
     }
 
     /** @test */
-    public function throws_exception_if_failed_to_get_file()
+    public function can_set_value_to_null_if_file_not_found()
     {
-        $this->expectException(TypeException::class);
         $this->file->set('foo.php');
+        $this->assertNull($this->file->get());
     }
 
     /** @test */

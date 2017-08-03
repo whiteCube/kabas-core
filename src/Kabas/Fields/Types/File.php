@@ -16,7 +16,7 @@ class File extends Uploadable
      */
     public function condition()
     {
-        if(is_object($this->reference)) return true;
+        if($this->reference) return true;
         return false;
     }
 
@@ -39,8 +39,8 @@ class File extends Uploadable
     protected function parse($value)
     {
         $this->setReference($value);
-        if(!$this->reference) return false;
-        return $this->reference->url;
+        if(is_object($this->reference)) return $this->reference->url;
+        return null;
     }
 
     protected function setReference($value)
@@ -50,21 +50,29 @@ class File extends Uploadable
 
     protected function getReference($value)
     {
-        if(is_string($value) && file_exists($value)){
-            $o = new \stdClass();
-            $o->path = realpath($value);
-            if($o->path){
-                $path = pathinfo($o->path);
-                $o->dirname = isset($path['dirname']) ? $path['dirname'] : null;
-                $o->basename = isset($path['basename']) ? $path['basename'] : null;
-                $o->filename = isset($path['filename']) ? $path['filename'] : null;
-                $o->extension = isset($path['extension']) ? $path['extension'] : null;
-                $o->size = filesize($o->path);
-                $o->url = UrlUtil::fromPath($o->path);
-                return $o;
-            }
-        }
-        return false;
+        if(!is_null($value) && !is_string($value)) return false;
+        // there was a wrong or empty value, returning true will
+        // still let the type condition validate correctly.
+        if(!($path = $this->getValuePath($value))) return true;
+        // The field contains a valid path, we'll build the
+        // reference object.
+        $o = new \stdClass();
+        $o->path = $path;
+        $path = pathinfo($o->path);
+        $o->dirname = isset($path['dirname']) ? $path['dirname'] : null;
+        $o->basename = isset($path['basename']) ? $path['basename'] : null;
+        $o->filename = isset($path['filename']) ? $path['filename'] : null;
+        $o->extension = isset($path['extension']) ? $path['extension'] : null;
+        $o->size = filesize($o->path);
+        $o->url = UrlUtil::fromPath($o->path);
+        return $o;
+    }
+
+    protected function getValuePath($value)
+    {
+        if(!$value) return false;
+        $path = realpath($value);
+        return $path ? $path : realpath(PUBLIC_PATH . DS . trim($value, DS));
     }
 
 }
