@@ -38,8 +38,8 @@ class Editor
 
     protected function serialize($args)
     {
-        foreach($args as $arg) {
-            if(is_callable($arg)) return md5('closure');
+        foreach($args as $key => $arg) {
+            if(is_callable($arg)) $args[$key] = 'closure';
         }
         return md5(serialize($args));
     }
