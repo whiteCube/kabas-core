@@ -74,8 +74,8 @@ class EditorTest extends TestCase
             $draw->background('#0000ff');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-circle580601915d6ef3900dc60cebbc7ba2b5'));
-        $this->del('foo-circle580601915d6ef3900dc60cebbc7ba2b5');
+        $this->assertTrue($this->exists('foo-circlebd69f297cd2a39be6bdc9377cf12eddf'));
+        $this->del('foo-circlebd69f297cd2a39be6bdc9377cf12eddf');
     }
 
     /** @test */
@@ -112,8 +112,8 @@ class EditorTest extends TestCase
             $draw->background('#0000ff');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-ellipse580601915d6ef3900dc60cebbc7ba2b5'));
-        $this->del('foo-ellipse580601915d6ef3900dc60cebbc7ba2b5');
+        $this->assertTrue($this->exists('foo-ellipse5c0a4ae84de1bb97f8d04daa03af5fc4'));
+        $this->del('foo-ellipse5c0a4ae84de1bb97f8d04daa03af5fc4');
     }
 
     /** @test */
@@ -239,8 +239,8 @@ class EditorTest extends TestCase
             $draw->color('#0000ff');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-line580601915d6ef3900dc60cebbc7ba2b5'));
-        $this->del('foo-line580601915d6ef3900dc60cebbc7ba2b5');
+        $this->assertTrue($this->exists('foo-line4f063de95639288b48ca28109924e87f'));
+        $this->del('foo-line4f063de95639288b48ca28109924e87f');
     }
 
     /** Commented for now because it takes over 2 minutes to complete */
@@ -301,8 +301,8 @@ class EditorTest extends TestCase
             $draw->background('#ff0000');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-polygon580601915d6ef3900dc60cebbc7ba2b5'));
-        $this->del('foo-polygon580601915d6ef3900dc60cebbc7ba2b5');
+        $this->assertTrue($this->exists('foo-polygonbc1366cebf7cd62ec1a30ee949fb2579'));
+        $this->del('foo-polygonbc1366cebf7cd62ec1a30ee949fb2579');
     }
 
     /** @test */
@@ -312,8 +312,8 @@ class EditorTest extends TestCase
             $draw->background('#ff0000');
         });
         $this->editor->save();
-        $this->assertTrue($this->exists('foo-rectangle580601915d6ef3900dc60cebbc7ba2b5'));
-        $this->del('foo-rectangle580601915d6ef3900dc60cebbc7ba2b5');
+        $this->assertTrue($this->exists('foo-rectanglec8537a1e0e12301631713dd57f91d5a7'));
+        $this->del('foo-rectanglec8537a1e0e12301631713dd57f91d5a7');
     }
 
     /** @test */
