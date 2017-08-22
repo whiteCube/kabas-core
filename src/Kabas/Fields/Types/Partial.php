@@ -12,8 +12,8 @@ class Partial extends Groupable
 
     /**
      * includes referenced partial's view with its data
-     * @param  string $params
-     * @return void
+     * @param  array $params
+     * @return this
      */
     public function render($params = [])
     {
