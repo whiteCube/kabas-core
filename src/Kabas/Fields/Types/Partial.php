@@ -12,13 +12,14 @@ class Partial extends Groupable
 
     /**
      * includes referenced partial's view with its data
-     * @param  string $option
-     * @return void
+     * @param  array $params
+     * @return this
      */
-    public function render()
+    public function render($params = [])
     {
         if($this->reference){
             $this->reference->set($this->output);
+            $this->reference->set($params);
             $this->reference->make();
         }
         return $this;
