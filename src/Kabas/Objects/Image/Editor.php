@@ -9,39 +9,21 @@ class Editor
 {
     public $intervention;
 
-    protected $dirname;
-
+    protected $directory;
     protected $filename;
-
     protected $extension;
-
-    protected $file;
-
     protected $history = [];
 
-    function __construct($dir, $file, $extension)
+    function __construct($directory, $filename, $extension)
     {
-        $this->dirname = $dir;
-        $this->filename = $file;
+        $this->directory = $directory;
+        $this->filename = $filename;
         $this->extension = $extension;
     }
 
     public function __call($name, $args)
     {
-        $this->history[] = $this->getAction($name, $args, $this->getSlug($name, $args));
-    }
-
-    protected function getSlug($name, $args)
-    {
-        return $name . $this->serialize($args);
-    }
-
-    protected function serialize($args)
-    {
-        foreach($args as $key => $arg) {
-            if(is_callable($arg)) $args[$key] = 'closure';
-        }
-        return md5(serialize($args));
+        $this->history[] = $this->getAction($name, $args, $this->getActionString($name, $args));
     }
 
     public function hasChanges()
@@ -50,29 +32,44 @@ class Editor
         return false;
     }
 
-    public function save()
+    public function save($directory = null)
     {
-        $this->setFile();
-        if(!file_exists($this->dirname . DS . $this->file)) {
+        if(!$directory) return;
+        mkdir($directory, 0755, true);
+        $file = $directory . DS . $this->getFullFilename();
+        if(!file_exists($file)) {
             $this->executeActions();
-            $this->intervention->save($this->dirname . DS . $this->file);
+            $this->intervention->save($file);
         }
         $this->history = [];
-        return $this->file;
+        return $file;
+    }
+
+    protected function getActionString($name, $args)
+    {
+        return $name . $this->getArgsString($args);
+    }
+
+    protected function getArgsString($args, $separator = '_')
+    {
+        return implode($separator, array_map(function($arg){
+            if(is_array($arg)) return $this->getArgsString($arg, '-');
+            if(is_object($arg)) return serialize($arg);
+            if(is_callable($arg)) return 'closure';
+            return (string) $arg;
+        }, $args));
     }
     
-    protected function setFile()
+    protected function getFullFilename()
     {
-        $this->file = $this->filename . $this->getHistoryString() . '.' . $this->extension;
+        return $this->filename . '-' . $this->getHistoryString() . '.' . $this->extension;
     }
 
     protected function getHistoryString()
     {
-        $string = '';
-        foreach ($this->history as $o) {
-            $string .= '-' . str_replace('.', 'dot', $o->slug);
-        }
-        return $string;
+        return md5(implode('#', array_map(function($action) {
+            return $action->slug;
+        }, $this->history)));
     }
 
     protected function getAction($name, $args, $slug = null)
@@ -87,14 +84,6 @@ class Editor
     protected function executeActions()
     {
         $this->prepareIntervention();
-        if(!isset($this->intervention->filename)) {
-            // I don't think this can ever happen
-            // @codeCoverageIgnoreStart
-            $this->intervention->filename = $this->filename;
-            $this->intervention->extension = $this->extension;
-            $this->intervention->dirname = $this->dirname;
-            // @codeCoverageIgnoreStop
-        }
         foreach ($this->history as $o) {
             $this->intervention = call_user_func_array([$this->intervention, $o->action], $o->args);
         }
@@ -102,9 +91,8 @@ class Editor
 
     public function prepareIntervention()
     {
-        if(!$this->intervention){
-            $this->intervention = new Intervention(['driver' => App::config()->get('app.imageDriver')]);
-            $this->intervention = $this->intervention->make($this->dirname . DS . $this->filename . '.' . $this->extension);
-        }
+        if($this->intervention) return;
+        $this->intervention = new Intervention(['driver' => App::config()->get('app.imageDriver')]);
+        $this->intervention = $this->intervention->make($this->directory . DS . $this->filename . '.' . $this->extension);
     }
 }

@@ -142,8 +142,10 @@ class App extends Container
         $this->define('DS', DIRECTORY_SEPARATOR);
         $this->define('CORE_PATH', __DIR__);
         $this->define('PUBLIC_PATH', $publicPath);
+        $this->define('PUBLIC_UPLOADS_PATH', PUBLIC_PATH . DS . 'uploads');
         $this->define('ROOT_PATH', realpath(PUBLIC_PATH . DS . '..'));
         $this->define('CONTENT_PATH', ROOT_PATH . DS . 'content');
+        $this->define('UPLOADS_PATH', CONTENT_PATH . DS . 'uploads');
         $this->define('STORAGE_PATH', ROOT_PATH . DS . 'storage');
         $this->define('SHARED_DIR', 'shared');
         $this->define('CONFIG_PATH', ROOT_PATH . DS . 'config');

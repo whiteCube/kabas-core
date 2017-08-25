@@ -91,6 +91,21 @@ class File
     }
 
     /**
+     * Creates a copy of given file and returns its new location
+     * @param string $source 
+     * @param string $destination 
+     * @param bool $overwrite 
+     * @return string
+     */
+    static function copy($source, $destination, $overwrite = true)
+    {
+        if(!$overwrite && file_exists($destination)) return $destination;
+        mkdir(dirname($destination), 0755, true);
+        if(copy($source, $destination)) return $destination;
+        return false;
+    }
+
+    /**
      * Get directory and subdirectory structure
      * @param  string $path
      * @return array

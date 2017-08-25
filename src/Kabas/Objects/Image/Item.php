@@ -5,16 +5,18 @@ namespace Kabas\Objects\Image;
 use Kabas\Objects\Image\Editor;
 use Kabas\Utils\Image;
 use Kabas\Utils\Url;
+use Kabas\Utils\File;
 
 class Item
 {
     public $error = false;
+    public $original;
     public $path;
     public $dirname;
+    public $public;
     public $filename;
     public $extension;
-    public $src;
-    protected $renamed;
+
     protected $editor;
     protected $dataMethods = [
         'filesize',
@@ -38,7 +40,7 @@ class Item
 
     public function __toString()
     {
-        return $this->apply()->src();
+        return $this->src();
     }
 
     public function __call($name, $args)
@@ -57,13 +59,13 @@ class Item
 
     public function apply()
     {
-        if($this->editor && $this->editor->hasChanges()) $this->renamed = $this->editor->save();
+        $this->path = $this->getPublicImage();
         return $this;
     }
 
     public function show($echo = true)
     {
-        $s = '<img src="' . $this->__toString() . '" alt="' . $this->alt() . '" />';
+        $s = '<img src="' . $this->src() . '" alt="' . $this->alt() . '" />';
         if($echo) echo($s);
         return $s;
     }
@@ -75,13 +77,8 @@ class Item
 
     public function src()
     {
-        return $this->src . '/' . $this->fullname();
-    }
-
-    public function fullname()
-    {
-        if($this->renamed) return $this->renamed;
-        return $this->filename . '.' . $this->extension;
+        if(!$this->path || ($this->editor && $this->editor->hasChanges())) $this->apply();
+        return Url::fromPath($this->path);
     }
 
     protected function mergeWithBase($content)
@@ -97,32 +94,24 @@ class Item
 
     protected function makeEditor($prepareIntervention = true)
     {
-        if(!$this->error) {
-            if(!$this->editor) {
-                $this->editor = new Editor($this->dirname, $this->filename, $this->extension);
-            }
-            if($prepareIntervention) $this->editor->prepareIntervention();
+        if($this->error) return;
+        if(!$this->editor) {
+            $this->editor = new Editor($this->dirname, $this->filename, $this->extension);
         }
+        if($prepareIntervention) $this->editor->prepareIntervention();
     }
 
     protected function setFile($path)
     {
-        if(!$path) {
+        if(!$path || !($this->original = realpath(ROOT_PATH . DS . trim($path, '\\/')))) {
             $this->error = true;
-            return false;
+            return;
         }
-        $this->path = realpath(ROOT_PATH . DS . trim($path, '\\/'));
-        if(!$this->path){
-            $this->error = true;
-            return false;
-        }
-        else{
-            $file = pathinfo($this->path);
-            $this->dirname = isset($file['dirname']) ? $file['dirname'] : null;
-            $this->filename = isset($file['filename']) ? $file['filename'] : null;
-            $this->extension = isset($file['extension']) ? $file['extension'] : null;
-            $this->src = Url::fromPath($this->dirname);
-        }
+        $file = pathinfo($this->original);
+        $this->filename = $file['filename'] ?? null;
+        $this->extension = $file['extension'] ?? null;
+        $this->dirname = $file['dirname'] ?? null;
+        $this->public = $this->getPublicPath($this->dirname);
     }
 
     protected function setAlt($string)
@@ -134,5 +123,49 @@ class Item
     {
         if(is_string($string)) return $string;
         return $this->filename;
+    }
+
+    /**
+     * Generates a full path to the image's supposed public directory
+     * @param  string $original
+     * @return string
+     */
+    protected function getPublicPath($original)
+    {
+        if(!$original) return;
+        $original = $this->getPublicSubDir($original);
+        return rtrim(PUBLIC_UPLOADS_PATH . DS . $original, DS);
+    }
+
+    /**
+     * Strips original path, only keeping useful subdirectories
+     * @param  string $original
+     * @return string
+     */
+    protected function getPublicSubDir($original)
+    {
+        if(strpos($original, UPLOADS_PATH) !== 0) return '';
+        return trim(substr($original, strlen(UPLOADS_PATH)),'\\/');
+    }
+
+    /**
+     * Creates publicly queryable image and returns its full path
+     * @return string
+     */
+    protected function getPublicImage()
+    {
+        if($this->editor && $this->editor->hasChanges()) {
+            return $this->editor->save($this->public);
+        }
+        return File::copy($this->original, $this->getPublicOriginal(), false);
+    }
+
+    /**
+     * Returns full path to the original public image
+     * @return string
+     */
+    protected function getPublicOriginal()
+    {
+        return $this->public . DS . $this->filename . '.' . $this->extension;
     }
 }
