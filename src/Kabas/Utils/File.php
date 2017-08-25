@@ -63,6 +63,7 @@ class File
     static function write($data, $path)
     {
         if(isset(self::$cache[$path])) self::$cache[$path] = $data;
+        self::mkdir(dirname($path));
         file_put_contents($path, $data);
     }
 

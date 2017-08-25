@@ -42,11 +42,17 @@ class FileTest extends TestCase
 
     public function deleteFakeFiles()
     {
-        File::delete(__DIR__ . '/test/dummy1.json');
-        File::delete(__DIR__ . '/test/dummy2.json');
-        File::delete(__DIR__ . '/test/foo/bar.json');
-        rmdir(__DIR__ . '/test/foo');
-        rmdir(__DIR__ . '/test');
+        $this->recursive_rmdir(__DIR__ . '/test');
+    }
+
+    public function recursive_rmdir($directory)
+    {
+        foreach(scandir($directory) as $file) {
+            if ('.' === $file || '..' === $file) continue;
+            if (is_dir($directory . DS . $file)) $this->recursive_rmdir($directory . DS . $file);
+            else unlink($directory . DS . $file);
+        }
+        rmdir($directory);
     }
 
     /** @test */
@@ -169,6 +175,29 @@ class FileTest extends TestCase
         $this->assertEquals('bar', $data['dummy1']->foo);
         $this->assertEquals('bar', $data['dummy2']->foo);
         $this->deleteFakeFiles();
+    }
+
+    /** @test */
+    public function can_make_new_directory()
+    {
+        File::mkdir(__DIR__.'/foo');
+        $this->assertTrue(is_dir(__DIR__.'/foo'));
+        File::writeJson(['foo' => 'bar'], __DIR__ . '/foo/bar');
+        $this->assertTrue(File::mkdir(__DIR__.'/foo'));
+        $this->assertTrue(file_exists(__DIR__.'/foo/bar.json'));
+        $this->recursive_rmdir(__DIR__.'/foo');
+    }
+
+    /** @test */
+    public function can_copy_file_and_return_its_destination()
+    {
+        File::writeJson(['foo' => 'bar'], __DIR__ . '/test/original');
+        File::writeJson(['foo' => 'bar', 'bar' => 'foo'], __DIR__ . '/test/overwrite');
+        $original = File::copy(__DIR__.'/test/original.json', __DIR__.'/test/foo/bar.json');
+        $overwrite = File::copy(__DIR__.'/test/overwrite.json', __DIR__.'/test/foo/bar.json', false);
+        $this->assertSame(__DIR__.'/test/foo/bar.json', $original);
+        $this->assertSame(__DIR__.'/test/foo/bar.json', $overwrite);
+        $this->assertSame(filesize(__DIR__ . '/test/original.json'), filesize(__DIR__.'/test/foo/bar.json'));
     }
 
     public function tearDown()
