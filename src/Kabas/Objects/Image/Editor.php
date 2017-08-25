@@ -53,9 +53,9 @@ class Editor
     protected function getArgsString($args, $separator = '_')
     {
         return implode($separator, array_map(function($arg){
+            if(is_callable($arg)) return 'closure';
             if(is_array($arg)) return $this->getArgsString($arg, '-');
             if(is_object($arg)) return serialize($arg);
-            if(is_callable($arg)) return 'closure';
             return (string) $arg;
         }, $args));
     }
