@@ -18,20 +18,17 @@ class EditorTest extends TestCase
         $this->createApplication([
             'config' => \Kabas\Config\Container::class
         ]);
-        $dir = PUBLIC_PATH . DS . 'TheCapricorn';
-        $file = 'foo';
-        $ext = 'jpg';
-        $this->editor = new Editor($dir, $file, $ext);
+        $this->editor = new Editor(UPLOADS_PATH, 'foo', 'jpg');
     }
 
-    public function exists($file, $ext = '.jpg')
+    public function exists($file)
     {
-        return file_exists(PUBLIC_PATH . DS . 'TheCapricorn' . DS . $file . $ext);
+        return file_exists(PUBLIC_UPLOADS_PATH . DS . $file);
     }
 
-    public function del($file, $ext = '.jpg')
+    public function del($file)
     {
-        return unlink(PUBLIC_PATH . DS . 'TheCapricorn' . DS . $file . $ext);
+        return unlink(PUBLIC_UPLOADS_PATH . DS . $file);
     }
 
     /** @test */
@@ -44,9 +41,9 @@ class EditorTest extends TestCase
     public function can_backup()
     {
         $this->editor->backup();
-        $this->editor->save();
-        $this->assertTrue($this->exists('foo-backup40cd750bba9870f18aada2478b24840a'));
-        $this->del('foo-backup40cd750bba9870f18aada2478b24840a');
+        $this->editor->save(PUBLIC_UPLOADS_PATH);
+        $this->assertTrue($this->exists('foo-402051f4be0cc3aad33bcf3ac3d6532b.jpg'));
+        $this->del('foo-402051f4be0cc3aad33bcf3ac3d6532b.jpg');
     }
 
     /** @test */

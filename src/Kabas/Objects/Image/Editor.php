@@ -35,7 +35,7 @@ class Editor
     public function save($directory = null)
     {
         if(!$directory) return;
-        mkdir($directory, 0755, true);
+        if(!is_dir($directory)) mkdir($directory, 0755, true);
         $file = $directory . DS . $this->getFullFilename();
         if(!file_exists($file)) {
             $this->executeActions();
