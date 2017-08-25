@@ -15,14 +15,10 @@ class ItemTest extends TestCase
 
     public function setUp()
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
-        if(!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__ . DS . '..' . DS . '..' . DS . 'TestTheme');
-        if(!defined('PUBLIC_PATH')) define('PUBLIC_PATH', ROOT_PATH . DS . 'public');
-        $data = [
-            'path' => 'public/TheCapricorn/foo.jpg',
-            'alt' => 'Alt value'
-        ];
-        $this->item = new Item($data);
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $this->item = new Item(['path' => 'content/uploads/foo.jpg', 'alt' => 'Foobar']);
     }
 
     /** @test */
