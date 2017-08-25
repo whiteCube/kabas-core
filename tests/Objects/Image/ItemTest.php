@@ -16,9 +16,15 @@ class ItemTest extends TestCase
     public function setUp()
     {
         $this->createApplication([
-            'config' => \Kabas\Config\Container::class
+            'config' => \Kabas\Config\Container::class,
+            'router' => \Kabas\Http\Router::class
         ]);
         $this->item = new Item(['path' => 'content/uploads/foo.jpg', 'alt' => 'Foobar']);
+    }
+
+    public function del($file)
+    {
+        return unlink(PUBLIC_UPLOADS_PATH . DS . $file);
     }
 
     /** @test */
@@ -30,34 +36,28 @@ class ItemTest extends TestCase
     /** @test */
     public function can_be_echoed()
     {
-        $this->expectOutputString('/foo.jpg');
-        echo $this->item;
+        $this->result = $this->catch(function(){
+            echo $this->item;
+        });
+        $this->see('uploads/foo.jpg');
+        $this->del('foo.jpg');
     }
 
     /** @test */
     public function can_return_filesize()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class,
-        ]);
         $this->assertSame(42950, $this->item->filesize());
     }
 
     /** @test */
     public function can_return_core()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class,
-        ]);
         $this->assertTrue(is_resource($this->item->getCore()));
     }
 
     /** @test */
     public function can_return_image_dimensions()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class,
-        ]);
         $this->assertSame(111, $this->item->height());
         $this->assertSame(333, $this->item->width());
     }
@@ -65,57 +65,49 @@ class ItemTest extends TestCase
     /** @test */
     public function can_return_iptc_data()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class,
-        ]);
         $this->assertSame('WhiteCube', $this->item->iptc('AuthorByline'));
     }
 
     /** @test */
     public function can_return_exif_data()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class
-        ]);
         $this->assertSame('WhiteCube', $this->item->exif('Artist'));
     }
 
     /** @test */
     public function can_return_mime_type()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class
-        ]);
         $this->assertSame('image/jpeg', $this->item->mime());
     }
 
     /** @test */
     public function can_return_the_color_of_a_pixel_within_the_image()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class
-        ]);
         $this->assertSame('#ccd0db', $this->item->pickColor(100, 100, 'hex'));
     }
 
     /** @test */
     public function can_return_alt()
     {
-        $this->assertSame('Alt value', $this->item->alt());
+        $this->assertSame('Foobar', $this->item->alt());
     }
 
     /** @test */
     public function can_use_filename_as_alt()
     {
-        $data = ['path' => 'public/TheCapricorn/foo.jpg'];
-        $item = new Item($data);
+        $item = new Item(['path' => 'public/TheCapricorn/foo.jpg']);
         $this->assertSame('foo', $item->alt());
     }
 
     /** @test */
     public function can_generate_html_image_tag()
     {
-        $this->assertSame('<img src="/foo.jpg" alt="Alt value" />', $this->item->show(false));
+        $this->result = $this->catch(function(){
+            $this->item->show();
+        });
+        $this->see('<img src="/uploads/foo.jpg" alt="Foobar" />');
+        $this->assertSame('<img src="/uploads/foo.jpg" alt="Foobar" />', $this->item->show(false));
+        $this->del('foo.jpg');
     }
 
     /** @test */
@@ -132,13 +124,9 @@ class ItemTest extends TestCase
     /** @test */
     public function can_forward_method_calls_to_editor()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class
-        ]);
-        $this->item->blur(2)->save();
-        $file = PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo-blura5f5d7a5fc80600513c623db108873af.jpg';
-        $this->assertTrue(file_exists($file));
-        unlink($file);
+        $this->item->blur(2)->src();
+        $this->assertTrue(file_exists(PUBLIC_UPLOADS_PATH . DS . 'foo-aaf678384788b1296dc98b4af034b866.jpg'));
+        $this->del('foo-aaf678384788b1296dc98b4af034b866.jpg');
     }
 
 }

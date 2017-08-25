@@ -100,9 +100,20 @@ class File
     static function copy($source, $destination, $overwrite = true)
     {
         if(!$overwrite && file_exists($destination)) return $destination;
-        mkdir(dirname($destination), 0755, true);
+        self::mkdir(dirname($destination));
         if(copy($source, $destination)) return $destination;
         return false;
+    }
+
+    /**
+     * Creates given directory if necessary, with permissions
+     * @param string $directory
+     * @return bool
+     */
+    static function mkdir($directory)
+    {
+        if(is_dir($directory)) return true;
+        return mkdir($directory, 0755, true);
     }
 
     /**

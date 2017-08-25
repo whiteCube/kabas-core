@@ -3,6 +3,7 @@
 namespace Kabas\Objects\Image;
 
 use Intervention\Image\ImageManager as Intervention;
+use Kabas\Utils\File;
 use Kabas\App;
 
 class Editor
@@ -35,6 +36,7 @@ class Editor
     public function save($directory = null)
     {
         if(!$directory) return;
+        File::mkdir($directory);
         if(!is_dir($directory)) mkdir($directory, 0755, true);
         $file = $directory . DS . $this->getFullFilename();
         if(!file_exists($file)) {
