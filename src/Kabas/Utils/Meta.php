@@ -3,6 +3,7 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
+use Kabas\Utils\Url;
 
 class Meta
 {
@@ -25,8 +26,7 @@ class Meta
     static function get($key)
     {
         $page = App::content()->pages->getCurrent();
-        if(isset($page->meta[$key])) return $page->meta[$key];
-        return null;
+        if(isset($page->meta[$key])) return self::clean($page->meta[$key]);
     }
 
     /**
@@ -37,7 +37,9 @@ class Meta
     {
         $page = App::content()->pages->getCurrent();
         if(!isset($page->meta)) return;
-        return $page->meta;
+        return array_map(function($item) {
+            return self::clean($item);
+        }, $page->meta);
     }
 
     /**
@@ -49,5 +51,10 @@ class Meta
         foreach(self::all() as $name => $content) {
             echo '<meta name="' . $name . '" content="' . $content . '">';
         }
+    }
+
+    protected static function clean($content)
+    {
+        return str_replace('#ROOT#', Url::base(), trim($content));
     }
 }

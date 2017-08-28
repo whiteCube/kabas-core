@@ -50,6 +50,14 @@ class MetaTest extends TestCase
     }
 
     /** @test */
+    public function can_inject_root_url_in_metadata()
+    {
+        Meta::set('foo', 'Visit us on #ROOT#!');
+        $this->assertSame('Visit us on http://www.foo.com!', Meta::get('foo'));
+        $this->assertSame('Visit us on http://www.foo.com!', Meta::all()['foo']);
+    }
+
+    /** @test */
     public function can_output_html_meta_tags_for_the_currently_defined_data()
     {
         $this->expectOutputRegex('/<meta name="foo" content="bar">/');
