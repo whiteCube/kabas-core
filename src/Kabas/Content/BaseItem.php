@@ -5,14 +5,13 @@ namespace Kabas\Content;
 use Kabas\App;
 use Kabas\Utils\File;
 use Kabas\Utils\Text;
+use Kabas\Objects\Page\Title;
 use Kabas\Fields\Item as Field;
 use Kabas\Exceptions\FileNotFoundException;
 
 class BaseItem
 {
     public $id;
-
-    public $_title;
 
     public $template;
 
@@ -24,17 +23,19 @@ class BaseItem
 
     public $directory;
 
+    protected $title;
+
     protected $controller;
 
     protected $structure;
 
     public function __construct(\stdClass $data)
     {
-        $this->id = isset($data->id) ? $data->id : false;
-        $this->_title = isset($data->title) ? $data->title : 'Untitled';
-        $this->template = isset($data->template) ? $data->template : false;
-        $this->fields = $this->loadFields(@$data->data);
-        $this->options = isset($data->options) ? $data->options : new \stdClass();
+        $this->id = $data->id ?? false;
+        $this->template = $data->template ?? false;
+        $this->fields = $this->loadFields($data->data ?? null);
+        $this->options = $data->options ?? new \stdClass();
+        $this->title = $this->makeTitle($data->title ?? null);
         $this->controller = $this->findControllerClass();
         $this->setData($data);
     }
@@ -88,9 +89,24 @@ class BaseItem
         }
     }
 
-    protected function setData($data)
+    /**
+     * Returns the title instance
+     * @return Kabas\Objects\Page\Title
+     */
+    public function getTitle()
     {
-        return null;
+        return $this->title;
+    }
+
+    /**
+     * Forwards the set() method to the title object
+     * @param  string $content
+     * @param  bool $hasFormatting
+     * @return void
+     */
+    public function setTitle($content, $hasFormatting = true)
+    {
+        $this->getTitle()->set($content, $hasFormatting);
     }
 
     public function getStructure()
@@ -146,6 +162,16 @@ class BaseItem
         return $path;
     }
 
+    /**
+     * Creates the default Title Object
+     * @param  string $default
+     * @return Kabas\Objects\Page\Title;
+     */
+    protected function makeTitle($default = null)
+    {
+        return new Title($default ?? $this->id ?? $this->template);
+    }
+
     protected function findControllerClass()
     {
         $class = $this->getTemplateNamespace();
@@ -156,5 +182,10 @@ class BaseItem
     protected function getTemplateNamespace()
     {
         return Text::toNamespace($this->template);
+    }
+
+    protected function setData($data)
+    {
+        return null;
     }
 }

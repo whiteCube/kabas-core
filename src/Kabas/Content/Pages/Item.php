@@ -15,8 +15,6 @@ class Item extends BaseItem
 
     public $meta;
 
-    public $title;
-
     protected static $defaultMeta = [];
 
     protected function setData($data)

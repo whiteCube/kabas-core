@@ -39,7 +39,8 @@ class BaseController
     public function __call($method, $args)
     {
         if($method == 'setup') return null;
-        return false;
+        if (!method_exists($this->item, $method)) return false;
+        return call_user_func_array([$this->item, $method], $args);
     }
 
     public function redirect($pageID, $params = [], $lang = null)

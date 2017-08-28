@@ -8,11 +8,13 @@ class Page
 {
     /**
      * Get the title of the current page
+     * @param  string $prefix
+     * @param  string $suffix
      * @return string
      */
-    static function title()
+    static function title($prefix = null, $suffix = null)
     {
-        return App::content()->pages->getCurrent()->title;
+        return App::content()->pages->getCurrent()->getTitle()->get($prefix, $suffix);
     }
 
     /**
