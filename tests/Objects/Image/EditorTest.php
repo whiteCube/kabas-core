@@ -188,10 +188,12 @@ class EditorTest extends TestCase
     /** @test */
     public function can_insert_image_into_another()
     {
-        $this->editor->insert(PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo.jpg', 'top-left', 75, 25);
+        $insertedImagePath = PUBLIC_PATH . DS . 'TheCapricorn' . DS . 'foo.jpg';
+        $this->editor->insert($insertedImagePath, 'top-left', 75, 25);
         $this->editor->save(PUBLIC_UPLOADS_PATH);
-        $this->assertTrue($this->exists('foo-d9a0da4d92298d0e35120f42a37d6530.jpg'));
-        $this->del('foo-d9a0da4d92298d0e35120f42a37d6530.jpg');
+        $expectedFileHash = md5('insert' . implode('_', [$insertedImagePath,'top-left',75,25]));
+        $this->assertTrue($this->exists('foo-' . $expectedFileHash . '.jpg'));
+        $this->del('foo-' . $expectedFileHash . '.jpg');
     }
 
     /** @test */
