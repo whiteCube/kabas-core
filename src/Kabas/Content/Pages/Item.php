@@ -20,7 +20,6 @@ class Item extends BaseItem
     protected function setData($data)
     {
         $this->route = isset($data->route) ? $data->route : false;
-        $this->title = isset($data->title) ? $data->title : false;
         $this->meta = $this->getMeta($data);
     }
 
