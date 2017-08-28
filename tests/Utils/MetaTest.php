@@ -58,6 +58,14 @@ class MetaTest extends TestCase
     }
 
     /** @test */
+    public function can_inject_current_url_in_metadata()
+    {
+        Meta::set('bar', '#CURRENT#');
+        $this->assertSame('http://www.foo.com/en/foo/bar', Meta::get('bar'));
+        $this->assertSame('http://www.foo.com/en/foo/bar', Meta::all()['bar']);
+    }
+
+    /** @test */
     public function can_output_html_meta_tags_for_the_currently_defined_data()
     {
         $this->expectOutputRegex('/<meta name="foo" content="bar">/');

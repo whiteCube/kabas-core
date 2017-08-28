@@ -37,6 +37,7 @@ class Meta
     {
         $page = App::content()->pages->getCurrent();
         if(!isset($page->meta)) return;
+        ksort($page->meta);
         return array_map(function($item) {
             return self::clean($item);
         }, $page->meta);
@@ -55,6 +56,6 @@ class Meta
 
     protected static function clean($content)
     {
-        return str_replace('#ROOT#', Url::base(), trim($content));
+        return str_replace(['#ROOT#','#CURRENT#'], [Url::base(),Url::getCurrent()], trim($content));
     }
 }
