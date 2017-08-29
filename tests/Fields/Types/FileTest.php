@@ -26,7 +26,7 @@ class FileTest extends TestCase
         $data->label = "File";
         $data->type = "file";
         $this->file = new File('File', null, $data);
-        $this->file->set(__DIR__ . '/../../TestTheme/public/index.php');
+        $this->file->set('content/uploads/foo.jpg');
     }
 
     /** @test */
@@ -36,21 +36,15 @@ class FileTest extends TestCase
     }
 
     /** @test */
-    public function can_set_value_to_null_if_file_not_found()
-    {
-        $this->file->set('foo.php');
-        $this->assertNull($this->file->get());
-    }
-
-    /** @test */
     public function can_return_information_about_the_file()
     {
-        $this->assertContains('core/tests/TestTheme/public', $this->file->dirname);
-        $this->assertSame('index.php', $this->file->basename);
-        $this->assertSame('index', $this->file->filename);
-        $this->assertSame('php', $this->file->extension);
-        $this->assertSame('php', $this->file->extension());
-        $this->assertSame(761, $this->file->size);
+        $this->assertContains('TestTheme/content/uploads', $this->file->dirname);
+        $this->assertContains('TestTheme/public/uploads', $this->file->public);
+        $this->assertSame('foo.jpg', $this->file->basename);
+        $this->assertSame('foo', $this->file->filename);
+        $this->assertSame('jpg', $this->file->extension);
+        $this->assertSame('jpg', $this->file->extension());
+        $this->assertSame(42950, $this->file->size);
     }
 
     /** @test */

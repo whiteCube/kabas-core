@@ -18,12 +18,13 @@ class File extends Uploadable
 
     public function __get($key)
     {
-        return $this->output->$key;
+        return $this->output->$key ?? false;
     }
 
     public function __call($name, $args)
     {
         if(!$this->output) return false;
+        if(!method_exists($this->output, $name)) return $this->__get($name);
         return call_user_func_array([$this->output, $name], $args);
     }
 

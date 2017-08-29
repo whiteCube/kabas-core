@@ -18,6 +18,7 @@ class File
     public $filename;
     public $extension;
     public $size;
+    public $basename;
 
     public function __construct(string $path)
     {
@@ -51,6 +52,7 @@ class File
         $this->filename = $file['filename'] ?? null;
         $this->extension = $file['extension'] ?? null;
         $this->dirname = $file['dirname'] ?? null;
+        $this->basename = $file['basename'] ?? null;
         $this->size = filesize($this->original);
         $this->public = $this->getPublicPath($this->dirname);
     }
