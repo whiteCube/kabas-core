@@ -40,8 +40,11 @@ class Editor
         if(!is_dir($directory)) mkdir($directory, 0755, true);
         $file = $directory . DS . $this->getFullFilename();
         if(!file_exists($file)) {
+            $this->prepareIntervention();
+            $this->intervention->backup();
             $this->executeActions();
             $this->intervention->save($file);
+            $this->intervention->reset();
         }
         $this->history = [];
         return $file;
@@ -85,7 +88,6 @@ class Editor
 
     protected function executeActions()
     {
-        $this->prepareIntervention();
         foreach ($this->history as $o) {
             $this->intervention = call_user_func_array([$this->intervention, $o->action], $o->args);
         }
