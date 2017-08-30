@@ -75,4 +75,20 @@ class TextualTest extends TestCase
         $this->assertFalse($this->textfield->exceeds(100));
     }
 
+    /** @test */
+    public function can_replace_string_with_another()
+    {
+        $this->expectOutputString('Foo bar!');
+        $this->textfield->set('Foo test!');
+        echo $this->textfield->replace('test','bar');
+    }
+
+    /** @test */
+    public function can_replace_strings_with_others()
+    {
+        $this->expectOutputString('Foo bar!');
+        $this->textfield->set('bar test?');
+        echo $this->textfield->replace(['bar','test','?'],['Foo', 'bar', '!']);
+    }
+
 }

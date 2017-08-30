@@ -85,4 +85,17 @@ class Textual extends Item
     {
         return Text::exceeds($this->output, $length);
     }
+
+    /**
+     * Replaces all occurances of given string(s)
+     * with its given replacement string
+     * @param string|array $search 
+     * @param string|array $replace 
+     * @return $this
+     */
+    public function replace($search, $replace)
+    {
+        $this->output = str_replace($search, $replace, $this->output);
+        return $this;
+    }
 }
