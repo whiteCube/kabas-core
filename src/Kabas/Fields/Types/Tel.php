@@ -14,9 +14,9 @@ class Tel extends Item
 
     public function condition()
     {
-        return (is_object($this->value) 
-            && is_string($this->value->label) 
-            && is_string($this->value->href) 
+        return (is_object($this->value)
+            && is_string($this->value->label)
+            && is_string($this->value->href)
             && preg_match('/^([0-9\.\s\/\+\-]+)$/', $this->value->href) === 1);
     }
 
@@ -27,7 +27,9 @@ class Tel extends Item
 
     public function parse($value)
     {
-        $value->href = str_replace(['.', '/', ' ', '-'], '', trim(strip_tags(strval($value->href))));
+        if($value) {
+            $value->href = str_replace(['.', '/', ' ', '-'], '', trim(strip_tags(strval($value->href))));
+        }
         return $value;
     }
 
