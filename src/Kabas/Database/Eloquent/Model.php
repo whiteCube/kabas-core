@@ -13,8 +13,8 @@ class Model extends BaseModel implements ModelInterface
      */
     public function __construct($attributes = [])
     {
-        if($this->table && !static::$repository) {
-            static::$repository = $this->table;
+        if(isset($this->table) && !isset($this->repository)) {
+            $this->repository = $this->table;
         }
         parent::__construct($attributes);
     }

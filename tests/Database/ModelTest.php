@@ -24,12 +24,14 @@ class ModelTest extends TestCase
     public function getModel($objectName = null, $repositoryName = null, $structureFileName = null, $translated = true)
     {
         return (new class([], $objectName, $repositoryName, $structureFileName, $translated) extends Model {
-            static protected $object;
-            public function __construct(array $attributes = [], $object, $repository, $structure, $translated) {
-                static::$object = $object;
-                static::$repository = $repository;
-                static::$structure = $structure;
-                static::$translated = $translated;
+            protected $object;
+            protected $repository;
+            protected $structure;
+            public function __construct(array $attributes = [], $object = null, $repository = null, $structure = null, $translated = true) {
+                $this->object = $object;
+                $this->repository = $repository;
+                $this->structure = $structure;
+                $this->translated = $translated;
                 $this->bootIfNotBooted();
                 $this->syncOriginal();
             }

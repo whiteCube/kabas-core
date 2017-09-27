@@ -11,28 +11,10 @@ abstract class Model extends EloquentModel
     use Concerns\HasFields;
 
     /**
-    * The current model's singular name
-    * @var string
-    */
-    static protected $object;
-
-    /**
-    * The current model's table or directory name
-    * @var string
-    */
-    static protected $repository;
-
-    /**
-    * The current model's structure file
-    * @var string
-    */
-    static protected $structure;
-
-    /**
     * Indicates if the model is translatable
     * @var bool
     */
-    static protected $translated = true;
+    protected $translated = true;
 
     /**
      * The "booting" method of the model.
@@ -40,9 +22,11 @@ abstract class Model extends EloquentModel
      */
     protected static function boot()
     {
-        static::constructObjectName();
-        static::constructRepositoryName();
-        static::constructStructureFileName();
+        $model = new static();
+        static::$booted[static::class] = [];
+        static::$booted[static::class]['object'] = static::getInstanceObjectName($model);
+        static::$booted[static::class]['repository'] = static::getInstanceRepositoryName($model);
+        static::$booted[static::class]['structure'] = static::getInstanceStructureFilename($model);
         parent::boot();
     }
 
@@ -52,7 +36,7 @@ abstract class Model extends EloquentModel
      */
     public function getObjectName() : string
     {
-        return static::$object;
+        return static::$booted[static::class]['object'];
     }
 
     /**
@@ -61,7 +45,16 @@ abstract class Model extends EloquentModel
      */
     public function getRepositoryName() : string
     {
-        return static::$repository;
+        return static::$booted[static::class]['repository'];
+    }
+
+    /**
+     * Returns the current model's strcuture filename
+     * @return string
+     */
+    public function getStructureFilename() : string
+    {
+        return static::$booted[static::class]['structure'];
     }
 
     /**
@@ -95,7 +88,7 @@ abstract class Model extends EloquentModel
      */
     public function getStructurePath() : string
     {
-        $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . static::$structure);
+        $path = realpath(THEME_PATH . DS . 'structures' . DS . 'models' . DS . $this->getStructureFilename());
         if(!$path) throw new \Kabas\Exceptions\FileNotFoundException($path);
         return $path;
     }
@@ -106,35 +99,40 @@ abstract class Model extends EloquentModel
      */
     public function isTranslatable() : bool
     {
-        return static::$translated;
+        return $this->translated;
     }
 
     /**
-     * Initializes the object name
-     * @return void
+     * Retrieves the given model's object name
+     * @param Kabas\Database\Model $model
+     * @return string
      */
-    protected static function constructObjectName()
+    protected static function getInstanceObjectName($model)
     {
-        if(strlen(static::$object)) return;
-        static::$object = lcfirst(Text::removeNamespace(static::class));
+        return  $model->getInitialProperty('object')
+                ?? lcfirst(Text::removeNamespace(get_class($model)));
     }
 
     /**
-     * Initializes the repository and attribute on this model
-     * @return void
+     * Retrieves the given model's repository name
+     * @param Kabas\Database\Model $model
+     * @return string
      */
-    protected static function constructRepositoryName()
+    protected static function getInstanceRepositoryName($model)
     {
-        static::$repository = static::$repository ?? static::$object . 's';
+        return  $model->getInitialProperty('repository')
+                ?? static::$booted[static::class]['object'] . 's';
     }
 
     /**
-     * Initializes the structure attributes on this model
-     * @return void
+     * Retrieves the given model's structure filename
+     * @param Kabas\Database\Model $model
+     * @return string
      */
-    protected static function constructStructureFileName()
+    protected static function getInstanceStructureFilename($model)
     {
-        static::$structure = static::$structure ?? static::$object . '.json';
+        return  $model->getInitialProperty('structure')
+                ?? static::$booted[static::class]['object'] . '.json';
     }
 
     /**
@@ -180,6 +178,17 @@ abstract class Model extends EloquentModel
     public function getTable()
     {
         return $this->getRepositoryName();
+    }
+
+    /**
+     * Retrieves initial protected property if it exists
+     * @param  string $property
+     * @return string|null
+     */
+    public function getInitialProperty($property)
+    {
+        if(isset($this->$property)) return $this->$property;
+        return null;
     }
 
     /**
