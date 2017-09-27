@@ -95,9 +95,10 @@ class Number extends Item
      * Formats the number
      * @return string
      */
-    public function format($decimals = 0, $decimalPoint = '.', $thousandSeparator = ',') {
-        return number_format($this->output, $decimals, $decimalPoint, $thousandSeparator);
-    }
+    // Bugged. 502 bad gateway
+    // public function format($decimals = 0, $decimalPoint = '.', $thousandSeparator = ',') {
+    //     return number_format($this->output, $decimals, $decimalPoint, $thousandSeparator);
+    // }
 
     /**
      * Formats the number to a proper price based on current locale
