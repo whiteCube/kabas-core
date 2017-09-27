@@ -92,6 +92,22 @@ class Number extends Item
     }
 
     /**
+     * Formats the number
+     * @return string
+     */
+    public function format($decimals = 0, $decimalPoint = '.', $thousandSeparator = ',') {
+        return number_format($this->output, $decimals, $decimalPoint, $thousandSeparator);
+    }
+
+    /**
+     * Formats the number to a proper price based on current locale
+     * @return string
+     */
+    public function money($format = '%i') {
+        return money_format($format, $this->output);
+    }
+
+    /**
      * Converts value to new numeric type
      * @param  string $key
      * @return int | float
