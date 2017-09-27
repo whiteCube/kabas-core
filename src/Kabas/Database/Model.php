@@ -17,17 +17,35 @@ abstract class Model extends EloquentModel
     protected $translated = true;
 
     /**
-     * The "booting" method of the model.
+     * Check if the model needs to be booted and if so, do it.
+     *
      * @return void
      */
-    protected static function boot()
+    protected function bootIfNotBooted()
     {
-        $model = new static();
-        static::$booted[static::class] = [];
-        static::$booted[static::class]['object'] = static::getInstanceObjectName($model);
-        static::$booted[static::class]['repository'] = static::getInstanceRepositoryName($model);
-        static::$booted[static::class]['structure'] = static::getInstanceStructureFilename($model);
-        parent::boot();
+        if (! isset(static::$booted[static::class])) {
+            static::$booted[static::class] = static::getModelInformation($this);
+
+            $this->fireModelEvent('booting', false);
+
+            static::boot();
+
+            $this->fireModelEvent('booted', false);
+        }
+    }
+
+    /**
+     * Returns identity strings for given model
+     * @param Kabas\Database\Model $model
+     * @return array
+     */
+    protected static function getModelInformation($model)
+    {
+        return [
+            'object' => ($object = static::getInstanceObjectName($model)),
+            'repository' => static::getInstanceRepositoryName($model, $object),
+            'structure' => static::getInstanceStructureFilename($model, $object)
+        ];
     }
 
     /**
@@ -116,23 +134,23 @@ abstract class Model extends EloquentModel
     /**
      * Retrieves the given model's repository name
      * @param Kabas\Database\Model $model
+     * @param string $objectName
      * @return string
      */
-    protected static function getInstanceRepositoryName($model)
+    protected static function getInstanceRepositoryName($model, $objectName)
     {
-        return  $model->getInitialProperty('repository')
-                ?? static::$booted[static::class]['object'] . 's';
+        return  $model->getInitialProperty('repository') ?? $objectName . 's';
     }
 
     /**
      * Retrieves the given model's structure filename
      * @param Kabas\Database\Model $model
+     * @param string $objectName
      * @return string
      */
-    protected static function getInstanceStructureFilename($model)
+    protected static function getInstanceStructureFilename($model, $objectName)
     {
-        return  $model->getInitialProperty('structure')
-                ?? static::$booted[static::class]['object'] . '.json';
+        return  $model->getInitialProperty('structure') ?? $objectName . '.json';
     }
 
     /**
