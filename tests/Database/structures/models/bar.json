@@ -1,0 +1,8 @@
+{
+    "fields": {
+        "bar": {
+            "type": "textarea",
+            "label": "Bar"
+        }
+    }
+}

@@ -21,62 +21,83 @@ class ModelTest extends TestCase
         if(!defined('THEME_PATH')) define('THEME_PATH', __DIR__);
     }
 
-    public function getModel($objectName = null, $repositoryName = null, $structureFileName = null, $translated = true)
-    {
-        return (new class([], $objectName, $repositoryName, $structureFileName, $translated) extends Model {
-            protected $object;
-            protected $repository;
-            protected $structure;
-            public function __construct(array $attributes = [], $object = null, $repository = null, $structure = null, $translated = true) {
-                $this->object = $object;
-                $this->repository = $repository;
-                $this->structure = $structure;
-                $this->translated = $translated;
-                $this->bootIfNotBooted();
-                $this->syncOriginal();
-            }
-        });
-    }
-
     /** @test */
     public function can_guess_and_return_object_name()
     {
-        $model = $this->getModel();
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $structure = 'foo.json';
+        });
         $this->assertContains('anonymous', $model->getObjectName());
     }
 
     /** @test */
     public function can_return_defined_object_name()
     {
-        $model = $this->getModel('foo');
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $object = 'foo';
+        });
         $this->assertEquals('foo', $model->getObjectName());
     }
 
     /** @test */
     public function can_guess_and_return_repository()
     {
-        $model = $this->getModel('foo');
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $object = 'foo';
+        });
         $this->assertEquals('foos', $model->getRepositoryName());
     }
 
     /** @test */
     public function can_return_defined_repository()
     {
-        $model = $this->getModel('foo', 'bar');
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $object = 'foo';
+            protected $repository = 'bar';
+        });
         $this->assertEquals('bar', $model->getRepositoryName());
     }
 
     /** @test */
     public function can_guess_and_return_structure_file_path()
     {
-        $model = $this->getModel('foo');
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $object = 'foo';
+        });
         $this->assertContains('foo.json', $model->getStructurePath());
     }
 
     /** @test */
     public function can_return_structure_file_path_from_defined_structure_file()
     {
-        $model = $this->getModel('test', null, 'foo.json');
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $object = 'test';
+            protected $structure = 'foo.json';
+        });
         $this->assertContains('foo.json', $model->getStructurePath());
     }
 
@@ -84,10 +105,13 @@ class ModelTest extends TestCase
     public function can_throw_exception_when_structure_file_not_found()
     {
         $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
             'config' => \Kabas\Config\Container::class
         ]);
         $this->expectException(FileNotFoundException::class);
-        $model = $this->getModel('test');
+        $model = (new class() extends Model {
+            protected $object = 'test';
+        });
         $path = $model->getStructurePath();
     }
 
@@ -95,9 +119,13 @@ class ModelTest extends TestCase
     public function can_return_all_available_paths()
     {
         $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
             'config' => \Kabas\Config\Container::class
         ]);
-        $model = $this->getModel('test', null, 'foo.json');
+        $model = (new class() extends Model {
+            protected $object = 'test';
+            protected $structure = 'foo.json';
+        });
         $paths = $model->getRepositories();
         $this->assertCount(3, $paths);
         $this->assertContains('TestTheme/content/shared/tests', $paths['shared']);
@@ -109,12 +137,41 @@ class ModelTest extends TestCase
     public function can_return_shared_path_for_untranslatable_model()
     {
         $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
             'config' => \Kabas\Config\Container::class
         ]);
-        $model = $this->getModel('test', null, 'foo.json', false);
+        $model = (new class() extends Model {
+            protected $object = 'test';
+            protected $structure = 'foo.json';
+            protected $translated = false;
+        });
         $paths = $model->getRepositories();
         $this->assertCount(1, $paths);
         $this->assertContains('TestTheme/content/shared/tests', $paths['shared']);
+    }
+
+    /** @test */
+    public function can_load_models_fields_for_multiple_models()
+    {
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        // Defining different models
+        $foo = (new class() extends Model {
+            protected $object = 'foo';
+            protected $structure = 'foo.json';
+        });
+        $bar = (new class() extends Model {
+            protected $object = 'bar';
+            protected $structure = 'bar.json';
+        });
+        // Loading fields first
+        $foo->getRawFields();
+        $bar->getRawFields();
+        // Checking if fields list is not overriden
+        $this->assertEquals('number', $foo->getRawField('foo')->type);
+        $this->assertEquals('textarea', $bar->getRawField('bar')->type);
     }
 
 }
