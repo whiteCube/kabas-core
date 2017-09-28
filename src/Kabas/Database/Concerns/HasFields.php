@@ -14,12 +14,6 @@ trait HasFields
     protected $fields = [];
 
     /**
-    * The current model's defined fields
-    * @var object
-    */
-    static protected $rawFields;
-
-    /**
      * Set a given field on the model.
      * @param  string  $key
      * @param  mixed  $value
@@ -44,13 +38,13 @@ trait HasFields
     }
 
     /**
-     * Parses the model's structure file and stores values in cache
-     * @return void
+     * Gets the model's structure file and stores values in cache
+     * @return object|false
      */
     protected function loadRawFields()
     {
         $structure = File::loadJson($this->getStructurePath());
-        static::$rawFields = $structure->fields ?? false;
+        return $structure->fields ?? false;
     }
 
     /**
@@ -59,8 +53,10 @@ trait HasFields
      */
     public function getRawFields()
     {
-        if(is_null(static::$rawFields)) $this->loadRawFields();
-        return static::$rawFields;
+        if(!isset(static::$booted[static::class]['fields'])) {
+            static::$booted[static::class]['fields'] = $this->loadRawFields();
+        }
+        return static::$booted[static::class]['fields'];
     }
 
     /**
