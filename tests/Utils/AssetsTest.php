@@ -27,6 +27,15 @@ class AssetsTest extends TestCase
     }
 
     /** @test */
+    public function can_load_src_with_last_modification_timestamp()
+    {
+        $href = Assets::src('foo.css');
+        $this->assertRegExp('/foo\.css\?\d+$/', $href);
+        $href = Assets::src('foo.css', false);
+        $this->assertRegExp('/foo\.css$/', $href);
+    }
+
+    /** @test */
     public function can_add_a_local_asset_onto_a_page()
     {
         $buffer = '<meta name="kabas-assets-location" value="foo">';
@@ -34,9 +43,10 @@ class AssetsTest extends TestCase
         Assets::add('foo.css', 'foo');
         Assets::add('foo.jpg', 'foo');
         $loaded = Assets::load($buffer);
-        $this->assertContains('<script type="text/javascript" src="http://www.foo.com/' . $this->themeName . '/index.js"></script>', $loaded);
-        $this->assertContains('<link rel="stylesheet" type="text/css" href="http://www.foo.com/' . $this->themeName . '/foo.css" />', $loaded);
-        $this->assertContains('<link rel="icon" href="http://www.foo.com/' . $this->themeName . '/foo.jpg" />', $loaded);
+        // Do not specify end of href and html tag, because it contains timestamp
+        $this->assertContains('<script type="text/javascript" src="http://www.foo.com/' . $this->themeName . '/index.js', $loaded);
+        $this->assertContains('<link rel="stylesheet" type="text/css" href="http://www.foo.com/' . $this->themeName . '/foo.css', $loaded);
+        $this->assertContains('<link rel="icon" href="http://www.foo.com/' . $this->themeName . '/foo.jpg', $loaded);
     }
 
     /** @test */
@@ -89,7 +99,8 @@ class AssetsTest extends TestCase
         $buffer = '<meta name="kabas-assets-location" value="foo">';
         Assets::add('index.js', 'foo', 'css');
         $loaded = Assets::load($buffer);
-        $this->assertContains('<link rel="stylesheet" type="text/css" href="http://www.foo.com/' . $this->themeName . '/index.js" />', $loaded);
+        // Do not specify end of href and link tag, because it contains timestamp
+        $this->assertContains('<link rel="stylesheet" type="text/css" href="http://www.foo.com/' . $this->themeName . '/index.js', $loaded);
     }
 
 }

@@ -64,16 +64,33 @@ class Assets
     }
 
     /**
-     * returns the asset's HREF
+     * returns the asset's HREF, with or without appended last updated
+     * timestamp for caching control
      * @param  string $src
+     * @param  bool $withTimestamp
      * @return string
      */
-    public static function src($src)
+    public static function src($src, $withTimestamp = true)
     {
         $href = Url::base();
         $href .= '/' . App::themes()->getCurrent('name') . '/';
         $href .= $src;
+        if($withTimestamp && ($timestamp = static::getModificationTimestamp($src))) {
+            $href .= '?' . $timestamp;
+        }
         return $href;
+    }
+
+    /**
+     * returns the asset's last update timestamp or null if not found
+     * @param  string $src
+     * @return int|null
+     */
+    public static function getModificationTimestamp($src)
+    {
+        $file = realpath(PUBLIC_PATH . DS . App::themes()->getCurrent('name') . DS . $src);
+        if(!$file) return;
+        return filemtime($file);
     }
 
     /**
