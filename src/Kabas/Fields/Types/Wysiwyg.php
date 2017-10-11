@@ -19,7 +19,13 @@ class Wysiwyg extends Textual
       protected function parse($value)
       {
             $parser = new \ParsedownExtra();
-            return $parser->text(str_replace(["\n\r","\r\n"], [PHP_EOL, PHP_EOL], $value));
+            return $parser
+                  ->setBreaksEnabled(true)
+                  ->text(str_replace(
+                        ["\n\r","\\n\\r","\r\n","\\r\\n","\n","\\n","\r","\\r"],
+                        PHP_EOL,
+                        $value
+                  ));
       }
 
       public function headingLevel($level)

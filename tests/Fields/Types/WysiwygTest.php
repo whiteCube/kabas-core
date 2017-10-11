@@ -24,6 +24,20 @@ class WysiwygTest extends TestCase
     }
 
     /** @test */
+    public function can_convert_all_types_of_EOL_to_br()
+    {
+        $this->textfield->set("A\nB\\nC\rD\\rE\r\nF\\r\\nG\n\rH\\n\\rI");
+        $this->assertContains('A<br />', $this->textfield->get());
+        $this->assertContains('B<br />', $this->textfield->get());
+        $this->assertContains('C<br />', $this->textfield->get());
+        $this->assertContains('D<br />', $this->textfield->get());
+        $this->assertContains('E<br />', $this->textfield->get());
+        $this->assertContains('F<br />', $this->textfield->get());
+        $this->assertContains('G<br />', $this->textfield->get());
+        $this->assertContains('H<br />', $this->textfield->get());
+    }
+
+    /** @test */
     public function can_format_headings()
     {
         $this->textfield->set('# My foo title');
