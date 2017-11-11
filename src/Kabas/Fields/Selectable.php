@@ -9,7 +9,7 @@ class Selectable extends Item implements \IteratorAggregate
 {
     public function __toString()
     {
-        return implode(', ', $this->labels());
+        return strval($this->key());
     }
 
     /**
