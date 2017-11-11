@@ -65,8 +65,8 @@ class Option
      */
     public function matches($value)
     {
-        if($value === $this->key) return true;
-        if($value === $this->label) return true;
+        if($value == $this->key) return true;
+        if($value == $this->label) return true;
         return false;
     }
 

@@ -21,6 +21,11 @@ class SelectableTest extends TestCase
         $this->selectable->set('foo');
     }
 
+    public static function getStaticFunctionOptions($fieldname)
+    {
+        return ['foo' => $fieldname, 'bar' => 'Test'];
+    }
+
     /** @test */
     public function can_be_echoed()
     {
@@ -43,6 +48,20 @@ class SelectableTest extends TestCase
         $this->assertCount(2, $all);
         $this->assertInstanceOf(Option::class, $all[0]);
         $this->assertSame('foo', $all[0]->label());
+    }
+
+    /** @test */
+    public function can_set_options_from_static_method_name()
+    {
+        $data = new \stdClass;
+        $data->label = 'Select';
+        $data->type = 'select';
+        $data->multiple = false;
+        $data->options = '\\Tests\\Fields\\SelectableTest::getStaticFunctionOptions';
+        $selectable = new Select('foobar', null, $data);
+        $this->assertCount(2, $selectable->all());
+        $this->assertEquals('foobar', $selectable->get('foo')->label());
+        $this->assertEquals('Test', $selectable->get('bar')->label());
     }
 
     /** @test */

@@ -121,7 +121,7 @@ class Selectable extends Item implements \IteratorAggregate
 
     /**
      * Overrides options list
-     * @param  array $options
+     * @param  mixed $options
      * @return void
      */
     public function setOptions($options = array())
@@ -168,10 +168,12 @@ class Selectable extends Item implements \IteratorAggregate
 
     /**
      * makes options from user defined list
+     * @param  mixed $options
      * @return array
      */
     protected function makeOptions($options)
     {
+        if(is_string($options)) $options = $this->getOptionsFromStaticMethod($options);
         if(!is_array($options) && !is_object($options)) throw new TypeException('Selectable field requires a valid options list.');
         $opts = [];
         $formatKeys = is_array($options) ? true : false;
@@ -180,6 +182,18 @@ class Selectable extends Item implements \IteratorAggregate
         }
         return $opts;
         
+    }
+
+    /**
+     * Tries to retrieve an array of options from given static call
+     * @param  string $staticMethodName
+     * @return array|null
+     */
+    protected function getOptionsFromStaticMethod($staticMethodName)
+    {
+        if(!is_callable($staticMethodName, false, $staticMethodName)) return;
+        if(!is_array($result = call_user_func_array($staticMethodName, [$this->name]))) return;
+        return $result;
     }
 
     /**
