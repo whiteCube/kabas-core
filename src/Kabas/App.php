@@ -10,7 +10,7 @@ class App extends Container
     * The current Kabas version
     * @var string
     */
-    const VERSION = '0.1.5';
+    const VERSION = '0.1.6';
 
     /**
      * The driver used to read data
