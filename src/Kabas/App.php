@@ -31,12 +31,6 @@ class App extends Container
     protected static $instance;
 
     /**
-     * The Illuminate Translator instance
-     * @var Illuminate\Translation\Translator
-     */
-    protected static $translator;
-
-    /**
      * The classes to instantiate for the application to work
      * @var array
      */

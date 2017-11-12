@@ -9,7 +9,6 @@ use Kabas\Content\Pages\Container as Pages;
 use Kabas\Content\Options\Container as Options;
 use Kabas\Content\Partials\Container as Partials;
 use Kabas\Content\Administrators\Container as Administrators;
-
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Translation\FileLoader;
 use Illuminate\Translation\Translator;
@@ -21,6 +20,7 @@ class Container
     public $menus;
     public $options;
     public $administrators;
+    public $translator;
 
     protected static $parsed = false;
 
@@ -34,14 +34,22 @@ class Container
         $this->translator = $this->loadTranslator();
     }
 
+
+    /**
+    * Creates a Translator instance for the Lang::trans() helper
+    * @return Illuminate\Translation\Translator
+    */
     protected function loadTranslator()
     {
         $locale = App::config()->languages->getCurrent()->original;
-        $path = THEME_PATH . '/lang';
-        $translationLoader = new FileLoader(new Filesystem, $path);
+        $translationLoader = new FileLoader(new Filesystem, THEME_PATH . '/lang');
         return new Translator($translationLoader, $locale);
     }
 
+    /**
+    * Launches content fields parsing for all content types
+    * @return void
+    */
     public function parse()
     {
         self::setParsed(true);
@@ -51,11 +59,20 @@ class Container
         }
     }
 
+    /**
+    * Gets the parsed state for the content singleton
+    * @return bool
+    */
     public static function isParsed()
     {
         return self::$parsed;
     }
 
+    /**
+    * Sets the parsed state for the content singleton
+    * @param bool $value
+    * @return void
+    */
     public static function setParsed($value)
     {
         self::$parsed = $value;
