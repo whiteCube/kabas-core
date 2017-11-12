@@ -32,7 +32,7 @@ trait CreatesApplication {
             'response' => \Kabas\Http\Response::class,
         ]);
         $this->setPageRoute($route);
-        $this->app->router->capture()->load()->setCurrent();
+        $this->app->router->load()->setCurrent();
     }
 
     protected function getDefaultSingletons()
@@ -62,6 +62,7 @@ trait CreatesApplication {
     public function setPageRoute($route)
     {
         $_SERVER['REQUEST_URI'] = $route;
+        $this->app->router->boot();
     }
 
     public function visit($route)
