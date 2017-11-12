@@ -58,7 +58,7 @@ class Router
      * Analyses the current incoming request
      * @return object $this
      */
-    public function capture()
+    public function boot()
     {
         $this->rootURL = $this->getRootURL();
         $this->baseURL = $this->getBaseURL();

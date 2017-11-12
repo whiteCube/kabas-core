@@ -82,7 +82,7 @@ class App extends Container
     {
         $this->loadAliases();
         $this->themes->loadCurrent();
-        $this->router->capture()->load()->setCurrent();
+        $this->router->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->page;
         $this->response->init($this->page);
