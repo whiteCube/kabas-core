@@ -94,4 +94,15 @@ class PartialsTest extends TestCase
         $this->assertEquals('override', $partial->title);
     }
 
+    /** @test */
+    public function can_return_partial_for_current_language()
+    {
+        $lang = ['/fr/foo/bar' => 'En-tête de page', '/en/foo/bar' => 'Page header'];
+        foreach ($lang as $route => $title) {
+            $this->setPageRoute($route);
+            $this->container = new Container;
+            $this->assertEquals($title, $this->container->load('header')->getTitle()->get());
+        }
+    }
+
 }

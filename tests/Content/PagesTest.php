@@ -19,7 +19,8 @@ class PagesTest extends TestCase
     public function setUp()
     {
         $this->createApplication();
-        $this->visit('/foo/bar');
+        $this->setPageRoute('/foo/bar');
+        $this->app->router->load()->setCurrent();
         $this->container = new Container;
     }
 
@@ -41,6 +42,18 @@ class PagesTest extends TestCase
         $current = $this->container->getCurrent();
         $this->assertInstanceOf(Item::class, $current);
         $this->assertSame('/foo/bar', $current->route);
+    }
+
+    /** @test */
+    public function can_return_page_for_current_language()
+    {
+        $lang = ['/fr/a-propos' => 'Page à propos', '/en/about' => 'About page'];
+        foreach ($lang as $route => $title) {
+            $this->setPageRoute($route);
+            $this->app->router->load()->setCurrent();
+            $this->container = new Container;
+            $this->assertEquals($title, $this->container->getCurrent()->getTitle()->get());
+        }
     }
 
 }

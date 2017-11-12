@@ -1,5 +1,6 @@
 {
     "route": "/about",
+    "id": "about",
     "template": "about",
     "title": "About page",
     "data": {
