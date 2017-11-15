@@ -1,0 +1,9 @@
+{
+    "route": "/optional/{first?}/{second?}",
+    "id": "optional",
+    "template": "params",
+    "title": "Page avec paramètres",
+    "data": {
+
+    }
+}
