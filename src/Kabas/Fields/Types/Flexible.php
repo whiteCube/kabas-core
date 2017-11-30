@@ -44,7 +44,7 @@ class Flexible extends Repeatable
         return $a;
     }
 
-    public function findOption($key)
+    protected function findOption($key)
     {
         foreach ($this->options as $option) {
             if($option->key === $key) return $option;
