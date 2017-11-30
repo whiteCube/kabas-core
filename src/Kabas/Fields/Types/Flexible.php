@@ -57,7 +57,7 @@ class Flexible extends Repeatable
      * @param  string $name
      * @return object
      */
-    public function get($key = null)
+    public function find($key = null)
     {
         if(is_null($key)) return $this->output;
         foreach ($this->output as $item) {
