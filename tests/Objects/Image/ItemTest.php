@@ -105,8 +105,8 @@ class ItemTest extends TestCase
         $this->result = $this->catch(function(){
             $this->item->show();
         });
-        $this->see('<img src="/uploads/foo.jpg" alt="Foobar" />');
-        $this->assertSame('<img src="/uploads/foo.jpg" alt="Foobar" />', $this->item->show(false));
+        $this->see('<img src="http://www.foo.com/uploads/foo.jpg" alt="Foobar" />');
+        $this->assertSame('<img src="http://www.foo.com/uploads/foo.jpg" alt="Foobar" />', $this->item->show(false));
         $this->del('foo.jpg');
     }
 

@@ -62,7 +62,7 @@ class UrlTest extends TestCase
     /** @test */
     public function can_return_the_url_to_an_asset()
     {
-        $this->assertSame('http://www.foo.com/TheCapricorn/foo.css', Url::asset('foo.css'));
+        $this->assertContains('http://www.foo.com/TheCapricorn/foo.css', Url::asset('foo.css'));
     }
 
     /** @test */

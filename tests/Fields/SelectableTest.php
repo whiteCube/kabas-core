@@ -16,14 +16,27 @@ class SelectableTest extends TestCase
         $data = new \stdClass;
         $data->label = 'Checkbox';
         $data->type = 'checkbox';
-        $data->options = ['foo' => 'foo', 'bar' => 'bar'];
+        $data->options = ['foo' => 'Foo', 'bar' => 'Bar'];
         $this->selectable = new Checkbox('Checkbox', null, $data);
         $this->selectable->set('foo');
+    }
+
+    public static function getStaticFunctionOptions($fieldname)
+    {
+        return ['foo' => $fieldname, 'bar' => 'Test'];
     }
 
     /** @test */
     public function can_be_echoed()
     {
+        $this->expectOutputString('foo');
+        echo $this->selectable;
+    }
+
+    /** @test */
+    public function can_show_first_selected_key_when_transformed_to_string()
+    {
+        $this->selectable->set(['foo', 'bar']);
         $this->expectOutputString('foo');
         echo $this->selectable;
     }
@@ -42,7 +55,21 @@ class SelectableTest extends TestCase
         $all = $this->selectable->all();
         $this->assertCount(2, $all);
         $this->assertInstanceOf(Option::class, $all[0]);
-        $this->assertSame('foo', $all[0]->label());
+        $this->assertSame('Foo', $all[0]->label());
+    }
+
+    /** @test */
+    public function can_set_options_from_static_method_name()
+    {
+        $data = new \stdClass;
+        $data->label = 'Select';
+        $data->type = 'select';
+        $data->multiple = false;
+        $data->options = '\\Tests\\Fields\\SelectableTest::getStaticFunctionOptions';
+        $selectable = new Select('foobar', null, $data);
+        $this->assertCount(2, $selectable->all());
+        $this->assertEquals('foobar', $selectable->get('foo')->label());
+        $this->assertEquals('Test', $selectable->get('bar')->label());
     }
 
     /** @test */
@@ -55,15 +82,15 @@ class SelectableTest extends TestCase
     public function can_return_the_labels_of_the_selected_options()
     {
         $this->selectable->set(['foo', 'bar']);
-        $this->assertEquals('foo', $this->selectable->labels()[0]);
-        $this->assertEquals('bar', $this->selectable->labels()[1]);
+        $this->assertEquals('Foo', $this->selectable->labels()[0]);
+        $this->assertEquals('Bar', $this->selectable->labels()[1]);
     }
 
     /** @test */
     public function can_return_the_label_of_the_first_selected_option()
     {
         $this->selectable->set(['foo', 'bar']);
-        $this->assertSame('foo', $this->selectable->label());
+        $this->assertSame('Foo', $this->selectable->label());
     }
 
     /** @test */

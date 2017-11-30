@@ -66,15 +66,43 @@ class Url extends Item
      */
     protected function parse($value)
     {
-        $value = explode('#', $value);
-        if($page = $this->findTarget($value[0])){
+        if(!is_string($value) || !strlen($value) || !($parts = $this->getValueParts($value))) return '';
+        if($page = $this->findTarget($parts->identifier)){
             $this->target = $page;
-            return UrlUtil::to($page->id) . (isset($value[1]) ? '#' . $value[1] : '');
+            return $this->makeUrlFromPageRoute($parts);
         }
-        elseif(filter_var($value[0], FILTER_VALIDATE_URL)){
-            return trim($value[0], '/');
+        elseif(filter_var($parts->identifier, FILTER_VALIDATE_URL)){
+            return $this->makeUrlFromParsedUrl($parts);
         }
         return '';
+    }
+
+    /**
+     * Parses given raw value and retrieves its different component parts
+     * @param  string $value
+     * @return object
+     */
+    protected function getValueParts($value)
+    {
+        if(!preg_match('/^(.*?)(?:\((.+?)\))?(?:\[(.+?)\])?(?:\#(.+))?$/', $value, $matches)) return;
+        $parts = new \stdClass();
+        $parts->identifier = (isset($matches[1]) && strlen($matches[1])) ? trim($matches[1]) : null;
+        $parts->parameters = (isset($matches[2]) && strlen($matches[2])) ? $this->getValueParameters($matches[2]) : null;
+        $parts->lang = (isset($matches[3]) && strlen($matches[3])) ? trim($matches[3]) : null;
+        $parts->anchor = (isset($matches[4]) && strlen($matches[4])) ? trim($matches[4]) : null;
+        return $parts;
+    }
+
+    /**
+     * Parses given raw parameters value
+     * @param  string $value
+     * @return array
+     */
+    protected function getValueParameters($value)
+    {
+        return array_map(function($param) {
+            return trim($param);
+        }, explode(',',$value));
     }
 
     /**
@@ -85,6 +113,44 @@ class Url extends Item
     protected function findTarget($id)
     {
         return App::content()->pages->get($id);
+    }
+
+    /**
+     * Creates an URL from given value parts containing a page id and optional parameters
+     * @param  object $parts
+     * @return string
+     */
+    protected function makeUrlFromPageRoute($parts)
+    {
+        $url = UrlUtil::to($parts->identifier, $this->getPageParameters($parts->identifier, $parts->parameters), $parts->lang);
+        return $url . ($parts->anchor ? '#' . $parts->anchor : '');
+    }
+
+    /**
+     * Fills a parameter array for given page route and parameters list
+     * @param  string $id
+     * @param  array $parameters
+     * @return string
+     */
+    protected function getPageParameters($id, $parameters)
+    {
+        if(!$id || !$parameters) return [];
+        $filled = [];
+        foreach (App::router()->getRouteByPage($id)->parameters as $i => $param) {
+            if(!isset($parameters[$i])) continue;
+            $filled[$param->variable] = $parameters[$i];
+        }
+        return $filled;
+    }
+
+    /**
+     * Recomposes an URL from parsed URL parts
+     * @param  object $parts
+     * @return string
+     */
+    protected function makeUrlFromParsedUrl($parts)
+    {
+        return trim($parts->identifier, '/') . ($parts->anchor ? '#' . $parts->anchor : '');
     }
 
 }

@@ -1,7 +1,7 @@
 {
 	"id": "header",
-    "tìtle": "Header",
 	"template": "header",
+    "title": "Page header",
 	"data": {
 		"logo": {
 			"path": "/public/uploads/the-capricorn@2x.png",

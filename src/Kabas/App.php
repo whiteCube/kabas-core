@@ -10,7 +10,7 @@ class App extends Container
     * The current Kabas version
     * @var string
     */
-    const VERSION = '0.1.5';
+    const VERSION = '0.1.6';
 
     /**
      * The driver used to read data
@@ -29,12 +29,6 @@ class App extends Container
      * @var Kabas
      */
     protected static $instance;
-
-    /**
-     * The Illuminate Translator instance
-     * @var Illuminate\Translation\Translator
-     */
-    protected static $translator;
 
     /**
      * The classes to instantiate for the application to work
@@ -88,7 +82,7 @@ class App extends Container
     {
         $this->loadAliases();
         $this->themes->loadCurrent();
-        $this->router->capture()->load()->setCurrent();
+        $this->router->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->page;
         $this->response->init($this->page);

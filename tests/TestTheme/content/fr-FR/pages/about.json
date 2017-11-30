@@ -1,9 +1,12 @@
 {
-    "route": "/about",
+    "route": "/a-propos",
     "id": "about",
     "template": "about",
-    "title": "About page",
+    "title": "Page à propos",
     "data": {
 
+    },
+    "meta": {
+        "description": "À propos de nous"
     }
 }

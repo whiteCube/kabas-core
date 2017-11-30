@@ -61,7 +61,7 @@ class MenuItemTest extends TestCase
     public function can_check_if_url_is_current_page()
     {
         $this->setPageRoute('/optional/foo');
-        $this->app->router->capture()->load()->setCurrent();
+        $this->app->router->load()->setCurrent();
         $items = [
             'root' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional'],
             'wrong' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional/bar'],

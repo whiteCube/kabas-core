@@ -58,7 +58,7 @@ class Router
      * Analyses the current incoming request
      * @return object $this
      */
-    public function capture()
+    public function boot()
     {
         $this->rootURL = $this->getRootURL();
         $this->baseURL = $this->getBaseURL();
@@ -145,9 +145,10 @@ class Router
      */
     public function setCurrent()
     {
-        if(!$current = $this->findMatchingRoute($this->route)) throw new NotFoundException($this->route, 'page', 404);
-        $this->current = $this->findMatchingRoute($this->route);
-        if($this->current) $this->current->gatherParameters($this->route, Lang::getCurrent()->original);
+        if(!($this->current = $this->findMatchingRoute($this->route))) {
+            throw new NotFoundException($this->route, 'page', 404);
+        }
+        $this->current->gatherParameters($this->route, Lang::getCurrent()->original);
         return $this;
     }
 
