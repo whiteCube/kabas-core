@@ -52,4 +52,18 @@ class Flexible extends Repeatable
         return false;
     }
 
+    /**
+     * Retrieves one or all of the contained fields
+     * @param  string $name
+     * @return object
+     */
+    public function get($key = null)
+    {
+        if(is_null($key)) return $this->output;
+        foreach ($this->output as $item) {
+            if($item->flexible === $key) return $item;
+        }
+        return null;
+    }
+
 }
