@@ -36,7 +36,7 @@ class Language
     public function activate()
     {
         $this->isCurrent = true;
-        setlocale(LC_ALL, $this->php . '.UTF-8', $this->php);
+        setlocale(LC_ALL, $this->php . '.utf8', $this->php . '.UTF-8', $this->php);
         // Keep integer and float values with a "dot" decimal separator.
         // Numbers should be formatted using number_format().
         setlocale(LC_NUMERIC, 'C');
