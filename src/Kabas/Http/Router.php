@@ -125,6 +125,7 @@ class Router
      */
     protected function detectLang()
     {
+        if(!isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) || !strlen($_SERVER['HTTP_ACCEPT_LANGUAGE'])) return;
         $lang = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
         return $lang[0];
     }
