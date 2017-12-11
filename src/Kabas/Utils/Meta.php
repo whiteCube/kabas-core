@@ -50,8 +50,16 @@ class Meta
     static function output()
     {
         foreach(self::all() as $name => $content) {
-            echo '<meta name="' . $name . '" content="' . $content . '">';
+            echo self::getMetaTag($name, $content);
         }
+    }
+
+    static function getMetaTag($name, $content)
+    {
+        $tag = '<meta ';
+        $tag .= strpos($name, ':') ? 'property="' . $name . '" ' : 'name="' . $name . '" ';
+        $tag .= 'content="' . $content . '">';
+        return $tag;
     }
 
     protected static function clean($content)
