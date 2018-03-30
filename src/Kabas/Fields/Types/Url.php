@@ -3,10 +3,10 @@
 namespace Kabas\Fields\Types;
 
 use Kabas\App;
-use Kabas\Fields\Item;
+use Kabas\Fields\Textual;
 use Kabas\Utils\Url as UrlUtil;
 
-class Url extends Item
+class Url extends Textual
 {
 
     protected $target;
