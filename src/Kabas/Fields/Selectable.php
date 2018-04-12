@@ -93,7 +93,8 @@ class Selectable extends Item implements \IteratorAggregate
      */
     public function label()
     {
-        return $this->labels()[0];
+        if(!($labels = $this->labels())) return null;
+        return $labels[0];
     }
 
     /**
