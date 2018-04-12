@@ -28,7 +28,8 @@ class Handler
      */ 
     public function read()
     {
-        return array_merge(['data' => [], 'flash' => []], $_SESSION[$this->key] ?? []);
+        $session = isset($_SESSION[$this->key]) ? (is_array($_SESSION[$this->key]) ? $_SESSION[$this->key] : []) : [];
+        return array_merge(['data' => [], 'flash' => []], $session);
     }
 
     /**
