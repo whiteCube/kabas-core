@@ -96,4 +96,20 @@ class Aggregate extends Item implements \IteratorAggregate, \Countable
         if(isset($this->output[$key])) return $this->output[$key];
         return null;
     }
+
+    /**
+     * Gets an amount of random items
+     * @param integer $amount
+     * @return array
+     */
+    public function random($amount = 1)
+    {
+        $items = [];
+        $indexes = array_rand($this->output, $amount);
+        if(!is_array($indexes)) $indexes = [$indexes];
+        for($i = 0; $i < count($indexes); $i++) {
+            $items[] = $this->output[$indexes[$i]];
+        }
+        return $items;
+    }
 }
