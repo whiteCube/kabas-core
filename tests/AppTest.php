@@ -3,7 +3,10 @@
 namespace Tests;
 
 use Kabas\App;
+use Kabas\Http\Router;
+use Tests\DITesting\SomeClass;
 use PHPUnit\Framework\TestCase;
+use Tests\DITesting\SomeInstance;
 use Kabas\Exceptions\NotFoundException;
 
 class AppTest extends TestCase
@@ -42,6 +45,14 @@ class AppTest extends TestCase
         $this->expectException(NotFoundException::class);
         ob_end_clean();
         $this->visit('/doesnotexist');
+    }
+
+    /** @test */
+    public function can_inject_dependencies()
+    {
+        $instance = $this->app->make(SomeClass::class);
+        $this->assertInstanceOf(Router::class, $instance->router);
+        $this->assertInstanceOf(SomeInstance::class, $instance->instance);
     }
 
 }
