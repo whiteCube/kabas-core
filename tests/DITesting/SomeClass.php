@@ -2,7 +2,7 @@
 
 namespace Tests\DITesting;
 
-use Kabas\Http\Router;
+use Kabas\Http\Routes\Router;
 
 class SomeClass
 {

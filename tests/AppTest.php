@@ -3,9 +3,9 @@
 namespace Tests;
 
 use Kabas\App;
-use Kabas\Http\Router;
-use Tests\DITesting\SomeClass;
+use Kabas\Http\Routes\Router;
 use PHPUnit\Framework\TestCase;
+use Tests\DITesting\SomeClass;
 use Tests\DITesting\SomeInstance;
 use Kabas\Exceptions\NotFoundException;
 
