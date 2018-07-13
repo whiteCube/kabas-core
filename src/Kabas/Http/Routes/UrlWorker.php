@@ -1,6 +1,6 @@
 <?php 
 
-namespace Kabas\Http;
+namespace Kabas\Http\Routes;
 
 use Kabas\Utils\Lang;
 

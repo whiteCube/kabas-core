@@ -1,15 +1,29 @@
 <?php
 
-namespace Kabas\Http;
+namespace Kabas\Http\Routes;
 
 class Route
 {
+
+    /**
+     * The route's namespace
+     * @var ?string
+     */
+    protected $namespace;
+
+    /**
+     * The route's name
+     * In case of a content-defined route, the page's identifier.
+     * @var string
+     */
+    protected $name;
+
     /**
      * The string representations of this route.
      * ex: '/news/{id}'
      * @var array
      */
-    public $strings = [];
+    public $definition = [];
 
     /**
      * The regular expressions to match this route's strings.
@@ -23,31 +37,49 @@ class Route
      */
     public $parameters = [];
 
-    /**
-     * Target page's identifier
-     * @var string
-     */
-    public $page;
-
-    public function __construct($page, $aggregate)
+    public function __construct($namespace = null, $name, array $definition)
     {
-        $this->page = $page;
-        $this->strings = $this->makeStringsArray($aggregate);
+        $this->namespace = $namespace;
+        $this->name = $name;
+        $this->definition = $definition;
         $this->regexen = $this->makeRegexenArray();
     }
 
     /**
-     * Make the strings array containing each available language
-     * @param array $aggregate
-     * @return array
+     * Returns the route's namespace
+     * @return ?string
      */
-    protected function makeStringsArray(array $aggregate)
+    public function getNamespace()
     {
-        $strings = [];
-        foreach ($aggregate as $lang => $page) {
-            $strings[$lang] = $page->route;
-        }
-        return $strings;
+        return $this->namespace;
+    }
+
+    /**
+     * Returns the route's name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Returns the route's identification signature
+     * @return string
+     */
+    public function getSignature()
+    {
+        return trim($this->getNamespace() . '.' . $this->getName(), '.');
+    }
+
+    /**
+     * Returns the definition for given locale
+     * @param string $locale
+     * @return string|null
+     */
+    public function getDefinition($locale)
+    {
+        return $this->definition[$locale] ?? null;
     }
 
     /**
@@ -57,7 +89,7 @@ class Route
     protected function makeRegexenArray()
     {
         $regexen = [];
-        foreach ($this->strings as $lang => $route) {
+        foreach ($this->definition as $lang => $route) {
             $regexen[$lang] = $this->generateRegex($route);
         }
         // Reset parameters indexes to numeric. This
@@ -119,15 +151,15 @@ class Route
     }
 
     /**
-     * Check if this route matches the specified route.
-     * @param  string $route
-     * @param  Kabas\Config\Language $lang
+     * Check if this route matches the specified uri.
+     * @param  string $uri
+     * @param  string $locale
      * @return bool
      */
-    public function matches($route, $lang)
+    public function matches($uri, $locale)
     {
-        if(!isset($this->regexen[$lang->original])) return false;
-        return !!preg_match($this->regexen[$lang->original], $route);
+        if(!isset($this->regexen[$locale])) return false;
+        return !!preg_match($this->regexen[$locale], $uri);
     }
 
     /**

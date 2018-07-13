@@ -1,13 +1,25 @@
 <?php
 
-namespace Kabas\Http;
+namespace Kabas\Http\Routes;
 
-use Kabas\App;
 use Kabas\Utils\Lang;
 use Kabas\Exceptions\NotFoundException;
 
 class Router
 {
+
+    /**
+     * Routes Repository
+     * @var \Kabas\Http\Routes\Routes\RouteRepository;
+     */
+    protected $repository;
+
+    /**
+     * Routes Url worker
+     * @var \Kabas\Http\Routes\Routes\UrlWorker;
+     */
+    protected $worker;
+
     protected $rootURL;
 
     protected $subdirectory;
@@ -24,22 +36,23 @@ class Router
      */
     protected $current;
 
-    /**
-     * Routes for the current application
-     * @var array
-     */
-    protected $routes = [];
-
-    /**
-     * Contains routes that have already been regex validated
-     * so they don't need to be regex'd again for performance
-     * @var array
-     */
-    protected $cache = [];
-
     public function __construct(UrlWorker $urlWorker)
     {
-        $this->urlWorker = $urlWorker;
+        // TODO : inject RouteRepository
+        $this->repository = new RouteRepository();
+        $this->worker = $urlWorker;
+    }
+
+    /**
+     * Returns the URL worker
+     * @return \Kabas\Http\Routes\UrlWorker
+     */
+    public function getWorker()
+    {
+        // TODO : this should probably not exist.
+        // Only necessary for Kabas\Utils\Url which could
+        // simply instanciate a new UrlWorker.
+        return $this->worker;
     }
 
     /**
@@ -48,9 +61,9 @@ class Router
      */
     public function load()
     {
-        foreach (App::content()->pages->getItems() as $id => $aggregate) {
-            $this->routes[] = new Route($id, $aggregate);
-        }
+        // TODO : should not be necessary anymore when
+        // RouteRepository will be injected
+        $this->repository->loadFromContent();
         return $this;
     }
 
@@ -62,8 +75,8 @@ class Router
     {
         $this->rootURL = $this->getRootURL();
         $this->baseURL = $this->getBaseURL();
-        $this->query = $this->urlWorker->getQuery($_SERVER['REQUEST_URI']);
-        $query = $this->urlWorker->getCleanQuery($this->query);
+        $this->query = $this->worker->getQuery($_SERVER['REQUEST_URI']);
+        $query = $this->worker->getCleanQuery($this->query);
         $this->route = $query->route;
         Lang::set($query->lang ? $query->lang : $this->detectLang());
         return $this;
@@ -79,19 +92,9 @@ class Router
     }
 
     /**
-     * Returns all routes
-     * @return array
-     */
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-
-    /**
-     * Get the current route query
+     * Get the URL base part
      * @return void
      */
-
     public function getBase()
     {
         return $this->baseURL;
@@ -101,7 +104,6 @@ class Router
      * Retrieves the domain's root URL
      * @return string
      */
-
     protected function getRootURL()
     {
         $ssl = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on';
@@ -112,10 +114,9 @@ class Router
      * Builds the base URL to Kabas's root
      * @return string
      */
-
     protected function getBaseURL()
     {
-        $this->subdirectory = $this->urlWorker->setSubdirectory();
+        $this->subdirectory = $this->worker->setSubdirectory();
         return $this->rootURL . $this->subdirectory . '/';
     }
 
@@ -131,13 +132,17 @@ class Router
     }
 
     /**
-     * Check if specified route exists in the application.
-     * @param  string $route (optional)
+     * Check if specified URI has a matching
+     * route in the application.
+     * @param ?string $uri
+     * @param ?string $locale
      * @return boolean
      */
-    public function routeExists($route = null)
+    public function routeExists($uri = null, $locale = null)
     {
-        return $this->findMatchingRoute($route) !== false;
+        // TODO : use Injected Language repository
+        if(!$locale) $locale = Lang::getCurrent()->original;
+        return !is_null($this->repository->find($uri, $locale));
     }
 
     /**
@@ -146,38 +151,22 @@ class Router
      */
     public function setCurrent()
     {
-        if(!($this->current = $this->findMatchingRoute($this->route))) {
+        $locale = Lang::getCurrent()->original;
+        if(!($this->current = $this->repository->find($this->route, $locale))) {
             throw new NotFoundException($this->route, 'page', 404);
         }
-        $this->current->gatherParameters($this->route, Lang::getCurrent()->original);
+        $this->current->gatherParameters($this->route, $locale);
         return $this;
     }
 
     /**
-     * Returns route that matches the query for current language
-     * @param string $route
-     * @return string
+     * Retrieves a route by its signature
+     * @return object
      */
-    public function findMatchingRoute($route)
-    {
-        if(array_key_exists($route, $this->cache)) return $this->cache[$route];
-        $this->cache[$route] = false;
-        $language = Lang::getCurrent();
-        foreach($this->routes as $item) {
-            if($item->matches($route, $language)) {
-                $this->cache[$route] = $item;
-                return $item;
-            }
-        }
-        return false;
-    }
-
     public function getRouteByPage($id)
     {
-        foreach ($this->routes as $route) {
-            if($route->page === $id) return $route;
-        }
-        return false;
+        // TODO : should handle route namespaces correctly !
+        return $this->repository->get($id);
     }
 
     /**
@@ -196,7 +185,7 @@ class Router
      */
     public function extractRoute($url)
     {
-        $url = $this->urlWorker->parseUrl($url);
+        $url = $this->worker->parseUrl($url);
         if($url->base == $this->baseURL) return $url->route;
         return false;
     }

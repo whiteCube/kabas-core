@@ -3,7 +3,7 @@
 namespace Kabas\Utils;
 
 use Kabas\App;
-use Kabas\Http\Route;
+use Kabas\Http\Routes\Route;
 use Kabas\Utils\Lang;
 use Kabas\Exceptions\NotFoundException;
 use Kabas\Exceptions\ArgumentMissingException;
@@ -82,7 +82,7 @@ class Url
      */
     static function parse($url)
     {
-        return App::router()->urlWorker->parseUrl($url);
+        return App::router()->getWorker()->parseUrl($url);
     }
 
     /**
@@ -97,7 +97,7 @@ class Url
 
     /**
      * Returns an absolute URL for the given route
-     * @param  Kabas\Http\Route $route
+     * @param  Kabas\Http\Routes\Route $route
      * @param  array $params
      * @param  mixed $lang
      * @return string
@@ -115,15 +115,14 @@ class Url
 
     /**
      * Returns an absolute URL for the given route
-     * @param  Kabas\Http\Route $route
+     * @param  Kabas\Http\Routes\Route $route
      * @param  array $params
      * @param  Kabas\Config\Language $lang
      * @return string
      */
-    protected static function fillRouteWithParams($route, $params, $lang)
+    protected static function fillRouteWithParams(Route $route, $params, $lang)
     {
-        if(!isset($route->strings[$lang->original])) return;
-        $str = $route->strings[$lang->original];
+        if(!($str = $route->getDefinition($lang->original))) return;
         foreach($route->parameters as $parameter){
             if($parameter->isRequired && !array_key_exists($parameter->variable, $params)){
                 throw new ArgumentMissingException('route', 'required parameter "' . $parameter->variable . '" is undefined');

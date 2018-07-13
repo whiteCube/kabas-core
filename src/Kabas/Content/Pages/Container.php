@@ -19,7 +19,7 @@ class Container extends BaseContainer
 
     public function getCurrent($lang = null)
     {
-        return $this->get(App::router()->getCurrent()->page, $lang);
+        return $this->get(App::router()->getCurrent()->getName(), $lang);
     }
 
     public function parse()

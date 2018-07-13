@@ -40,7 +40,7 @@ class App extends Container
         'session' => \Kabas\Session\Manager::class,
         'themes' => \Kabas\Themes\Container::class,
         'fields' => \Kabas\Fields\Container::class,
-        'router' => \Kabas\Http\Router::class,
+        'router' => \Kabas\Http\Routes\Router::class,
         'content' => \Kabas\Content\Container::class,
         'uploads' => \Kabas\Objects\Uploads\Container::class,
         'request' => \Kabas\Http\Request::class,
@@ -84,7 +84,7 @@ class App extends Container
         $this->themes->loadCurrent();
         $this->router->load()->setCurrent();
         $this->content->parse();
-        $this->page = $this->router->getCurrent()->page;
+        $this->page = $this->router->getCurrent()->getName();
         $this->response->init($this->page);
         $this->session->save();
     }

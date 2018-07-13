@@ -28,7 +28,7 @@ trait CreatesApplication {
             'fields' => \Kabas\Fields\Container::class,
             'content' => \Kabas\Content\Container::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
             'response' => \Kabas\Http\Response::class,
         ]);
         $this->setPageRoute($route);
@@ -43,7 +43,7 @@ trait CreatesApplication {
             'themes' => \Kabas\Themes\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
             'content' => \Kabas\Content\Container::class,
             'request' => \Kabas\Http\Request::class,
             'response' => \Kabas\Http\Response::class

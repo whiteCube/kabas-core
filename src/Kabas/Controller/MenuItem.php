@@ -115,9 +115,9 @@ class MenuItem
     {
         if(!($route = Url::route($this->url))) return false;
         $current = App::router()->getCurrent();
-        $lang = Lang::getCurrent();
-        if(!$current->matches($route, $lang)) return false;
-        $parameters = $current->extractParameters($route, $lang->original);
+        $locale = Lang::getCurrent()->original;
+        if(!$current->matches($route, $locale)) return false;
+        $parameters = $current->extractParameters($route, $locale);
         foreach ($current->parameters as $i => $parameter) {
             if(is_null($parameter->value) && !isset($parameters[$i])) continue;
             if(!$parameter->isRequired && !isset($parameters[$i])) continue;

@@ -2,7 +2,7 @@
 
 namespace Tests\Http;
 
-use Kabas\Http\UrlWorker;
+use Kabas\Http\Routes\UrlWorker;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 

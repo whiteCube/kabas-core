@@ -18,7 +18,7 @@ class RedirectResponseTest extends TestCase
         $this->createApplication([
             'fields' => \Kabas\Fields\Container::class,
             'config' => \Kabas\Config\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class,
             'content' => \Kabas\Content\Container::class,
             'themes' => \Kabas\Themes\Container::class

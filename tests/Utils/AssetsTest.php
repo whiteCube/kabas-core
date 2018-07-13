@@ -20,7 +20,7 @@ class AssetsTest extends TestCase
         $this->createApplication([
             'config' => \Kabas\Config\Container::class,
             'themes' => \Kabas\Themes\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
         ]);
         $this->themeName = $this->app->config->get('site.theme');
     }

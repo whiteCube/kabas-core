@@ -2,9 +2,9 @@
 
 namespace Tests\Http;
 
-use Kabas\Http\Route;
-use Kabas\Http\Router;
-use Kabas\Http\UrlWorker;
+use Kabas\Http\Routes\Route;
+use Kabas\Http\Routes\Router;
+use Kabas\Http\Routes\UrlWorker;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +20,7 @@ class RouterTest extends TestCase
         $this->createApplication([
             'config' => \Kabas\Config\Container::class,
             'content' => \Kabas\Content\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'themes' => \Kabas\Themes\Container::class
@@ -37,13 +37,6 @@ class RouterTest extends TestCase
             'config' => \Kabas\Config\Container::class
         ]);
         $this->assertInstanceOf(Router::class, new Router(new UrlWorker));
-    }
-
-    /** @test */
-    public function can_load_routes_from_content_files()
-    {
-        $this->bootBaseRouterApplication();
-        $this->assertCount(5, $this->app->router->getRoutes());
     }
 
     /** @test */
@@ -83,13 +76,13 @@ class RouterTest extends TestCase
     }
 
     /** @test */
-    public function returns_false_when_trying_to_get_page_that_does_not_exist()
+    public function returns_null_when_trying_to_get_page_that_does_not_exist()
     {
         $this->createApplication([
             'config' => \Kabas\Config\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
         ]);
-        $this->assertFalse($this->app->router->getRouteByPage('test'));
+        $this->assertNull($this->app->router->getRouteByPage('test'));
     }
 
     /** @test */

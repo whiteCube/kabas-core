@@ -7,9 +7,9 @@ use Kabas\Http\Response;
 
 class Redirect extends Response implements ResponseInterface
 {
-    public function __construct(string $pageID, array $params = [], $lang = null)
+    public function __construct(string $target, array $params = [], $lang = null)
     {
-        $this->target = $pageID;
+        $this->target = $target;
         $this->params = $params;
         $this->lang = $lang;
     }

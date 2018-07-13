@@ -19,7 +19,7 @@ class FileTest extends TestCase
     {
         $this->createApplication([
             'config' => \Kabas\Config\Container::class,
-            'router' => \Kabas\Http\Router::class,
+            'router' => \Kabas\Http\Routes\Router::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class
         ]);
         $data = new \stdClass;
