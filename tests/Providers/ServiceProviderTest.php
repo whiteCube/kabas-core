@@ -2,7 +2,6 @@
 
 namespace Tests\Providers;
 
-use Kabas\Session\Manager;
 use PHPUnit\Framework\TestCase;
 use Tests\CreatesApplication;
 use Theme\TheCapricorn\Providers\Package\SomeService;
