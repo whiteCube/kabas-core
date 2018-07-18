@@ -2,3 +2,4 @@ vendor
 build/logs/*
 tests/TestTheme/storage/logs/*
 tests/TestTheme/storage/administrators/*
+.idea
