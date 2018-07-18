@@ -6,6 +6,7 @@ use Kabas\Session\Manager;
 use PHPUnit\Framework\TestCase;
 use Tests\CreatesApplication;
 use Theme\TheCapricorn\Providers\Package\SomeService;
+use Theme\TheCapricorn\Providers\Package\SomeServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
@@ -17,6 +18,7 @@ class ServiceProviderTest extends TestCase
     public function setUp()
     {
         $this->createApplication();
+        $this->app->config->set('app.providers', [SomeServiceProvider::class]);
         $this->visit('/fr');
     }
 
