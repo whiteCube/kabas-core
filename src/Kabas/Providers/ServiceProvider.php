@@ -39,12 +39,12 @@ class ServiceProvider
      */
     public function loadRoutesFrom($path)
     {
-        var_dump('loading routes from ' . $path);
+        // TODO: load the routes file
     }
 
     public function publishConfig($path, $name)
     {
-        var_dump('publish the config file');
+        // TODO: set the config file to be published via a command later
     }
 
 }
