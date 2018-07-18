@@ -56,4 +56,8 @@ return [
             'Text' => Kabas\Utils\Text::class,
             'Url' => Kabas\Utils\Url::class
       ],
+
+      'providers' => [
+            Theme\TheCapricorn\Providers\Package\SomeServiceProvider::class,
+      ],
 ];

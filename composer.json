@@ -29,6 +29,7 @@
     "autoload": {
         "psr-4": {
             "Kabas\\": "src/Kabas/",
+            "Theme\\": "tests/TestTheme/themes",
             "Tests\\": "tests/"
         }
     },
