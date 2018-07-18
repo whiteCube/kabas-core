@@ -24,6 +24,7 @@
             <directory>src/Kabas/Fields</directory>
             <directory>src/Kabas/Http</directory>
             <directory>src/Kabas/Objects</directory>
+            <directory>src/Kabas/Providers</directory>
             <directory>src/Kabas/Session</directory>
             <directory>src/Kabas/Themes</directory>
             <directory>src/Kabas/Utils</directory>
@@ -59,6 +60,9 @@
         </testsuite>
         <testsuite name="Objects">
             <directory>tests/Objects</directory>
+        </testsuite>
+        <testsuite name="Providers">
+            <directory>tests/Providers</directory>
         </testsuite>
         <testsuite name="Session">
             <directory>tests/Session</directory>
