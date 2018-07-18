@@ -15,8 +15,8 @@ class SomeServiceProvider extends ServiceProvider
 
     public function boot() 
     {
-        $this->loadRoutesFrom('./routes');
-        $this->publishConfig('./config.php', 'mypackage');
+        $this->loadRoutesFrom(__dir__ . '/routes.php');
+        $this->publishConfig(__dir__ . '/config.php', 'mypackage');
     }
 
 }

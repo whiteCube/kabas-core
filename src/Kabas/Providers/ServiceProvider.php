@@ -40,6 +40,7 @@ class ServiceProvider
     public function loadRoutesFrom($path)
     {
         // TODO: load the routes file
+        require $path;
     }
 
     public function publishConfig($path, $name)
