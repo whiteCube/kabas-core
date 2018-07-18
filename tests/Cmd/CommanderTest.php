@@ -4,6 +4,7 @@ namespace Tests;
 
 use Kabas\Cmd\Commander;
 use Tests\HandlesOutput;
+use Tests\RunsCommands;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\ArgumentMissingException;
@@ -12,6 +13,7 @@ use Kabas\Exceptions\CommandNotAllowedException;
 class CommanderTest extends TestCase
 {
     use CreatesApplication;
+    use RunsCommands;
 
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
@@ -44,11 +46,6 @@ class CommanderTest extends TestCase
     protected function restoreConfig()
     {
         file_put_contents(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'config' . DS . 'site.php', $this->configbackup);
-    }
-
-    public function cmd(...$args)
-    {
-        return new Commander(THEMES_DIR . DS . '..' . DS, $args);
     }
 
     /** @test */
