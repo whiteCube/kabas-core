@@ -4,7 +4,6 @@ namespace Tests;
 
 use Kabas\Cmd\Commander;
 use Tests\HandlesOutput;
-use Tests\RunsCommands;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\ArgumentMissingException;
@@ -13,7 +12,6 @@ use Kabas\Exceptions\CommandNotAllowedException;
 class CommanderTest extends TestCase
 {
     use CreatesApplication;
-    use RunsCommands;
 
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
@@ -46,6 +44,11 @@ class CommanderTest extends TestCase
     protected function restoreConfig()
     {
         file_put_contents(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'config' . DS . 'site.php', $this->configbackup);
+    }
+
+    public function cmd(...$args)
+    {
+        return new Commander(THEMES_DIR . DS . '..' . DS, $args);
     }
 
     /** @test */
@@ -144,9 +147,11 @@ class CommanderTest extends TestCase
             $this->cmd('make:template', 'foopage');
             $this->createFakeStructureFiles('templates');
             $this->cmd('content:page', 'foopage');
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'pages', 'foopage.json'));
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'pages', 'foopage.json'));
-            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
+            $this->assertTrue($this->hasFile('..', 'content', 'en-GB', 'pages', 'foopage.json'));
+            $this->assertTrue($this->hasFile( '..', 'content', 'fr-FR', 'pages', 'foopage.json'));
+            $this->deleteFile('..', 'content', 'en-GB', 'pages', 'foopage.json');
+            $this->deleteFile('..', 'content', 'fr-FR', 'pages', 'foopage.json');
+//            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
         });
     }
 
@@ -157,9 +162,13 @@ class CommanderTest extends TestCase
             $this->cmd('make:partial', 'foopartial');
             $this->createFakeStructureFiles('partials');
             $this->cmd('content:partial', 'foopartial');
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'partials', 'foopartial.json'));
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'partials', 'foopartial.json'));
-            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
+            $this->assertTrue($this->hasFile('..', 'content', 'en-GB', 'partials', 'foopartial.json'));
+            $this->assertTrue($this->hasFile('..', 'content', 'fr-FR', 'partials', 'foopartial.json'));
+
+            $this->deleteFile('..', 'content', 'en-GB', 'partials', 'foopartial.json');
+
+            $this->deleteFile('..', 'content', 'fr-FR', 'partials', 'foopartial.json');
+//            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
         });
     }
 
@@ -170,9 +179,10 @@ class CommanderTest extends TestCase
             $this->cmd('make:menu', 'foomenu');
             $this->createFakeStructureFiles('menus');
             $this->cmd('content:menu', 'foomenu');
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'menus', 'foomenu.json'));
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'menus', 'foomenu.json'));
-            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
+            $this->assertTrue($this->hasFile('..', 'content', 'en-GB', 'menus', 'foomenu.json'));
+            $this->assertTrue($this->hasFile('..', 'content', 'fr-FR', 'menus', 'foomenu.json'));
+            $this->deleteFile('..', 'content', 'en-GB', 'menus', 'foomenu.json');
+            $this->deleteFile('..', 'content', 'fr-FR', 'menus', 'foomenu.json');
         });
     }
 
@@ -183,10 +193,11 @@ class CommanderTest extends TestCase
             $this->cmd('make:model', 'foonews', 'eloquent');
             $this->createFakeStructureFiles('objects');
             $this->cmd('content:object', 'foonews');
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'objects', 'foonews', '1.json'));
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'objects', 'foonews', '1.json'));
-            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
-        });   
+            $this->assertTrue($this->hasFile('..', 'content', 'en-GB', 'objects', 'foonews', '1.json'));
+            $this->assertTrue($this->hasFile('..', 'content', 'fr-FR', 'objects', 'foonews', '1.json'));
+            $this->deleteFile('..', 'content', 'en-GB', 'objects', 'foonews', '1.json');
+            $this->deleteFile('..', 'content', 'fr-FR', 'objects', 'foonews', '1.json');
+        });
     }
 
     /** @test */
@@ -196,9 +207,9 @@ class CommanderTest extends TestCase
             $this->cmd('make:template', 'foopage');
             $this->createFakeStructureFiles('templates');
             $this->cmd('content:page', 'foopage', 'en-GB');
-            $this->assertTrue($this->hasFile('..', '..', '..', 'content', 'en-GB', 'pages', 'foopage.json'));
-            $this->assertFalse($this->hasFile('..', '..', '..', 'content', 'fr-FR', 'pages', 'foopage.json'));
-            $this->rrmdir(__DIR__ . DS . '..' . DS . '..' . DS . 'content');
+            $this->assertTrue($this->hasFile('..', 'content', 'en-GB', 'pages', 'foopage.json'));
+            $this->assertFalse($this->hasFile('..', 'content', 'fr-FR', 'pages', 'foopage.json'));
+            $this->deleteFile('..', 'content', 'en-GB', 'pages', 'foopage.json');
         });
     }
 

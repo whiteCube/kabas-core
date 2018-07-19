@@ -5,12 +5,14 @@ namespace Tests\Providers;
 use Kabas\Providers\ServiceProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\CreatesApplication;
+use Tests\RunsCommands;
 use Theme\TheCapricorn\Providers\Package\SomeService;
 use Theme\TheCapricorn\Providers\Package\SomeServiceProvider;
 
 class ServiceProviderTest extends TestCase
 {
     use CreatesApplication;
+    use RunsCommands;
 
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
@@ -18,6 +20,8 @@ class ServiceProviderTest extends TestCase
     /** @test */
     public function can_load_a_service()
     {
+        if(!defined('THEME')) define('THEME', 'TheCapricorn');
+        $this->prepareCommands();
         $this->createApplication();
         $this->app->config->set('app.providers', [SomeServiceProvider::class]);
         $this->visit('/fr');

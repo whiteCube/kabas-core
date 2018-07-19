@@ -98,7 +98,7 @@ class Content extends Command
      */
     protected function generateObjectFile($model, $lang, $fields)
     {
-        $path = $this->dir('content' . DS . $lang . DS . 'objects' . DS . $model);
+        $path = $this->dir(ROOT_PATH . DS . 'content' . DS . $lang . DS . 'objects' . DS . $model);
         $files = scandir($path);
         $id = intval(pathinfo($files[count($files) - 1], PATHINFO_FILENAME));
         $file = $path . DS . (++$id);
@@ -116,7 +116,7 @@ class Content extends Command
      */
     protected function generateContentFile($name, $type, $lang, $fields = null)
     {
-        $file = $this->dir('content' . DS . $lang . DS . $type) . DS . $name;
+        $file = $this->dir(ROOT_PATH . DS . 'content' . DS . $lang . DS . $type) . DS . $name;
         if(!$fields) $fields = new \stdClass;
         $content = [];
         if($type == 'pages'){
