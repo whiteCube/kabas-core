@@ -1,8 +1,8 @@
 # Kabas
 
 [![Travis](https://travis-ci.org/whiteCube/kabas-core.svg?branch=master)](https://travis-ci.org/whiteCube/kabas-core)
-[![Code Climate](https://img.shields.io/codeclimate/coverage/github/whiteCube/kabas-core.svg)](https://codeclimate.com/github/whiteCube/kabas-core)
-[![Code Climate](https://img.shields.io/codeclimate/github/whiteCube/kabas-core.svg)](https://codeclimate.com/github/whiteCube/kabas-core)
+[![Maintainability](https://api.codeclimate.com/v1/badges/81fb879e36167269fe10/maintainability)](https://codeclimate.com/github/whiteCube/kabas-core/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/81fb879e36167269fe10/test_coverage)](https://codeclimate.com/github/whiteCube/kabas-core/test_coverage)
 [![GitHub release](https://img.shields.io/github/tag/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/releases)
 [![Packagist](https://img.shields.io/packagist/dt/kabas/core.svg)](https://packagist.org/packages/kabas/core)
 [![GitHub issues](https://img.shields.io/github/issues/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/issues)
