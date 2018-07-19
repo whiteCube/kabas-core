@@ -103,7 +103,6 @@ class File
         if(!$overwrite && file_exists($destination)) return $destination;
         self::mkdir(dirname($destination));
         if(copy($source, $destination)) return $destination;
-        return false;
     }
 
     /**
@@ -155,7 +154,9 @@ class File
                 $items[$name] = File::loadJson($file, $cache);
                 continue;
             }
+            // @codeCoverageIgnoreStart
             if($content = static::loadJsonIfValid($file, $cache)) $items[$name] = $content;
+            // @codeCoverageIgnoreEnd
         }
         return $items;
     }
