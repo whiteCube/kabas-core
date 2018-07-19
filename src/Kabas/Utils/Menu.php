@@ -4,6 +4,9 @@ namespace Kabas\Utils;
 
 use Kabas\App;
 
+/**
+ *  @codeCoverageIgnore
+ */
 class Menu
 {
 

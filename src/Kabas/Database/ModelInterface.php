@@ -2,6 +2,9 @@
 
 namespace Kabas\Database;
 
+/**
+ *  @codeCoverageIgnore
+ */
 interface ModelInterface
 {
     public function getObjectName() : string;
