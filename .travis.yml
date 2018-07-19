@@ -3,6 +3,9 @@ language: php
 php:
   - '7.1'
 
+before_install:
+  - sudo apt-get update && sudo apt-get --reinstall install -qq language-pack-en language-pack-fr
+
 install: composer install
 
 coverage:
