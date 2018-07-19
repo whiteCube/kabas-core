@@ -10,6 +10,12 @@ class ServiceProvider
     protected $app;
 
     /**
+     * List of config files to publish
+     * @var array
+     */
+    protected $configs;
+
+    /**
      * Create a Service Provider instance
      * @param Kabas\App $app
      */
@@ -43,9 +49,24 @@ class ServiceProvider
         require $path;
     }
 
+    /**
+     * Publish a config file
+     * @param string $path The absolute path to the config file
+     * @param string $name The name to save the file as
+     */
     public function publishConfig($path, $name)
     {
         // TODO: set the config file to be published via a command later
+        $this->configs[$name] = $path;
+    }
+
+    /**
+     * Get the list of config files to publish
+     * @return array
+     */
+    public function getConfigs()
+    {
+        return $this->configs;
     }
 
 }

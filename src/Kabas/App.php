@@ -204,4 +204,12 @@ class App extends Container
         self::$muted = true;
     }
 
+    /**
+     * Return the registered service providers
+     * @return array
+     */
+    public function getProviders()
+    {
+        return $this->providers;
+    }
 }
