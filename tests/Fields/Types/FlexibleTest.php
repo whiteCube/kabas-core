@@ -2,6 +2,7 @@
 
 namespace Tests\Fields\Types;
 
+use Kabas\Fields\Types\Text;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Fields\Types\Flexible;
@@ -24,18 +25,21 @@ class FlexibleTest extends TestCase
         $opt1 = new \stdClass;
         $opt1->label = 'title';
         $opt1->type = 'text';
+
         $opt2 = new \stdClass;
         $opt2->label = 'background';
         $opt2->type = 'color';
+
         $data->options = [
-            $opt1,
-            $opt2
+            'title' => $opt1,
+            'background' => $opt2
         ];
 
         $val1 = new \stdClass;
-        $val1->option = 0;
+        $val1->option = 'title';
         $val1->value = 'My foo title';
         $val1->class = 'Title';
+
         $val2 = new \stdClass;
         $val2->option = 'background';
         $val2->value = '#fefefe';
@@ -48,6 +52,13 @@ class FlexibleTest extends TestCase
     public function can_be_instantiated_properly()
     {
         $this->assertInstanceOf(Flexible::class, $this->flexible);
+    }
+
+    /** @test */
+    public function can_find_an_element()
+    {
+        $this->assertInstanceOf(Text::class, $this->flexible->find('title'));
+        $this->assertNull($this->flexible->find('aaa'));
     }
 
 }

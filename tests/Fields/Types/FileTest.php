@@ -53,4 +53,10 @@ class FileTest extends TestCase
         $this->assertFalse($this->file->foo);
     }
 
+    /** @test */
+    public function can_pass_method_calls_to_file_object()
+    {
+        $this->assertSame($this->file->src(), 'http://www.foo.com/uploads/foo.jpg');
+    }
+
 }

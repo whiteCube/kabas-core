@@ -4,6 +4,7 @@ namespace Tests\Controllers;
 
 use Kabas\App;
 use Kabas\Content\Pages\Item;
+use Kabas\Objects\Page\Title;
 use Tests\CreatesApplication;
 use Kabas\Http\Responses\Json;
 use PHPUnit\Framework\TestCase;
@@ -57,6 +58,12 @@ class BaseControllerTest extends TestCase
     public function can_return_a_json_response()
     {
         $this->assertInstanceOf(Json::class, $this->controller->json([]));
+    }
+
+    /** @test */
+    public function can_pass_method_calls_to_underlying_item()
+    {
+        $this->assertInstanceOf(Title::class, $this->controller->getTitle());
     }
 
 }

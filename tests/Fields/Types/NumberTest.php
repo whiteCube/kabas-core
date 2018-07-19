@@ -80,4 +80,19 @@ class NumberTest extends TestCase
         $this->number->set(4.6);
         $this->assertSame(4, $this->number->floor()->i);
     }
+
+    /** @test */
+    public function can_be_formatted()
+    {
+        $this->number->set(123456);
+        $this->assertSame('123,456', $this->number->formatted());
+    }
+
+    /** @test */
+    public function can_be_money_formatted()
+    {
+        setlocale(LC_MONETARY, 'fr_BE');
+        $this->number->set(1234.56);
+        $this->assertSame('1.234,56 EUR', $this->number->money());
+    }
 }

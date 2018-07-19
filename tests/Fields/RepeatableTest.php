@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Fields;
 
@@ -65,6 +65,12 @@ class RepeatableTest extends TestCase
     public function can_determine_if_value_is_an_array()
     {
         $this->assertTrue($this->repeatable->condition());
+    }
+
+    /** @test */
+    public function can_take_only_a_portion_of_the_value()
+    {
+        $this->assertCount(1, $this->repeatable->take(1));
     }
 
 }

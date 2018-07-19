@@ -174,4 +174,17 @@ class ModelTest extends TestCase
         $this->assertEquals('textarea', $bar->getRawField('bar')->type);
     }
 
+    /** @test */
+    public function can_get_repository_name_with_alias()
+    {
+        $this->createApplication([
+            'fields' => \Kabas\Fields\Container::class,
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $model = (new class() extends Model {
+            protected $structure = 'foo.json';
+        });
+        $this->assertSame($model->getRepositoryName(), $model->getTable());
+    }
+
 }

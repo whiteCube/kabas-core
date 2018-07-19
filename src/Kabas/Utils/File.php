@@ -102,7 +102,8 @@ class File
     {
         if(!$overwrite && file_exists($destination)) return $destination;
         self::mkdir(dirname($destination));
-        if(copy($source, $destination)) return $destination;
+        copy($source, $destination);
+        return $destination;
     }
 
     /**

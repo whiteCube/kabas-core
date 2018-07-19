@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Fields\Types;
 
@@ -59,6 +59,12 @@ class AggregateTest extends TestCase
     {
         $this->aggregate->setOption('title', 'foo');
         $this->assertSame('foo', $this->aggregate->title);
+    }
+
+    /** @test */
+    public function can_return_a_random_item()
+    {
+        $this->assertInstanceOf(Text::class, $this->aggregate->random()[0]);
     }
 
 }

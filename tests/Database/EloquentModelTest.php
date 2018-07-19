@@ -52,4 +52,11 @@ class EloquentModelTest extends TestCase
         $this->assertInstanceOf(Textarea::class, $model->foo);
         $this->assertEquals('bar', $model->foo->get());
     }
+
+    /** @test */
+    public function can_set_repository_name_from_table_name()
+    {
+        $model = new EloquentModel();
+        $this->assertSame('test', $model->getRepositoryName());
+    }
 }
