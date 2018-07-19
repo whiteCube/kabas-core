@@ -2,9 +2,6 @@
 
 namespace Kabas\Session;
 
-/**
- *  @codeCoverageIgnore
- */
 interface ContainerInterface {
 
     /**

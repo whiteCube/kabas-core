@@ -2,9 +2,6 @@
 
 namespace Kabas\Objects\Uploads;
 
-/**
- *  @codeCoverageIgnore
- */
 class UploadMover
 {
     /**
