@@ -1,2 +1,2 @@
 exclude_patterns:
-- "src/Kabas/Utils/Debug"
+- "src/Kabas/Utils/Debug/"
