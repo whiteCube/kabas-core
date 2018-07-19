@@ -1,5 +1,5 @@
 <?php
-
+phpinfo(); die();
 use Kabas\App;
 
 /**
