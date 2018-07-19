@@ -91,7 +91,7 @@ class NumberTest extends TestCase
     /** @test */
     public function can_be_money_formatted()
     {
-        setlocale(LC_MONETARY, 'en_US');
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
         $this->number->set(1234.56);
         $this->assertSame('USD1,234.56', $this->number->money());
     }
