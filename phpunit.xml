@@ -28,6 +28,10 @@
             <directory>src/Kabas/Session</directory>
             <directory>src/Kabas/Themes</directory>
             <directory>src/Kabas/Utils</directory>
+            <exclude>
+                <file>src/Kabas/Utils/Debug.php</file>
+                <directory>src/Kabas/Utils/Debug</directory>
+            </exclude>
             <directory>src/Kabas/View</directory>
             <file>src/Kabas/App.php</file>
         </whitelist>
