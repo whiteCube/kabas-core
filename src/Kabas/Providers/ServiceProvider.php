@@ -52,18 +52,16 @@ class ServiceProvider
      */
     public function loadRoutesFrom($path)
     {
-        // TODO: load the routes file
         require $path;
     }
 
     /**
-     * Publish a config file
+     * Set a config to be published
      * @param string $path The absolute path to the config file
      * @param string $name The name to save the file as
      */
     public function publishConfig($path, $name)
     {
-        // TODO: set the config file to be published via a command later
         $this->configs[$name] = $path;
     }
 
