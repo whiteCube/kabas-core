@@ -45,7 +45,7 @@ class Container
     public function loadCurrent()
     {
         if($this->current){
-            $this->loadRecursivelyExcept($this->current['path'], ['public', 'structures', 'views', 'node_modules', 'providers']);
+            $this->loadRecursivelyExcept($this->current['path'], ['public', 'structures', 'views', 'node_modules', 'Providers']);
         }
     }
 
