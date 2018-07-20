@@ -5,7 +5,7 @@ php:
 
 env:
   global:
-    - CC_TEST_REPORTER_ID=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
+    - CODECLIMATE_REPO_TOKEN=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
 
 before_install:
   - sudo apt-get update && sudo apt-get --reinstall install -qq language-pack-en
@@ -21,16 +21,5 @@ addons:
   code_climate:
     repo_token: 678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
 
-script:
-# Running unit tests with clover coverage report
-- vendor/bin/codecept run unit --coverage --coverage-xml
-
-before_script:
-- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-- chmod +x ./cc-test-reporter
-- ./cc-test-reporter before-build
-
 after_script:
-#- CODECLIMATE_REPO_TOKEN=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658 ./vendor/bin/test-reporter
-- mv tests/_output/coverage.xml clover.xml
-- ./cc-test-reporter after-build --coverage-input-type clover --id 12345 --exit-code $TRAVIS_TEST_RESULT
+  - ./vendor/bin/test-reporter
