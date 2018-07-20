@@ -36,10 +36,9 @@ class Router
      */
     protected $current;
 
-    public function __construct(UrlWorker $urlWorker)
+    public function __construct(UrlWorker $urlWorker, RouteRepository $repository)
     {
-        // TODO : inject RouteRepository
-        $this->repository = new RouteRepository();
+        $this->repository = $repository;
         $this->worker = $urlWorker;
     }
 

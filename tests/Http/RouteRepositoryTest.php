@@ -2,6 +2,7 @@
 
 namespace Tests\Http;
 
+use Kabas\Http\Routes\Cache;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Http\Routes\RouteRepository;
@@ -29,7 +30,8 @@ class RouteRepositoryTest extends TestCase
     public function can_load_routes_from_content_files()
     {
         $this->bootBase();
-        $repository = new RouteRepository();
+        $cache = $this->createMock(Cache::class);
+        $repository = new RouteRepository($cache);
         $repository->loadFromContent();
         $this->assertInstanceOf(Route::class, $repository->get('about'));
     }
@@ -37,7 +39,8 @@ class RouteRepositoryTest extends TestCase
     /** @test */
     public function can_register_new_route_manually()
     {
-        $repository = new RouteRepository();
+        $cache = $this->createMock(Cache::class);
+        $repository = new RouteRepository($cache);
         $repository->register('foo', 'bar', ['en-GB' => '/foo/{bar}']);
         $this->assertInstanceOf(Route::class, $repository->get('foo.bar'));
     }

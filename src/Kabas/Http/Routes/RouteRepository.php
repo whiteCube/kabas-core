@@ -19,9 +19,9 @@ class RouteRepository {
      */
     protected $cache;
 
-    public function __construct()
+    public function __construct(Cache $cache)
     {
-        $this->cache = new Cache();
+        $this->cache = $cache;
         // TODO : inject content repository for automatic routes loading
         // Currently handled with $this->loadFromContent();
     }
