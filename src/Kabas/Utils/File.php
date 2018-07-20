@@ -100,10 +100,11 @@ class File
      */
     static function copy($source, $destination, $overwrite = true)
     {
+        if(is_dir($source)) return self::copyDir($source, $destination);
         if(!$overwrite && file_exists($destination)) return $destination;
         self::mkdir(dirname($destination));
-        copy($source, $destination);
-        return $destination;
+        $copied = copy($source, $destination);
+        return $copied ? $destination : false;
     }
 
     /**
@@ -196,6 +197,23 @@ class File
     {
         $parts = pathinfo($path);
         return $parts['extension'] === 'json';
+    }
+
+    static function copyDir($source, $destination)
+    {
+        $dir = opendir($source);
+        @mkdir($destination);
+        while(false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($source . '/' . $file)) {
+                    self::copyDir($source . '/' . $file,$destination . '/' . $file);
+                }
+                else {
+                    copy($source . '/' . $file,$destination . '/' . $file);
+                }
+            }
+        }
+        closedir($dir);
     }
 
 }

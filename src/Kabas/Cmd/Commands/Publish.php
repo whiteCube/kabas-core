@@ -13,6 +13,7 @@ class Publish
         $app = App::getInstance();
         foreach($app->getProviders() as $provider) {
             $this->publishConfigs($provider->getConfigs());
+            $this->publishViews($provider->getViews());
         }
     }
 
@@ -26,5 +27,26 @@ class Publish
     protected function publishConfig($name, $path)
     {
         File::copy($path, CONFIG_PATH . DS . $name . '.php', false);
+    }
+
+    protected function publishViews($views)
+    {
+        foreach($views as $name => $path) {
+            $this->publishView($name, $path);
+        }
+    }
+
+    protected function publishView($name, $path)
+    {
+        if(is_array($path)) {
+            foreach($path as $item) {
+                $this->publishView($name, $item);
+            }
+            return;
+        }
+
+        $basename = pathinfo($path, PATHINFO_BASENAME);
+
+        File::copy($path, THEME_VIEWS . DS . 'vendor' . DS . $name . DS . $basename);
     }
 }

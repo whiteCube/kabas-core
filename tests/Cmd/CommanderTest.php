@@ -8,6 +8,7 @@ use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 use Kabas\Exceptions\ArgumentMissingException;
 use Kabas\Exceptions\CommandNotAllowedException;
+use Theme\TheCapricorn\Providers\Package\SomeServiceProvider;
 
 class CommanderTest extends TestCase
 {
@@ -218,6 +219,18 @@ class CommanderTest extends TestCase
     {
         $this->expectOutputRegex('/Command not found!/');
         $this->cmd('foo');
+    }
+    
+    /** @test */
+    public function can_publish_provider_files()
+    {
+        $this->app->config->set('app.providers', [SomeServiceProvider::class]);
+        $this->cmd('publish');
+        $this->catch(function() {
+            $this->assertTrue($this->hasFile('..', 'config', 'mypackage.php'));
+            $this->assertTrue($this->hasFile('FooTheme', 'views', 'vendor', 'mypackage'));
+            $this->deleteFile('..', 'config', 'mypackage.php');
+        });
     }
 
     public function createFakeStructureFiles($type)

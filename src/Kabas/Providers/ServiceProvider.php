@@ -15,6 +15,13 @@ class ServiceProvider
      */
     protected $configs;
 
+
+    /**
+     * List of views to publish
+     * @var array
+     */
+    protected $views;
+
     /**
      * Create a Service Provider instance
      * @param Kabas\App $app
@@ -61,12 +68,32 @@ class ServiceProvider
     }
 
     /**
+     * Set a view or view folder to be published
+     * @param $path The absolute path to the config file or folder
+     * @param $dest the folder name to save the files to
+     */
+    public function publishViews($path, $dest)
+    {
+        if(!isset($this->views[$dest])) $this->views[$dest] = [];
+        $this->views[$dest][] = $path;
+    }
+
+    /**
      * Get the list of config files to publish
      * @return array
      */
     public function getConfigs()
     {
         return $this->configs;
+    }
+
+    /**
+     * Get the list of views to publish
+     * @return array
+     */
+    public function getViews()
+    {
+        return $this->views;
     }
 
 }

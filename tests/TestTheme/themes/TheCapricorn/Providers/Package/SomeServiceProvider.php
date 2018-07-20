@@ -17,6 +17,8 @@ class SomeServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(__dir__ . '/routes.php');
         $this->publishConfig(__dir__ . '/config.php', 'mypackage');
+        $this->publishViews(__dir__ . '/views/view.php', 'mypackage');
+        $this->publishViews(__dir__ . '/views', 'mypackage');
     }
 
 }
