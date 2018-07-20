@@ -7,7 +7,7 @@
 [![Packagist](https://img.shields.io/packagist/dt/kabas/core.svg)](https://packagist.org/packages/kabas/core)
 [![GitHub issues](https://img.shields.io/github/issues/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/pulls)
-[![license](https://img.shields.io/github/license/whiteCube/kabas-core.svg)](https://github.com/whiteCube/kabas-core/blob/master/LICENSE)
+
 
 **A flexible CMS**
 
