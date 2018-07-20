@@ -3,6 +3,10 @@ language: php
 php:
   - '7.1'
 
+env:
+  global:
+    - CC_TEST_REPORTER_ID=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
+
 before_install:
   - sudo apt-get update && sudo apt-get --reinstall install -qq language-pack-en
 
