@@ -11,6 +11,7 @@ class Publish
     public function run()
     {
         $app = App::getInstance();
+        $app->registerProviders($app->config->get('app.providers'));
         foreach($app->getProviders() as $provider) {
             $this->publishConfigs($provider->getConfigs());
             $this->publishViews($provider->getViews());

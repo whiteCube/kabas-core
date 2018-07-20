@@ -183,7 +183,7 @@ class App extends Container
      * @param iterable $providers
      * @return void
      */
-    protected function registerProviders(iterable $providers)
+    public function registerProviders(iterable $providers)
     {
         foreach($providers as $provider) {
             $instance = $this->makeWith($provider, ['app' => $this]);
