@@ -68,6 +68,7 @@ class Locale
             $this->source = $source;
             break;
         }
+        $this->locales->set($this->current);
     }
 
     protected function getLanguageFromSource($source)

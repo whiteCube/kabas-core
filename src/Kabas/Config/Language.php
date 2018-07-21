@@ -5,6 +5,7 @@ namespace Kabas\Config;
 use Kabas\App;
 use Kabas\Utils\Lang;
 use WhiteCube\Lingua\Service as Lingua;
+use Kabas\Http\Request\Locale;
 
 class Language
 {
@@ -40,6 +41,8 @@ class Language
         // Keep integer and float values with a "dot" decimal separator.
         // Numbers should be formatted using number_format().
         setlocale(LC_NUMERIC, 'C');
+        // Remember the choice for the next requests
+        setcookie(Locale::COOKIE_NAME, $this->slug, time()+60*60*24*365);
     }
 
     /**
