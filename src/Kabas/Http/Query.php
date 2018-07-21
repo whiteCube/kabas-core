@@ -2,7 +2,7 @@
 
 namespace Kabas\Http;
 
-use Kabas\App;
+use Kabas\Config\LanguageRepository;
 
 class Query
 {
@@ -46,8 +46,15 @@ class Query
      */
     protected $route;
 
-    function __construct(string $host, string $uri, string $script = null, $ssl = false)
+    /**
+     * Application's available LanguageRepository
+     * @var Kabas\Config\LanguageRepository
+     */
+    protected $locales;
+
+    function __construct(LanguageRepository $locales, string $host, string $uri, string $script = null, $ssl = false)
     {
+        $this->locales = $locales;
         $this->setSSL($ssl);
         $this->setHost($host);
         $this->setRoot($script);
@@ -186,8 +193,7 @@ class Query
     {
         preg_match('/^\/?([^\/]+)?/', $uri, $matches);
         if(!isset($matches[1]) || !strlen($matches[1])) return;
-        // TODO : Use dependency injection for language repository ?
-        if(!App::config()->languages->has($matches[1])) return;
+        if(!$this->locales->has($matches[1])) return;
         return $matches[1];
     }
 
