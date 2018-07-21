@@ -1,6 +1,6 @@
 <?php
 
-namespace Kabas\Http;
+namespace Kabas\Http\Request;
 
 use Kabas\App;
 use Kabas\Config\LanguageRepository;

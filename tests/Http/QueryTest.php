@@ -3,7 +3,7 @@
 namespace Tests\Http;
 
 use PHPUnit\Framework\TestCase;
-use Kabas\Http\Query;
+use Kabas\Http\Request\Query;
 use Kabas\Config\LanguageRepository;
 use Tests\CreatesApplication;
 

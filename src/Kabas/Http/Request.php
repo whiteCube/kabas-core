@@ -2,17 +2,26 @@
 
 namespace Kabas\Http;
 
+use Kabas\Http\Request\Query;
+
 class Request
 {
     /**
      * The request method.
      * @var string
      */
-    public $method;
+    protected $method;
+
+    /**
+     * The request query.
+     * @var Kabas\Http\Request\Query
+     */
+    protected $query;
 
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->query = Query::createFromServer();
         $this->constructData();
     }
 
