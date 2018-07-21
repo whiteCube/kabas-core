@@ -65,6 +65,15 @@ class Query
     }
 
     /**
+     * Returns the query's protocol
+     * @return string
+     */
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
+
+    /**
      * Define host string
      * @param string $host 
      * @return void
@@ -72,6 +81,15 @@ class Query
     public function setHost($host)
     {
         $this->host = rtrim($host, '/');
+    }
+
+    /**
+     * Returns the query's host
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
     }
 
     /**
@@ -85,6 +103,15 @@ class Query
     }
 
     /**
+     * Returns the query's root sub-directory
+     * @return string|null
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
      * Define full URI string, locale, and requested route
      * @param string $uri 
      * @return void
@@ -94,6 +121,33 @@ class Query
         $this->uri = trim($this->extractRealURIFromURI($uri), '/');
         $this->locale = $this->extractLocaleFromRealURI($this->uri);
         $this->route = $this->extractRouteFromRealURI($this->uri, $this->locale);
+    }
+
+    /**
+     * Returns the query's useful URI
+     * @return string
+     */
+    public function getURI()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * Returns the query's locale
+     * @return string|null
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * Returns the query's requested route
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 
     /**
