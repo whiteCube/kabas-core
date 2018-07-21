@@ -158,6 +158,20 @@ class Query
     }
 
     /**
+     * Returns the query's full URL
+     * @return string
+     */
+    public function getURL()
+    {
+        $url = $this->getScheme() . '://';
+        $url .= $this->getHost();
+        $url .= ($this->getRoot() ? '/' . $this->getRoot() : '');
+        $url .= ($this->getLocale() ? '/' . $this->getLocale() : '');
+        $url .= $this->getRoute();
+        return rtrim($url, '/');
+    }
+
+    /**
      * Retrieves the sub-directory to Kabas' index file
      * @param string $script 
      * @return string|null
