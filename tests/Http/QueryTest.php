@@ -5,9 +5,12 @@ namespace Tests\Http;
 use PHPUnit\Framework\TestCase;
 use Kabas\Http\Query;
 use Kabas\Config\LanguageRepository;
+use Tests\CreatesApplication;
 
 class QueryTest extends TestCase
 {
+    use CreatesApplication;
+
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
@@ -98,6 +101,22 @@ class QueryTest extends TestCase
     {
         $query = new Query($this->locales, 'test.com', '/subdirectory/en', 'subdirectory/index.php');
         $this->assertEquals('en', $query->getURI());
+        $this->assertEquals('/', $query->getRoute());
+    }
+
+    /** @test */
+    public function can_instanciate_from_server_values()
+    {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+        $query = Query::createFromServer();
+        $this->assertInstanceOf(Query::class, $query);
+        $this->assertEquals('http', $query->getScheme());
+        $this->assertEquals('www.foo.com', $query->getHost());
+        $this->assertNull($query->getRoot());
+        $this->assertEquals('', $query->getURI());
+        $this->assertNull($query->getLocale());
         $this->assertEquals('/', $query->getRoute());
     }
 }

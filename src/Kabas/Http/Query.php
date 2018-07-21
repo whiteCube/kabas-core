@@ -2,6 +2,7 @@
 
 namespace Kabas\Http;
 
+use Kabas\App;
 use Kabas\Config\LanguageRepository;
 
 class Query
@@ -59,6 +60,15 @@ class Query
         $this->setHost($host);
         $this->setRoot($script);
         $this->setURI($uri);
+    }
+
+    public static function createFromServer()
+    {
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+        $script = $_SERVER['SCRIPT_NAME'];
+        $ssl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on');
+        return new self(App::config()->languages, $host, $uri, $script, $ssl);
     }
 
     /**
