@@ -13,11 +13,12 @@ trait CreatesApplication {
 
     public $app;
 
-    public function createApplication(array $singletonsToBoot = null)
+    public function createApplication(array $singletonsToBoot = null, $uri = null, $providers = null)
     {
-        $this->alterGlobalServer();
+        $this->alterGlobalServer($uri);
         $this->app = new App(__DIR__ . '/TestTheme/public');
         $this->app->boot($singletonsToBoot ?? $this->getDefaultSingletons());
+        if($providers) $this->app->config->set('app.providers', $providers);
     }
 
     public function createMinimalContentApplicationForRoute($route)
@@ -29,9 +30,9 @@ trait CreatesApplication {
             'content' => \Kabas\Content\Container::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class,
             'router' => \Kabas\Http\Routes\Router::class,
+            'request' => \Kabas\Http\Request::class,
             'response' => \Kabas\Http\Response::class,
-        ]);
-        $this->setPageRoute($route);
+        ], $route);
         $this->app->router->load()->setCurrent();
     }
 
@@ -50,24 +51,18 @@ trait CreatesApplication {
         ];
     }
 
-    public function alterGlobalServer()
+    public function alterGlobalServer($uri = null)
     {
         $_SERVER['SCRIPT_NAME'] = '/index.php';
         $_SERVER['HTTP_HOST'] = 'www.foo.com';
-        $_SERVER['REQUEST_URI'] = '/';
+        $_SERVER['REQUEST_URI'] = $uri ?? '/';
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'en-GB,en;q=0.8,en-US;q=0.6,en;q=0.4 ';
     }
 
-    public function setPageRoute($route)
+    public function visit($uri, array $singletonsToBoot = null, array $providers = null)
     {
-        $_SERVER['REQUEST_URI'] = $route;
-        $this->app->router->boot();
-    }
-
-    public function visit($route)
-    {
-        $this->setPageRoute($route);
+        $this->createApplication($singletonsToBoot, $uri, $providers);
         $this->result = $this->catch(function(){
             $this->app->handle();
         });

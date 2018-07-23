@@ -24,7 +24,7 @@ class Locale
      * The locale found in this request
      * @var Kabas\Config\Language
      */
-    protected $locale;
+    protected $current;
 
     /**
      * Location where current locale was defined
@@ -49,9 +49,9 @@ class Locale
      * Returns the current locale
      * @return Kabas\Config\Language
      */
-    public function getLocale()
+    public function getCurrent()
     {
-        return $this->locale;
+        return $this->current;
     }
 
     /**
@@ -71,7 +71,7 @@ class Locale
      */
     public function shouldRedirect()
     {
-        return ($this->query->getLocale() !== $this->getLocale()->slug);
+        return ($this->query->getLocale() !== $this->getCurrent()->slug);
     }
 
     /**
@@ -85,11 +85,11 @@ class Locale
     {
         foreach ($sources as $source) {
             if(is_null($locale = $this->getLanguageFromSource($source))) continue;
-            $this->locale = $locale;
+            $this->current = $locale;
             $this->source = $source;
             break;
         }
-        $this->locales->set($this->locale);
+        $this->locales->set($this->current);
     }
 
     /**

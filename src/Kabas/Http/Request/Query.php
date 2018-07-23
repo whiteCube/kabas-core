@@ -168,14 +168,24 @@ class Query
     }
 
     /**
+     * Returns the query's base URL
+     * @return string
+     */
+    public function getBase()
+    {
+        $url = $this->getScheme() . '://';
+        $url .= $this->getHost();
+        $url .= ($this->getRoot() ? '/' . $this->getRoot() : '');
+        return $url;
+    }
+
+    /**
      * Returns the query's full URL
      * @return string
      */
     public function getURL()
     {
-        $url = $this->getScheme() . '://';
-        $url .= $this->getHost();
-        $url .= ($this->getRoot() ? '/' . $this->getRoot() : '');
+        $url = $this->getBase();
         $url .= ($this->getLocale() ? '/' . $this->getLocale() : '');
         $url .= $this->getRoute();
         return rtrim($url, '/');

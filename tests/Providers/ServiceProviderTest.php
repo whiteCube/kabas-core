@@ -22,9 +22,7 @@ class ServiceProviderTest extends TestCase
     {
         if(!defined('THEME')) define('THEME', 'TheCapricorn');
         $this->prepareCommands();
-        $this->createApplication();
-        $this->app->config->set('app.providers', [SomeServiceProvider::class]);
-        $this->visit('/fr');
+        $this->visit('/en/about', null, [SomeServiceProvider::class]);
         $this->assertInstanceOf(SomeService::class, $this->app->someservice);
     }
 

@@ -17,6 +17,7 @@ class ItemTest extends TestCase
     {
         $this->createApplication([
             'config' => \Kabas\Config\Container::class,
+            'request' => \Kabas\Http\Request::class,
             'router' => \Kabas\Http\Routes\Router::class
         ]);
         $this->item = new Item(['path' => 'content/uploads/foo.jpg', 'alt' => 'Foobar']);

@@ -15,15 +15,10 @@ class MenusTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
-    public function setUp()
-    {
-        $this->createApplication();
-        $this->setPageRoute('/foo/bar');
-    }
-
     /** @test */
     public function can_be_instantiated_properly()
     {
+        $this->createApplication(null, '/foo/bar');
         $this->container = new Container;
         $this->assertInstanceOf(Container::class, $this->container);
     }
@@ -32,11 +27,9 @@ class MenusTest extends TestCase
     public function can_return_menu_for_current_language()
     {
         $lang = ['fr' => 'Navigation principale', 'en' => 'Main navigation'];
-        foreach ($lang as $code => $navTitle) {
-            $this->setPageRoute('/' . $code . '/foo/bar');
-            $this->container = new Container;
-            $this->assertSame($navTitle, $this->container->get('main')->getTitle()->get());
-        }
+        $this->createApplication(null, '/fr/foo/bar');
+        $this->container = new Container;
+        $this->assertSame('Navigation principale', $this->container->get('main')->getTitle()->get());
     }
 
 }

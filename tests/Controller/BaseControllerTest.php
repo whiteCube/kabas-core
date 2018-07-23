@@ -22,7 +22,6 @@ class BaseControllerTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
         $this->visit('/foo/bar');
         $this->catch(function(){
             $this->controller = new BaseController(App::content()->pages->get('about'));

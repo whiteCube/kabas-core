@@ -16,7 +16,6 @@ class UrlTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
         $this->visit('/foo/bar');
         $data = new \stdClass;
         $data->label = 'Url';
@@ -80,7 +79,7 @@ class UrlTest extends TestCase
     public function can_returned_parsed_url()
     {
         $this->url->set('http://www.foo.com/foo');
-        $this->assertSame('/foo', $this->url->getParsed()->query);
+        $this->assertInstanceOf(\Kabas\Http\Request\Query::class, $this->url->getParsed());
     }
 
 }

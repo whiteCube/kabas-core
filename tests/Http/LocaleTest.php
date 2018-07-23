@@ -38,8 +38,8 @@ class LocaleTest extends TestCase
         $this->query->setURI('/en/foo/bar/');
         $language = new Locale($this->locales, $this->query);
         $this->assertEquals('query', $language->getSource());
-        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getLocale());
-        $this->assertEquals('en-GB', $language->getLocale()->locale);
+        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getCurrent());
+        $this->assertEquals('en-GB', $language->getCurrent()->locale);
     }
 
     /** @test */
@@ -48,8 +48,8 @@ class LocaleTest extends TestCase
         $_COOKIE[Locale::COOKIE_NAME] = 'en';
         $language = new Locale($this->locales, $this->query);
         $this->assertEquals('cookie', $language->getSource());
-        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getLocale());
-        $this->assertEquals('en-GB', $language->getLocale()->locale);
+        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getCurrent());
+        $this->assertEquals('en-GB', $language->getCurrent()->locale);
     }
 
     /** @test */
@@ -58,8 +58,8 @@ class LocaleTest extends TestCase
         $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr-BE,nl;q=0.8,en-GB;q=0.6,en;q=0.6,*;q=0.4';
         $language = new Locale($this->locales, $this->query);
         $this->assertEquals('browser', $language->getSource());
-        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getLocale());
-        $this->assertEquals('en-GB', $language->getLocale()->locale);
+        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getCurrent());
+        $this->assertEquals('en-GB', $language->getCurrent()->locale);
     }
 
     /** @test */
@@ -67,8 +67,8 @@ class LocaleTest extends TestCase
     {
         $language = new Locale($this->locales, $this->query);
         $this->assertEquals('config', $language->getSource());
-        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getLocale());
-        $this->assertEquals('en-GB', $language->getLocale()->locale);
+        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getCurrent());
+        $this->assertEquals('en-GB', $language->getCurrent()->locale);
     }
 
     /** @test */

@@ -15,7 +15,6 @@ class AuthTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
         $this->visit('/foo/bar');
         if(!is_dir(STORAGE_PATH . DS . 'administrators')) mkdir(STORAGE_PATH . DS . 'administrators', 0777, true);
         file_put_contents(STORAGE_PATH . DS . 'administrators' . DS . 'Void.json', json_encode(['password' => password_hash('foobar', PASSWORD_BCRYPT)]));

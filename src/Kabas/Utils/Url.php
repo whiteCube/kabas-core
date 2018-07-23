@@ -7,6 +7,7 @@ use Kabas\Http\Routes\Route;
 use Kabas\Utils\Lang;
 use Kabas\Exceptions\NotFoundException;
 use Kabas\Exceptions\ArgumentMissingException;
+use Kabas\Http\Request\Query;
 
 class Url
 {
@@ -51,7 +52,7 @@ class Url
      */
     static function base()
     {
-        return trim(App::router()->getBase(), '/');
+        return App::request()->getQuery()->getBase();
     }
 
     /**
@@ -78,11 +79,14 @@ class Url
     /**
      * Returns Kabas-parsed URL
      * @param  string $url
-     * @return object
+     * @return Kabas\Http\Request\Query
      */
     static function parse($url)
     {
-        return App::router()->getWorker()->parseUrl($url);
+        // TODO : do this in a static creator
+        $url = parse_url($url);
+        $query = new Query(App::config()->languages, $url['host'], $url['path'] ?? '/', $_SERVER['SCRIPT_NAME'], (($url['scheme'] ?? '') === 'https'));
+        return $query;
     }
 
     /**
@@ -92,7 +96,10 @@ class Url
      */
     static function route($url)
     {
-        return App::router()->extractRoute($url);
+        // TODO : do this in a static creator
+        $url = parse_url($url);
+        $query = new Query(App::config()->languages, $url['host'], $url['path'] ?? '/', $_SERVER['SCRIPT_NAME'], (($url['scheme'] ?? '') === 'https'));
+        return $query->getRoute();
     }
 
     /**

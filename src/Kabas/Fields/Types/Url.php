@@ -28,7 +28,7 @@ class Url extends Textual
     public function isLocal()
     {
         if($this->target) return true;
-        if(trim(UrlUtil::parse($this->value)->base, '/') == UrlUtil::base()) return true;
+        if(UrlUtil::parse($this->value)->getBase() == UrlUtil::base()) return true;
         return false;
     }
 
