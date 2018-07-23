@@ -45,21 +45,42 @@ class Locale
         $this->defineFromSourcesPriority(['query', 'cookie', 'browser', 'config']);
     }
 
+    /**
+     * Returns the current locale
+     * @return Kabas\Config\Language
+     */
     public function getLocale()
     {
         return $this->locale;
     }
 
+    /**
+     * Returns the source that was used to define
+     * the current locale
+     * @return string
+     */
     public function getSource()
     {
         return $this->source;
     }
 
+    /**
+     * Checks if the current locale is well written
+     * in the query. If not, a 301 redirect should be performed.
+     * @return bool
+     */
     public function shouldRedirect()
     {
         return ($this->query->getLocale() !== $this->getLocale()->slug);
     }
 
+    /**
+     * Tries the given sources in order of priority in order
+     * to determine the current locale. Once found it will set
+     * it into the application's LanguageRepository.
+     * @param array $sources
+     * @return void
+     */
     protected function defineFromSourcesPriority(array $sources)
     {
         foreach ($sources as $source) {
@@ -71,6 +92,12 @@ class Locale
         $this->locales->set($this->current);
     }
 
+    /**
+     * Runs one probable source in order to determine
+     * if it has a defined locale.
+     * @param string $source
+     * @return Kabas\Config\Language|null
+     */
     protected function getLanguageFromSource($source)
     {
         $method = $this->getSourceMethodFromName($source);
@@ -79,16 +106,29 @@ class Locale
         return $locale;
     }
 
+    /**
+     * Formats a given source into its testing method name.
+     * @param string $source
+     * @return string
+     */
     protected function getSourceMethodFromName($source)
     {
         return 'getLocaleFrom' . ucfirst($source);
     }
 
+    /**
+     * Runs the query source method.
+     * @return string|null
+     */
     public function getLocaleFromQuery()
     {
         return $this->query->getLocale();
     }
 
+    /**
+     * Runs the cookie source method.
+     * @return string|null
+     */
     public function getLocaleFromCookie()
     {
         if(isset($_COOKIE[self::COOKIE_NAME])) {
@@ -96,6 +136,10 @@ class Locale
         }
     }
 
+    /**
+     * Runs the HTTP_ACCEPT_LANGUAGE header source method.
+     * @return Kabas\Config\Language|null
+     */
     public function getLocaleFromBrowser()
     {
         if(!isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) return;
@@ -105,11 +149,20 @@ class Locale
         }
     }
 
+    /**
+     * Runs the last (always defined) configuration source method.
+     * @return Kabas\Config\Language|null
+     */
     public function getLocaleFromConfig()
     {
         return $this->locales->getDefault();
     }
 
+    /**
+     * Parses the HTTP_ACCEPT_LANGUAGE header in order to extract
+     * its 3 best locale codes.
+     * @return array
+     */
     protected function getHttpAcceptLanguagePreferencesArray()
     {
         $languages = [];
@@ -137,6 +190,12 @@ class Locale
         return $languages;
     }
 
+    /**
+     * Transforms a HTTP_ACCEPT_LANGUAGE header locale definition into
+     * a definition array.
+     * @param string $preference
+     * @return array|null
+     */
     protected function getHttpAcceptLanguagePreferenceDefinition($preference)
     {
         $definition = [];
@@ -148,6 +207,12 @@ class Locale
         return $definition;
     }
 
+    /**
+     * Transforms a HTTP_ACCEPT_LANGUAGE quality-factor into a usable
+     * float number.
+     * @param ?string $quality
+     * @return float
+     */
     protected function getHttpAccpetLanguagePreferenceQuality($quality)
     {
         if(is_null($quality)) return 1;
@@ -157,6 +222,13 @@ class Locale
         return floatval($quality);
     }
 
+    /**
+     * Transforms a quality-factor float number into a
+     * priority key integer.
+     * @param float $quality
+     * @param array $existing
+     * @return int
+     */
     protected function getHttpAcceptLanguagePreferenceKeyForQuality($quality, $existing)
     {
         $key = 100 - intval(($quality > 1 ? 1 : $quality) * 100);
