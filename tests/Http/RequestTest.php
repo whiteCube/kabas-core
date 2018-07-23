@@ -49,6 +49,21 @@ class RequestTest extends TestCase
     {
         $_SERVER['REQUEST_METHOD'] = 'PATCH';
         $req = new Request;
-        $this->assertEquals('PATCH', $req->method());
+        $this->assertEquals('PATCH', $req->getMethod());
     }
+
+    /** @test */
+    public function can_return_query_object()
+    {
+        $req = new Request;
+        $this->assertInstanceOf(\Kabas\Http\Request\Query::class, $req->getQuery());
+    }
+
+    /** @test */
+    public function can_return_locale_object()
+    {
+        $req = new Request;
+        $this->assertInstanceOf(\Kabas\Http\Request\Locale::class, $req->getLocale());
+    }
+
 }

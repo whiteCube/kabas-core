@@ -28,7 +28,7 @@ class Request
 
     public function __construct()
     {
-        $this->method = $_SERVER['REQUEST_METHOD'];
+        $this->method = strtoupper($_SERVER['REQUEST_METHOD']);
         $this->query = Query::createFromServer();
         $this->locale = new Locale(App::config()->languages, $this->query);
         $this->constructData();
@@ -56,9 +56,27 @@ class Request
      * Get the request method.
      * @return string
      */
-    public function method()
+    public function getMethod()
     {
         return $this->method;
+    }
+
+    /**
+     * Get the request query.
+     * @return Kabas\Http\Request\Query
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * Get the request locale.
+     * @return Kabas\Http\Request\Locale
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**
