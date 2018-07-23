@@ -73,6 +73,16 @@ class LocaleTest extends TestCase
     }
 
     /** @test */
+    public function can_parse_weird_HTTP_ACCEPT_LANGUAGE_header()
+    {
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'ru-RU;q=0.6,de;q=0.2,*;q=0.4,fr-BE,nl;q=0.1;,;,en;q=0.9';
+        $language = new Locale($this->locales, $this->query);
+        $this->assertEquals('browser', $language->getSource());
+        $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getCurrent());
+        $this->assertEquals('en-GB', $language->getCurrent()->locale);
+    }
+
+    /** @test */
     public function can_suggest_a_redirect_for_better_locale_setting_in_URI()
     {
         $unsetQuery = new Query($this->locales, 'www.foo.com', '/bar/');
