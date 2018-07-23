@@ -85,11 +85,11 @@ class Locale
     {
         foreach ($sources as $source) {
             if(is_null($locale = $this->getLanguageFromSource($source))) continue;
-            $this->current = $locale;
+            $this->locale = $locale;
             $this->source = $source;
             break;
         }
-        $this->locales->set($this->current);
+        $this->locales->set($this->locale);
     }
 
     /**
@@ -217,7 +217,7 @@ class Locale
     {
         if(is_null($quality)) return 1;
         if(!strlen($quality = trim($quality))) return 0;
-        if(!strpos($quality, 'q=') !== 0) return 0;
+        if(strpos($quality, 'q=') !== 0) return 0;
         if(!strlen($quality = trim(substr($quality, 2)))) return 0;
         return floatval($quality);
     }
