@@ -23,7 +23,7 @@ class RepeaterTest extends TestCase
         $data->label = 'Repeater';
         $data->type = 'repeater';
 
-        $data->options = (object) [
+        $data->option = (object) [
             "type" => "text",
             "label" => "Title"
         ];

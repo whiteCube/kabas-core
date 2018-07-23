@@ -17,13 +17,24 @@ class Repeater extends Repeatable
     {
         $a = [];
         if(!is_array($value)) return $a;
-        $class = App::fields()->getClass($this->options->type);
+        $class = App::fields()->getClass($this->option->type);
 
         foreach ($value as $i => $item) {
-            $a[] = new $class($this->getMultiFieldname($i), $item, $this->options);
+            $a[] = new $class($this->getMultiFieldname($i), $item, $this->option);
         }
         
         return $a;
+    }
+
+
+    /**
+     * Sets options & other field data
+     * @return array
+     */
+    protected function implement($structure)
+    {
+        parent::implement($structure);
+        if(!isset($this->reference)) $this->setOptions($structure->option);
     }
 
 }

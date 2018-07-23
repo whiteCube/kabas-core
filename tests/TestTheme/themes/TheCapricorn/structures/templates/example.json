@@ -3,7 +3,7 @@
         "list": {
             "label": "To do",
             "type": "repeater",
-            "options": {
+            "option": {
                 "type": "group",
                 "label": "Todo item",
                 "options": {
