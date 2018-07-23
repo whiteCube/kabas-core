@@ -2,7 +2,9 @@
 
 namespace Tests;
 
+use Illuminate\Container\Container;
 use Kabas\Cmd\Commander;
+use Kabas\Cmd\Constants;
 use Tests\HandlesOutput;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
@@ -24,6 +26,7 @@ class CommanderTest extends TestCase
         $this->spoofConfig();
         if(!defined('THEMES_DIR')) define('THEMES_DIR', __DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'themes');
         if(!defined('THEME')) define('THEME', 'FooTheme');
+        new Constants(THEMES_DIR . DS . '..' . DS);
         $this->createApplication([
             'config' => \Kabas\Config\Container::class
         ]);
@@ -49,7 +52,9 @@ class CommanderTest extends TestCase
 
     public function cmd(...$args)
     {
-        return new Commander(THEMES_DIR . DS . '..' . DS, $args);
+        return $this->app->make(Commander::class, [
+            'args' => $args
+        ]);
     }
 
     /** @test */

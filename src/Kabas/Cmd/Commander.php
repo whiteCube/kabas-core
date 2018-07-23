@@ -2,6 +2,7 @@
 
 namespace Kabas\Cmd;
 
+use Kabas\Config\Container as Config;
 use Kabas\Utils\File;
 use Kabas\Utils\Text;
 use Kabas\Exceptions\TypeException;
@@ -17,9 +18,10 @@ class Commander
     protected $theme;
     protected $lang;
 
-    public function __construct($projectDir, $args)
+    public function __construct($args, Config $config)
     {
-        $this->setConstants($projectDir);
+        $this->extractConfig($config);
+        $this->setConstants();
         $this->command = $this->findCommand($args);
         $this->arguments = $args;
         $this->setThemeConstants();
@@ -57,16 +59,12 @@ class Commander
 
     /**
      * Set constants to use throughout commands.
-     * @param string $projectDir
      * @return void
      */
-    protected function setConstants($projectDir)
+    protected function setConstants()
     {
-        if(!defined('DS')) define('DS', DIRECTORY_SEPARATOR);
-        if(!defined('ROOT_PATH')) define('ROOT_PATH', realpath($projectDir));
-        if(!defined('TEMPLATES_PATH')) define('TEMPLATES_PATH', __DIR__ . DS . 'Templates' . DS);
-        if(!defined('CONFIG_PATH')) define('CONFIG_PATH', ROOT_PATH . DS . 'config');
-        if(!defined('THEMES_PATH')) define('THEMES_PATH', ROOT_PATH . DS . 'themes');
+        if(!defined('THEME')) define('THEME', $this->theme);
+        if(!defined('THEME_PATH')) define('THEME_PATH', THEMES_PATH . DS . THEME);
     }
 
     /**
@@ -100,6 +98,11 @@ class Commander
     protected function commandNotFound()
     {
         return !method_exists($this->command->class, $this->command->method);
+    }
+
+    protected function extractConfig($config)
+    {
+        $this->theme = $config->get('site.theme');
     }
 
 

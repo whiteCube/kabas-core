@@ -4,4 +4,10 @@ array_shift($argv);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-new Kabas\Cmd\Commander(__DIR__, $argv);
+new \Kabas\Cmd\Constants(__DIR__);
+
+$kabas = new \Kabas\App(realpath(__DIR__));
+$kabas->make(Kabas\Cmd\Commander::class, [
+    'projectDir' => __DIR__,
+    'args' => $argv
+]);
