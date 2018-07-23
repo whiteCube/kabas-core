@@ -65,6 +65,7 @@ class LocaleTest extends TestCase
     /** @test */
     public function can_define_current_language_from_language_repository_default()
     {
+        $_SERVER['HTTP_ACCEPT_LANGUAGE'] = 'fr-BE,nl;q=0.8,ru-RU;q=0.6,de;q=0.6,*;q=0.4';
         $language = new Locale($this->locales, $this->query);
         $this->assertEquals('config', $language->getSource());
         $this->assertInstanceOf(\Kabas\Config\Language::class, $language->getCurrent());
