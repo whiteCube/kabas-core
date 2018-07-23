@@ -3,6 +3,13 @@ language: php
 php:
   - '7.1'
 
+env:
+  global:
+    - CODECLIMATE_REPO_TOKEN=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
+
+before_install:
+  - sudo apt-get update && sudo apt-get --reinstall install -qq language-pack-en
+
 install: composer install
 
 coverage:
@@ -15,4 +22,4 @@ addons:
     repo_token: 678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658
 
 after_script:
-  - CODECLIMATE_REPO_TOKEN=678b563806312550c330b52944080cf599edbd78122c203aa1d650b04a2a0658 ./vendor/bin/test-reporter
+  - ./vendor/bin/test-reporter

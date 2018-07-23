@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\DITesting\SomeClass;
 use Tests\DITesting\SomeInstance;
 use Kabas\Exceptions\NotFoundException;
+use Theme\TheCapricorn\Providers\Package\SomeServiceProvider;
 
 class AppTest extends TestCase
 {
@@ -55,4 +56,13 @@ class AppTest extends TestCase
         $this->assertInstanceOf(SomeInstance::class, $instance->instance);
     }
 
+    /** @test */
+     public function can_return_the_registered_service_providers()
+     {
+        $this->assertTrue(is_array($this->app->getProviders()));
+        $this->app->config->set('app.providers', [SomeServiceProvider::class]);
+        $this->visit('/fr');
+        $this->assertCount(1, $this->app->getProviders());
+        $this->assertInstanceOf(SomeServiceProvider::class, $this->app->getProviders()[0]);
+     }
 }

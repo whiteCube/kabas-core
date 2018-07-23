@@ -37,5 +37,13 @@ class DateTest extends TestCase
         $this->assertSame(10, $this->date->day);
     }
 
+    /** @test */
+    public function can_pass_set_values_to_carbon_instance()
+    {
+        $this->assertSame($this->date->year, 2000);
+        $this->date->year = 2018;
+        $this->assertSame($this->date->year, 2018);
+    }
+
 
 }

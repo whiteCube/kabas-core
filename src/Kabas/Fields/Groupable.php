@@ -6,7 +6,7 @@ class Groupable extends Aggregate
 {
     public function __set($name, $value)
     {
-        if(isset($this->options[$name])) $this->output[$name]->set($value);
+        if(isset($this->output[$name])) $this->output[$name]->set($value);
         else $this->output[$name] = $value;
     }
 

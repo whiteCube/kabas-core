@@ -31,6 +31,12 @@ class App extends Container
     protected static $instance;
 
     /**
+     * All the registered provider instances
+     * @var array
+     */
+    protected $providers = [];
+
+    /**
      * The classes to instantiate for the application to work
      * @var array
      */
@@ -85,6 +91,7 @@ class App extends Container
         $this->router->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->getName();
+        $this->registerProviders($this->config->get('app.providers'));
         $this->response->init($this->page);
         $this->session->save();
     }
@@ -165,14 +172,44 @@ class App extends Container
     protected function registerBindings(array $singletons)
     {
         foreach ($singletons as $name => $class) {
-            $this->singleton($name, $class);
+            $this->singleton($class);
+            $this->alias($class, $name);
             if(method_exists($this[$name], 'boot')) $this[$name]->boot();
         }
     }
 
+    /**
+     * Instanciate service providers
+     * @param iterable $providers
+     * @return void
+     */
+    public function registerProviders(iterable $providers)
+    {
+        foreach($providers as $provider) {
+            $instance = $this->makeWith($provider, ['app' => $this]);
+            $instance->register();
+            $this->providers[] = $instance;
+        }
+        foreach($this->providers as $provider) {
+            $provider->boot();
+        }
+    }
+
+    /**
+     * Prevent application from outputting anything
+     * @return void
+     */
     static function preventFurtherOutput()
     {
         self::$muted = true;
     }
 
+    /**
+     * Return the registered service providers
+     * @return array
+     */
+    public function getProviders()
+    {
+        return $this->providers;
+    }
 }

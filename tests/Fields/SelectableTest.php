@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Fields;
 
@@ -139,6 +139,15 @@ class SelectableTest extends TestCase
         $selectable = new Select('select', null, $data);
         $selectable->set('foo');
         $this->assertSame('foo', $selectable->key());
+    }
+
+
+    /** @test */
+    public function can_be_deep_cloned()
+    {
+        $clone = clone $this->selectable;
+        $this->assertTrue($clone == $this->selectable);
+        $this->assertNotSame(spl_object_hash($clone), spl_object_hash($this->selectable));
     }
 
 }

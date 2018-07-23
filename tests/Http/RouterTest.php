@@ -4,6 +4,7 @@ namespace Tests\Http;
 
 use Kabas\Http\Routes\Route;
 use Kabas\Http\Routes\Router;
+use Kabas\Http\Routes\RouteRepository;
 use Kabas\Http\Routes\UrlWorker;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +37,9 @@ class RouterTest extends TestCase
         $this->createApplication([
             'config' => \Kabas\Config\Container::class
         ]);
-        $this->assertInstanceOf(Router::class, new Router(new UrlWorker));
+        $urlworker = $this->createMock(UrlWorker::class);
+        $repository = $this->createMock(RouteRepository::class);
+        $this->assertInstanceOf(Router::class, new Router($urlworker, $repository));
     }
 
     /** @test */

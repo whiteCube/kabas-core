@@ -189,15 +189,20 @@ class FileTest extends TestCase
     }
 
     /** @test */
-    public function can_copy_file_and_return_its_destination()
+    public function can_copy_file()
     {
         File::writeJson(['foo' => 'bar'], __DIR__ . '/test/original');
         File::writeJson(['foo' => 'bar', 'bar' => 'foo'], __DIR__ . '/test/overwrite');
         $original = File::copy(__DIR__.'/test/original.json', __DIR__.'/test/foo/bar.json');
         $overwrite = File::copy(__DIR__.'/test/overwrite.json', __DIR__.'/test/foo/bar.json', false);
-        $this->assertSame(__DIR__.'/test/foo/bar.json', $original);
-        $this->assertSame(__DIR__.'/test/foo/bar.json', $overwrite);
         $this->assertSame(filesize(__DIR__ . '/test/original.json'), filesize(__DIR__.'/test/foo/bar.json'));
+    }
+
+    /** @test */
+    public function can_copy_folders_recursively()
+    {
+        File::copyDir(__DIR__ . DS . '..' . DS . 'TestTheme' . DS . 'storage', __DIR__ . DS . 'test');
+        $this->assertTrue(is_dir(__DIR__ . DS . 'test'));
     }
 
     public function tearDown()

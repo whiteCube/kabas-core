@@ -24,11 +24,13 @@
         "seld/jsonlint": "^1.4",
         "nyratas/php-console-log": "^1.1",
         "whitecube/lingua": "^1.0",
-        "filp/whoops": "^2.1"
+        "filp/whoops": "^2.1",
+        "codeception/codeception": "^2.4"
     },
     "autoload": {
         "psr-4": {
             "Kabas\\": "src/Kabas/",
+            "Theme\\": "tests/TestTheme/themes",
             "Tests\\": "tests/"
         }
     },

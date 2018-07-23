@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests\Fields\Types;
 
@@ -40,6 +40,21 @@ class GroupableTest extends TestCase
     {
         $this->assertInstanceOf(Text::class, $this->group->title);
         $this->assertInstanceOf(Text::class, $this->group->title());
+    }
+
+    /** @test */
+    public function can_propagate_setters_to_child_fields()
+    {
+        $this->group->title = 'My bar title';
+        $this->assertInstanceOf(Text::class, $this->group->title);
+        $this->assertSame('My bar title', (string) $this->group->title);
+    }
+
+    /** @test */
+    public function can_set_values_that_did_not_exist()
+    {
+        $this->group->foo = 'bar';
+        $this->assertSame('bar', $this->group->foo);
     }
 
 }
