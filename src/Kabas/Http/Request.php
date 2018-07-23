@@ -2,7 +2,9 @@
 
 namespace Kabas\Http;
 
+use Kabas\App;
 use Kabas\Http\Request\Query;
+use Kabas\Http\Request\Locale;
 
 class Request
 {
@@ -18,10 +20,17 @@ class Request
      */
     protected $query;
 
+    /**
+     * The request locale.
+     * @var Kabas\Http\Request\Locale
+     */
+    protected $locale;
+
     public function __construct()
     {
         $this->method = $_SERVER['REQUEST_METHOD'];
         $this->query = Query::createFromServer();
+        $this->locale = new Locale(App::config()->languages, $this->query);
         $this->constructData();
     }
 

@@ -2,16 +2,27 @@
 
 namespace Tests\Http;
 
+use Tests\CreatesApplication;
 use Kabas\Http\Request;
 use PHPUnit\Framework\TestCase;
 
 class RequestTest extends TestCase
 {
+    use CreatesApplication;
+
+    protected $preserveGlobalState = false;
+    protected $runTestInSeparateProcess = true;
+
+    public function setUp()
+    {
+        $this->createApplication([
+            'config' => \Kabas\Config\Container::class
+        ]);
+    }
 
     /** @test */
     public function can_be_properly_instanciated()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
         $req = new Request;
         $this->assertInstanceOf(Request::class, $req);
     }
@@ -28,7 +39,6 @@ class RequestTest extends TestCase
     /** @test */
     public function can_check_if_request_is_get()
     {
-        $_SERVER['REQUEST_METHOD'] = 'GET';
         $req = new Request;
         $this->assertTrue($req->isGet());
         $this->assertFalse($req->isPost());
