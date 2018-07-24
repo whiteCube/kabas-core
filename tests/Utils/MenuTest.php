@@ -17,7 +17,7 @@ class MenuTest extends TestCase
 
     public function setUp()
     {
-        $this->createMinimalContentApplicationForRoute('/foo/bar');
+        $this->visit('/foo/bar');
         $this->app->content->parse();
     }
 

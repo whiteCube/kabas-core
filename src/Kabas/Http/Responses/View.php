@@ -2,7 +2,9 @@
 
 namespace Kabas\Http\Responses;
 
+use Kabas\App;
 use Kabas\Http\Response;
+use Kabas\Utils\Assets;
 use Kabas\View\View as ViewEngine;
 
 class View extends Response implements ResponseInterface
@@ -20,7 +22,9 @@ class View extends Response implements ResponseInterface
     public function run()
     {
         $this->setHeaders();
-        ViewEngine::make($this->view, $this->getData(), $this->item->directory);
+        $container = App::getInstance();
+        echo Assets::load($container->view->make($this->item->directory . '.' . $this->view, $this->getData())->render());
+//        ViewEngine::make($this->view, $this->getData(), $this->item->directory);
     }
 
     /**

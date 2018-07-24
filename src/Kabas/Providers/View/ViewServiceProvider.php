@@ -49,6 +49,9 @@ class ViewServiceProvider extends ServiceProvider
         $viewResolver->register('blade', function () use ($bladeCompiler) {
             return new CompilerEngine($bladeCompiler); // @codeCoverageIgnore
         });
+        $viewResolver->register('php', function () {
+            return new PhpEngine;
+        });
         $viewFinder = new FileViewFinder($filesystem, $this->templatesPath);
         $viewFactory = new Factory($viewResolver, $viewFinder, $eventDispatcher);
         return $viewFactory;
