@@ -26,6 +26,12 @@ return [
     'imageDriver' => 'gd',
 
     /**
+     * The templating engine to use (available: 'php', 'blade')
+     * @var string
+     */
+    'templating' => 'blade',
+
+    /**
      * Debug mode
      * @var bool
      */

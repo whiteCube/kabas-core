@@ -33,4 +33,18 @@ class ViewResponseTest extends TestCase
         $resp->run();
     }
 
+    /** @test */
+    public function can_turn_off_the_blade_templating()
+    {
+        $this->expectOutputRegex('/The about page/');
+        $this->visit('/foo/bar');
+        $this->app->config->set('app.templating', 'php');
+        $item = new \stdClass;
+        $item->fields = new \stdClass;
+        $item->data = null;
+        $item->directory = 'templates';
+        $resp = new ViewResponse('about', $item);
+        $resp->run();
+    }
+
 }

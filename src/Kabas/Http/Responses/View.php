@@ -22,9 +22,12 @@ class View extends Response implements ResponseInterface
     public function run()
     {
         $this->setHeaders();
-        $container = App::getInstance();
-        echo Assets::load($container->view->make($this->item->directory . '.' . $this->view, $this->getData())->render());
-//        ViewEngine::make($this->view, $this->getData(), $this->item->directory);
+        $app = App::getInstance();
+        if($app->config->get('app.templating') == 'blade') {
+            echo Assets::load($app->view->make($this->item->directory . '.' . $this->view, $this->getData())->render());
+        } else {
+            ViewEngine::make($this->view, $this->getData(), $this->item->directory);
+        }
     }
 
     /**
