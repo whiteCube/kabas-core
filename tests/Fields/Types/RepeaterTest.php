@@ -42,5 +42,24 @@ class RepeaterTest extends TestCase
     {
         $this->assertInstanceOf(Repeater::class, $this->repeater);
     }
+
+    /** @test */
+    public function can_use_default_field_type()
+    {
+        $data = new \stdClass;
+        $data->label = 'Repeater';
+        $data->type = 'repeater';
+
+        $data->option = (object) [
+            "label" => "Title"
+        ];
+
+        $val1 = new \stdClass;
+        $val1->value = 'My foo title';
+
+        $repeater = new Repeater('Repeater', null, $data);
+        $repeater->set([$val1]);
+        $this->assertSame('Text', $repeater->get(0)->getType());
+    }
     
 }
