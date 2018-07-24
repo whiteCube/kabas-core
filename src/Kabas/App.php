@@ -7,9 +7,9 @@ use Illuminate\Container\Container;
 class App extends Container
 {
     /**
-    * The current Kabas version
-    * @var string
-    */
+     * The current Kabas version
+     * @var string
+     */
     const VERSION = '0.1.7';
 
     /**
@@ -70,7 +70,7 @@ class App extends Container
     }
 
     /**
-     * Initiates the required singletons 
+     * Initiates the required singletons
      * in order to get the app rolling.
      * @return void
      */
@@ -88,6 +88,7 @@ class App extends Container
     {
         $this->loadAliases();
         $this->themes->loadCurrent();
+        $this->registerThemePaths();
         $this->router->load()->setCurrent();
         $this->content->parse();
         $this->page = $this->router->getCurrent()->getName();
@@ -126,9 +127,9 @@ class App extends Container
     }
 
     /**
-    * Get the version number of this Kabas website.
-    * @return string
-    */
+     * Get the version number of this Kabas website.
+     * @return string
+     */
     public function version()
     {
         return static::VERSION;
@@ -153,10 +154,19 @@ class App extends Container
         $this->define('THEMES_PATH', ROOT_PATH . DS . 'themes');
     }
 
+    protected function registerThemePaths()
+    {
+        $this->define('THEME', $this->config->get('site.theme'));
+        $this->define('THEME_PATH', THEMES_PATH . DS . THEME);
+        $this->define('VIEWS_PATH', THEME_PATH . DS . 'views');
+        $this->define('STRUCTURES_PATH', THEME_PATH . DS . 'structures');
+        $this->define('CONTROLLERS_PATH', THEME_PATH . DS . 'controllers');
+    }
+
     /**
      * Sets a new constant if it does not exist yet
-     * @param string $name 
-     * @param string $value 
+     * @param string $name
+     * @param string $value
      * @return void
      */
     protected function define($name, $value)
@@ -187,11 +197,11 @@ class App extends Container
     {
         foreach($providers as $provider) {
             $instance = $this->makeWith($provider, ['app' => $this]);
-            $instance->register();
+            if(method_exists($provider, 'register')) $this->call([$instance, 'register']);
             $this->providers[] = $instance;
         }
         foreach($this->providers as $provider) {
-            $provider->boot();
+            if(method_exists($provider, 'boot')) $this->call([$instance, 'boot']);
         }
     }
 

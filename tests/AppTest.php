@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Tests;
 
@@ -55,11 +55,11 @@ class AppTest extends TestCase
     }
 
     /** @test */
-     public function can_return_the_registered_service_providers()
-     {
+    public function can_return_the_registered_service_providers()
+    {
         $this->visit('/en/about', null, [SomeServiceProvider::class]);
         $this->assertTrue(is_array($this->app->getProviders()));
-        $this->assertCount(1, $this->app->getProviders());
-        $this->assertInstanceOf(SomeServiceProvider::class, $this->app->getProviders()[0]);
-     }
+        $index = count($this->app->getProviders()) - 1;
+        $this->assertInstanceOf(SomeServiceProvider::class, $this->app->getProviders()[$index]);
+    }
 }

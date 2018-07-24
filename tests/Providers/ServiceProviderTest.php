@@ -26,14 +26,6 @@ class ServiceProviderTest extends TestCase
         $this->assertInstanceOf(SomeService::class, $this->app->someservice);
     }
 
-    /** @test */
-    public function always_has_boot_and_register_methods()
-    {
-        $provider = new ServiceProvider($this->app);
-        $this->assertNull($provider->register());
-        $this->assertNull($provider->boot());
-    }
-
     public function can_load_routes()
     {
 

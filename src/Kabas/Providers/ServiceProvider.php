@@ -31,19 +31,6 @@ class ServiceProvider
         $this->app = $app;
     }
 
-    /**
-     * Do your magic after all Service Providers have been created.
-     * @return void
-     */
-    public function boot() 
-    {}
-
-    /**
-     * Register bindings in the container
-     * @return void
-     */
-    public function register() 
-    {}
 
     /**
      * Load your custom routes into the app

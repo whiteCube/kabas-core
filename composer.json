@@ -25,7 +25,8 @@
         "nyratas/php-console-log": "^1.1",
         "whitecube/lingua": "^1.0",
         "filp/whoops": "^2.1",
-        "codeception/codeception": "^2.4"
+        "codeception/codeception": "^2.4",
+        "illuminate/view": "^5.6"
     },
     "autoload": {
         "psr-4": {
