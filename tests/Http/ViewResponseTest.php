@@ -24,7 +24,6 @@ class ViewResponseTest extends TestCase
     public function can_return_a_view_instance()
     {
         $this->expectOutputRegex('/The about page/');
-        $this->createApplication();
         $this->visit('/foo/bar');
         $item = new \stdClass;
         $item->fields = new \stdClass;

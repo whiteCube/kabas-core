@@ -5,7 +5,7 @@ namespace Tests\Http;
 use Kabas\Http\Routes\Route;
 use Kabas\Http\Routes\Router;
 use Kabas\Http\Routes\RouteRepository;
-use Kabas\Http\Routes\UrlWorker;
+use Kabas\Http\Request;
 use Tests\CreatesApplication;
 use PHPUnit\Framework\TestCase;
 
@@ -25,28 +25,17 @@ class RouterTest extends TestCase
             'uploads' => \Kabas\Objects\Uploads\Container::class,
             'fields' => \Kabas\Fields\Container::class,
             'themes' => \Kabas\Themes\Container::class
-        ]);
+        ], $route);
         if(!$route) return $this->app->router->load();
-        $this->setPageRoute($route);
         $this->app->router->load()->setCurrent();
     }
 
     /** @test */
     public function can_be_instanciated_properly()
     {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class
-        ]);
-        $urlworker = $this->createMock(UrlWorker::class);
+        $request = $this->createMock(Request::class);
         $repository = $this->createMock(RouteRepository::class);
-        $this->assertInstanceOf(Router::class, new Router($urlworker, $repository));
-    }
-
-    /** @test */
-    public function can_get_a_route_by_page_name()
-    {
-        $this->bootBaseRouterApplication();
-        $this->assertInstanceOf(Route::class, $this->app->router->getRouteByPage('about'));
+        $this->assertInstanceOf(Router::class, new Router($request, $repository));
     }
 
     /** @test */
@@ -79,19 +68,10 @@ class RouterTest extends TestCase
     }
 
     /** @test */
-    public function returns_null_when_trying_to_get_page_that_does_not_exist()
-    {
-        $this->createApplication([
-            'config' => \Kabas\Config\Container::class,
-            'router' => \Kabas\Http\Routes\Router::class,
-        ]);
-        $this->assertNull($this->app->router->getRouteByPage('test'));
-    }
-
-    /** @test */
     public function can_return_the_current_route()
     {
         $this->bootBaseRouterApplication('/foo/bar');
-        $this->assertEquals('/foo/bar', $this->app->router->getRoute());
+        $this->assertInstanceOf(\Kabas\Http\Routes\Route::class, $this->app->router->getCurrent());
+        $this->assertEquals('example', $this->app->router->getCurrent()->getName());
     }
 }

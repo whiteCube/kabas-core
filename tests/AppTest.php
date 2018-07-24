@@ -17,20 +17,17 @@ class AppTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
-    public function setUp()
-    {
-        $this->createApplication();
-    }
-
     /** @test */
     public function can_return_app_version()
     {
+        $this->createApplication();
         $this->assertInternalType('string', $this->app->version());
     }
 
     /** @test */
     public function can_return_its_own_instance()
     {
+        $this->createApplication();
         $this->assertInstanceOf(App::class, App::getInstance());
     }
 
@@ -51,6 +48,7 @@ class AppTest extends TestCase
     /** @test */
     public function can_inject_dependencies()
     {
+        $this->createApplication();
         $instance = $this->app->make(SomeClass::class);
         $this->assertInstanceOf(Router::class, $instance->router);
         $this->assertInstanceOf(SomeInstance::class, $instance->instance);
@@ -59,9 +57,8 @@ class AppTest extends TestCase
     /** @test */
      public function can_return_the_registered_service_providers()
      {
+        $this->visit('/en/about', null, [SomeServiceProvider::class]);
         $this->assertTrue(is_array($this->app->getProviders()));
-        $this->app->config->set('app.providers', [SomeServiceProvider::class]);
-        $this->visit('/fr');
         $this->assertCount(1, $this->app->getProviders());
         $this->assertInstanceOf(SomeServiceProvider::class, $this->app->getProviders()[0]);
      }

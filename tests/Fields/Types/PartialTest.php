@@ -16,7 +16,6 @@ class PartialTest extends TestCase
 
     public function setUp()
     {
-        $this->createApplication();
         $this->visit('/foo/bar');
     }
 

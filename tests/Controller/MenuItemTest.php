@@ -15,9 +15,8 @@ class MenuItemTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
-    public function setUp()
+    protected function boot()
     {
-        $this->createApplication();
         $this->visit('/about');
         $this->catch(function(){
             $this->menu = App::content()->menus->get('main');
@@ -28,6 +27,7 @@ class MenuItemTest extends TestCase
     /** @test */
     public function can_set_and_get_data()
     {
+        $this->boot();
         $this->controller->foo = 'bar';
         $this->assertSame('bar', $this->controller->foo);
     }
@@ -35,6 +35,7 @@ class MenuItemTest extends TestCase
     /** @test */
     public function can_test_if_contains_subitems()
     {
+        $this->boot();
         $this->assertFalse($this->controller->hasSub());
         $withSubitems = new MenuItem($this->menu->items->items[2]);
         $this->assertTrue($withSubitems->hasSub());
@@ -43,6 +44,7 @@ class MenuItemTest extends TestCase
     /** @test */
     public function can_return_subitems()
     {
+        $this->boot();
         $this->assertCount(0, $this->controller->getSub());
         $withSubitems = new MenuItem($this->menu->items->items[2]);
         $this->assertCount(1, $withSubitems->getSub());
@@ -51,6 +53,7 @@ class MenuItemTest extends TestCase
     /** @test */
     public function can_check_if_current_target_is_an_existing_page()
     {
+        $this->boot();
         $this->assertFalse($this->controller->isActive());
         $withSubitems = new MenuItem($this->menu->items->items[4]);
         $this->assertFalse($withSubitems->isActive(false));
@@ -60,8 +63,9 @@ class MenuItemTest extends TestCase
     /** @test */
     public function can_check_if_url_is_current_page()
     {
-        $this->setPageRoute('/optional/foo');
+        $this->createApplication(null, '/optional/foo');
         $this->app->router->load()->setCurrent();
+        $this->menu = App::content()->menus->get('main');
         $items = [
             'root' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional'],
             'wrong' => (object) ['label' => 'foo', 'target' => 'http://www.foo.com/optional/bar'],
@@ -72,7 +76,7 @@ class MenuItemTest extends TestCase
         foreach ($items as $key => $value) {
             $items[$key] = new MenuItem(new Link($value, $key, $this->menu->getStructure()->item));
         }
-        $this->assertTrue($items['root']->isActive());
+        $this->assertFalse($items['root']->isActive());
         $this->assertFalse($items['wrong']->isActive());
         $this->assertTrue($items['right']->isActive());
         $this->assertFalse($items['full']->isActive());
@@ -82,6 +86,7 @@ class MenuItemTest extends TestCase
     /** @test */
     public function returns_hash_if_menu_does_not_contain_url_field()
     {
+        $this->boot();
         $menu = App::content()->menus->get('test');
         $controller = new MenuItem($menu->items->items[0]);
         $this->assertSame('#', $controller->url);

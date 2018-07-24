@@ -15,7 +15,8 @@ class RouteRepositoryTest extends TestCase
     protected $preserveGlobalState = false;
     protected $runTestInSeparateProcess = true;
 
-    protected function bootBase()
+    /** @test */
+    public function can_load_routes_from_content_files()
     {
         $this->createApplication([
             'config' => \Kabas\Config\Container::class,
@@ -24,16 +25,11 @@ class RouteRepositoryTest extends TestCase
             'fields' => \Kabas\Fields\Container::class,
             'themes' => \Kabas\Themes\Container::class
         ]);
-    }
-
-    /** @test */
-    public function can_load_routes_from_content_files()
-    {
-        $this->bootBase();
         $cache = $this->createMock(Cache::class);
         $repository = new RouteRepository($cache);
         $repository->loadFromContent();
         $this->assertInstanceOf(Route::class, $repository->get('about'));
+        $this->assertNull($repository->get('test-does-not-exist'));
     }
 
     /** @test */
@@ -44,4 +40,5 @@ class RouteRepositoryTest extends TestCase
         $repository->register('foo', 'bar', ['en-GB' => '/foo/{bar}']);
         $this->assertInstanceOf(Route::class, $repository->get('foo.bar'));
     }
+
 }

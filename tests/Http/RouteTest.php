@@ -3,7 +3,6 @@
 namespace Tests\Http;
 
 use Kabas\Http\Routes\Route;
-use Kabas\Http\Routes\UrlWorker;
 use PHPUnit\Framework\TestCase;
 
 class RouteTest extends TestCase

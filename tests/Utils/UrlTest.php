@@ -72,12 +72,13 @@ class UrlTest extends TestCase
     }
 
     /** @test */
-    public function can_parse_an_url_and_return_an_object()
+    public function can_parse_an_url_and_return_a_query_object()
     {
         $parsed = Url::parse('http://www.foo.com/en/test');
-        $this->assertSame('en', $parsed->lang->slug);
-        $this->assertSame('/test', $parsed->route);
-        $this->assertSame('http://www.foo.com', $parsed->root);
+        $this->assertInstanceOf(\Kabas\Http\Request\Query::class, $parsed);
+        $this->assertSame('en', $parsed->getLocale());
+        $this->assertSame('/test', $parsed->getRoute());
+        $this->assertSame('http://www.foo.com', $parsed->getBase());
     }
 
     /** @test */

@@ -21,7 +21,8 @@ class RedirectResponseTest extends TestCase
             'router' => \Kabas\Http\Routes\Router::class,
             'uploads' => \Kabas\Objects\Uploads\Container::class,
             'content' => \Kabas\Content\Container::class,
-            'themes' => \Kabas\Themes\Container::class
+            'themes' => \Kabas\Themes\Container::class,
+            'request' => \Kabas\Http\Request::class,
         ]);
         $this->app->router->load();
     }

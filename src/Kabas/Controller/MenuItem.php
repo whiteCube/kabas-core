@@ -113,17 +113,8 @@ class MenuItem
      */
     protected function isUrlActive()
     {
-        if(!($route = Url::route($this->url))) return false;
-        $current = App::router()->getCurrent();
-        $locale = Lang::getCurrent()->original;
-        if(!$current->matches($route, $locale)) return false;
-        $parameters = $current->extractParameters($route, $locale);
-        foreach ($current->parameters as $i => $parameter) {
-            if(is_null($parameter->value) && !isset($parameters[$i])) continue;
-            if(!$parameter->isRequired && !isset($parameters[$i])) continue;
-            if($parameter->value === $parameters[$i]) continue;
-            return false;
-        }
-        return true;
+        if(is_string($this->url)) return false;
+        $url = trim(explode('?', explode('#', $this->url->getValue())[0])[0], '/');
+        return (App::request()->getQuery()->getURL() === $url);
     }
 }
