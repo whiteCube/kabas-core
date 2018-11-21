@@ -6,7 +6,7 @@ use Kabas\App;
 use Kabas\Content\BaseContainer;
 use Kabas\Content\Menus\Link;
 
-class Links extends BaseContainer implements \IteratorAggregate
+class Links extends BaseContainer implements \IteratorAggregate, \Countable
 {
     protected $structure;
     public $items = [];
@@ -15,6 +15,11 @@ class Links extends BaseContainer implements \IteratorAggregate
     {
         $this->structure = $structure;
         if(is_array($items)) $this->makeItems($items);
+    }
+
+    public function count()
+    {
+        return count($this->items);
     }
 
     public function make()

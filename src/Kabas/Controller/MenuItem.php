@@ -10,7 +10,6 @@ use Kabas\Utils\Lang;
 class MenuItem
 {
     protected $item;
-    protected $items = [];
 
     public function __construct($item)
     {
